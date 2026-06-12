@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import GuideCard from '../../components/GuideCard.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('guides')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const description =
+  'Every China Travel Made Easy guide: payments, internet, visas, trains, city transport, language, hotels, food, and a complete first-timer itinerary.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'All China travel guides',
+    url: 'https://chinatravelmadeeasy.com/guides/',
+    description,
+    isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
+  },
+];
+---
+
+<Base title="All guides" description={description} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+    <h1 class="font-display font-bold text-3xl">All guides</h1>
+    <p class="text-soft mt-3 max-w-2xl leading-relaxed">
+      Read the <a href="/guides/china-pre-departure-checklist/" class="text-accent underline">pre-departure
+      checklist</a> first — it links to everything else in the order you'll actually need it.
+    </p>
+    <div class="grid sm:grid-cols-2 gap-4 mt-8">
+      {guides.map((guide) => <GuideCard guide={guide} />)}
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+
+const description =
+  'China Travel Made Easy is written by Terry Chen, a Chinese-American Northwestern student who has spent years helping non-Chinese-speaking friends and family navigate travel in China.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About Terry Chen and China Travel Made Easy',
+    url: 'https://chinatravelmadeeasy.com/about/',
+    description,
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Terry Chen',
+      description:
+        'Chinese-American student at Northwestern University. Writes practical China travel guides for non-Chinese speakers.',
+      knowsLanguage: ['en', 'zh'],
+      affiliation: { '@type': 'CollegeOrUniversity', name: 'Northwestern University' },
+    },
+  },
+];
+---
+
+<Base title="About" description={description} jsonLd={jsonLd}>
+  <article class="mx-auto max-w-3xl px-4 sm:px-6 py-12">
+    <h1 class="font-display font-bold text-3xl sm:text-4xl">About this site</h1>
+
+    <div class="prose mt-8">
+      <p>
+        Hi — I'm <strong>Terry Chen</strong>, a Chinese-American student at Northwestern
+        University. I grew up between the US and China: family in both countries, fluent in
+        Mandarin and English, and — more relevantly for you — years of experience being the person
+        who gets the panicked text from the Shanghai airport: <em>"my card won't link to Alipay,
+        what do I do?"</em>
+      </p>
+
+      <h2>Why this site exists</h2>
+      <p>
+        Most English-language advice about China is either outdated (written when Alipay didn't
+        take foreign cards and everyone needed a visa) or vague ("download WeChat!"). Meanwhile,
+        China changed dramatically between 2023 and 2026: visa-free entry expanded to dozens of
+        countries, the payment apps opened up to international cards, train tickets went fully
+        electronic, and even the local map apps added English. A first-time trip is genuinely
+        easier than it has ever been — <em>if</em> you set things up correctly before you fly.
+      </p>
+      <p>
+        Every guide here is the advice I actually give friends and relatives, written down once,
+        properly, with the failure modes included. No affiliate-link padding, no "top 10 magical
+        experiences" filler.
+      </p>
+
+      <h2>How I keep it honest</h2>
+      <ul>
+        <li><strong>Dates on everything.</strong> Each guide shows when it was last updated, and time-sensitive claims say "as of mid-2026."</li>
+        <li><strong>Caveats included.</strong> If a method fails for some travelers (foreign-card payment limits, hotels that turn away foreigners, VPNs that stop working), the guide says so.</li>
+        <li><strong>Official sources for the load-bearing stuff.</strong> For visas and entry rules, I always point you to the Chinese embassy or the National Immigration Administration rather than asking you to trust a blog — including this one.</li>
+        <li><strong>First-hand and second-hand testing.</strong> I travel to China regularly, and I help non-Chinese-speaking visitors set up their phones, payments, and bookings. When something breaks for them, the guide gets fixed.</li>
+      </ul>
+
+      <h2>Get in touch</h2>
+      <p>
+        Spotted something outdated? That's the most useful email you can send me. Reach me at
+        <strong>hello@chinatravelmadeeasy.com</strong> — corrections, questions, and "this worked /
+        this didn't" reports all welcome.
+      </p>
+    </div>
+  </article>
+</Base>

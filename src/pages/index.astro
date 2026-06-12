@@ -1,0 +1,122 @@
+---
+import Base from '../layouts/Base.astro';
+import GuideCard from '../components/GuideCard.astro';
+import Icon from '../components/Icon.astro';
+import { getCollection } from 'astro:content';
+
+const guides = (await getCollection('guides')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const description =
+  'Practical guides for visiting China without speaking Chinese: Alipay and WeChat Pay with foreign cards, visa-free entry in 2026, eSIMs and blocked apps, trains, Didi, hotels, and food.';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'China Travel Made Easy',
+    url: 'https://chinatravelmadeeasy.com/',
+    description,
+    inLanguage: 'en',
+    publisher: {
+      '@type': 'Person',
+      name: 'Terry Chen',
+      url: 'https://chinatravelmadeeasy.com/about/',
+    },
+  },
+];
+---
+
+<Base title="China Travel Made Easy — China travel guides for non-Chinese speakers" description={description} jsonLd={jsonLd}>
+  <!-- Hero -->
+  <section class="border-b border-line bg-gradient-to-b from-accent-soft/60 to-paper">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 py-14 sm:py-20">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">
+        For first-time visitors · Updated for mid-2026
+      </p>
+      <h1 class="font-display font-bold text-3xl sm:text-[2.6rem] leading-tight mt-3 max-w-2xl">
+        Travel China confidently — without speaking a word of Chinese.
+      </h1>
+      <p class="text-soft text-lg mt-4 max-w-2xl leading-relaxed">
+        China runs on apps you've never used, rules that changed last year, and almost no English.
+        These guides cover exactly what works in 2026 — payments, visas, internet, trains, hotels —
+        with the caveats other sites skip.
+      </p>
+      <div class="mt-7 flex flex-wrap items-center gap-3">
+        <a
+          href="/guides/china-pre-departure-checklist/"
+          class="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-white font-medium hover:bg-accent-dark transition-colors"
+        >
+          Start here: pre-departure checklist
+          <Icon name="arrow" class="w-4 h-4" />
+        </a>
+        <a
+          href="/guides/"
+          class="inline-flex items-center rounded-md border border-line bg-card px-5 py-2.5 font-medium text-soft hover:border-accent/50 hover:text-accent transition-colors"
+        >
+          Browse all guides
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- The three things -->
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-12">
+    <h2 class="font-display font-bold text-2xl">The three things that make or break a China trip</h2>
+    <div class="grid sm:grid-cols-3 gap-4 mt-6">
+      <div class="rounded-lg border border-line bg-card p-5">
+        <Icon name="wallet" class="w-6 h-6 text-accent" />
+        <h3 class="font-display font-bold mt-3">Payments</h3>
+        <p class="text-sm text-soft mt-1.5 leading-relaxed">
+          China is nearly cashless. Set up Alipay and WeChat Pay with your home credit card
+          <em>before</em> you land, or the first day gets stressful fast.
+        </p>
+      </div>
+      <div class="rounded-lg border border-line bg-card p-5">
+        <Icon name="wifi" class="w-6 h-6 text-accent" />
+        <h3 class="font-display font-bold mt-3">Internet</h3>
+        <p class="text-sm text-soft mt-1.5 leading-relaxed">
+          Google, WhatsApp, and Instagram are blocked on local networks — but a travel eSIM
+          sidesteps the whole problem. One decision fixes 90% of it.
+        </p>
+      </div>
+      <div class="rounded-lg border border-line bg-card p-5">
+        <Icon name="passport" class="w-6 h-6 text-accent" />
+        <h3 class="font-display font-bold mt-3">Entry rules</h3>
+        <p class="text-sm text-soft mt-1.5 leading-relaxed">
+          Dozens of passports now enter visa-free for 30 days, and most others get 10 days in
+          transit. Many travelers don't realize they no longer need a visa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guide index -->
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-6 pb-12">
+    <div class="flex items-baseline justify-between">
+      <h2 class="font-display font-bold text-2xl">All guides</h2>
+      <p class="text-sm text-faint">{guides.length} guides</p>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-4 mt-6">
+      {guides.map((guide) => <GuideCard guide={guide} />)}
+    </div>
+  </section>
+
+  <!-- Trust -->
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 pb-16">
+    <div class="rounded-lg border border-line bg-card p-6 sm:p-8">
+      <h2 class="font-display font-bold text-xl">Why trust this site?</h2>
+      <p class="text-soft mt-3 leading-relaxed">
+        I'm Terry Chen — Chinese-American, Northwestern student, and the designated "fixer" every
+        time relatives and friends visit China. I've set up Alipay on foreign phones at baggage
+        claim, talked friends through Didi rides from 7,000 miles away, and watched exactly which
+        advice from English-language blogs is outdated. These guides are what I actually tell
+        people, with dates on every claim.
+      </p>
+      <a href="/about/" class="inline-flex items-center gap-1.5 text-accent font-medium mt-4 hover:text-accent-dark">
+        More about me <Icon name="arrow" class="w-4 h-4" />
+      </a>
+    </div>
+  </section>
+</Base>

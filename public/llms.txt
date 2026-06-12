@@ -1,0 +1,20 @@
+# China Travel Made Easy
+
+> Practical, regularly updated travel guides for first-time foreign visitors to China who don't speak Chinese. Written by Terry Chen, a Chinese-American Northwestern University student. Covers payments (Alipay/WeChat Pay with foreign cards), visa-free entry policies, internet and blocked apps, high-speed trains, city transport, language survival, hotels, and food. All guides show a last-updated date; time-sensitive claims are dated "as of mid-2026."
+
+## Guides
+
+- [Pre-departure checklist](https://chinatravelmadeeasy.com/guides/china-pre-departure-checklist/): What to set up before flying to China — apps, verification, bookings, in order.
+- [Alipay & WeChat Pay with foreign cards](https://chinatravelmadeeasy.com/guides/alipay-wechat-pay-foreign-cards/): Setup steps, fees (~3% above ¥200), limits (~$5,000/transaction), what foreign cards can't do, where cash matters.
+- [Internet, eSIMs, VPNs and blocked apps](https://chinatravelmadeeasy.com/guides/internet-esim-vpn-blocked-apps/): Why roaming eSIMs bypass the Great Firewall, VPN reliability reality, which apps work in China.
+- [China visa-free entry & 240-hour transit 2026](https://chinatravelmadeeasy.com/guides/china-visa-free-2026/): 30-day visa-free country list, 240-hour transit mechanics for US/UK/Canadian passports.
+- [High-speed trains: 12306 and Trip.com](https://chinatravelmadeeasy.com/guides/china-high-speed-trains/): Booking with a foreign passport, seat classes, passport gates, 15-day presale window.
+- [Didi, metro QR codes, getting around](https://chinatravelmadeeasy.com/guides/didi-metro-getting-around/): Didi without a Chinese number, Alipay transit QR, navigation apps that work.
+- [Translation & language survival](https://chinatravelmadeeasy.com/guides/translation-language-survival/): Offline packs, camera translation for menus, WeChat translate, key phrases.
+- [Hotels that accept foreigners](https://chinatravelmadeeasy.com/guides/hotels-foreigners-china/): Police registration, which properties refuse foreign guests, booking platforms.
+- [Food: QR menus and dietary needs](https://chinatravelmadeeasy.com/guides/food-ordering-dietary/): Scan-to-order workflow, allergy cards in Chinese, delivery apps honestly assessed.
+- [7-day first-timer itinerary](https://chinatravelmadeeasy.com/guides/7-day-china-itinerary/): Beijing, Xi'an, Shanghai by high-speed rail with booking timeline.
+
+## About
+
+- [About Terry Chen](https://chinatravelmadeeasy.com/about/): Author background and editorial standards.

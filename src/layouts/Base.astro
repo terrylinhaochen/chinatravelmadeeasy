@@ -1,0 +1,87 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogType?: string;
+  jsonLd?: object[];
+}
+
+const { title, description, ogType = 'website', jsonLd = [] } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const siteName = 'China Travel Made Easy';
+const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+
+    {jsonLd.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <header class="border-b border-line bg-paper/95 sticky top-0 z-10 backdrop-blur">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 flex items-center justify-between h-14">
+        <a href="/" class="flex items-center gap-2 group" aria-label="China Travel Made Easy — home">
+          <span
+            class="inline-flex items-center justify-center w-7 h-7 rounded bg-accent text-white font-display font-bold text-sm leading-none"
+            >中</span
+          >
+          <span class="font-display font-bold text-[1.05rem] tracking-tight group-hover:text-accent transition-colors"
+            >China Travel Made Easy</span
+          >
+        </a>
+        <nav class="flex items-center gap-4 sm:gap-6 text-sm font-medium text-soft">
+          <a href="/guides/" class="hover:text-accent transition-colors">Guides</a>
+          <a href="/about/" class="hover:text-accent transition-colors">About</a>
+          <a
+            href="/guides/china-pre-departure-checklist/"
+            class="hidden sm:inline-flex items-center rounded-md bg-accent px-3 py-1.5 text-white hover:bg-accent-dark transition-colors"
+            >Start here</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1 w-full">
+      <slot />
+    </main>
+
+    <footer class="border-t border-line mt-16">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 py-10 text-sm text-faint space-y-3">
+        <p class="font-display font-bold text-soft text-base">China Travel Made Easy</p>
+        <p>
+          Practical, field-tested guides for first-time visitors to China — written by
+          <a href="/about/" class="underline hover:text-accent">Terry Chen</a>, a Chinese-American
+          student who grew up navigating both worlds.
+        </p>
+        <p>
+          Visa rules, app features, and payment policies in China change often. Every guide shows
+          its last-updated date; always confirm critical details (especially visas) with official
+          sources before you fly.
+        </p>
+        <p>&copy; {new Date().getFullYear()} chinatravelmadeeasy.com · Independent and ad-free. Not affiliated with any government or company mentioned.</p>
+      </div>
+    </footer>
+  </body>
+</html>
