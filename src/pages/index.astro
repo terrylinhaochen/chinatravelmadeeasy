@@ -8,8 +8,16 @@ const guides = (await getCollection('guides')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
+// Two pillars: the experiences worth coming for, and the logistics that make them possible.
+const DELIGHT_CATEGORIES = new Set(['Authentic China', 'Food']);
+const DELIGHT_SLUGS = new Set(['7-day-china-itinerary']);
+const delights = guides.filter(
+  (g) => DELIGHT_CATEGORIES.has(g.data.category) || DELIGHT_SLUGS.has(g.id)
+);
+const logistics = guides.filter((g) => !delights.includes(g));
+
 const description =
-  'Practical guides for visiting China without speaking Chinese: Alipay and WeChat Pay with foreign cards, visa-free entry in 2026, eSIMs and blocked apps, trains, Didi, hotels, and food.';
+  'The two halves of a great China trip: authentic experiences (street food, tea houses, real neighborhoods) and the logistics that unlock them — payments, visas, eSIMs, trains, and hotels, without speaking Chinese.';
 
 const jsonLd = [
   {
@@ -36,12 +44,13 @@ const jsonLd = [
         For first-time visitors · Updated for mid-2026
       </p>
       <h1 class="font-display font-bold text-3xl sm:text-[2.6rem] leading-tight mt-3 max-w-2xl">
-        Travel China confidently — without speaking a word of Chinese.
+        The real China is worth the trip. The logistics shouldn't stop you.
       </h1>
       <p class="text-soft text-lg mt-4 max-w-2xl leading-relaxed">
-        China runs on apps you've never used, rules that changed last year, and almost no English.
-        These guides cover exactly what works in 2026 — payments, visas, internet, trains, hotels —
-        with the caveats other sites skip.
+        Night markets, tea houses, neighborhoods where nobody's performing for tourists — that's
+        why you go. These guides handle both halves: the experiences worth planning around, and
+        the 2026 logistics (payments, visas, internet, trains) that make them possible without
+        speaking a word of Chinese.
       </p>
       <div class="mt-7 flex flex-wrap items-center gap-3">
         <a
@@ -92,31 +101,34 @@ const jsonLd = [
     </div>
   </section>
 
-  <!-- Guide index -->
-  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-6 pb-12">
+  <!-- Authentic delights -->
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-6">
     <div class="flex items-baseline justify-between">
-      <h2 class="font-display font-bold text-2xl">All guides</h2>
-      <p class="text-sm text-faint">{guides.length} guides</p>
+      <h2 class="font-display font-bold text-2xl">Authentic delights</h2>
+      <p class="text-sm text-faint">{delights.length} guides</p>
     </div>
+    <p class="text-soft mt-2 max-w-2xl leading-relaxed">
+      The experiences worth building a trip around — eating, wandering, and the everyday culture
+      most visitors walk past.
+    </p>
     <div class="grid sm:grid-cols-2 gap-4 mt-6">
-      {guides.map((guide) => <GuideCard guide={guide} />)}
+      {delights.map((guide) => <GuideCard guide={guide} />)}
     </div>
   </section>
 
-  <!-- Trust -->
-  <section class="mx-auto max-w-4xl px-4 sm:px-6 pb-16">
-    <div class="rounded-lg border border-line bg-card p-6 sm:p-8">
-      <h2 class="font-display font-bold text-xl">Why trust this site?</h2>
-      <p class="text-soft mt-3 leading-relaxed">
-        I'm Terry Chen — Chinese-American, Northwestern student, and the designated "fixer" every
-        time relatives and friends visit China. I've set up Alipay on foreign phones at baggage
-        claim, talked friends through Didi rides from 7,000 miles away, and watched exactly which
-        advice from English-language blogs is outdated. These guides are what I actually tell
-        people, with dates on every claim.
-      </p>
-      <a href="/about/" class="inline-flex items-center gap-1.5 text-accent font-medium mt-4 hover:text-accent-dark">
-        More about me <Icon name="arrow" class="w-4 h-4" />
-      </a>
+  <!-- Travel logistics -->
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-6 pb-16">
+    <div class="flex items-baseline justify-between">
+      <h2 class="font-display font-bold text-2xl">Travel logistics</h2>
+      <p class="text-sm text-faint">{logistics.length} guides</p>
+    </div>
+    <p class="text-soft mt-2 max-w-2xl leading-relaxed">
+      The unglamorous half that makes the rest possible: money, internet, entry rules, and getting
+      around.
+    </p>
+    <div class="grid sm:grid-cols-2 gap-4 mt-6">
+      {logistics.map((guide) => <GuideCard guide={guide} />)}
     </div>
   </section>
+
 </Base>
