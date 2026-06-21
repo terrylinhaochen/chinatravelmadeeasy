@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
+import { getGuideImage } from '../../data/guideImages';
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
@@ -27,7 +28,8 @@ const updatedHuman = updated.toLocaleDateString('en-US', {
   day: 'numeric',
 });
 
-const pageUrl = `https://chinatravelmadeeasy.com/guides/${guide.id}/`;
+const pageUrl = `https://chinatravelmadeeasy.com/guides//`;
+const guideImage = getGuideImage(guide.id);
 
 const jsonLd: object[] = [
   {
@@ -37,12 +39,13 @@ const jsonLd: object[] = [
     description,
     dateModified: updatedISO,
     datePublished: updatedISO,
+    image: `https://chinatravelmadeeasy.com`,
     inLanguage: 'en',
     mainEntityOfPage: pageUrl,
     author: {
-      '@type': 'Person',
-      name: 'Terry Chen',
-      url: 'https://chinatravelmadeeasy.com/about/',
+      '@type': 'Organization',
+      name: 'China Travel Made Easy',
+      url: 'https://chinatravelmadeeasy.com/',
     },
     publisher: {
       '@type': 'Organization',
@@ -92,10 +95,13 @@ if (faqs.length > 0) {
       <h1 class="font-display font-bold text-3xl sm:text-4xl leading-tight mt-4">{title}</h1>
       <p class="text-soft text-lg mt-3 leading-relaxed">{description}</p>
       <p class="text-sm text-faint mt-4 pb-6 border-b border-line">
-        By <a href="/about/" class="underline hover:text-accent">Terry Chen</a> ·
-        Last updated <time datetime={updatedISO}>{updatedHuman}</time>
+        China Travel Made Easy concierge desk · Last updated <time datetime={updatedISO}>{updatedHuman}</time>
       </p>
     </header>
+
+    <figure class="mt-8 overflow-hidden rounded-lg border border-line bg-card">
+      <img src={guideImage.src} alt={guideImage.alt} class="h-72 w-full object-cover sm:h-96" />
+    </figure>
 
     <div class="prose mt-8">
       <Content />

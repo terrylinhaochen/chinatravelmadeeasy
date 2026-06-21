@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Insights are produced by CrowdListen and synced via
+// pipeline/pulse_from_crowdlisten.py. The page builds (empty state) without it.
+let pulse: {
+  generated_at?: string;
+  insights: {
+    title: string;
+    description: string;
+    category?: string;
+    urgency?: string;
+    impact_label?: string;
+    signal_count?: number;
+    segments: string[];
+    evidence: { quote: string; platform?: string; url?: string }[];
+  }[];
+} = { insights: [] };
+
+const pulsePath = path.join(process.cwd(), 'src/data/pulse.json');
+if (fs.existsSync(pulsePath)) {
+  pulse = JSON.parse(fs.readFileSync(pulsePath, 'utf-8'));
+}
+const updated = pulse.generated_at
+  ? new Date(pulse.generated_at).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    })
+  : null;
+
+const description =
+  'How China Travel Made Easy turns long-form reviews, local social posts, and traveler questions into crowd-vetted China travel guides.';
+---
+
+<Base title="Crowd signals — how traveler questions become guides" description={description}>
+  <section class="bg-card">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 py-12 sm:py-16">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">
+        Crowd signals{updated && ` · Updated ${updated}`}
+      </p>
+      <h1 class="font-display font-bold text-4xl sm:text-5xl leading-tight mt-3 max-w-3xl">
+        Long-form reviews and local conversations, matched to traveler questions.
+      </h1>
+      <p class="text-soft text-lg mt-5 max-w-3xl leading-relaxed">
+        The point is not to publish a feed of random trends. China Travel Made Easy uses CrowdListen
+        as the distribution and matching layer: traveler reviews, forum threads, local social posts,
+        and review-site signals are clustered into the questions people are actually trying to answer.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 sm:px-6 py-10">
+    <div class="grid gap-4 sm:grid-cols-3">
+      <div class="rounded-lg border border-line bg-card p-5">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">1. Listen</p>
+        <h2 class="font-display font-bold text-xl mt-2">Collect real travel language</h2>
+        <p class="text-soft text-sm mt-2 leading-relaxed">
+          Long-form reviews, Reddit threads, Xiaohongshu posts, hotel reviews, food discussions,
+          and destination writeups become the raw evidence.
+        </p>
+      </div>
+      <div class="rounded-lg border border-line bg-card p-5">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">2. Match</p>
+        <h2 class="font-display font-bold text-xl mt-2">Map evidence to questions</h2>
+        <p class="text-soft text-sm mt-2 leading-relaxed">
+          Repeated concerns get grouped by intent: where to stay, what to eat, which app to use,
+          which route works, and what locals warn people about.
+        </p>
+      </div>
+      <div class="rounded-lg border border-line bg-card p-5">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">3. Publish</p>
+        <h2 class="font-display font-bold text-xl mt-2">Turn signals into guides</h2>
+        <p class="text-soft text-sm mt-2 leading-relaxed">
+          The output is a readable guide, not a dashboard: clear answers, sourced caveats, and
+          practical decisions a traveler can use while planning.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-lg border border-line bg-[#f4f0e8] p-5 sm:p-6">
+      <div class="grid gap-5 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+        <div>
+          <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">Source mix</p>
+          <h2 class="font-display font-bold text-2xl mt-2">Built for relevance, not generic travel copy</h2>
+        </div>
+        <div class="grid gap-3 sm:grid-cols-2">
+          {['Long-form traveler reviews', 'Local social media posts', 'Hotel and food review sites', 'Forum questions and trip reports'].map((source) => (
+            <div class="rounded-md border border-line bg-white px-4 py-3 text-sm font-semibold text-soft">
+              {source}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {
+      pulse.insights.length === 0 ? (
+        <div class="mt-8 rounded-lg border border-line bg-card p-8">
+          <p class="font-display font-bold text-xl">First China review corpus is being shaped</p>
+          <p class="text-soft mt-2 max-w-2xl leading-relaxed">
+            The public page stays quiet until there is enough evidence to produce useful, readable
+            guidance. In the meantime, start with the <a href="/guides/" class="text-accent underline">current guides</a>.
+          </p>
+        </div>
+      ) : (
+        <div class="mt-8 space-y-5">
+          {pulse.insights.map((insight, idx) => (
+            <article class="rounded-lg border border-line bg-card p-6">
+              <div class="flex items-start justify-between gap-4">
+                <h2 class="font-display font-bold text-lg leading-snug">{insight.title}</h2>
+                <span class="shrink-0 text-[11px] font-semibold uppercase tracking-wider text-faint mt-1">
+                  #{idx + 1}
+                </span>
+              </div>
+              <p class="text-soft mt-2 leading-relaxed">{insight.description}</p>
+              <div class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-faint">
+                {insight.signal_count && (
+                  <span>heard {insight.signal_count} {insight.signal_count === 1 ? 'time' : 'times'} recently</span>
+                )}
+                {insight.impact_label && <span>{insight.impact_label}</span>}
+                {insight.segments.slice(0, 3).map((s) => (
+                  <span class="rounded-full border border-line px-2 py-0.5">{s}</span>
+                ))}
+              </div>
+              {insight.evidence.length > 0 && (
+                <div class="mt-4 border-t border-line pt-3 space-y-2">
+                  {insight.evidence.map((e) => (
+                    <blockquote class="text-sm text-soft leading-relaxed">
+                      “{e.quote}”
+                      {e.url && (
+                        <a href={e.url} class="text-accent ml-1 hover:underline" rel="nofollow noopener">
+                          — {e.platform || 'source'}
+                        </a>
+                      )}
+                    </blockquote>
+                  ))}
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      )
+    }
+
+    <div class="mt-10 rounded-lg border border-line bg-card p-6 flex items-start gap-4">
+      <Icon name="compass" class="w-6 h-6 text-accent shrink-0 mt-0.5" />
+      <p class="text-sm text-soft leading-relaxed">
+        Powered by <a href="https://crowdlisten.com" class="text-accent hover:underline">CrowdListen</a>,
+        an audience-intelligence engine that clusters what crowds are saying and matches it to
+        user questions. Insights are aggregated; direct quotes appear only with public source links.
+      </p>
+    </div>
+  </section>
+</Base>

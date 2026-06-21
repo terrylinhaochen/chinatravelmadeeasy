@@ -8,16 +8,104 @@ const guides = (await getCollection('guides')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-// Two pillars: the experiences worth coming for, and the logistics that make them possible.
-const DELIGHT_CATEGORIES = new Set(['Authentic China', 'Food']);
-const DELIGHT_SLUGS = new Set(['7-day-china-itinerary']);
-const delights = guides.filter(
-  (g) => DELIGHT_CATEGORIES.has(g.data.category) || DELIGHT_SLUGS.has(g.id)
-);
-const logistics = guides.filter((g) => !delights.includes(g));
+const guideById = Object.fromEntries(guides.map((guide) => [guide.id, guide]));
+
+const places = [
+  {
+    name: 'Beijing',
+    image: '/images/great-wall.jpg',
+    alt: 'The Great Wall of China curving through mountain ridges near Beijing',
+    kicker: 'Imperial history + hutongs',
+    body: 'Forbidden City, Mutianyu Great Wall, neighborhood lanes, breakfast carts, and parks where daily life starts before 8am.',
+    href: '/guides/7-day-china-itinerary/',
+  },
+  {
+    name: 'Shanghai',
+    image: '/images/shanghai-skyline.jpg',
+    alt: 'Shanghai skyline glowing at night across the Huangpu River',
+    kicker: 'Arrival city + food streets',
+    body: 'The easiest first landing: skyline walks, longtang lanes, excellent hotels, train access, and the most foreigner-friendly logistics.',
+    href: '/guides/neighborhoods-beyond-landmarks/',
+  },
+  {
+    name: "Xi'an",
+    image: '/images/china-high-speed-train.jpg',
+    alt: 'A Chinese high-speed train waiting at a bright station platform',
+    kicker: 'Ancient capital by train',
+    body: 'Terracotta Warriors, city walls, Muslim Quarter snacks, and the classic high-speed rail link between Beijing and Shanghai.',
+    href: '/guides/china-high-speed-trains/',
+  },
+  {
+    name: 'Chengdu',
+    image: '/images/china-street-food.jpg',
+    alt: 'A street food stall in China with steam rising from the counter at night',
+    kicker: 'Tea, spice, slow mornings',
+    body: 'Teahouses, street snacks, residential food streets, parks, and a slower version of urban China that travelers remember.',
+    href: '/guides/tea-houses-and-rituals/',
+  },
+];
+
+const travelModes = [
+  {
+    title: 'Places',
+    icon: 'map',
+    body: 'Where to base, what to skip, and how Beijing, Shanghai, Xi\'an, and Chengdu fit together.',
+    href: '/guides/7-day-china-itinerary/',
+    color: 'bg-[#e8f0e1] text-[#496334]',
+  },
+  {
+    title: 'Eating',
+    icon: 'bowl',
+    body: 'Street food, QR menus, spice levels, allergy cards, tea houses, and where tourists overpay.',
+    href: '/guides/street-food-night-markets/',
+    color: 'bg-[#fff0dc] text-[#8c571d]',
+  },
+  {
+    title: 'Traveling',
+    icon: 'train',
+    body: 'High-speed rail, Didi, metro QR codes, airport pickup, and how to move without Chinese.',
+    href: '/guides/china-high-speed-trains/',
+    color: 'bg-[#e6f0f5] text-[#315d73]',
+  },
+  {
+    title: 'Hospitality',
+    icon: 'passport',
+    body: 'Hotels that accept foreign passports, neighborhoods to stay in, and booking-platform traps.',
+    href: '/guides/hotels-foreigners-china/',
+    color: 'bg-[#f7e7e4] text-accent',
+  },
+];
+
+const crowdPicks = [
+  {
+    label: 'Crowd signal',
+    title: 'Travelers worry about visas too late',
+    body: 'The fix is not a long immigration essay. First determine whether you qualify for 30-day visa-free entry or the 240-hour transit route, then book flights that match the rule.',
+    href: '/guides/china-visa-free-2026/',
+  },
+  {
+    label: 'Crowd signal',
+    title: 'Payments are the real day-one failure',
+    body: 'Set up Alipay and WeChat Pay before the airport. If your card or passport verification fails after landing, every taxi, snack stall, and metro ride gets harder.',
+    href: '/guides/alipay-wechat-pay-foreign-cards/',
+  },
+  {
+    label: 'Crowd signal',
+    title: 'The best food is usually not the famous market',
+    body: 'Walk two streets away from the landmark, look for local queues, point at what is being cooked hot, and pay with a QR code.',
+    href: '/guides/street-food-night-markets/',
+  },
+];
+
+const essentials = [
+  guideById['china-pre-departure-checklist'],
+  guideById['internet-esim-vpn-blocked-apps'],
+  guideById['translation-language-survival'],
+  guideById['food-ordering-dietary'],
+].filter(Boolean);
 
 const description =
-  'The two halves of a great China trip: authentic experiences (street food, tea houses, real neighborhoods) and the logistics that unlock them — payments, visas, eSIMs, trains, and hotels, without speaking Chinese.';
+  'A Lonely Planet-style China travel guide built around authentic, crowd-vetted planning questions: places, eating, transport, hotels, payments, visas, internet, and language.';
 
 const jsonLd = [
   {
@@ -28,107 +116,159 @@ const jsonLd = [
     description,
     inLanguage: 'en',
     publisher: {
-      '@type': 'Person',
-      name: 'Terry Chen',
-      url: 'https://chinatravelmadeeasy.com/about/',
+      '@type': 'Organization',
+      name: 'China Travel Made Easy',
+      url: 'https://chinatravelmadeeasy.com/',
     },
   },
 ];
 ---
 
-<Base title="China Travel Made Easy — China travel guides for non-Chinese speakers" description={description} jsonLd={jsonLd}>
-  <!-- Hero -->
-  <section class="border-b border-line bg-gradient-to-b from-accent-soft/60 to-paper">
-    <div class="mx-auto max-w-4xl px-4 sm:px-6 py-14 sm:py-20">
-      <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">
-        For first-time visitors · Updated for mid-2026
-      </p>
-      <h1 class="font-display font-bold text-3xl sm:text-[2.6rem] leading-tight mt-3 max-w-2xl">
-        The real China is worth the trip. The logistics shouldn't stop you.
-      </h1>
-      <p class="text-soft text-lg mt-4 max-w-2xl leading-relaxed">
-        Night markets, tea houses, neighborhoods where nobody's performing for tourists — that's
-        why you go. These guides handle both halves: the experiences worth planning around, and
-        the 2026 logistics (payments, visas, internet, trains) that make them possible without
-        speaking a word of Chinese.
-      </p>
-      <div class="mt-7 flex flex-wrap items-center gap-3">
-        <a
-          href="/guides/china-pre-departure-checklist/"
-          class="inline-flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-white font-medium hover:bg-accent-dark transition-colors"
-        >
-          Start here: pre-departure checklist
-          <Icon name="arrow" class="w-4 h-4" />
+<Base title="China Travel Made Easy — crowd-vetted China travel guide" description={description} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
+    <div class="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+      <div>
+        <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">
+          China travel guide · Crowd-vetted planning
+        </p>
+        <h1 class="mt-4 font-display text-5xl font-bold leading-none sm:text-7xl lg:text-8xl">
+          China
+        </h1>
+        <p class="mt-5 max-w-xl text-lg leading-relaxed text-soft sm:text-xl">
+          Where to go, what to eat, how to travel, where to stay, and which practical setup steps
+          matter before you fly.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#places" class="rounded-md bg-ink px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent">
+            Explore places
+          </a>
+          <a href="/guides/china-pre-departure-checklist/" class="rounded-md border border-line bg-paper px-4 py-2.5 text-sm font-semibold text-ink hover:border-accent/50 hover:text-accent">
+            Start planning
+          </a>
+        </div>
+      </div>
+      <div class="overflow-hidden rounded-lg border border-line bg-card">
+        <img src="/images/shanghai-skyline.jpg" alt="Shanghai skyline glowing at night" class="h-[260px] w-full object-cover sm:h-[360px] lg:h-[420px]" fetchpriority="high" />
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 sm:px-6">
+    <div class="rounded-lg border border-line bg-[#f4f0e8] p-3 sm:p-4">
+      <div class="grid gap-3 sm:grid-cols-2">
+        {travelModes.map((mode) => (
+          <a href={mode.href} class="group rounded-lg border border-line bg-white p-5 transition-colors hover:border-accent/50">
+            <span class={`inline-flex h-10 w-10 items-center justify-center rounded-md ${mode.color}`}>
+              <Icon name={mode.icon} class="h-5 w-5" />
+            </span>
+            <h2 class="mt-3 font-display text-xl font-bold group-hover:text-accent">{mode.title}</h2>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{mode.body}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="places" class="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Where to go</p>
+        <h2 class="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">China’s first-trip places, made simple</h2>
+      </div>
+      <a href="/guides/7-day-china-itinerary/" class="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-dark">
+        See the 7-day route
+        <Icon name="arrow" class="h-3.5 w-3.5" />
+      </a>
+    </div>
+    <div class="mt-8 grid gap-5 sm:grid-cols-2">
+      {places.map((place) => (
+        <a href={place.href} class="group overflow-hidden rounded-lg border border-line bg-card transition-all hover:border-accent/50 hover:shadow-[0_12px_30px_rgba(33,29,25,0.12)]">
+          <div class="aspect-[16/10] overflow-hidden bg-line">
+            <img src={place.image} alt={place.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          </div>
+          <div class="p-5">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">{place.kicker}</p>
+            <h3 class="mt-1 font-display text-2xl font-bold group-hover:text-accent">{place.name}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{place.body}</p>
+          </div>
         </a>
-        <a
-          href="/guides/"
-          class="inline-flex items-center rounded-md border border-line bg-card px-5 py-2.5 font-medium text-soft hover:border-accent/50 hover:text-accent transition-colors"
-        >
-          Browse all guides
-        </a>
-      </div>
+      ))}
     </div>
   </section>
 
-  <!-- The three things -->
-  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-12">
-    <h2 class="font-display font-bold text-2xl">The three things that make or break a China trip</h2>
-    <div class="grid sm:grid-cols-3 gap-4 mt-6">
-      <div class="rounded-lg border border-line bg-card p-5">
-        <Icon name="wallet" class="w-6 h-6 text-accent" />
-        <h3 class="font-display font-bold mt-3">Payments</h3>
-        <p class="text-sm text-soft mt-1.5 leading-relaxed">
-          China is nearly cashless. Set up Alipay and WeChat Pay with your home credit card
-          <em>before</em> you land, or the first day gets stressful fast.
+  <section class="mx-auto max-w-5xl px-4 sm:px-6">
+    <div class="grid gap-8 rounded-lg bg-ink px-5 py-10 text-white sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:py-12">
+      <div>
+        <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#f2c36d]">Authentic crowd-vetted opinions</p>
+        <h2 class="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">What travelers keep learning the hard way</h2>
+        <p class="mt-4 leading-relaxed text-white/75">
+          The guide is organized around repeated planning questions and field reports: the advice
+          people wish they had before the first taxi, first train station, first hotel desk, or
+          first untranslated menu.
         </p>
       </div>
-      <div class="rounded-lg border border-line bg-card p-5">
-        <Icon name="wifi" class="w-6 h-6 text-accent" />
-        <h3 class="font-display font-bold mt-3">Internet</h3>
-        <p class="text-sm text-soft mt-1.5 leading-relaxed">
-          Google, WhatsApp, and Instagram are blocked on local networks — but a travel eSIM
-          sidesteps the whole problem. One decision fixes 90% of it.
-        </p>
-      </div>
-      <div class="rounded-lg border border-line bg-card p-5">
-        <Icon name="passport" class="w-6 h-6 text-accent" />
-        <h3 class="font-display font-bold mt-3">Entry rules</h3>
-        <p class="text-sm text-soft mt-1.5 leading-relaxed">
-          Dozens of passports now enter visa-free for 30 days, and most others get 10 days in
-          transit. Many travelers don't realize they no longer need a visa.
-        </p>
+      <div class="grid gap-4">
+        {crowdPicks.map((pick) => (
+          <a href={pick.href} class="group rounded-lg border border-white/15 bg-white/8 p-5 transition-colors hover:border-[#f2c36d]/70 hover:bg-white/12">
+            <p class="text-[11px] font-semibold uppercase tracking-wider text-[#f2c36d]">{pick.label}</p>
+            <h3 class="mt-2 font-display text-2xl font-bold group-hover:text-[#f2c36d]">{pick.title}</h3>
+            <p class="mt-2 leading-relaxed text-white/75">{pick.body}</p>
+          </a>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- Authentic delights -->
-  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-6">
-    <div class="flex items-baseline justify-between">
-      <h2 class="font-display font-bold text-2xl">Authentic delights</h2>
-      <p class="text-sm text-faint">{delights.length} guides</p>
-    </div>
-    <p class="text-soft mt-2 max-w-2xl leading-relaxed">
-      The experiences worth building a trip around — eating, wandering, and the everyday culture
-      most visitors walk past.
-    </p>
-    <div class="grid sm:grid-cols-2 gap-4 mt-6">
-      {delights.map((guide) => <GuideCard guide={guide} />)}
+  <section class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:py-16">
+    <div class="grid gap-8 lg:grid-cols-[1fr_1fr]">
+      <div class="overflow-hidden rounded-lg border border-line bg-card">
+        <img src="/images/china-high-speed-train.jpg" alt="High-speed train in a Chinese railway station" class="h-64 w-full object-cover sm:h-72" />
+        <div class="p-6">
+          <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Traveling China</p>
+          <h2 class="mt-2 font-display text-3xl font-bold">Trains, Didi, metro, and the airport-to-hotel handoff</h2>
+          <p class="mt-3 leading-relaxed text-soft">
+            China is easier when you treat transport as a system: book high-speed rail between
+            cities, use Didi when addresses are hard, and use Alipay transport QR codes for metro.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href="/guides/china-high-speed-trains/" class="rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent-dark">Train guide</a>
+            <a href="/guides/didi-metro-getting-around/" class="rounded-md border border-line px-4 py-2.5 text-sm font-semibold hover:border-accent/50 hover:text-accent">City transport</a>
+          </div>
+        </div>
+      </div>
+      <div class="overflow-hidden rounded-lg border border-line bg-card">
+        <img src="/images/china-street-food.jpg" alt="Chinese street food stall with steam and bright signage" class="h-64 w-full object-cover sm:h-72" />
+        <div class="p-6">
+          <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Eating China</p>
+          <h2 class="mt-2 font-display text-3xl font-bold">Street food, tea houses, QR menus, and dietary survival</h2>
+          <p class="mt-3 leading-relaxed text-soft">
+            The best meals are often visible, pointable, and cheap. The trick is knowing how to
+            order, how to pay, and which famous food streets are mostly theater.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <a href="/guides/street-food-night-markets/" class="rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent-dark">Street food</a>
+            <a href="/guides/food-ordering-dietary/" class="rounded-md border border-line px-4 py-2.5 text-sm font-semibold hover:border-accent/50 hover:text-accent">Ordering guide</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Travel logistics -->
-  <section class="mx-auto max-w-4xl px-4 sm:px-6 py-6 pb-16">
-    <div class="flex items-baseline justify-between">
-      <h2 class="font-display font-bold text-2xl">Travel logistics</h2>
-      <p class="text-sm text-faint">{logistics.length} guides</p>
-    </div>
-    <p class="text-soft mt-2 max-w-2xl leading-relaxed">
-      The unglamorous half that makes the rest possible: money, internet, entry rules, and getting
-      around.
-    </p>
-    <div class="grid sm:grid-cols-2 gap-4 mt-6">
-      {logistics.map((guide) => <GuideCard guide={guide} />)}
+  <section class="mx-auto max-w-5xl px-4 sm:px-6">
+    <div class="rounded-lg border border-line bg-card p-5 sm:p-8">
+      <div class="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+        <div>
+          <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Travel essentials</p>
+          <h2 class="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">Before you fly, fix the basics</h2>
+        </div>
+        <p class="leading-relaxed text-soft">
+          Visa rules, mobile payments, eSIMs, translation, hotels, and train bookings are the
+          practical layer underneath every good China trip.
+        </p>
+      </div>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        {essentials.map((guide) => <GuideCard guide={guide} />)}
+      </div>
     </div>
   </section>
-
 </Base>

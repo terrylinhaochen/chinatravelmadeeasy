@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import type { CollectionEntry } from 'astro:content';
+import { getGuideImage } from '../data/guideImages';
 
 interface Props {
   guide: CollectionEntry<'guides'>;
@@ -8,6 +9,7 @@ interface Props {
 
 const { guide } = Astro.props;
 const { title, description, category, icon, updated } = guide.data;
+const image = getGuideImage(guide.id);
 const fmt = updated.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
@@ -16,19 +18,24 @@ const fmt = updated.toLocaleDateString('en-US', {
 
 <a
   href={`/guides/${guide.id}/`}
-  class="group block rounded-lg border border-line bg-card p-5 hover:border-accent/50 hover:shadow-[0_2px_12px_rgba(179,56,44,0.08)] transition-all"
+  class="group block overflow-hidden rounded-lg border border-line bg-card hover:border-accent/50 hover:shadow-[0_2px_12px_rgba(179,56,44,0.08)] transition-all"
 >
-  <div class="flex items-start gap-3.5">
-    <span class="mt-0.5 inline-flex w-9 h-9 shrink-0 items-center justify-center rounded-md bg-accent-soft text-accent">
-      <Icon name={icon} class="w-5 h-5" />
-    </span>
-    <div class="min-w-0">
-      <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">{category}</p>
-      <h3 class="font-display font-bold text-lg leading-snug mt-0.5 group-hover:text-accent transition-colors">
-        {title}
-      </h3>
-      <p class="text-sm text-soft mt-1.5 leading-relaxed">{description}</p>
-      <p class="text-xs text-faint mt-2.5">Updated {fmt}</p>
+  <div class="aspect-[16/9] bg-line overflow-hidden">
+    <img src={image.src} alt={image.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+  </div>
+  <div class="p-5">
+    <div class="flex items-start gap-3.5">
+      <span class="mt-0.5 inline-flex w-9 h-9 shrink-0 items-center justify-center rounded-md bg-accent-soft text-accent">
+        <Icon name={icon} class="w-5 h-5" />
+      </span>
+      <div class="min-w-0">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">{category}</p>
+        <h3 class="font-display font-bold text-lg leading-snug mt-0.5 group-hover:text-accent transition-colors">
+          {title}
+        </h3>
+        <p class="text-sm text-soft mt-1.5 leading-relaxed">{description}</p>
+        <p class="text-xs text-faint mt-2.5">Updated {fmt}</p>
+      </div>
     </div>
   </div>
 </a>

@@ -1,6 +1,6 @@
 # China Travel Made Easy
 
-> Practical, regularly updated travel guides for first-time foreign visitors to China who don't speak Chinese. Written by Terry Chen, a Chinese-American Northwestern University student. Covers payments (Alipay/WeChat Pay with foreign cards), visa-free entry policies, internet and blocked apps, high-speed trains, city transport, language survival, hotels, and food. All guides show a last-updated date; time-sensitive claims are dated "as of mid-2026."
+> Practical, regularly updated trip-planning answers for first-time foreign visitors to China who don't speak Chinese. Covers payments (Alipay/WeChat Pay with foreign cards), visa-free entry policies, internet and blocked apps, high-speed trains, city transport, language survival, hotels, and food. All guides show a last-updated date; time-sensitive claims are dated "as of mid-2026."
 
 ## Guides
 
@@ -17,4 +17,4 @@
 
 ## About
 
-- [About Terry Chen](https://chinatravelmadeeasy.com/about/): Author background and editorial standards.
+- [About China Travel Made Easy](https://chinatravelmadeeasy.com/about/): Editorial standards and update approach.

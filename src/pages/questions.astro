@@ -1,0 +1,191 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+
+const description =
+  'Common China travel questions matched to crowd-vetted guides on visas, payments, eSIMs, hotels, food, trains, language, and itinerary planning.';
+
+const questionGroups = [
+  {
+    title: 'Before booking',
+    questions: [
+      {
+        q: 'Do I need a visa for China, or can I use the 240-hour transit policy?',
+        answer: 'Start here before buying flights. The answer changes by passport, route, and trip length.',
+        href: '/guides/china-visa-free-2026/',
+        guide: 'Visa-free entry guide',
+      },
+      {
+        q: 'What should I set up two weeks before flying?',
+        answer: 'Payments, eSIM, train reminders, passport copies, hotel addresses, and booking windows.',
+        href: '/guides/china-pre-departure-checklist/',
+        guide: 'Pre-departure checklist',
+      },
+      {
+        q: 'What is a realistic first-time China route?',
+        answer: 'Beijing, Xi\'an, and Shanghai by high-speed rail is the simplest one-week route.',
+        href: '/guides/7-day-china-itinerary/',
+        guide: '7-day itinerary',
+      },
+    ],
+  },
+  {
+    title: 'Phone, money, and apps',
+    questions: [
+      {
+        q: 'Can I use Alipay or WeChat Pay with a foreign card?',
+        answer: 'Yes, but set it up before arrival and understand where foreign cards still fail.',
+        href: '/guides/alipay-wechat-pay-foreign-cards/',
+        guide: 'Payment setup guide',
+      },
+      {
+        q: 'Will Google, WhatsApp, Instagram, and Gmail work in China?',
+        answer: 'A roaming eSIM is usually easier than relying on hotel Wi-Fi or a VPN alone.',
+        href: '/guides/internet-esim-vpn-blocked-apps/',
+        guide: 'Internet and eSIM guide',
+      },
+      {
+        q: 'Can I get around if I do not speak Chinese?',
+        answer: 'Camera translation, screenshots, WeChat translate, and a few phrases cover most situations.',
+        href: '/guides/translation-language-survival/',
+        guide: 'Language survival guide',
+      },
+    ],
+  },
+  {
+    title: 'On the ground',
+    questions: [
+      {
+        q: 'Should I take trains or domestic flights between Chinese cities?',
+        answer: 'For Beijing, Xi\'an, Shanghai, Hangzhou, and similar routes, high-speed rail is usually easier.',
+        href: '/guides/china-high-speed-trains/',
+        guide: 'High-speed train guide',
+      },
+      {
+        q: 'How do I use Didi, taxis, and metro QR codes?',
+        answer: 'Use Alipay for metro codes and Didi for typed destinations when taxi language is hard.',
+        href: '/guides/didi-metro-getting-around/',
+        guide: 'City transport guide',
+      },
+      {
+        q: 'Will hotels accept foreign passports?',
+        answer: 'Most mainstream city hotels do, but budget stays, homestays, and small towns still need care.',
+        href: '/guides/hotels-foreigners-china/',
+        guide: 'Hotel guide',
+      },
+    ],
+  },
+  {
+    title: 'Food and culture',
+    questions: [
+      {
+        q: 'How do I order food from QR menus or street stalls?',
+        answer: 'Screenshots, camera translation, pointing, and payment QR codes solve most meals.',
+        href: '/guides/food-ordering-dietary/',
+        guide: 'Food ordering guide',
+      },
+      {
+        q: 'Which street foods and night markets are actually worth it?',
+        answer: 'Look for hot food, local queues, and streets just outside the famous tourist zone.',
+        href: '/guides/street-food-night-markets/',
+        guide: 'Street food guide',
+      },
+      {
+        q: 'How do I enjoy tea houses without falling for the tea scam?',
+        answer: 'Know normal prices, pick real tea houses, and never follow a stranger to a venue they choose.',
+        href: '/guides/tea-houses-and-rituals/',
+        guide: 'Tea house guide',
+      },
+    ],
+  },
+];
+---
+
+<Base title="Traveler questions — matched to China guides" description={description}>
+  <section class="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
+    <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">
+      Traveler questions
+    </p>
+    <div class="mt-3 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+      <div>
+        <h1 class="font-display font-bold text-4xl sm:text-5xl leading-tight">
+          Common China questions, matched to the right guide.
+        </h1>
+      </div>
+      <p class="text-soft text-lg leading-relaxed">
+        CrowdListen turns long-form reviews, local social posts, forum threads, and review-site
+        signals into the questions travelers are actually trying to answer.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 sm:px-6">
+    <div class="rounded-lg border border-line bg-[#f4f0e8] p-4 sm:p-6">
+      <div class="grid gap-4 sm:grid-cols-3">
+        <div class="rounded-lg border border-line bg-white p-5">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">1. Listen</p>
+          <h2 class="font-display font-bold text-xl mt-2">Reviews and local conversations</h2>
+          <p class="text-soft text-sm mt-2 leading-relaxed">Trip reports, Reddit threads, Xiaohongshu posts, food discussions, and hotel reviews.</p>
+        </div>
+        <div class="rounded-lg border border-line bg-white p-5">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">2. Match</p>
+          <h2 class="font-display font-bold text-xl mt-2">Questions by intent</h2>
+          <p class="text-soft text-sm mt-2 leading-relaxed">Where to stay, what to eat, which apps work, which route makes sense, and what to avoid.</p>
+        </div>
+        <div class="rounded-lg border border-line bg-white p-5">
+          <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">3. Answer</p>
+          <h2 class="font-display font-bold text-xl mt-2">Readable planning guides</h2>
+          <p class="text-soft text-sm mt-2 leading-relaxed">Clear answers, sourced caveats, and practical next steps instead of a dashboard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
+    <div class="space-y-10">
+      {questionGroups.map((group) => (
+        <section aria-labelledby={group.title.toLowerCase().replaceAll(' ', '-') }>
+          <h2 id={group.title.toLowerCase().replaceAll(' ', '-')} class="font-display text-2xl font-bold">{group.title}</h2>
+          <div class="mt-4 grid gap-4 lg:grid-cols-3">
+            {group.questions.map((item) => (
+              <a href={item.href} class="group rounded-lg border border-line bg-card p-5 transition-colors hover:border-accent/50">
+                <p class="text-[11px] font-semibold uppercase tracking-wider text-accent">{item.guide}</p>
+                <h3 class="mt-2 font-display text-xl font-bold leading-snug group-hover:text-accent">{item.q}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-soft">{item.answer}</p>
+                <p class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-accent">
+                  Read answer
+                  <Icon name="arrow" class="h-3.5 w-3.5" />
+                </p>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 sm:px-6">
+    <div class="rounded-lg border border-line bg-card p-6 sm:p-8">
+      <div class="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+        <div>
+          <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">Ask a question</p>
+          <h2 class="mt-2 font-display text-3xl font-bold">What should we answer next?</h2>
+          <p class="mt-3 text-soft leading-relaxed">Send a real planning question. The best questions become new guides or updates to existing ones.</p>
+        </div>
+        <form action="mailto:hello@chinatravelmadeeasy.com" method="post" enctype="text/plain" class="grid gap-3">
+          <label class="grid gap-1 text-sm font-semibold text-soft">
+            Your question
+            <textarea name="question" rows="5" class="w-full rounded-md border border-line bg-paper p-3 font-body text-ink outline-none focus:border-accent" placeholder="Example: Can I use a US iPhone eSIM and still receive bank verification texts?"></textarea>
+          </label>
+          <label class="grid gap-1 text-sm font-semibold text-soft">
+            Email optional
+            <input name="email" type="email" class="w-full rounded-md border border-line bg-paper p-3 font-body text-ink outline-none focus:border-accent" placeholder="you@example.com" />
+          </label>
+          <button type="submit" class="justify-self-start rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent-dark">
+            Submit question
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>
