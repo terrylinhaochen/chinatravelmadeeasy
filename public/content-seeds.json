@@ -1,0 +1,301 @@
+{
+  "generated_at": "2026-06-21T00:00:00Z",
+  "source": "editorial_bootstrap",
+  "entity_id": null,
+  "loop_version": 1,
+  "quality_thresholds": {
+    "min_evidence_count": 3,
+    "min_source_types": 2,
+    "require_editor_review": true
+  },
+  "seeds": [
+    {
+      "id": "payment-foreign-card-failure",
+      "kind": "question",
+      "category": "Money & Payments",
+      "priority": 95,
+      "question": "Can I really use Alipay or WeChat Pay with a foreign card in China?",
+      "concern": "Travelers worry that payments will fail at restaurants, taxis, metro gates, and street stalls after they land.",
+      "answer_seed": "Yes, most visitors should set up both Alipay and WeChat Pay before flying, complete passport verification, and link a foreign Visa, Mastercard, Amex, JCB, Discover, or Diners card. The guide should still explain where foreign-card wallets can fail: person-to-person transfers, some merchant QR codes, verification issues, bank fraud blocks, and occasional cash-only backup moments.",
+      "audience": [
+        "first-time visitors",
+        "US travelers",
+        "UK travelers",
+        "Canadian travelers",
+        "Australian travelers"
+      ],
+      "related_guides": [
+        {
+          "title": "Alipay & WeChat Pay With a Foreign Card",
+          "href": "/guides/alipay-wechat-pay-foreign-cards/"
+        },
+        {
+          "title": "China Pre-Departure Checklist",
+          "href": "/guides/china-pre-departure-checklist/"
+        },
+        {
+          "title": "Didi, Metro QR Codes, Getting Around",
+          "href": "/guides/didi-metro-getting-around/"
+        }
+      ],
+      "recommended_places": [],
+      "evidence_summary": "Starter seed from current payment guide FAQs and pre-departure checklist. Replace with CrowdListen clusters from traveler reviews, payment setup failures, and app-store/social threads.",
+      "evidence_count": 0,
+      "source_mix": [
+        "current guide corpus"
+      ],
+      "search_phrases": [
+        "can foreigners use alipay in china",
+        "wechat pay foreign card china",
+        "do I need cash in china"
+      ],
+      "codex_brief": "Refresh the payment guide with the newest repeated failure modes, then add a short QA answer for each failure mode.",
+      "status": "ready_for_crowdlisten_evidence"
+    },
+    {
+      "id": "china-visa-free-route-confusion",
+      "kind": "question",
+      "category": "Visas & Entry",
+      "priority": 92,
+      "question": "Do I need a China visa, or can I use the 240-hour visa-free transit policy?",
+      "concern": "Travelers are confused by passport rules, A-China-B routing, Hong Kong/Macau/Taiwan treatment, and whether round trips qualify.",
+      "answer_seed": "The answer depends on passport, route, and trip length. A normal visa-free country visitor may get up to 30 days, while US, UK, Canadian, and other non-listed passports often use the 240-hour transit route if they arrive from one country or region and leave to a different one. The guide must date every rule and push readers to verify with official sources before booking.",
+      "audience": [
+        "US travelers",
+        "UK travelers",
+        "Canadian travelers",
+        "first-time visitors"
+      ],
+      "related_guides": [
+        {
+          "title": "China Visa-Free Entry & 240-Hour Transit",
+          "href": "/guides/china-visa-free-2026/"
+        },
+        {
+          "title": "A First-Timer's 7-Day China Itinerary",
+          "href": "/guides/7-day-china-itinerary/"
+        },
+        {
+          "title": "China Pre-Departure Checklist",
+          "href": "/guides/china-pre-departure-checklist/"
+        }
+      ],
+      "recommended_places": [],
+      "evidence_summary": "Starter seed from current visa and itinerary FAQs. Replace with CrowdListen clusters from route-planning questions and recent traveler reports.",
+      "evidence_count": 0,
+      "source_mix": [
+        "current guide corpus"
+      ],
+      "search_phrases": [
+        "china 240 hour visa free transit",
+        "does hong kong count for china transit visa",
+        "do us citizens need china visa"
+      ],
+      "codex_brief": "Generate route examples and failure cases, then add dated official-source caveats.",
+      "status": "ready_for_crowdlisten_evidence"
+    },
+    {
+      "id": "social-post-to-saved-map-place",
+      "kind": "recommendation",
+      "category": "Trip Planning",
+      "priority": 90,
+      "question": "How do I turn a China travel link from social media into a saved place on my map?",
+      "concern": "Travelers discover restaurants, neighborhoods, hotels, tea houses, and attractions in scattered posts, but saving those places into Apple Maps or a China map app is tedious.",
+      "answer_seed": "The simplest workflow is paste link, extract place, verify the place name and city, then save to Apple Maps by default. Keep Gaode/AMap as an alternate option for China-specific navigation. Sign-in should happen only when saving or syncing the user's saved-place collection.",
+      "audience": [
+        "itinerary planners",
+        "food travelers",
+        "social media users"
+      ],
+      "related_guides": [
+        {
+          "title": "Save Places",
+          "href": "/map-import/"
+        },
+        {
+          "title": "Street Food & Night Markets",
+          "href": "/guides/street-food-night-markets/"
+        },
+        {
+          "title": "Beyond the Landmarks",
+          "href": "/guides/neighborhoods-beyond-landmarks/"
+        }
+      ],
+      "recommended_places": [
+        {
+          "name": "People's Park tea houses",
+          "area": "Chengdu",
+          "maps_query": "People's Park Chengdu tea house"
+        },
+        {
+          "name": "Former French Concession side streets",
+          "area": "Shanghai",
+          "maps_query": "Former French Concession Shanghai"
+        }
+      ],
+      "evidence_summary": "Starter seed from the current map-import feature and authentic-neighborhood guides. Replace with CrowdListen link extraction and place clusters.",
+      "evidence_count": 0,
+      "source_mix": [
+        "current guide corpus",
+        "product workflow"
+      ],
+      "search_phrases": [
+        "save xiaohongshu place to apple maps",
+        "china travel social media itinerary map",
+        "save restaurants from travel posts"
+      ],
+      "codex_brief": "Use CrowdListen source extraction to identify place names, city, address hints, and recommendation reason, then emit a save-ready place card.",
+      "status": "ready_for_crowdlisten_evidence"
+    },
+    {
+      "id": "where-to-stay-foreign-passport",
+      "kind": "question",
+      "category": "Hospitality",
+      "priority": 84,
+      "question": "Will hotels in China accept my foreign passport?",
+      "concern": "Travelers hear that some hotels cannot host foreigners and worry about being rejected at check-in.",
+      "answer_seed": "Most mainstream city hotels accept foreign passports, but some budget hotels, homestays, small-town properties, and older listings may not. The best answer should recommend booking platforms that expose foreigner-friendly inventory, confirming the first hotel, carrying the Chinese address, and avoiding unverified budget listings after a late arrival.",
+      "audience": [
+        "first-time visitors",
+        "budget travelers",
+        "small-city travelers"
+      ],
+      "related_guides": [
+        {
+          "title": "Hotels That Accept Foreigners",
+          "href": "/guides/hotels-foreigners-china/"
+        },
+        {
+          "title": "China Pre-Departure Checklist",
+          "href": "/guides/china-pre-departure-checklist/"
+        },
+        {
+          "title": "Translation & Language Survival",
+          "href": "/guides/translation-language-survival/"
+        }
+      ],
+      "recommended_places": [],
+      "evidence_summary": "Starter seed from current hotel guide FAQs. Replace with CrowdListen hotel-review and booking-thread clusters.",
+      "evidence_count": 0,
+      "source_mix": [
+        "current guide corpus"
+      ],
+      "search_phrases": [
+        "china hotels accept foreigners passport",
+        "can foreigners stay in any hotel in china",
+        "china hotel police registration tourist"
+      ],
+      "codex_brief": "Build a city-by-city hotel booking checklist and collect examples of rejection/acceptance language from reviews.",
+      "status": "ready_for_crowdlisten_evidence"
+    },
+    {
+      "id": "food-ordering-without-chinese",
+      "kind": "question",
+      "category": "Eating",
+      "priority": 82,
+      "question": "How do I order food in China if I cannot read Chinese?",
+      "concern": "Travelers are blocked by QR menus, untranslated dish names, spice levels, allergies, and payment flows.",
+      "answer_seed": "A practical guide should teach camera translation, screenshot translation for QR menus, pointing at visible dishes, common dietary lines in Chinese, and how to pay from the same phone. It should also route food discovery into saved places so recommendations become a trip plan.",
+      "audience": [
+        "food travelers",
+        "allergy-sensitive travelers",
+        "non-Chinese speakers"
+      ],
+      "related_guides": [
+        {
+          "title": "Food: QR Menus and Dietary Needs",
+          "href": "/guides/food-ordering-dietary/"
+        },
+        {
+          "title": "Street Food & Night Markets",
+          "href": "/guides/street-food-night-markets/"
+        },
+        {
+          "title": "Translation & Language Survival",
+          "href": "/guides/translation-language-survival/"
+        }
+      ],
+      "recommended_places": [
+        {
+          "name": "Xi'an Muslim Quarter side streets",
+          "area": "Xi'an",
+          "maps_query": "Xi'an Muslim Quarter food side streets"
+        },
+        {
+          "name": "Chengdu People's Park tea houses",
+          "area": "Chengdu",
+          "maps_query": "Chengdu People's Park tea house"
+        }
+      ],
+      "evidence_summary": "Starter seed from current food, street-food, and translation guides. Replace with CrowdListen food-review and social-post clusters.",
+      "evidence_count": 0,
+      "source_mix": [
+        "current guide corpus"
+      ],
+      "search_phrases": [
+        "china qr menu translate",
+        "order food in china without chinese",
+        "china food allergy card chinese"
+      ],
+      "codex_brief": "Create answer blocks by situation: QR menu, street stall, allergy, spice level, tea house, delivery app.",
+      "status": "ready_for_crowdlisten_evidence"
+    },
+    {
+      "id": "authentic-neighborhoods-over-landmarks",
+      "kind": "recommendation",
+      "category": "Places",
+      "priority": 78,
+      "question": "Where can I see everyday China beyond the major landmarks?",
+      "concern": "Travelers want authentic neighborhoods, food streets, tea houses, parks, and local routines, but do not know which recommendations are real versus tourist traps.",
+      "answer_seed": "The guide should organize recommendations by place type: Beijing hutongs that still have daily life, Shanghai longtang and former French Concession side streets, Chengdu tea houses and parks, wet markets, and morning park culture. It should include etiquette: buy something, ask before photographing people, and avoid treating residential lanes as attractions.",
+      "audience": [
+        "culture travelers",
+        "repeat visitors",
+        "photography travelers"
+      ],
+      "related_guides": [
+        {
+          "title": "Beyond the Landmarks",
+          "href": "/guides/neighborhoods-beyond-landmarks/"
+        },
+        {
+          "title": "Tea in China for Visitors",
+          "href": "/guides/tea-houses-and-rituals/"
+        },
+        {
+          "title": "Street Food & Night Markets",
+          "href": "/guides/street-food-night-markets/"
+        }
+      ],
+      "recommended_places": [
+        {
+          "name": "Wudaoying and Guozijian lanes",
+          "area": "Beijing",
+          "maps_query": "Wudaoying Hutong Beijing"
+        },
+        {
+          "name": "Anfu Road and Wukang Road side streets",
+          "area": "Shanghai",
+          "maps_query": "Anfu Road Shanghai"
+        },
+        {
+          "name": "People's Park",
+          "area": "Chengdu",
+          "maps_query": "People's Park Chengdu"
+        }
+      ],
+      "evidence_summary": "Starter seed from current authentic-China guides. Replace with CrowdListen clusters from local social posts, travel threads, and review-site recommendations.",
+      "evidence_count": 0,
+      "source_mix": [
+        "current guide corpus"
+      ],
+      "search_phrases": [
+        "authentic neighborhoods china travel",
+        "beijing hutongs not touristy",
+        "chengdu tea house people's park"
+      ],
+      "codex_brief": "Use CrowdListen to cluster place recommendations by city, then keep only places with repeated evidence and clear traveler fit.",
+      "status": "ready_for_crowdlisten_evidence"
+    }
+  ]
+}

@@ -9,8 +9,8 @@ const GUIDE_IMAGES: Record<string, GuideImage> = {
     alt: 'The Great Wall near Beijing, a classic first-trip stop in China',
   },
   'alipay-wechat-pay-foreign-cards': {
-    src: '/images/china-street-food.jpg',
-    alt: 'A Chinese street food stall where mobile payment is commonly used',
+    src: '/images/china-mobile-payment-qr.jpg',
+    alt: 'QR codes for mobile payment in China',
   },
   'china-high-speed-trains': {
     src: '/images/china-high-speed-train.jpg',
@@ -21,20 +21,20 @@ const GUIDE_IMAGES: Record<string, GuideImage> = {
     alt: 'China immigration inspection sign at an airport',
   },
   'china-visa-free-2026': {
-    src: '/images/china-immigration.jpg',
-    alt: 'China immigration inspection sign for entry and visa planning',
+    src: '/images/chinese-passport.jpg',
+    alt: 'Chinese passport cover representing entry and visa planning',
   },
   'didi-metro-getting-around': {
-    src: '/images/china-high-speed-train.jpg',
-    alt: 'Rail platform in China with a high-speed train',
+    src: '/images/shanghai-metro-entrance.jpg',
+    alt: 'Shanghai metro entrance for city transport planning',
   },
   'festivals-and-local-experiences': {
     src: '/images/chinese-lanterns.jpg',
     alt: 'Red Chinese lanterns glowing at night',
   },
   'food-ordering-dietary': {
-    src: '/images/china-street-food.jpg',
-    alt: 'Chinese street food stall with signs and visible dishes',
+    src: '/images/chinese-restaurant-interior.jpg',
+    alt: 'Chinese restaurant interior for food ordering and dietary planning',
   },
   'hotels-foreigners-china': {
     src: '/images/china-hotel-lobby.jpg',

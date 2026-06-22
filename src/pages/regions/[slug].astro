@@ -1,0 +1,136 @@
+---
+import Base from '../../layouts/Base.astro';
+import GuideCard from '../../components/GuideCard.astro';
+import Icon from '../../components/Icon.astro';
+import { getCollection } from 'astro:content';
+import { destinations } from '../../data/destinations';
+
+export function getStaticPaths() {
+  return destinations.map((destination) => ({
+    params: { slug: destination.slug },
+    props: { destination },
+  }));
+}
+
+const { destination } = Astro.props;
+const guides = await getCollection('guides');
+const guidesById = Object.fromEntries(guides.map((guide) => [guide.id, guide]));
+const matchedGuides = destination.guideIds
+  .map((id) => guidesById[id])
+  .filter(Boolean)
+  .slice(0, 6);
+const faqItems = [
+  {
+    q: `What is ${destination.name} best for on a China trip?`,
+    a: `${destination.name} is best for ${destination.summary.toLowerCase()} ${destination.why}`,
+  },
+  {
+    q: `Which guides should I read before visiting ${destination.name}?`,
+    a: matchedGuides.length
+      ? `Start with ${matchedGuides
+          .slice(0, 3)
+          .map((guide) => guide.data.title)
+          .join(', ')}. These guides cover the practical setup and decisions most relevant to this region.`
+      : `Start with the pre-departure, payment, internet, transport, and hotel guides before planning ${destination.name}.`,
+  },
+  {
+    q: `Can I save ${destination.name} recommendations from TikTok or Instagram?`,
+    a: `Yes. Use Save Places to paste a TikTok or Instagram link, extract the likely place, and keep it in a trip collection with Apple Maps as the default map option.`,
+  },
+];
+
+const description = `${destination.name} China travel planning: ${destination.summary}. Find the best practical guides for this region.`;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${destination.name} travel guides`,
+    url: `https://chinatravelmadeeasy.com/regions/${destination.slug}/`,
+    description,
+    isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    name: `${destination.name} travel questions`,
+    description,
+    inLanguage: 'en',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  },
+];
+---
+
+<Base title={`${destination.name} travel guides`} description={description} image={destination.image.src} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <a href="/regions/" class="inline-flex items-center gap-2 text-sm font-semibold text-soft hover:text-accent">
+      <Icon name="arrow" class="h-3.5 w-3.5 rotate-180" />
+      All destinations
+    </a>
+    <div class="mt-6 grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
+      <div>
+        <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">{destination.type}</p>
+        <h1 class="mt-2 font-display text-5xl font-bold leading-none sm:text-6xl">{destination.name}</h1>
+      </div>
+      <div>
+        <p class="text-xl leading-relaxed text-soft">{destination.summary}</p>
+        <p class="mt-4 leading-relaxed text-soft">{destination.why}</p>
+      </div>
+    </div>
+
+    <figure class="mt-8 overflow-hidden rounded-lg border border-line bg-card">
+      <img src={destination.image.src} alt={destination.image.alt} class="h-[280px] w-full object-cover sm:h-[420px]" fetchpriority="high" />
+      <figcaption class="border-t border-line px-4 py-2 text-xs text-faint">
+        Cover source: <a href={destination.image.source} class="hover:text-accent" rel="noopener">{destination.image.title}</a>
+      </figcaption>
+    </figure>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={`https://maps.apple.com/?q=${encodeURIComponent(destination.mapQuery)}`} class="rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent-dark">
+        Open in Apple Maps
+      </a>
+      <a href="/map-import/" class="rounded-md border border-line bg-paper px-4 py-2.5 text-sm font-semibold text-ink hover:border-accent/50 hover:text-accent">
+        Save social links
+      </a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="rounded-lg border border-line bg-card p-5 sm:p-8">
+      <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+        <div>
+          <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Guide matches</p>
+          <h2 class="mt-2 font-display text-3xl font-bold">Start with these guides</h2>
+        </div>
+        <p class="leading-relaxed text-soft">
+          These are the current China Travel Made Easy guides most relevant to planning {destination.name}.
+          CrowdListen seeds can add more region-specific answers as repeated questions and recommendations show up.
+        </p>
+      </div>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        {matchedGuides.map((guide) => <GuideCard guide={guide} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="rounded-lg border border-line bg-[#f4f0e8] p-5 sm:p-8">
+      <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Destination QA</p>
+      <h2 class="mt-2 font-display text-3xl font-bold">Questions for planning {destination.name}</h2>
+      <dl class="mt-5 divide-y divide-line rounded-lg border border-line bg-card">
+        {faqItems.map((item) => (
+          <div class="grid gap-2 p-4 sm:grid-cols-[0.85fr_1.15fr] sm:p-5">
+            <dt class="font-display text-xl font-bold">{item.q}</dt>
+            <dd class="text-sm leading-relaxed text-soft">{item.a}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+</Base>

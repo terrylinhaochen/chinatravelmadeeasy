@@ -1,0 +1,206 @@
+{
+  "hong-kong": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Hong_Kong_Skyline_viewed_from_Victoria_Peak.jpg/3840px-Hong_Kong_Skyline_viewed_from_Victoria_Peak.jpg",
+    "alt": "Victoria Harbour skyline in Hong Kong",
+    "source": "https://en.wikipedia.org/wiki/Victoria_Harbour",
+    "title": "Victoria Harbour"
+  },
+  "taiwan": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Taipei_101_from_Xiangshan_20250905.jpg/1920px-Taipei_101_from_Xiangshan_20250905.jpg",
+    "alt": "Taipei 101 skyline in Taiwan",
+    "source": "https://en.wikipedia.org/wiki/Taipei_101",
+    "title": "Taipei 101"
+  },
+  "shanghai": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Huangpu_Park_20124-Shanghai_%2832208802494%29.jpg",
+    "alt": "Shanghai skyline",
+    "source": "https://en.wikipedia.org/wiki/Shanghai",
+    "title": "Shanghai"
+  },
+  "beijing": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/The_Forbidden_City_-_View_from_Coal_Hill.jpg/3840px-The_Forbidden_City_-_View_from_Coal_Hill.jpg",
+    "alt": "Forbidden City palace roofs in Beijing",
+    "source": "https://en.wikipedia.org/wiki/Forbidden_City",
+    "title": "Forbidden City"
+  },
+  "tianjin": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/8/81/Tianjin_Eye_and_Tianjin.jpg",
+    "alt": "Tianjin riverside architecture",
+    "source": "https://en.wikipedia.org/wiki/Tianjin",
+    "title": "Tianjin"
+  },
+  "chongqing": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/6/67/Chongqing_Nightscape.jpg",
+    "alt": "Chongqing mountain city skyline",
+    "source": "https://en.wikipedia.org/wiki/Chongqing",
+    "title": "Chongqing"
+  },
+  "anhui": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Huangshan_pic_4.jpg/3840px-Huangshan_pic_4.jpg",
+    "alt": "Huangshan mountains in Anhui",
+    "source": "https://en.wikipedia.org/wiki/Huangshan",
+    "title": "Huangshan"
+  },
+  "fujian": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Three_round%2C_one_oval%2C_one_square_%2816831811084%29.jpg/3840px-Three_round%2C_one_oval%2C_one_square_%2816831811084%29.jpg",
+    "alt": "Fujian tulou round houses",
+    "source": "https://en.wikipedia.org/wiki/Fujian_tulou",
+    "title": "Fujian tulou"
+  },
+  "gansu": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Mogao_Caves_%2854376969262%29.jpg",
+    "alt": "Mogao Caves in Dunhuang, Gansu",
+    "source": "https://en.wikipedia.org/wiki/Mogao_Caves",
+    "title": "Mogao Caves"
+  },
+  "guangdong": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/1/16/Canton_Tower_20241027_%28cropped%29.jpg",
+    "alt": "Canton Tower in Guangzhou, Guangdong",
+    "source": "https://en.wikipedia.org/wiki/Canton_Tower",
+    "title": "Canton Tower"
+  },
+  "guizhou": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/3/30/HuangguoshuFall.jpg",
+    "alt": "Huangguoshu Waterfall in Guizhou",
+    "source": "https://en.wikipedia.org/wiki/Huangguoshu_Waterfall",
+    "title": "Huangguoshu Waterfall"
+  },
+  "hainan": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/4/44/Yalong_Bay_01.jpg",
+    "alt": "Yalong Bay beach in Hainan",
+    "source": "https://en.wikipedia.org/wiki/Yalong_Bay",
+    "title": "Yalong Bay"
+  },
+  "hebei": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Old_Dragon%27s_Head_of_Great_Wall.jpg",
+    "alt": "Shanhai Pass Great Wall in Hebei",
+    "source": "https://en.wikipedia.org/wiki/Shanhai_Pass",
+    "title": "Shanhai Pass"
+  },
+  "heilongjiang": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/6/63/Harbin_Ice_Festival.jpg",
+    "alt": "Harbin ice festival in Heilongjiang",
+    "source": "https://en.wikipedia.org/wiki/Harbin_International_Ice_and_Snow_Sculpture_Festival",
+    "title": "Harbin International Ice and Snow Sculpture Festival"
+  },
+  "henan": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/b/b4/27427-Luoyang_%2849067744628%29.jpg",
+    "alt": "Longmen Grottoes in Henan",
+    "source": "https://en.wikipedia.org/wiki/Longmen_Grottoes",
+    "title": "Longmen Grottoes"
+  },
+  "hubei": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/7/7f/CN_-_Hubei_-_Wuhan_-_Kranichpagode.jpg",
+    "alt": "Yellow Crane Tower in Wuhan, Hubei",
+    "source": "https://en.wikipedia.org/wiki/Yellow_Crane_Tower",
+    "title": "Yellow Crane Tower"
+  },
+  "hunan": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg/3840px-1_tianzishan_wulingyuan_zhangjiajie_2012.jpg",
+    "alt": "Zhangjiajie sandstone pillars in Hunan",
+    "source": "https://en.wikipedia.org/wiki/Zhangjiajie_National_Forest_Park",
+    "title": "Zhangjiajie National Forest Park"
+  },
+  "jiangsu": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/c/ce/20240203_Lingering_Garden_09.jpg",
+    "alt": "Suzhou classical garden in Jiangsu",
+    "source": "https://en.wikipedia.org/wiki/Classical_Gardens_of_Suzhou",
+    "title": "Classical Gardens of Suzhou"
+  },
+  "jiangxi": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/e/e1/%E6%99%AF%E5%BE%B7%E9%95%87%E5%B8%82%E6%98%8C%E6%B1%9F%E4%B8%9C%E5%B2%B8.JPG",
+    "alt": "Jingdezhen porcelain city in Jiangxi",
+    "source": "https://en.wikipedia.org/wiki/Jingdezhen",
+    "title": "Jingdezhen"
+  },
+  "jilin": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Laika_ac_Mt._Paekdu_%287998657081%29.jpg/3840px-Laika_ac_Mt._Paekdu_%287998657081%29.jpg",
+    "alt": "Changbai Mountain volcanic lake in Jilin",
+    "source": "https://en.wikipedia.org/wiki/Mount_Paektu",
+    "title": "Mount Paektu"
+  },
+  "liaoning": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Xigang%2C_Dalian%2C_Liaoning%2C_China_-_panoramio_%2818%29.jpg/3840px-Xigang%2C_Dalian%2C_Liaoning%2C_China_-_panoramio_%2818%29.jpg",
+    "alt": "Dalian coast in Liaoning",
+    "source": "https://en.wikipedia.org/wiki/Dalian",
+    "title": "Dalian"
+  },
+  "qinghai": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Qinghai_lake.jpg",
+    "alt": "Qinghai Lake plateau scenery",
+    "source": "https://en.wikipedia.org/wiki/Qinghai_Lake",
+    "title": "Qinghai Lake"
+  },
+  "shaanxi": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/8/88/51714-Terracota-Army.jpg",
+    "alt": "Terracotta Army in Shaanxi",
+    "source": "https://en.wikipedia.org/wiki/Terracotta_Army",
+    "title": "Terracotta Army"
+  },
+  "shandong": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/1/18/Qingdao_Harbour_51341-Qingdao_%2849055637186%29.jpg",
+    "alt": "Qingdao coast in Shandong",
+    "source": "https://en.wikipedia.org/wiki/Qingdao",
+    "title": "Qingdao"
+  },
+  "shanxi": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/7/74/Pingyao-oldtown.jpg",
+    "alt": "Pingyao old city in Shanxi",
+    "source": "https://en.wikipedia.org/wiki/Pingyao",
+    "title": "Pingyao"
+  },
+  "sichuan": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Chengdu_Research_Base_Eingang.jpg",
+    "alt": "Giant panda at Chengdu Research Base in Sichuan",
+    "source": "https://en.wikipedia.org/wiki/Chengdu_Research_Base_of_Giant_Panda_Breeding",
+    "title": "Chengdu Research Base of Giant Panda Breeding"
+  },
+  "yunnan": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Lijiang_-_panoramio_%286%29.jpg/3840px-Lijiang_-_panoramio_%286%29.jpg",
+    "alt": "Lijiang old town in Yunnan",
+    "source": "https://en.wikipedia.org/wiki/Old_Town_of_Lijiang",
+    "title": "Old Town of Lijiang"
+  },
+  "zhejiang": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/West_Lake%2C_Hangzhou_2025.jpg/3840px-West_Lake%2C_Hangzhou_2025.jpg",
+    "alt": "West Lake in Hangzhou, Zhejiang",
+    "source": "https://en.wikipedia.org/wiki/West_Lake",
+    "title": "West Lake"
+  },
+  "guangxi": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/1_guilin_yangshuo_2017.jpg/3840px-1_guilin_yangshuo_2017.jpg",
+    "alt": "Yangshuo karst landscape in Guangxi",
+    "source": "https://en.wikipedia.org/wiki/Yangshuo_County",
+    "title": "Yangshuo County"
+  },
+  "inner-mongolia": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/6/60/%E5%91%BC%E4%BC%A6%E8%B4%9D%E5%B0%94_%E5%93%88%E5%85%8B_-_panoramio.jpg",
+    "alt": "Hulunbuir grassland in Inner Mongolia",
+    "source": "https://en.wikipedia.org/wiki/Hulunbuir",
+    "title": "Hulunbuir"
+  },
+  "ningxia": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Shapotou.jpg",
+    "alt": "Shapotou desert landscape in Ningxia",
+    "source": "https://en.wikipedia.org/wiki/Shapotou%2C_Zhongwei",
+    "title": "Shapotou, Zhongwei"
+  },
+  "tibet": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Potala_Palace_HQ.jpg",
+    "alt": "Potala Palace in Tibet",
+    "source": "https://en.wikipedia.org/wiki/Potala_Palace",
+    "title": "Potala Palace"
+  },
+  "xinjiang": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/H%C3%ABytgah_Mosque%2C_Kashi_%2820230923100109%29.jpg/3840px-H%C3%ABytgah_Mosque%2C_Kashi_%2820230923100109%29.jpg",
+    "alt": "Kashgar old city in Xinjiang",
+    "source": "https://en.wikipedia.org/wiki/Kashgar",
+    "title": "Kashgar"
+  },
+  "macau": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg/3840px-%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg",
+    "alt": "Ruins of Saint Paul's in Macau",
+    "source": "https://en.wikipedia.org/wiki/Ruins_of_Saint_Paul's",
+    "title": "Ruins of Saint Paul's"
+  }
+}

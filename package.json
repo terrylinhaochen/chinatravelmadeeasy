@@ -4,12 +4,13 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "seed:content": "python3 pipeline/content_seeds_from_crowdlisten.py"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.3.0",

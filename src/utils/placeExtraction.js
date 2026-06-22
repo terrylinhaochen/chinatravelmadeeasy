@@ -56,7 +56,13 @@ export function extractTripPlaces(source) {
     if (!place.name || place.name.length < 2 || place.name.length > 42) return;
     if (/^(day|start|in|for|the|near|then|lunch|sunset|stay|china|shanghai|beijing|chengdu|xi'an)$/i.test(place.name)) return;
     const key = String(place.name).toLowerCase() + '|' + String(place.city || '').toLowerCase();
-    if (!results.some((item) => String(item.name).toLowerCase() + '|' + String(item.city || '').toLowerCase() === key)) results.push(place);
+    const candidateAliases = aliasesFor(place);
+    const duplicate = results.some((item) => {
+      if (String(item.name).toLowerCase() + '|' + String(item.city || '').toLowerCase() === key) return true;
+      if (item.city && place.city && String(item.city).toLowerCase() !== String(place.city).toLowerCase()) return false;
+      return aliasesFor(item).some((alias) => candidateAliases.includes(alias));
+    });
+    if (!duplicate) results.push(place);
   }
 }
 
@@ -74,7 +80,6 @@ function textFromUrl(url) {
   } catch { return url; }
 }
 function detectPlatform(url) {
-  if (/xiaohongshu|xhslink/i.test(url)) return 'Xiaohongshu';
   if (/douyin|tiktok/i.test(url)) return 'TikTok/Douyin';
   if (/reddit/i.test(url)) return 'Reddit';
   if (/instagram/i.test(url)) return 'Instagram';
@@ -107,6 +112,9 @@ function inferCategory(text) {
 function evidenceLine(text, place) {
   const aliases = [place.name, ...place.aliases].map((alias) => alias.toLowerCase());
   return cleanNote(text.split(/\n|。|；|;|•/).find((line) => !/^https?:/i.test(line.trim()) && aliases.some((alias) => line.toLowerCase().includes(alias))) || 'Found in the shared link metadata.');
+}
+function aliasesFor(place) {
+  return [place.name, ...(place.aliases || [])].map((alias) => String(alias || '').toLowerCase()).filter(Boolean);
 }
 function cleanNote(line) { return compact(String(line || '').replace(/^[-\s]+/, '')).slice(0, 150); }
 function compact(value) { return String(value || '').replace(/%20/g, ' ').replace(/[+_]+/g, ' ').replace(/\s+/g, ' ').trim(); }

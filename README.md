@@ -20,7 +20,7 @@ npm run build    # outputs to dist/
 npm run preview
 ```
 
-Requires Node 20+.
+Requires Node 22+.
 
 ## Adding or updating a guide
 
@@ -37,7 +37,22 @@ Requires Node 20+.
 - Per-page titles, meta descriptions, canonical URLs, OG tags
 - Article + BreadcrumbList + FAQPage JSON-LD on guide pages
 - `@astrojs/sitemap` (`/sitemap-index.xml`), `robots.txt`, `llms.txt`
+- `/questions/`, `/content-seeds/`, and `/content-seeds.json` for QA-first AI-search retrieval
 - CNAME for the custom domain lives in `public/CNAME`
+
+## CrowdListen content loop
+
+CrowdListen is the evidence layer; Codex is the editorial layer. The seed loop turns
+clustered traveler concerns and recommendations into guide briefs:
+
+```sh
+CONTENT_SEEDS_ENTITY_ID=<crowdlisten-entity-id> npm run seed:content
+npm run build
+```
+
+The script writes `src/data/contentSeeds.json`, `public/content-seeds.json`, and
+`content-seed-queue.md`. See `docs/crowdlisten-content-loop.md` for the workflow
+and quality rules.
 
 ## Deploy
 

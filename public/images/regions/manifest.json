@@ -1,0 +1,34 @@
+{
+  "hong-kong": {
+    "src": "/images/regions/hong-kong.jpg",
+    "alt": "Hong Kong China Towboat-in-Victoria-Harbour-01 in or near Hong Kong",
+    "source": "https://commons.wikimedia.org/wiki/File:Hong_Kong_China_Towboat-in-Victoria-Harbour-01.jpg",
+    "title": "Hong Kong China Towboat-in-Victoria-Harbour-01",
+    "artist": "CEphoto, Uwe Aranas",
+    "license": "CC BY-SA 3.0"
+  },
+  "taiwan": {
+    "src": "/images/regions/taiwan.jpg",
+    "alt": "Snapshot of Taipei, Taiwan Skyline 2016 in or near Taiwan",
+    "source": "https://commons.wikimedia.org/wiki/File:Snapshot_of_Taipei,_Taiwan_Skyline_2016.jpg",
+    "title": "Snapshot of Taipei, Taiwan Skyline 2016",
+    "artist": "bryan...",
+    "license": "CC BY-SA 2.0"
+  },
+  "chongqing": {
+    "src": "/images/regions/chongqing.jpg",
+    "alt": "Hongya Cave Centre at night - panoramio in or near Chongqing",
+    "source": "https://commons.wikimedia.org/wiki/File:Hongya_Cave_Centre_at_night_-_panoramio.jpg",
+    "title": "Hongya Cave Centre at night - panoramio",
+    "artist": "Raki_Man",
+    "license": "CC BY 3.0"
+  },
+  "gansu": {
+    "src": "/images/regions/gansu.jpg",
+    "alt": "Magao Caves, Dunhuang, Gansu, 2010 - panoramio in or near Gansu",
+    "source": "https://commons.wikimedia.org/wiki/File:Magao_Caves,_Dunhuang,_Gansu,_2010_-_panoramio.jpg",
+    "title": "Magao Caves, Dunhuang, Gansu, 2010 - panoramio",
+    "artist": "Randy Rambo",
+    "license": "CC BY 3.0"
+  }
+}

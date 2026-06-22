@@ -28,8 +28,9 @@ const updatedHuman = updated.toLocaleDateString('en-US', {
   day: 'numeric',
 });
 
-const pageUrl = `https://chinatravelmadeeasy.com/guides//`;
 const guideImage = getGuideImage(guide.id);
+const pageUrl = new URL(`/guides/${guide.id}/`, Astro.site).toString();
+const guideImageUrl = new URL(guideImage.src, Astro.site).toString();
 
 const jsonLd: object[] = [
   {
@@ -39,7 +40,7 @@ const jsonLd: object[] = [
     description,
     dateModified: updatedISO,
     datePublished: updatedISO,
-    image: `https://chinatravelmadeeasy.com`,
+    image: guideImageUrl,
     inLanguage: 'en',
     mainEntityOfPage: pageUrl,
     author: {
@@ -77,7 +78,7 @@ if (faqs.length > 0) {
 }
 ---
 
-<Base title={title} description={description} ogType="article" jsonLd={jsonLd}>
+<Base title={title} description={description} ogType="article" image={guideImage.src} jsonLd={jsonLd}>
   <article class="mx-auto max-w-3xl px-4 sm:px-6 py-10 sm:py-14">
     <nav class="text-sm text-faint" aria-label="Breadcrumb">
       <a href="/" class="hover:text-accent">Home</a>

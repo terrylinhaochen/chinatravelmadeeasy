@@ -1,9 +1,9 @@
 ---
-import Base from '../layouts/Base.astro';
-import LocalizedQuestionsPage from '../components/LocalizedQuestionsPage.astro';
-import { questionAlternates, questionLocales } from '../data/localizedQuestions';
+import Base from '../../layouts/Base.astro';
+import LocalizedQuestionsPage from '../../components/LocalizedQuestionsPage.astro';
+import { questionAlternates, questionLocales } from '../../data/localizedQuestions';
 
-const page = questionLocales.en;
+const page = questionLocales.ja;
 const faqEntities = page.groups.flatMap((group) =>
   group.questions.map((item) => ({
     '@type': 'Question',
@@ -22,7 +22,7 @@ const jsonLd = [
     name: page.title,
     description: page.description,
     inLanguage: page.lang,
-    about: ['China travel planning', 'China visas', 'China payments', 'China transport'],
+    about: ['中国旅行準備', '中国ビザ', '中国決済', '中国交通'],
   },
   {
     '@context': 'https://schema.org',
