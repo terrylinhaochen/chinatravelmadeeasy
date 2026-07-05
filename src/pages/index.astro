@@ -160,7 +160,7 @@ const jsonLd = [
         <p class="ds-eyebrow">
           Save places
         </p>
-        <h1 class="mt-4 text-5xl leading-[0.98] sm:text-6xl lg:text-7xl">
+        <h1 class="mt-4 text-4xl leading-[1.02] sm:text-6xl lg:text-7xl">
           Local treasures, saved to your map.
         </h1>
         <p class="mt-5 text-lg leading-relaxed text-soft">
@@ -294,16 +294,16 @@ const jsonLd = [
         lists every province-level planning region and links each one to guide recommendations.
       </p>
     </div>
-    <div class="mt-8 grid grid-cols-3 gap-4">
+    <div class="home-destination-grid mt-8">
       {homepageDestinations.map((destination) => (
-        <a href={`/regions/${destination.slug}/`} class="ds-card-link group overflow-hidden">
-          <div class="aspect-[4/3] overflow-hidden bg-surface-strong">
+        <a href={`/regions/${destination.slug}/`} class="home-destination-card ds-card-link group overflow-hidden">
+          <div class="home-destination-thumb overflow-hidden bg-surface-strong">
             <img src={destination.image.src} alt={destination.image.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
           </div>
-          <div class="p-5">
+          <div class="home-destination-copy p-5">
             <p class="ds-tag">{destination.type}</p>
             <h3 class="mt-2 text-2xl font-bold group-hover:text-accent">{destination.name}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-soft">{destination.summary}</p>
+            <p class="destination-summary mt-2 text-sm leading-relaxed text-soft">{destination.summary}</p>
           </div>
         </a>
       ))}
@@ -318,9 +318,9 @@ const jsonLd = [
 
   <section class="mx-auto max-w-6xl px-4 pb-12 sm:px-6 sm:pb-16">
     <PinDensityPanel
-      eyebrow="Pin density"
-      title="See where traveler pins keep clustering."
-      description="A compact activity map for province-level saved-place signal. Guides stay location-based; answers stay question-based."
+      eyebrow="Explored map"
+      title="Your saved-place atlas"
+      description="Darker pixels show where pins and traveler lists cluster. Built to feel like a shareable map of what you have explored."
       class="bg-card"
     />
   </section>
@@ -373,6 +373,59 @@ const jsonLd = [
     </div>
   </section>
 </Base>
+
+<style>
+  .home-destination-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .home-destination-thumb {
+    aspect-ratio: 4 / 3;
+  }
+
+  @media (min-width: 640px) {
+    .home-destination-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .home-destination-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 639px) {
+    .home-destination-card {
+      display: grid;
+      grid-template-columns: minmax(7.5rem, 34%) minmax(0, 1fr);
+      min-height: 9rem;
+    }
+
+    .home-destination-thumb {
+      aspect-ratio: auto;
+      height: 100%;
+      min-height: 9rem;
+    }
+
+    .home-destination-copy {
+      padding: 1rem;
+    }
+
+    .home-destination-card h3 {
+      font-size: 1.35rem;
+      line-height: 1.08;
+    }
+
+    .destination-summary {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+  }
+</style>
 
 <script>
   import { amapUrl, appleMapsUrl, displayName, extractTripPlaces, normalizeSource } from '../utils/placeExtraction.js';
