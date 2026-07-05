@@ -13,6 +13,20 @@ const jsonLd = [
     description,
     isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Destination regions',
+    description,
+    numberOfItems: destinations.length,
+    itemListElement: destinations.map((destination, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: destination.name,
+      description: destination.summary,
+      url: `https://chinatravelmadeeasy.com/regions/${destination.slug}/`,
+    })),
+  },
 ];
 ---
 
@@ -31,7 +45,7 @@ const jsonLd = [
     <div class="ds-map-panel mt-8">
       <div class="ds-map-legend">
         <p class="ds-eyebrow">Map view</p>
-        <h2 class="mt-2 text-3xl leading-tight">Jump into the region.</h2>
+        <h2 class="mt-2 text-3xl leading-tight">Where should you start?</h2>
         <p class="mt-3 text-sm leading-relaxed text-soft">
           Tap a pin for starter places and related guides.
         </p>

@@ -29,6 +29,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(image, Astro.site);
 const siteName = 'China Travel Made Easy';
 const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+const siteUrl = new URL('/', Astro.site).toString();
+const localeByLang: Record<string, string> = {
+  en: 'en_US',
+  ko: 'ko_KR',
+  ja: 'ja_JP',
+};
+const ogLocale = localeByLang[lang] ?? 'en_US';
+const alternateLocales = Object.values(localeByLang).filter((locale) => locale !== ogLocale);
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}#organization`,
+  name: siteName,
+  url: siteUrl,
+  logo: new URL('/favicon.svg', Astro.site).toString(),
+  sameAs: ['https://chinatravelmadeeasy.com/'],
+};
 const gaMeasurementIds = (
   import.meta.env.PUBLIC_GA_MEASUREMENT_IDS ||
   import.meta.env.PUBLIC_GA_MEASUREMENT_ID ||
@@ -59,6 +76,8 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     <meta name="generator" content={Astro.generator} />
 
     <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content={ogLocale} />
+    {alternateLocales.map((locale) => <meta property="og:locale:alternate" content={locale} />)}
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -71,6 +90,7 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     <meta name="twitter:image" content={imageUrl} />
     <meta name="twitter:image:alt" content={imageAlt} />
 
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
     {jsonLd.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}

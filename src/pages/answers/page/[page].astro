@@ -51,6 +51,21 @@ const jsonLd = [
     inLanguage: page.lang,
     mainEntity: faqEntities,
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${page.title} page ${currentPage}`,
+    description: page.description,
+    inLanguage: page.lang,
+    numberOfItems: items.length,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: (currentPage - 1) * perPage + index + 1,
+      name: item.q,
+      description: item.answer,
+      url: new URL(item.href, Astro.site).toString(),
+    })),
+  },
 ];
 ---
 

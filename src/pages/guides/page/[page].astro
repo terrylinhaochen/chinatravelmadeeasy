@@ -35,6 +35,20 @@ const jsonLd = [
     description,
     isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `China travel guides page ${currentPage}`,
+    description,
+    numberOfItems: guides.length,
+    itemListElement: guides.map((guide, index) => ({
+      '@type': 'ListItem',
+      position: (currentPage - 1) * perPage + index + 1,
+      name: guide.data.seoTitle ?? guide.data.title,
+      description: guide.data.seoDescription ?? guide.data.description,
+      url: `https://chinatravelmadeeasy.com/guides/${guide.slug}/`,
+    })),
+  },
 ];
 ---
 
