@@ -40,6 +40,22 @@ Requires Node 22+.
 - `/answers/`, `/content-seeds/`, and `/content-seeds.json` for QA-first AI-search retrieval
 - CNAME for the custom domain lives in `public/CNAME`
 
+## Generated imagery
+
+The site uses generated Sasi watercolor assets from `public/images/generated`.
+`npm run build` verifies that every homepage, guide, and region image points at a
+generated asset before Astro builds.
+
+```sh
+npm run images:verify   # checks manifest coverage and generated files
+npm run images:check    # dry-runs the 53 Nano Banana prompts
+npm run images:fallback # intentionally writes local SVG preview assets
+GEMINI_API_KEY=... npm run images:generate
+```
+
+`images:generate` requires `GEMINI_API_KEY`, `GOOGLE_API_KEY`, or
+`GOOGLE_GENAI_API_KEY`; it will not silently fall back to placeholders.
+
 ## Analytics and Search Console
 
 Set `PUBLIC_GA_MEASUREMENT_ID` for the China Travel Made Easy GA4 stream
