@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-21T00:00:00Z",
-  "source": "editorial_bootstrap",
+  "generated_at": "2026-07-04T19:00:00Z",
+  "source": "crowdlisten_handoff",
   "entity_id": null,
   "loop_version": 1,
   "quality_thresholds": {
@@ -39,10 +39,12 @@
         }
       ],
       "recommended_places": [],
-      "evidence_summary": "Starter seed from current payment guide FAQs and pre-departure checklist. Replace with CrowdListen clusters from traveler reviews, payment setup failures, and app-store/social threads.",
-      "evidence_count": 0,
+      "evidence_summary": "CrowdListen found three traveler reports about failed or uncertain Alipay/WeChat Pay usage, one official Alipay traveler source, and one recent secondary travel guide. The guide update now covers linked-card failures, private QR limitations, no-app fallback planning, and second-card/cash backup order.",
+      "evidence_count": 5,
       "source_mix": [
-        "current guide corpus"
+        "reddit traveler reports",
+        "official product source",
+        "secondary travel guide"
       ],
       "search_phrases": [
         "can foreigners use alipay in china",
@@ -50,7 +52,7 @@
         "do I need cash in china"
       ],
       "codex_brief": "Refresh the payment guide with the newest repeated failure modes, then add a short QA answer for each failure mode.",
-      "status": "ready_for_crowdlisten_evidence"
+      "status": "guide_updated_from_crowdlisten"
     },
     {
       "id": "china-visa-free-route-confusion",

@@ -24,7 +24,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(image, Astro.site);
 const siteName = 'China Travel Made Easy';
 const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
-const gaMeasurementId = 'G-X2F8XWJWY6';
+const gaMeasurementIds = (
+  import.meta.env.PUBLIC_GA_MEASUREMENT_IDS ||
+  import.meta.env.PUBLIC_GA_MEASUREMENT_ID ||
+  'G-X2F8XWJWY6'
+)
+  .split(',')
+  .map((id) => id.trim())
+  .filter(Boolean);
+const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 ---
 
 <!doctype html>
@@ -34,6 +42,7 @@ const gaMeasurementId = 'G-X2F8XWJWY6';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/manifest.webmanifest" />
@@ -57,32 +66,40 @@ const gaMeasurementId = 'G-X2F8XWJWY6';
     {jsonLd.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`} />
-    <script
-      is:inline
-      set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaMeasurementId}');`}
-    />
+    {
+      gaMeasurementIds.length > 0 && (
+        <>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementIds[0]}`} />
+          <script
+            is:inline
+            set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());${gaMeasurementIds
+              .map((id) => `gtag('config','${id}');`)
+              .join('')}`}
+          />
+        </>
+      )
+    }
   </head>
   <body class="min-h-screen flex flex-col">
     <header class="border-b border-line bg-paper/95">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6 flex items-center justify-between h-14">
-        <a href="/" class="flex items-center gap-2 group" aria-label="China Travel Made Easy — home">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:h-20 sm:px-6 sm:py-0">
+        <a href="/" class="group flex min-w-0 items-center gap-2" aria-label="China Travel Made Easy — home">
           <span
-            class="inline-flex items-center justify-center w-7 h-7 rounded bg-accent text-white font-display font-bold text-sm leading-none"
+            class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-sm font-bold leading-none text-white"
             >中</span
           >
-          <span class="font-display font-bold text-[1.05rem] tracking-tight group-hover:text-accent transition-colors"
+          <span class="truncate text-[1.05rem] font-bold transition-colors group-hover:text-accent"
             >China Travel Made Easy</span
           >
         </a>
-        <nav class="flex items-center gap-4 sm:gap-6 text-sm font-medium text-soft">
-          <a href="/guides/" class="hover:text-accent transition-colors">Guides</a>
-          <a href="/questions/" class="hover:text-accent transition-colors">Questions</a>
-          <a href="/topics/" class="hover:text-accent transition-colors">Topics</a>
-          <a href="/about/" class="hover:text-accent transition-colors">About</a>
+        <nav class="flex w-full items-center gap-4 overflow-x-auto text-sm font-semibold text-soft sm:w-auto sm:gap-6 sm:overflow-visible">
+          <a href="/guides/" class="flex min-h-11 items-center hover:text-accent transition-colors">Guides</a>
+          <a href="/questions/" class="flex min-h-11 items-center hover:text-accent transition-colors">Questions</a>
+          <a href="/topics/" class="flex min-h-11 items-center hover:text-accent transition-colors">Topics</a>
+          <a href="/about/" class="flex min-h-11 items-center hover:text-accent transition-colors">About</a>
           <a
             href="/map-import/"
-            class="hidden sm:inline-flex items-center rounded-md bg-accent px-3 py-1.5 text-white hover:bg-accent-dark transition-colors"
+            class="ds-button ds-button-primary hidden min-h-0 px-4 py-2 sm:inline-flex"
             >Save Places</a
           >
         </nav>
@@ -93,9 +110,9 @@ const gaMeasurementId = 'G-X2F8XWJWY6';
       <slot />
     </main>
 
-    <footer class="border-t border-line mt-16">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6 py-10 text-sm text-faint space-y-3">
-        <p class="font-display font-bold text-soft text-base">China Travel Made Easy</p>
+    <footer class="mt-16 border-t border-line bg-paper">
+      <div class="mx-auto max-w-6xl space-y-3 px-4 py-10 text-sm text-faint sm:px-6">
+        <p class="text-base font-bold text-soft">China Travel Made Easy</p>
         <p>Practical China travel answers, kept current.</p>
         <p>&copy; {new Date().getFullYear()} chinatravelmadeeasy.com</p>
       </div>

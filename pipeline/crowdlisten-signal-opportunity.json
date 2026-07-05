@@ -1,0 +1,412 @@
+{
+  "generated_at": "2026-07-04",
+  "source": "/Users/terry/Desktop/crowdlisten_files/knowledge/prototypes/outcome_loop_packs/out/app_handoffs/china_travel_made_easy/crowdlisten_handoff.json",
+  "signal_opportunity": {
+    "vertical": "china_travel_made_easy",
+    "target_entity": "China Travel Made Easy",
+    "loop": "traveler_confusion_to_guide_update",
+    "business_outcome": "Help travelers solve high-friction China trip problems with dated, practical, searchable guides.",
+    "loop_readiness_score": 0.9,
+    "source_evidence_strength": 1.0,
+    "demand_signal_count": 6,
+    "source_record_count": 5,
+    "source_platforms": [
+      {
+        "platform": "official_web",
+        "count": 1
+      },
+      {
+        "platform": "reddit",
+        "count": 3
+      },
+      {
+        "platform": "travel_guide",
+        "count": 1
+      }
+    ],
+    "signal_class_mix": [
+      {
+        "signal_class": "customer_demand",
+        "count": 3
+      },
+      {
+        "signal_class": "secondary_supply",
+        "count": 1
+      },
+      {
+        "signal_class": "trusted_supply",
+        "count": 1
+      }
+    ],
+    "available_loop_templates": [
+      {
+        "id": "content_demand",
+        "business_goal": "Turn repeated audience questions, concerns, and goals into useful content artifacts.",
+        "action_outputs": [
+          "answer brief",
+          "guide update",
+          "faq entry",
+          "digest segment",
+          "audio brief"
+        ],
+        "writeback_fields": [
+          "artifact_url",
+          "evidence_used",
+          "impressions",
+          "clicks",
+          "follow_up_questions",
+          "next_content_gap"
+        ]
+      },
+      {
+        "id": "feedback_triage",
+        "business_goal": "Turn fragmented customer complaints, feature requests, and confusion into prioritized product actions.",
+        "action_outputs": [
+          "issue card",
+          "bug report",
+          "feature brief",
+          "customer follow-up brief",
+          "roadmap evidence pack"
+        ],
+        "writeback_fields": [
+          "ticket_url",
+          "owner",
+          "resolution_status",
+          "customers_affected",
+          "repeat_rate_after_fix",
+          "new_related_issues"
+        ]
+      },
+      {
+        "id": "internal_context",
+        "business_goal": "Turn decisions, examples, calls, notes, and operating preferences into reusable context for agents.",
+        "action_outputs": [
+          "agent instruction pack",
+          "decision pack",
+          "project context pack",
+          "handoff brief",
+          "review checklist"
+        ],
+        "writeback_fields": [
+          "artifact_url",
+          "decision_update",
+          "agent_used_context",
+          "quality_rating",
+          "corrections",
+          "new_context_needed"
+        ]
+      }
+    ],
+    "top_signals": [
+      {
+        "id": "china-seed-01",
+        "title": "Can I really use Alipay or WeChat Pay with a foreign card in China?",
+        "why_it_matters": "Travelers worry that payments will fail at restaurants, taxis, metro gates, and street stalls after they land.",
+        "evidence_count": 5,
+        "source_record_count": 5,
+        "source_roles": [
+          "official_or_product_source",
+          "secondary_guide",
+          "traveler_report"
+        ]
+      },
+      {
+        "id": "china-seed-02",
+        "title": "Do I need a China visa, or can I use the 240-hour visa-free transit policy?",
+        "why_it_matters": "Travelers are confused by passport rules, A-China-B routing, Hong Kong/Macau/Taiwan treatment, and whether round trips qualify.",
+        "evidence_count": 0,
+        "source_record_count": 0,
+        "source_roles": []
+      },
+      {
+        "id": "china-seed-03",
+        "title": "How do I turn a China travel link from social media into a saved place on my map?",
+        "why_it_matters": "Travelers discover restaurants, neighborhoods, hotels, tea houses, and attractions in scattered posts, but saving those places into Apple Maps or a China map app is tedious.",
+        "evidence_count": 0,
+        "source_record_count": 0,
+        "source_roles": []
+      },
+      {
+        "id": "china-seed-04",
+        "title": "Will hotels in China accept my foreign passport?",
+        "why_it_matters": "Travelers hear that some hotels cannot host foreigners and worry about being rejected at check-in.",
+        "evidence_count": 0,
+        "source_record_count": 0,
+        "source_roles": []
+      },
+      {
+        "id": "china-seed-05",
+        "title": "How do I order food in China if I cannot read Chinese?",
+        "why_it_matters": "Travelers are blocked by QR menus, untranslated dish names, spice levels, allergies, and payment flows.",
+        "evidence_count": 0,
+        "source_record_count": 0,
+        "source_roles": []
+      }
+    ],
+    "source_records": [
+      {
+        "id": "china-payments-reddit-01",
+        "signal_class": "customer_demand",
+        "platform": "reddit",
+        "source_role": "traveler_report",
+        "actor": null,
+        "title": "Neither Alipay Nor WeChat Working Do I Cancel My Trip To China?",
+        "observed_signal": "Travelers report that foreign-card binding can succeed while payments still fail, so they need a second card and a fallback payment plan.",
+        "entities": [
+          "Alipay",
+          "WeChat Pay",
+          "foreign card",
+          "China traveler"
+        ],
+        "url": "https://www.reddit.com/r/chinatravel/comments/1tfxdvq/neither_alipay_nor_wechat_working_do_i_cancel_my/"
+      },
+      {
+        "id": "china-payments-reddit-02",
+        "signal_class": "customer_demand",
+        "platform": "reddit",
+        "source_role": "traveler_report",
+        "actor": null,
+        "title": "Do you think I can survive in China with no Alipay?",
+        "observed_signal": "Payment anxiety is not only setup confusion; travelers ask whether a trip is still manageable if Alipay keeps failing.",
+        "entities": [
+          "Alipay",
+          "WeChat Pay",
+          "data roaming",
+          "cash fallback"
+        ],
+        "url": "https://www.reddit.com/r/chinatravel/comments/1troic0/do_you_think_i_can_survive_in_china_with_no/"
+      },
+      {
+        "id": "china-payments-reddit-03",
+        "signal_class": "customer_demand",
+        "platform": "reddit",
+        "source_role": "traveler_report",
+        "actor": null,
+        "title": "First time trying to use Alipay in China - it did not go well",
+        "observed_signal": "Person-to-person transfers and private QR payment flows can fail for foreign users even when merchant QR payments may work.",
+        "entities": [
+          "Alipay",
+          "private QR",
+          "merchant QR",
+          "cash"
+        ],
+        "url": "https://www.reddit.com/r/chinatravel/comments/1sn03lg/first_time_trying_to_use_alipay_in_china_it_did/"
+      },
+      {
+        "id": "china-payments-official-01",
+        "signal_class": "trusted_supply",
+        "platform": "official_web",
+        "source_role": "official_or_product_source",
+        "actor": null,
+        "title": "Pay with Alipay or your home e-wallets in the Chinese mainland",
+        "observed_signal": "Alipay's international version is positioned for overseas travelers and supports binding international bank cards.",
+        "entities": [
+          "Alipay",
+          "Alipay+",
+          "international bank card",
+          "overseas travelers"
+        ],
+        "url": "https://www.alipayplus.com/pay-in-the-chinese-mainland/"
+      },
+      {
+        "id": "china-payments-guide-01",
+        "signal_class": "secondary_supply",
+        "platform": "travel_guide",
+        "source_role": "secondary_guide",
+        "actor": null,
+        "title": "Navigating China's Digital Frontier: A Guide to Using Alipay in 2026",
+        "observed_signal": "Recent travel guidance says travelers can link foreign cards to Alipay, but verification and limits still need to be explained.",
+        "entities": [
+          "Alipay",
+          "Visa",
+          "Mastercard",
+          "verification",
+          "transaction limits"
+        ],
+        "url": "https://wildchina.com/2026/05/guide-to-using-alipay-2026/"
+      }
+    ],
+    "supply_ledger": {
+      "type": "social_place_supply_ledger",
+      "run_type": "fixture_social_supply",
+      "entry_count": 3,
+      "place_card_count": 11,
+      "top_entries": [
+        {
+          "source_id": "china-social-shanghai-01",
+          "platform": "xiaohongshu_fixture",
+          "city": "Shanghai",
+          "title": "Shanghai walkable neighborhood saves",
+          "place_card_count": 5,
+          "place_cards": [
+            {
+              "display_name": "武康路, Shanghai",
+              "category": "See",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=%E6%AD%A6%E5%BA%B7%E8%B7%AF%2C%20Shanghai",
+              "amap_url": "https://uri.amap.com/search?keyword=%E6%AD%A6%E5%BA%B7%E8%B7%AF%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+            },
+            {
+              "display_name": "Anfu Road, Shanghai",
+              "category": "See",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=Anfu%20Road%2C%20Shanghai",
+              "amap_url": "https://uri.amap.com/search?keyword=Anfu%20Road%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+            },
+            {
+              "display_name": "Jia Jia Tang Bao, Shanghai",
+              "category": "Eat",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=Jia%20Jia%20Tang%20Bao%2C%20Shanghai",
+              "amap_url": "https://uri.amap.com/search?keyword=Jia%20Jia%20Tang%20Bao%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+            },
+            {
+              "display_name": "People's Square, Shanghai",
+              "category": "See",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=People's%20Square%2C%20Shanghai",
+              "amap_url": "https://uri.amap.com/search?keyword=People's%20Square%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+            },
+            {
+              "display_name": "The Bund, Shanghai",
+              "category": "See",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=The%20Bund%2C%20Shanghai",
+              "amap_url": "https://uri.amap.com/search?keyword=The%20Bund%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+            }
+          ]
+        },
+        {
+          "source_id": "china-social-chengdu-01",
+          "platform": "xiaohongshu_fixture",
+          "city": "Chengdu",
+          "title": "Chengdu slow day tea and hotpot saves",
+          "place_card_count": 3,
+          "place_cards": [
+            {
+              "display_name": "People's Park, Chengdu",
+              "category": "Tea",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=People's%20Park%2C%20Chengdu",
+              "amap_url": "https://uri.amap.com/search?keyword=People's%20Park%2C%20Chengdu&view=map&src=chinatravelmadeeasy&callnative=1"
+            },
+            {
+              "display_name": "Heming Tea House, Chengdu",
+              "category": "Tea",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=Heming%20Tea%20House%2C%20Chengdu",
+              "amap_url": "https://uri.amap.com/search?keyword=Heming%20Tea%20House%2C%20Chengdu&view=map&src=chinatravelmadeeasy&callnative=1"
+            },
+            {
+              "display_name": "小龙坎火锅, Chengdu",
+              "category": "Eat",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=%E5%B0%8F%E9%BE%99%E5%9D%8E%E7%81%AB%E9%94%85%2C%20Chengdu",
+              "amap_url": "https://uri.amap.com/search?keyword=%E5%B0%8F%E9%BE%99%E5%9D%8E%E7%81%AB%E9%94%85%2C%20Chengdu&view=map&src=chinatravelmadeeasy&callnative=1"
+            }
+          ]
+        },
+        {
+          "source_id": "china-social-beijing-01",
+          "platform": "douyin_fixture",
+          "city": "Beijing",
+          "title": "Beijing first-timer landmark saves",
+          "place_card_count": 3,
+          "place_cards": [
+            {
+              "display_name": "Forbidden City, Beijing",
+              "category": "See",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=Forbidden%20City%2C%20Beijing",
+              "amap_url": "https://uri.amap.com/search?keyword=Forbidden%20City%2C%20Beijing&view=map&src=chinatravelmadeeasy&callnative=1"
+            },
+            {
+              "display_name": "Temple of Heaven, Beijing",
+              "category": "See",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=Temple%20of%20Heaven%2C%20Beijing",
+              "amap_url": "https://uri.amap.com/search?keyword=Temple%20of%20Heaven%2C%20Beijing&view=map&src=chinatravelmadeeasy&callnative=1"
+            },
+            {
+              "display_name": "Mutianyu Great Wall, Beijing",
+              "category": "See",
+              "confidence": "known place",
+              "apple_maps_url": "https://maps.apple.com/?q=Mutianyu%20Great%20Wall%2C%20Beijing",
+              "amap_url": "https://uri.amap.com/search?keyword=Mutianyu%20Great%20Wall%2C%20Beijing&view=map&src=chinatravelmadeeasy&callnative=1"
+            }
+          ]
+        }
+      ]
+    },
+    "action_types": [
+      "create_place_card",
+      "update_or_create_guide"
+    ],
+    "action_queue": [
+      {
+        "id": "china-action-01",
+        "type": "update_or_create_guide",
+        "title": "Can I really use Alipay or WeChat Pay with a foreign card in China?",
+        "expected_outcome": "Reduce a recurring traveler failure mode with a direct answer, related guide links, and machine-readable FAQ coverage."
+      },
+      {
+        "id": "china-action-02",
+        "type": "update_or_create_guide",
+        "title": "Do I need a China visa, or can I use the 240-hour visa-free transit policy?",
+        "expected_outcome": "Reduce a recurring traveler failure mode with a direct answer, related guide links, and machine-readable FAQ coverage."
+      },
+      {
+        "id": "china-action-03",
+        "type": "create_place_card",
+        "title": "How do I turn a China travel link from social media into a saved place on my map?",
+        "expected_outcome": "Turn scattered social travel links into save-ready place cards with city, address hints, source reason, and map workflow."
+      }
+    ],
+    "repurpose_strategy": {
+      "pattern": "traveler confusion -> official caveat + social failure mode -> guide/FAQ/place card",
+      "reuse_moves": [
+        "Turn repeated Reddit/search confusion into direct QA pages.",
+        "Use Xiaohongshu-style social supply for place cards and itinerary ideas.",
+        "Split every dated policy or app claim into current answer, caveats, and fallback plan.",
+        "Write back repeated unresolved comments as stale-claim reviews."
+      ],
+      "needs_before_scaling": [
+        "live Xiaohongshu/Douyin/social place ingestion to replace fixture supply",
+        "Chinese-English entity aliases for destinations and apps",
+        "dated official-source monitor for visa, payment, and transport claims"
+      ]
+    },
+    "next_recommendations": [
+      {
+        "id": "next-event-china-guide-01",
+        "title": "Split China payment guidance into setup, arrival test, failure modes, and fallback blocks",
+        "target_action_type": "update_or_create_guide",
+        "required_context": [
+          "Alipay passport verification failed",
+          "can I pay street vendors with foreign card",
+          "does WeChat Pay work before arriving in China"
+        ]
+      },
+      {
+        "id": "next-event-china-place-01",
+        "title": "Replace the China social-supply fixture with live Xiaohongshu/Douyin place ingestion",
+        "target_action_type": "ingest_place_recommendation_sources",
+        "required_context": [
+          "source URL",
+          "place name",
+          "Chinese alias",
+          "city",
+          "recommendation reason",
+          "share/save link",
+          "extraction confidence"
+        ]
+      }
+    ],
+    "gaps": [
+      "live Xiaohongshu/Douyin ingestion and source links",
+      "official policy monitor for visa/payment/hotel claims",
+      "place entity resolution for Chinese/English names",
+      "analytics loop for which guide answers reduce confusion"
+    ]
+  }
+}

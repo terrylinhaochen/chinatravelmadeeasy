@@ -40,6 +40,16 @@ Requires Node 22+.
 - `/questions/`, `/content-seeds/`, and `/content-seeds.json` for QA-first AI-search retrieval
 - CNAME for the custom domain lives in `public/CNAME`
 
+## Analytics and Search Console
+
+Set `PUBLIC_GA_MEASUREMENT_ID` for the China Travel Made Easy GA4 stream
+(`G-X2F8XWJWY6` in the Crowdlisten account). If the site needs to report to more than one GA4 property, set
+`PUBLIC_GA_MEASUREMENT_IDS` to a comma-separated list. Set
+`PUBLIC_GOOGLE_SITE_VERIFICATION` to the Search Console HTML tag token.
+GitHub Pages deploys include the production GA4 ID and Search Console token;
+`CHINATRAVELMADEEASY_GA_MEASUREMENT_IDS` can still be set as a repository
+variable if the site needs to report to additional GA4 properties.
+
 ## CrowdListen content loop
 
 CrowdListen is the evidence layer; Codex is the editorial layer. The seed loop turns

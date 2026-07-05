@@ -6,8 +6,8 @@ const description = 'Paste a TikTok or Instagram link, extract China trip places
 
 <Base title="Save a China travel link to maps" description={description}>
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-    <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">Link to map</p>
-    <h1 class="mt-3 font-display text-4xl font-bold leading-tight sm:text-5xl">Create map collections from TikTok inspiration.</h1>
+    <p class="ds-eyebrow">Link to map</p>
+    <h1 class="mt-3 text-4xl font-bold leading-tight sm:text-5xl">Create map collections from TikTok inspiration.</h1>
     <p class="mt-4 text-lg leading-relaxed text-soft">
       Paste a TikTok or Instagram link. Extract the places mentioned,
       save them as a trip collection, then open each one in Apple Maps.
@@ -15,66 +15,66 @@ const description = 'Paste a TikTok or Instagram link, extract China trip places
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-8 sm:px-6">
-    <div class="rounded-lg border border-line bg-[#f4f0e8] p-5 sm:p-6">
-      <p class="font-display text-2xl font-bold">From social post to saved map list</p>
+    <div class="ds-panel p-5 sm:p-6">
+      <p class="text-2xl font-bold">From social post to saved map list</p>
       <p class="mt-2 text-sm leading-relaxed text-soft">
         CrowdListen-style source processing detects TikTok and Instagram share links, reads the
         share text/caption available to the browser, extracts place names and cities, then turns the
         recommendation into a save-ready collection.
       </p>
       <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center">
-        <div class="rounded-md border border-line bg-card p-4">
-          <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">1. Import</p>
+        <div class="ds-card p-4">
+          <p class="ds-tag">1. Import</p>
           <p class="mt-1 font-semibold text-ink">TikTok or Instagram share</p>
         </div>
-        <div class="hidden text-center font-display text-2xl text-accent sm:block">→</div>
-        <div class="rounded-md border border-line bg-card p-4">
-          <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">2. Extract</p>
+        <div class="hidden text-center text-2xl font-bold text-accent sm:block">→</div>
+        <div class="ds-card p-4">
+          <p class="ds-tag">2. Extract</p>
           <p class="mt-1 font-semibold text-ink">Places + city context</p>
         </div>
-        <div class="hidden text-center font-display text-2xl text-accent sm:block">→</div>
-        <div class="rounded-md border border-line bg-card p-4">
-          <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">3. Collect</p>
+        <div class="hidden text-center text-2xl font-bold text-accent sm:block">→</div>
+        <div class="ds-card p-4">
+          <p class="ds-tag">3. Collect</p>
           <p class="mt-1 font-semibold text-ink">Saved Apple Maps links</p>
         </div>
       </div>
       <div class="mt-5 flex flex-wrap gap-2 text-xs font-semibold text-soft">
         {['TikTok / Douyin', 'Instagram Reels'].map((source) => (
-          <span class="rounded-md border border-line bg-card px-3 py-1.5">{source}</span>
+          <span class="ds-chip">{source}</span>
         ))}
       </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-8 sm:px-6">
-    <div class="rounded-lg border border-line bg-card p-5 sm:p-6">
+    <div class="ds-card p-5 sm:p-6">
       <div class="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <label for="linkInput" class="font-display text-2xl font-bold">Paste link</label>
+          <label for="linkInput" class="text-2xl font-bold">Paste link</label>
           <p class="mt-1 text-sm leading-relaxed text-soft">Paste a TikTok or Instagram link, then extract places. Or run a sample.</p>
         </div>
         <div class="flex flex-wrap gap-2">
-          <button type="button" data-sample="tiktok-shanghai" class="sampleBtn rounded-md border border-line bg-paper px-3 py-2 text-sm font-semibold text-ink hover:border-accent/50 hover:text-accent">Run TikTok sample</button>
-          <button type="button" data-sample="instagram-chengdu" class="sampleBtn rounded-md border border-line bg-paper px-3 py-2 text-sm font-semibold text-ink hover:border-accent/50 hover:text-accent">Run Instagram sample</button>
+          <button type="button" data-sample="tiktok-shanghai" class="sampleBtn ds-button ds-button-secondary min-h-0 px-3 py-2">Run TikTok sample</button>
+          <button type="button" data-sample="instagram-chengdu" class="sampleBtn ds-button ds-button-secondary min-h-0 px-3 py-2">Run Instagram sample</button>
         </div>
       </div>
       <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_auto]">
-        <input id="linkInput" type="url" inputmode="url" class="rounded-md border border-line bg-paper p-3 text-sm outline-none focus:border-accent" placeholder="https://..." />
-        <button id="extractBtn" type="button" class="rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent-dark">Extract</button>
+        <input id="linkInput" type="url" inputmode="url" class="ds-input text-sm" placeholder="https://..." />
+        <button id="extractBtn" type="button" class="ds-button ds-button-primary">Extract</button>
       </div>
-      <p id="sourceText" class="mt-3 hidden text-xs font-semibold uppercase tracking-wider text-faint"></p>
-      <p id="statusText" class="mt-4 hidden rounded-md border border-line bg-paper p-3 text-sm leading-relaxed text-soft"></p>
+      <p id="sourceText" class="ds-tag mt-3 hidden"></p>
+      <p id="statusText" class="ds-card mt-4 hidden p-3 text-sm leading-relaxed text-soft"></p>
     </div>
   </section>
 
   <section id="resultSection" class="mx-auto hidden max-w-6xl px-4 pb-8 sm:px-6">
-    <div class="rounded-lg border border-line bg-card p-5 sm:p-6">
+    <div class="ds-card p-5 sm:p-6">
       <div class="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">Extracted collection</p>
-          <h2 id="collectionTitle" class="mt-1 font-display text-2xl font-bold">Places from this link</h2>
+          <p class="ds-eyebrow">Extracted collection</p>
+          <h2 id="collectionTitle" class="mt-1 text-2xl font-bold">Places from this link</h2>
         </div>
-        <button id="saveCollectionBtn" type="button" class="rounded-md bg-ink px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent">
+        <button id="saveCollectionBtn" type="button" class="ds-button ds-button-dark">
           Save collection
         </button>
       </div>
@@ -83,23 +83,23 @@ const description = 'Paste a TikTok or Instagram link, extract China trip places
   </section>
 
   <section id="loginSection" class="mx-auto hidden max-w-6xl px-4 pb-8 sm:px-6">
-    <div class="rounded-lg border border-line bg-paper p-5 sm:p-6">
-      <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">Sign in to save</p>
-      <h2 class="mt-2 font-display text-2xl font-bold">Save this collection to your trip list.</h2>
+    <div class="ds-panel p-5 sm:p-6">
+      <p class="ds-eyebrow">Sign in to save</p>
+      <h2 class="mt-2 text-2xl font-bold">Save this collection to your trip list.</h2>
       <p class="mt-2 text-sm leading-relaxed text-soft">For this local prototype, sign-in is stored in this browser. A production version would connect this to the real account system before syncing across devices.</p>
       <div class="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
-        <input id="emailInput" type="email" class="rounded-md border border-line bg-white p-3 text-sm outline-none focus:border-accent" placeholder="you@example.com" />
-        <button id="loginBtn" type="button" class="rounded-md bg-ink px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent">Continue</button>
+        <input id="emailInput" type="email" class="ds-input text-sm" placeholder="you@example.com" />
+        <button id="loginBtn" type="button" class="ds-button ds-button-dark">Continue</button>
       </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
-    <div class="rounded-lg border border-line bg-card p-5 sm:p-6">
+    <div class="ds-card p-5 sm:p-6">
       <div class="flex items-end justify-between gap-3">
         <div>
-          <p class="text-[12px] font-semibold uppercase tracking-[0.15em] text-accent">Saved here</p>
-          <h2 class="mt-1 font-display text-2xl font-bold">My saved collections</h2>
+          <p class="ds-eyebrow">Saved here</p>
+          <h2 class="mt-1 text-2xl font-bold">My saved collections</h2>
           <p class="mt-1 text-sm text-soft">A backup list of places ready to open and save in Apple Maps.</p>
         </div>
         <p id="userBadge" class="text-sm text-faint"></p>
@@ -200,15 +200,15 @@ const description = 'Paste a TikTok or Instagram link, extract China trip places
     function renderPlaces(places) {
       resultSection.classList.remove('hidden');
       collectionTitle.textContent = selectedCollectionName;
-      placeResult.innerHTML = places.map((place, index) => '<article class="rounded-lg border border-line bg-paper p-4" data-place-card>' +
-        '<p class="text-[11px] font-semibold uppercase tracking-wider text-faint">' + escapeHtml(place.category || 'Place') + '</p>' +
-        '<h3 class="mt-1 font-display text-2xl font-bold">' + escapeHtml(displayName(place)) + '</h3>' +
+      placeResult.innerHTML = places.map((place, index) => '<article class="ds-card p-4" data-place-card>' +
+        '<p class="ds-tag">' + escapeHtml(place.category || 'Place') + '</p>' +
+        '<h3 class="mt-1 text-2xl font-bold">' + escapeHtml(displayName(place)) + '</h3>' +
         '<p class="mt-2 text-sm leading-relaxed text-soft">' + escapeHtml(place.note || 'Found in the shared link.') + '</p>' +
         '<div class="mt-4 flex flex-wrap gap-2">' +
-          '<button data-save-index="' + index + '" type="button" class="savePlaceBtn rounded-md bg-ink px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent">Save place</button>' +
-          '<a target="_blank" rel="noopener" href="' + appleMapsUrl(place) + '" class="rounded-md border border-line bg-card px-4 py-2.5 text-sm font-semibold text-ink hover:border-accent/50 hover:text-accent">Open Apple Maps</a>' +
+          '<button data-save-index="' + index + '" type="button" class="savePlaceBtn ds-button ds-button-dark">Save place</button>' +
+          '<a target="_blank" rel="noopener" href="' + appleMapsUrl(place) + '" class="ds-button ds-button-secondary">Open Apple Maps</a>' +
           '<details class="text-sm text-soft"><summary class="cursor-pointer rounded-md border border-line px-3 py-2 font-semibold text-ink">Other maps</summary>' +
-          '<a class="mt-2 inline-block rounded-md border border-line px-3 py-2 font-semibold hover:border-accent/50 hover:text-accent" target="_blank" rel="noopener" href="' + amapUrl(place) + '">高德地图</a></details>' +
+          '<a class="ds-button ds-button-secondary mt-2 min-h-0 px-3 py-2" target="_blank" rel="noopener" href="' + amapUrl(place) + '">高德地图</a></details>' +
         '</div></article>').join('');
       document.querySelectorAll('.savePlaceBtn').forEach((button) => {
         button.addEventListener('click', () => saveCollection([places[Number(button.dataset.saveIndex)]], true));
@@ -252,17 +252,17 @@ const description = 'Paste a TikTok or Instagram link, extract China trip places
       userBadge.textContent = user ? user.email : 'Not signed in';
       const saved = getSaved();
       if (!saved.length) {
-        savedList.innerHTML = '<div class="rounded-md border border-dashed border-line bg-paper p-4">Saved collections will appear here after sign-in.</div>';
+        savedList.innerHTML = '<div class="ds-card border-dashed p-4">Saved collections will appear here after sign-in.</div>';
         return;
       }
       savedList.innerHTML = saved.map((collection) => {
         const places = Array.isArray(collection.places) ? collection.places : [collection];
-        return '<article class="rounded-md border border-line bg-paper p-4">' +
+        return '<article class="ds-card p-4">' +
           '<div class="flex flex-wrap items-start justify-between gap-3">' +
-          '<div><p class="text-[11px] font-semibold uppercase tracking-wider text-faint">' + escapeHtml(collection.platform || 'Collection') + '</p>' +
-          '<h3 class="font-display text-xl font-bold text-ink">' + escapeHtml(collection.name || displayName(places[0])) + '</h3></div>' +
+          '<div><p class="ds-tag">' + escapeHtml(collection.platform || 'Collection') + '</p>' +
+          '<h3 class="text-xl font-bold text-ink">' + escapeHtml(collection.name || displayName(places[0])) + '</h3></div>' +
           '<span class="text-xs text-faint">' + places.length + ' place' + (places.length === 1 ? '' : 's') + '</span></div>' +
-          '<div class="mt-3 flex flex-wrap gap-2">' + places.map((place) => '<a target="_blank" rel="noopener" href="' + appleMapsUrl(place) + '" class="rounded-md border border-line bg-card px-3 py-2 text-xs font-semibold text-ink hover:border-accent/50 hover:text-accent">' + escapeHtml(displayName(place)) + '</a>').join('') + '</div>' +
+          '<div class="mt-3 flex flex-wrap gap-2">' + places.map((place) => '<a target="_blank" rel="noopener" href="' + appleMapsUrl(place) + '" class="ds-chip hover:border-accent/50 hover:text-accent">' + escapeHtml(displayName(place)) + '</a>').join('') + '</div>' +
         '</article>';
       }).join('');
     }

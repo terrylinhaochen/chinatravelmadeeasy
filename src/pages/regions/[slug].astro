@@ -75,8 +75,8 @@ const jsonLd = [
     </a>
     <div class="mt-6 grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
       <div>
-        <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">{destination.type}</p>
-        <h1 class="mt-2 font-display text-5xl font-bold leading-none sm:text-6xl">{destination.name}</h1>
+        <p class="ds-eyebrow">{destination.type}</p>
+        <h1 class="mt-2 text-5xl font-bold leading-none sm:text-6xl">{destination.name}</h1>
       </div>
       <div>
         <p class="text-xl leading-relaxed text-soft">{destination.summary}</p>
@@ -84,7 +84,7 @@ const jsonLd = [
       </div>
     </div>
 
-    <figure class="mt-8 overflow-hidden rounded-lg border border-line bg-card">
+    <figure class="ds-photo mt-8">
       <img src={destination.image.src} alt={destination.image.alt} class="h-[280px] w-full object-cover sm:h-[420px]" fetchpriority="high" />
       <figcaption class="border-t border-line px-4 py-2 text-xs text-faint">
         Cover source: <a href={destination.image.source} class="hover:text-accent" rel="noopener">{destination.image.title}</a>
@@ -92,21 +92,21 @@ const jsonLd = [
     </figure>
 
     <div class="mt-8 flex flex-wrap gap-3">
-      <a href={`https://maps.apple.com/?q=${encodeURIComponent(destination.mapQuery)}`} class="rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent-dark">
+      <a href={`https://maps.apple.com/?q=${encodeURIComponent(destination.mapQuery)}`} class="ds-button ds-button-primary">
         Open in Apple Maps
       </a>
-      <a href="/map-import/" class="rounded-md border border-line bg-paper px-4 py-2.5 text-sm font-semibold text-ink hover:border-accent/50 hover:text-accent">
+      <a href="/map-import/" class="ds-button ds-button-secondary">
         Save social links
       </a>
     </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="rounded-lg border border-line bg-card p-5 sm:p-8">
+    <div class="ds-card p-5 sm:p-8">
       <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
         <div>
-          <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Guide matches</p>
-          <h2 class="mt-2 font-display text-3xl font-bold">Start with these guides</h2>
+          <p class="ds-eyebrow">Guide matches</p>
+          <h2 class="mt-2 text-3xl font-bold">Start with these guides</h2>
         </div>
         <p class="leading-relaxed text-soft">
           These are the current China Travel Made Easy guides most relevant to planning {destination.name}.
@@ -120,13 +120,13 @@ const jsonLd = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-    <div class="rounded-lg border border-line bg-[#f4f0e8] p-5 sm:p-8">
-      <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Destination QA</p>
-      <h2 class="mt-2 font-display text-3xl font-bold">Questions for planning {destination.name}</h2>
-      <dl class="mt-5 divide-y divide-line rounded-lg border border-line bg-card">
+    <div class="ds-panel p-5 sm:p-8">
+      <p class="ds-eyebrow">Destination QA</p>
+      <h2 class="mt-2 text-3xl font-bold">Questions for planning {destination.name}</h2>
+      <dl class="ds-card mt-5 divide-y divide-line">
         {faqItems.map((item) => (
           <div class="grid gap-2 p-4 sm:grid-cols-[0.85fr_1.15fr] sm:p-5">
-            <dt class="font-display text-xl font-bold">{item.q}</dt>
+            <dt class="text-xl font-bold">{item.q}</dt>
             <dd class="text-sm leading-relaxed text-soft">{item.a}</dd>
           </div>
         ))}

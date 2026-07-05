@@ -1,0 +1,116 @@
+{
+  "generated_at": "2026-07-04",
+  "source": "/Users/terry/Desktop/crowdlisten_files/knowledge/prototypes/outcome_loop_packs/out/app_handoffs/china_travel_made_easy/crowdlisten_handoff.json",
+  "supply_ledger": {
+    "type": "social_place_supply_ledger",
+    "run_type": "fixture_social_supply",
+    "entry_count": 3,
+    "place_card_count": 11,
+    "top_entries": [
+      {
+        "source_id": "china-social-shanghai-01",
+        "platform": "xiaohongshu_fixture",
+        "city": "Shanghai",
+        "title": "Shanghai walkable neighborhood saves",
+        "place_card_count": 5,
+        "place_cards": [
+          {
+            "display_name": "武康路, Shanghai",
+            "category": "See",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=%E6%AD%A6%E5%BA%B7%E8%B7%AF%2C%20Shanghai",
+            "amap_url": "https://uri.amap.com/search?keyword=%E6%AD%A6%E5%BA%B7%E8%B7%AF%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+          },
+          {
+            "display_name": "Anfu Road, Shanghai",
+            "category": "See",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=Anfu%20Road%2C%20Shanghai",
+            "amap_url": "https://uri.amap.com/search?keyword=Anfu%20Road%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+          },
+          {
+            "display_name": "Jia Jia Tang Bao, Shanghai",
+            "category": "Eat",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=Jia%20Jia%20Tang%20Bao%2C%20Shanghai",
+            "amap_url": "https://uri.amap.com/search?keyword=Jia%20Jia%20Tang%20Bao%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+          },
+          {
+            "display_name": "People's Square, Shanghai",
+            "category": "See",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=People's%20Square%2C%20Shanghai",
+            "amap_url": "https://uri.amap.com/search?keyword=People's%20Square%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+          },
+          {
+            "display_name": "The Bund, Shanghai",
+            "category": "See",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=The%20Bund%2C%20Shanghai",
+            "amap_url": "https://uri.amap.com/search?keyword=The%20Bund%2C%20Shanghai&view=map&src=chinatravelmadeeasy&callnative=1"
+          }
+        ]
+      },
+      {
+        "source_id": "china-social-chengdu-01",
+        "platform": "xiaohongshu_fixture",
+        "city": "Chengdu",
+        "title": "Chengdu slow day tea and hotpot saves",
+        "place_card_count": 3,
+        "place_cards": [
+          {
+            "display_name": "People's Park, Chengdu",
+            "category": "Tea",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=People's%20Park%2C%20Chengdu",
+            "amap_url": "https://uri.amap.com/search?keyword=People's%20Park%2C%20Chengdu&view=map&src=chinatravelmadeeasy&callnative=1"
+          },
+          {
+            "display_name": "Heming Tea House, Chengdu",
+            "category": "Tea",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=Heming%20Tea%20House%2C%20Chengdu",
+            "amap_url": "https://uri.amap.com/search?keyword=Heming%20Tea%20House%2C%20Chengdu&view=map&src=chinatravelmadeeasy&callnative=1"
+          },
+          {
+            "display_name": "小龙坎火锅, Chengdu",
+            "category": "Eat",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=%E5%B0%8F%E9%BE%99%E5%9D%8E%E7%81%AB%E9%94%85%2C%20Chengdu",
+            "amap_url": "https://uri.amap.com/search?keyword=%E5%B0%8F%E9%BE%99%E5%9D%8E%E7%81%AB%E9%94%85%2C%20Chengdu&view=map&src=chinatravelmadeeasy&callnative=1"
+          }
+        ]
+      },
+      {
+        "source_id": "china-social-beijing-01",
+        "platform": "douyin_fixture",
+        "city": "Beijing",
+        "title": "Beijing first-timer landmark saves",
+        "place_card_count": 3,
+        "place_cards": [
+          {
+            "display_name": "Forbidden City, Beijing",
+            "category": "See",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=Forbidden%20City%2C%20Beijing",
+            "amap_url": "https://uri.amap.com/search?keyword=Forbidden%20City%2C%20Beijing&view=map&src=chinatravelmadeeasy&callnative=1"
+          },
+          {
+            "display_name": "Temple of Heaven, Beijing",
+            "category": "See",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=Temple%20of%20Heaven%2C%20Beijing",
+            "amap_url": "https://uri.amap.com/search?keyword=Temple%20of%20Heaven%2C%20Beijing&view=map&src=chinatravelmadeeasy&callnative=1"
+          },
+          {
+            "display_name": "Mutianyu Great Wall, Beijing",
+            "category": "See",
+            "confidence": "known place",
+            "apple_maps_url": "https://maps.apple.com/?q=Mutianyu%20Great%20Wall%2C%20Beijing",
+            "amap_url": "https://uri.amap.com/search?keyword=Mutianyu%20Great%20Wall%2C%20Beijing&view=map&src=chinatravelmadeeasy&callnative=1"
+          }
+        ]
+      }
+    ]
+  }
+}

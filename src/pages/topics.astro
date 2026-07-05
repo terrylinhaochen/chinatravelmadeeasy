@@ -135,8 +135,8 @@ const jsonLd = [
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
     <div class="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
       <div>
-        <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Topics</p>
-        <h1 class="mt-2 font-display text-4xl font-bold leading-tight sm:text-5xl">Plan by what you need to solve.</h1>
+        <p class="ds-eyebrow">Topics</p>
+        <h1 class="mt-2 text-4xl font-bold leading-tight sm:text-5xl">Plan by what you need to solve.</h1>
       </div>
       <p class="text-lg leading-relaxed text-soft">
         Guides are grouped around traveler intent, not a generic table of contents: where to go,
@@ -146,18 +146,18 @@ const jsonLd = [
 
     <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {topics.map((topic) => (
-        <a href={topic.href} class="group rounded-lg border border-line bg-card p-5 transition-colors hover:border-accent/50">
-          <span class="inline-flex h-10 w-10 items-center justify-center rounded-md bg-accent-soft text-accent">
+        <a href={topic.href} class="ds-card-link group p-5">
+          <span class="ds-icon-tile">
             <Icon name={topic.icon} class="h-5 w-5" />
           </span>
-          <h2 class="mt-3 font-display text-2xl font-bold group-hover:text-accent">{topic.title}</h2>
+          <h2 class="mt-3 text-2xl font-bold group-hover:text-accent">{topic.title}</h2>
           <p class="mt-3 font-semibold leading-snug text-ink">{topic.question}</p>
           <p class="mt-2 text-sm leading-relaxed text-soft">{topic.body}</p>
           <div class="mt-4 border-t border-line pt-3">
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">Related guides</p>
+            <p class="ds-tag">Related guides</p>
             <div class="mt-2 flex flex-wrap gap-2">
               {topic.guideIds.map((id) => guideById[id]).filter(Boolean).map((guide) => (
-                <span class="rounded-md bg-paper px-2.5 py-1 text-xs font-semibold text-soft">
+                <span class="ds-chip">
                   {guide.data.category}
                 </span>
               ))}
@@ -169,21 +169,21 @@ const jsonLd = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="rounded-lg border border-line bg-[#f4f0e8] p-5 sm:p-8">
+    <div class="ds-panel p-5 sm:p-8">
       <div class="grid gap-5 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
         <div>
-          <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">QA index</p>
-          <h2 class="mt-2 font-display text-3xl font-bold">Questions this page answers</h2>
+          <p class="ds-eyebrow">QA index</p>
+          <h2 class="mt-2 text-3xl font-bold">Questions this page answers</h2>
         </div>
         <p class="leading-relaxed text-soft">
           Each topic is written as a search question first, then linked to the guide or tool that
           answers the planning problem.
         </p>
       </div>
-      <dl class="mt-6 divide-y divide-line rounded-lg border border-line bg-card">
+      <dl class="ds-card mt-6 divide-y divide-line">
         {topics.map((topic) => (
           <div class="grid gap-2 p-4 sm:grid-cols-[0.9fr_1.1fr] sm:p-5">
-            <dt class="font-display text-xl font-bold">{topic.question}</dt>
+            <dt class="text-xl font-bold">{topic.question}</dt>
             <dd class="text-sm leading-relaxed text-soft">
               {topic.answer}
               <a href={topic.href} class="ml-2 font-semibold text-accent hover:text-accent-dark">

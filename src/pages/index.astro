@@ -17,7 +17,6 @@ const travelModes = [
     icon: 'map',
     body: 'Start with the most-searched entry regions, then open the full region guide when you need every province-level destination.',
     href: '/regions/',
-    color: 'bg-[#e8f0e1] text-[#496334]',
     image: '/images/great-wall.jpg',
     alt: 'Great Wall landscape near Beijing',
   },
@@ -26,7 +25,6 @@ const travelModes = [
     icon: 'bowl',
     body: 'Street food, QR menus, spice levels, allergy cards, tea houses, and where tourists overpay.',
     href: '/guides/street-food-night-markets/',
-    color: 'bg-[#fff0dc] text-[#8c571d]',
     image: '/images/chengdu-tea-shop.jpg',
     alt: 'Tea house table in Chengdu',
   },
@@ -35,7 +33,6 @@ const travelModes = [
     icon: 'train',
     body: 'High-speed rail, Didi, metro QR codes, airport pickup, and how to move without Chinese.',
     href: '/guides/china-high-speed-trains/',
-    color: 'bg-[#e6f0f5] text-[#315d73]',
     image: '/images/shanghai-metro-entrance.jpg',
     alt: 'Shanghai metro entrance sign',
   },
@@ -44,7 +41,6 @@ const travelModes = [
     icon: 'passport',
     body: 'Hotels that accept foreign passports, neighborhoods to stay in, and booking-platform traps.',
     href: '/guides/hotels-foreigners-china/',
-    color: 'bg-[#f7e7e4] text-accent',
     image: '/images/china-hotel-lobby.jpg',
     alt: 'Hotel lobby in China',
   },
@@ -60,8 +56,14 @@ const crowdPicks = [
   {
     label: 'Crowd signal',
     title: 'Payments are the real day-one failure',
-    body: 'Set up Alipay and WeChat Pay before the airport. If your card or passport verification fails after landing, every taxi, snack stall, and metro ride gets harder.',
+    body: 'Set up both wallets before the airport, but also plan for linked-card failures, private QR issues, and a cash or second-card fallback.',
     href: '/guides/alipay-wechat-pay-foreign-cards/',
+  },
+  {
+    label: 'Crowd signal',
+    title: 'Social posts should become save-ready places',
+    body: 'Travel inspiration is scattered across short videos and posts. Extract the place, city, and map query before it disappears into screenshots.',
+    href: '/map-import/',
   },
   {
     label: 'Crowd signal',
@@ -102,10 +104,10 @@ const jsonLd = [
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
     <div class="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
       <div>
-        <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">
+        <p class="ds-eyebrow">
           China travel guide · Crowd-vetted planning
         </p>
-        <h1 class="mt-4 font-display text-5xl font-bold leading-none sm:text-7xl lg:text-8xl">
+        <h1 class="mt-4 text-5xl font-bold leading-none sm:text-7xl lg:text-8xl">
           China
         </h1>
         <p class="mt-5 max-w-xl text-lg leading-relaxed text-soft sm:text-xl">
@@ -113,33 +115,33 @@ const jsonLd = [
           matter before you fly.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#places" class="rounded-md bg-ink px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent">
+          <a href="#places" class="ds-button ds-button-primary">
             Explore places
           </a>
-          <a href="/guides/china-pre-departure-checklist/" class="rounded-md border border-line bg-paper px-4 py-2.5 text-sm font-semibold text-ink hover:border-accent/50 hover:text-accent">
+          <a href="/guides/china-pre-departure-checklist/" class="ds-button ds-button-secondary">
             Start planning
           </a>
         </div>
       </div>
-      <div class="overflow-hidden rounded-lg border border-line bg-card">
+      <div class="ds-photo">
         <img src="/images/shanghai-skyline.jpg" alt="Shanghai skyline glowing at night" class="h-[260px] w-full object-cover sm:h-[360px] lg:h-[420px]" fetchpriority="high" />
       </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="rounded-lg border border-line bg-[#f4f0e8] p-3 sm:p-4">
+    <div class="ds-panel p-3 sm:p-4">
       <div class="grid gap-3 sm:grid-cols-2">
         {travelModes.map((mode) => (
-          <a href={mode.href} class="group grid grid-cols-[6.5rem_1fr] overflow-hidden rounded-lg border border-line bg-white transition-colors hover:border-accent/50 sm:grid-cols-[7.5rem_1fr]">
-            <div class="h-full min-h-32 overflow-hidden bg-line">
+          <a href={mode.href} class="ds-card-link group grid grid-cols-[6.5rem_1fr] overflow-hidden sm:grid-cols-[7.5rem_1fr]">
+            <div class="h-full min-h-32 overflow-hidden bg-surface-strong">
               <img src={mode.image} alt={mode.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
             </div>
             <div class="p-4 sm:p-5">
-              <span class={`inline-flex h-10 w-10 items-center justify-center rounded-md ${mode.color}`}>
+              <span class="ds-icon-tile">
                 <Icon name={mode.icon} class="h-5 w-5" />
               </span>
-              <h2 class="mt-3 font-display text-xl font-bold group-hover:text-accent">{mode.title}</h2>
+              <h2 class="mt-3 text-xl font-bold group-hover:text-accent">{mode.title}</h2>
               <p class="mt-2 text-sm leading-relaxed text-soft">{mode.body}</p>
             </div>
           </a>
@@ -151,8 +153,8 @@ const jsonLd = [
   <section id="places" class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
     <div class="grid gap-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
       <div>
-        <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Where to go</p>
-        <h2 class="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">Start with the places travelers search first</h2>
+        <p class="ds-eyebrow">Where to go</p>
+        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Start with the places travelers search first</h2>
       </div>
       <p class="text-soft leading-relaxed">
         The homepage stays focused on the four highest-intent entry regions. The full destination index
@@ -161,20 +163,20 @@ const jsonLd = [
     </div>
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {featuredDestinations.map((destination) => (
-        <a href={`/regions/${destination.slug}/`} class="group overflow-hidden rounded-lg border border-line bg-card transition-colors hover:border-accent/50">
-          <div class="aspect-[4/3] overflow-hidden bg-line">
+        <a href={`/regions/${destination.slug}/`} class="ds-card-link group overflow-hidden">
+          <div class="aspect-[4/3] overflow-hidden bg-surface-strong">
             <img src={destination.image.src} alt={destination.image.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
           </div>
           <div class="p-5">
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-faint">{destination.type}</p>
-            <h3 class="mt-2 font-display text-2xl font-bold group-hover:text-accent">{destination.name}</h3>
+            <p class="ds-tag">{destination.type}</p>
+            <h3 class="mt-2 text-2xl font-bold group-hover:text-accent">{destination.name}</h3>
             <p class="mt-2 text-sm leading-relaxed text-soft">{destination.summary}</p>
           </div>
         </a>
       ))}
     </div>
     <div class="mt-6">
-      <a href="/regions/" class="inline-flex items-center gap-2 rounded-md border border-line bg-paper px-4 py-2.5 text-sm font-semibold text-ink hover:border-accent/50 hover:text-accent">
+      <a href="/regions/" class="ds-button ds-button-secondary">
         View all destinations
         <Icon name="arrow" class="h-3.5 w-3.5" />
       </a>
@@ -182,22 +184,24 @@ const jsonLd = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="grid gap-8 rounded-lg bg-ink px-5 py-10 text-white sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:py-12">
+    <div class="ds-panel grid gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:py-12">
       <div>
-        <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-[#f2c36d]">Authentic crowd-vetted opinions</p>
-        <h2 class="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">What travelers keep learning the hard way</h2>
-        <p class="mt-4 leading-relaxed text-white/75">
-          The guide is organized around repeated planning questions and field reports: the advice
-          people wish they had before the first taxi, first train station, first hotel desk, or
-          first untranslated menu.
+        <p class="ds-eyebrow">Authentic crowd-vetted opinions</p>
+        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">What travelers keep learning the hard way</h2>
+        <p class="mt-4 leading-relaxed text-soft">
+          The guide is organized around repeated planning questions and field reports. CrowdListen
+          turns those signals into finished guide updates, FAQ entries, and save-ready place workflows.
         </p>
+        <a href="/content-seeds/" class="ds-button ds-button-secondary mt-5">
+          View the guide queue
+        </a>
       </div>
       <div class="grid gap-4">
         {crowdPicks.map((pick) => (
-          <a href={pick.href} class="group rounded-lg border border-white/15 bg-white/8 p-5 transition-colors hover:border-[#f2c36d]/70 hover:bg-white/12">
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-[#f2c36d]">{pick.label}</p>
-            <h3 class="mt-2 font-display text-2xl font-bold group-hover:text-[#f2c36d]">{pick.title}</h3>
-            <p class="mt-2 leading-relaxed text-white/75">{pick.body}</p>
+          <a href={pick.href} class="ds-card-link group p-5">
+            <p class="ds-tag text-accent">{pick.label}</p>
+            <h3 class="mt-2 text-2xl font-bold group-hover:text-accent">{pick.title}</h3>
+            <p class="mt-2 leading-relaxed text-soft">{pick.body}</p>
           </a>
         ))}
       </div>
@@ -206,33 +210,33 @@ const jsonLd = [
 
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
     <div class="grid gap-8 lg:grid-cols-[1fr_1fr]">
-      <div class="overflow-hidden rounded-lg border border-line bg-card">
+      <div class="ds-card overflow-hidden">
         <img src="/images/china-high-speed-train.jpg" alt="High-speed train in a Chinese railway station" class="h-64 w-full object-cover sm:h-72" />
         <div class="p-6">
-          <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Traveling China</p>
-          <h2 class="mt-2 font-display text-3xl font-bold">Trains, Didi, metro, and the airport-to-hotel handoff</h2>
+          <p class="ds-eyebrow">Traveling China</p>
+          <h2 class="mt-2 text-3xl font-bold">Trains, Didi, metro, and the airport-to-hotel handoff</h2>
           <p class="mt-3 leading-relaxed text-soft">
             China is easier when you treat transport as a system: book high-speed rail between
             cities, use Didi when addresses are hard, and use Alipay transport QR codes for metro.
           </p>
           <div class="mt-5 flex flex-wrap gap-3">
-            <a href="/guides/china-high-speed-trains/" class="rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent-dark">Train guide</a>
-            <a href="/guides/didi-metro-getting-around/" class="rounded-md border border-line px-4 py-2.5 text-sm font-semibold hover:border-accent/50 hover:text-accent">City transport</a>
+            <a href="/guides/china-high-speed-trains/" class="ds-button ds-button-primary">Train guide</a>
+            <a href="/guides/didi-metro-getting-around/" class="ds-button ds-button-secondary">City transport</a>
           </div>
         </div>
       </div>
-      <div class="overflow-hidden rounded-lg border border-line bg-card">
+      <div class="ds-card overflow-hidden">
         <img src="/images/china-street-food.jpg" alt="Chinese street food stall with steam and bright signage" class="h-64 w-full object-cover sm:h-72" />
         <div class="p-6">
-          <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Eating China</p>
-          <h2 class="mt-2 font-display text-3xl font-bold">Street food, tea houses, QR menus, and dietary survival</h2>
+          <p class="ds-eyebrow">Eating China</p>
+          <h2 class="mt-2 text-3xl font-bold">Street food, tea houses, QR menus, and dietary survival</h2>
           <p class="mt-3 leading-relaxed text-soft">
             The best meals are often visible, pointable, and cheap. The trick is knowing how to
             order, how to pay, and which famous food streets are mostly theater.
           </p>
           <div class="mt-5 flex flex-wrap gap-3">
-            <a href="/guides/street-food-night-markets/" class="rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent-dark">Street food</a>
-            <a href="/guides/food-ordering-dietary/" class="rounded-md border border-line px-4 py-2.5 text-sm font-semibold hover:border-accent/50 hover:text-accent">Ordering guide</a>
+            <a href="/guides/street-food-night-markets/" class="ds-button ds-button-primary">Street food</a>
+            <a href="/guides/food-ordering-dietary/" class="ds-button ds-button-secondary">Ordering guide</a>
           </div>
         </div>
       </div>
@@ -240,11 +244,11 @@ const jsonLd = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="rounded-lg border border-line bg-card p-5 sm:p-8">
+    <div class="ds-card p-5 sm:p-8">
       <div class="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
         <div>
-          <p class="text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">Travel essentials</p>
-          <h2 class="mt-2 font-display text-3xl font-bold leading-tight sm:text-4xl">Before you fly, fix the basics</h2>
+          <p class="ds-eyebrow">Travel essentials</p>
+          <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Before you fly, fix the basics</h2>
         </div>
         <p class="leading-relaxed text-soft">
           Visa rules, mobile payments, eSIMs, translation, hotels, and train bookings are the
