@@ -2,6 +2,10 @@
 
 This folder includes project images from public sources. Public-domain files are noted where applicable.
 
+## Generated Watercolor Assets
+
+- `generated/*`: Site-specific Sasi watercolor travel illustrations created by `pipeline/generate_nano_banana_images.mjs`. Without a configured `GEMINI_API_KEY`, the script writes local SVG fallback assets for development and preview. Re-run `npm run images:generate` with Gemini credentials to replace them with Nano Banana PNG output.
+
 ## Wikimedia Commons
 
 - `china-mobile-payment-qr.jpg`: "QR codes for mobile pay in China" by Harald Groven, CC BY-SA 2.0. Source: https://commons.wikimedia.org/wiki/File:QR_codes_for_mobile_pay_in_China.jpg

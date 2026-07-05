@@ -4,12 +4,17 @@ import GuideCard from '../components/GuideCard.astro';
 import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { featuredDestinations } from '../data/destinations';
+import { getGeneratedImage } from '../data/generatedImages';
 
 const guides = (await getCollection('guides')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
 const guideById = Object.fromEntries(guides.map((guide) => [guide.id, guide]));
+const heroImage = getGeneratedImage('home:hero') ?? {
+  src: '/images/generated/home-hero.svg',
+  alt: 'Watercolor China travel guide hero scene',
+};
 
 const travelModes = [
   {
@@ -17,32 +22,32 @@ const travelModes = [
     icon: 'map',
     body: 'Start with the most-searched entry regions, then open the full region guide when you need every province-level destination.',
     href: '/regions/',
-    image: '/images/great-wall.jpg',
-    alt: 'Great Wall landscape near Beijing',
+    image: getGeneratedImage('home:places')?.src ?? '/images/generated/home-places.svg',
+    alt: getGeneratedImage('home:places')?.alt ?? 'Watercolor China destination planning scene',
   },
   {
     title: 'Eating',
     icon: 'bowl',
     body: 'Street food, QR menus, spice levels, allergy cards, tea houses, and where tourists overpay.',
     href: '/guides/street-food-night-markets/',
-    image: '/images/chengdu-tea-shop.jpg',
-    alt: 'Tea house table in Chengdu',
+    image: getGeneratedImage('home:eating')?.src ?? '/images/generated/home-eating.svg',
+    alt: getGeneratedImage('home:eating')?.alt ?? 'Watercolor China eating guide scene',
   },
   {
     title: 'Traveling',
     icon: 'train',
     body: 'High-speed rail, Didi, metro QR codes, airport pickup, and how to move without Chinese.',
     href: '/guides/china-high-speed-trains/',
-    image: '/images/shanghai-metro-entrance.jpg',
-    alt: 'Shanghai metro entrance sign',
+    image: getGeneratedImage('home:traveling')?.src ?? '/images/generated/home-traveling.svg',
+    alt: getGeneratedImage('home:traveling')?.alt ?? 'Watercolor China transport guide scene',
   },
   {
     title: 'Hospitality',
     icon: 'passport',
     body: 'Hotels that accept foreign passports, neighborhoods to stay in, and booking-platform traps.',
     href: '/guides/hotels-foreigners-china/',
-    image: '/images/china-hotel-lobby.jpg',
-    alt: 'Hotel lobby in China',
+    image: getGeneratedImage('home:hospitality')?.src ?? '/images/generated/home-hospitality.svg',
+    alt: getGeneratedImage('home:hospitality')?.alt ?? 'Watercolor China hotel and hospitality scene',
   },
 ];
 
@@ -124,7 +129,7 @@ const jsonLd = [
         </div>
       </div>
       <div class="ds-photo">
-        <img src="/images/shanghai-skyline.jpg" alt="Shanghai skyline glowing at night" class="h-[260px] w-full object-cover sm:h-[360px] lg:h-[420px]" fetchpriority="high" />
+        <img src={heroImage.src} alt={heroImage.alt} class="h-[260px] w-full object-cover sm:h-[360px] lg:h-[420px]" fetchpriority="high" />
       </div>
     </div>
   </section>
@@ -211,7 +216,7 @@ const jsonLd = [
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
     <div class="grid gap-8 lg:grid-cols-[1fr_1fr]">
       <div class="ds-card overflow-hidden">
-        <img src="/images/china-high-speed-train.jpg" alt="High-speed train in a Chinese railway station" class="h-64 w-full object-cover sm:h-72" />
+        <img src={getGeneratedImage('guide:china-high-speed-trains')?.src ?? '/images/generated/high-speed-train.svg'} alt={getGeneratedImage('guide:china-high-speed-trains')?.alt ?? 'Watercolor high-speed train at a China station'} class="h-64 w-full object-cover sm:h-72" />
         <div class="p-6">
           <p class="ds-eyebrow">Traveling China</p>
           <h2 class="mt-2 text-3xl font-bold">Trains, Didi, metro, and the airport-to-hotel handoff</h2>
@@ -226,7 +231,7 @@ const jsonLd = [
         </div>
       </div>
       <div class="ds-card overflow-hidden">
-        <img src="/images/china-street-food.jpg" alt="Chinese street food stall with steam and bright signage" class="h-64 w-full object-cover sm:h-72" />
+        <img src={getGeneratedImage('guide:street-food-night-markets')?.src ?? '/images/generated/street-food.svg'} alt={getGeneratedImage('guide:street-food-night-markets')?.alt ?? 'Watercolor China street food night market'} class="h-64 w-full object-cover sm:h-72" />
         <div class="p-6">
           <p class="ds-eyebrow">Eating China</p>
           <h2 class="mt-2 text-3xl font-bold">Street food, tea houses, QR menus, and dietary survival</h2>

@@ -37,7 +37,7 @@ Requires Node 22+.
 - Per-page titles, meta descriptions, canonical URLs, OG tags
 - Article + BreadcrumbList + FAQPage JSON-LD on guide pages
 - `@astrojs/sitemap` (`/sitemap-index.xml`), `robots.txt`, `llms.txt`
-- `/questions/`, `/content-seeds/`, and `/content-seeds.json` for QA-first AI-search retrieval
+- `/answers/`, `/content-seeds/`, and `/content-seeds.json` for QA-first AI-search retrieval
 - CNAME for the custom domain lives in `public/CNAME`
 
 ## Analytics and Search Console

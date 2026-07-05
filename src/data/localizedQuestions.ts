@@ -1,22 +1,22 @@
 export const questionAlternates = [
-  { hreflang: 'en', href: '/questions/' },
-  { hreflang: 'ko', href: '/ko/questions/' },
-  { hreflang: 'ja', href: '/ja/questions/' },
-  { hreflang: 'x-default', href: '/questions/' },
+  { hreflang: 'en', href: '/answers/' },
+  { hreflang: 'ko', href: '/ko/answers/' },
+  { hreflang: 'ja', href: '/ja/answers/' },
+  { hreflang: 'x-default', href: '/answers/' },
 ];
 
 export const questionLocales = {
   en: {
     lang: 'en',
-    path: '/questions/',
+    path: '/answers/',
     label: 'English',
-    title: 'Traveler questions matched to China guides',
+    title: 'Traveler answers matched to China guides',
     description:
-      'Common China travel questions in a retrieval-friendly QA format, matched to crowd-vetted guides on visas, payments, eSIMs, hotels, food, trains, language, and itineraries.',
-    eyebrow: 'Traveler questions',
-    heading: 'Common China questions, matched to the right guide.',
+      'Common China travel answers in a retrieval-friendly QA format, matched to crowd-vetted guides on visas, payments, eSIMs, hotels, food, trains, language, and itineraries.',
+    eyebrow: 'Traveler answers',
+    heading: 'Common China travel answers, matched to the right guide.',
     intro:
-      'Question pages should match how travelers actually search: short concerns, direct answers, and a guide when they need more detail.',
+      'Answer pages should match how travelers actually search: short concerns, direct answers, and a guide when they need more detail.',
     whyTitle: 'Why QA works for travel planning',
     whyCopy:
       'Visitors rarely start with a table of contents. They ask whether Alipay works, where to stay, how trains work, or what to set up before flying. Keeping pages in question-and-answer form makes the content easier to scan, translate, index, and retrieve.',
@@ -28,7 +28,7 @@ export const questionLocales = {
     readAnswer: 'Read answer',
     submitTitle: 'What should we answer next?',
     submitCopy: 'Send a real planning question. The best questions become new guides or updates to existing ones.',
-    submitButton: 'Submit question',
+    submitButton: 'Submit answer request',
     questionPlaceholder: 'Example: Can I use a US iPhone eSIM and still receive bank verification texts?',
     emailLabel: 'Email optional',
     groups: [
@@ -129,7 +129,7 @@ export const questionLocales = {
   },
   ko: {
     lang: 'ko',
-    path: '/ko/questions/',
+    path: '/ko/answers/',
     label: '한국어',
     title: '중국 여행 질문과 답변',
     description:
@@ -226,7 +226,7 @@ export const questionLocales = {
   },
   ja: {
     lang: 'ja',
-    path: '/ja/questions/',
+    path: '/ja/answers/',
     label: '日本語',
     title: '中国旅行の質問と回答',
     description:

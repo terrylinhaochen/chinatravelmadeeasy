@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor destination illustration for Canton Tower">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="97" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="412.70588235294116" cy="238.47058823529412" rx="350.4313725490196" ry="209.29411764705884" fill="#bed8eb"/>
+    <ellipse cx="897.5686274509803" cy="455.843137254902" rx="353.1372549019608" ry="197.01960784313727" fill="#e6b8c2"/>
+    <ellipse cx="813.8039215686274" cy="542.3529411764706" rx="346.3529411764706" ry="237.52941176470588" fill="#e9dcc5"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M803.5 327.1 C 963.5 237.1, 479.6 345.5, 599.6 225.5" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M458.4 536.9 C 618.4 446.9, 88.9 289.1, 208.9 169.1" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M799.2 525.1 C 959.2 435.1, 26.5 560.1, 146.5 440.1" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M583.5 325.1 C 743.5 235.1, 259.3 543.2, 379.3 423.2" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M1045.1 140.8 C 1205.1 50.8, 134.6 392.6, 254.6 272.6" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M1019.2 111.4 C 1179.2 21.4, 733.2 541.3, 853.2 421.3" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M579.2 221.2 C 739.2 131.2, 695.8 447.2, 815.8 327.2" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M173.7 162.4 C 333.7 72.4, 363.2 648.6, 483.2 528.6" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M109.0 444.7 C 269.0 354.7, 691.6 637.3, 811.6 517.3" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M350.6 427.1 C 510.6 337.1, 483.8 445.3, 603.8 325.3" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M221.2 270.2 C 381.2 180.2, 928.5 268.4, 1048.5 148.4" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M842.4 425.1 C 1002.4 335.1, 903.6 240.1, 1023.6 120.1" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M803.5 327.1 C 963.5 237.1, 479.6 345.5, 599.6 225.5" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M458.4 536.9 C 618.4 446.9, 88.9 289.1, 208.9 169.1" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor destination illustration for Terracotta Army">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="170" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="410.11764705882354" cy="290" rx="256.94117647058823" ry="178.23529411764707" fill="#d8cab6"/>
+    <ellipse cx="879.2156862745098" cy="261.72549019607845" rx="321.0980392156863" ry="281.5686274509804" fill="#b8d7cc"/>
+    <ellipse cx="828.4705882352941" cy="599.4117647058823" rx="478.7450980392157" ry="190.47058823529412" fill="#f0c7a7"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M790.6 197.6 C 950.6 107.6, 300.9 528.1, 420.9 408.1" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M773.3 501.6 C 933.3 411.6, 729.0 686.2, 849.0 566.2" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M156.5 83.9 C 316.5 -6.1, 97.2 371.9, 217.2 251.9" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M298.8 240.8 C 458.8 150.8, 662.5 537.5, 782.5 417.5" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M967.5 442.7 C 1127.5 352.7, 1011.7 530.0, 1131.7 410.0" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M48.6 144.7 C 208.6 54.7, 317.5 260.8, 437.5 140.8" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M393.7 411.4 C 553.7 321.4, 683.3 322.9, 803.3 202.9" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M838.0 576.1 C 998.0 486.1, 666.7 614.7, 786.7 494.7" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M182.4 248.6 C 342.4 158.6, 72.2 213.8, 192.2 93.8" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M769.0 421.2 C 929.0 331.2, 209.4 364.4, 329.4 244.4" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M1131.4 413.3 C 1291.4 323.3, 853.7 558.2, 973.7 438.2" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M411.0 132.9 C 571.0 42.9, -31.7 272.1, 88.3 152.1" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M790.6 197.6 C 950.6 107.6, 300.9 528.1, 420.9 408.1" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M773.3 501.6 C 933.3 411.6, 729.0 686.2, 849.0 566.2" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>

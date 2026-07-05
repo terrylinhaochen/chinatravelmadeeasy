@@ -17,10 +17,10 @@
 
 ## AI-search and QA surfaces
 
-- [Traveler questions](https://chinatravelmadeeasy.com/questions/): Retrieval-friendly QA page matching common China travel questions to guide answers.
-- [Korean traveler questions](https://chinatravelmadeeasy.com/ko/questions/): Korean-language QA page for China travel planning intents.
-- [Japanese traveler questions](https://chinatravelmadeeasy.com/ja/questions/): Japanese-language QA page for China travel planning intents.
-- [Travel topics](https://chinatravelmadeeasy.com/topics/): Question-led topic index for places, payments, apps, transport, hotels, food, language, authentic experiences, and map saving.
+- [Traveler answers](https://chinatravelmadeeasy.com/answers/): Retrieval-friendly QA page matching common China travel questions to guide answers.
+- [Korean traveler answers](https://chinatravelmadeeasy.com/ko/answers/): Korean-language QA page for China travel planning intents.
+- [Japanese traveler answers](https://chinatravelmadeeasy.com/ja/answers/): Japanese-language QA page for China travel planning intents.
+- [Guides and planning topics](https://chinatravelmadeeasy.com/guides/#topics): Question-led topic index folded into Guides for places, payments, apps, transport, hotels, food, language, authentic experiences, and map saving.
 - [Destination regions](https://chinatravelmadeeasy.com/regions/): Province-level China destination index with region-specific guide matches and QA.
 - [Save Places](https://chinatravelmadeeasy.com/map-import/): Paste TikTok or Instagram travel links, extract China places, and save them to Apple Maps-ready trip collections.
 - [Content seeds](https://chinatravelmadeeasy.com/content-seeds/): CrowdListen-informed question, concern, and recommendation seeds for future guide updates.

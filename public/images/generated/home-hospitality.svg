@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor China hotel and hospitality scene">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="242" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="272.94117647058823" cy="340.8235294117647" rx="393.72549019607845" ry="195.1764705882353" fill="#d6d1e8"/>
+    <ellipse cx="805.8039215686274" cy="436" rx="262.98039215686276" ry="240.3921568627451" fill="#c5e0d7"/>
+    <ellipse cx="958.7450980392157" cy="622.3529411764706" rx="340.078431372549" ry="221.05882352941177" fill="#efc6b1"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M104.7 268.2 C 264.7 178.2, -23.4 601.5, 96.6 481.5" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M1083.9 360.4 C 1243.9 270.4, 417.3 270.2, 537.3 150.2" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M1096.9 480.0 C 1256.9 390.0, 724.9 494.2, 844.9 374.2" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M454.1 87.8 C 614.1 -2.2, 824.6 238.2, 944.6 118.2" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M656.9 295.7 C 816.9 205.7, 93.0 665.5, 213.0 545.5" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M920.0 440.8 C 1080.0 350.8, 587.7 671.2, 707.7 551.2" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M57.3 487.8 C 217.3 397.8, 22.4 390.7, 142.4 270.7" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M514.5 142.7 C 674.5 52.7, 966.0 479.2, 1086.0 359.2" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M833.7 376.1 C 993.7 286.1, 978.4 594.0, 1098.4 474.0" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M937.3 109.4 C 1097.3 19.4, 359.1 217.5, 479.1 97.5" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M178.0 554.5 C 338.0 464.5, 554.4 417.1, 674.4 297.1" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M691.4 560.4 C 851.4 470.4, 808.0 556.4, 928.0 436.4" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M104.7 268.2 C 264.7 178.2, -23.4 601.5, 96.6 481.5" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M1083.9 360.4 C 1243.9 270.4, 417.3 270.2, 537.3 150.2" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>

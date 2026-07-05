@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor destination illustration for Fujian tulou">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="89" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="290.19607843137254" cy="232.8235294117647" rx="320.94117647058823" ry="250.70588235294116" fill="#d6d1e8"/>
+    <ellipse cx="866.9803921568628" cy="437.72549019607845" rx="440.3137254901961" ry="188.23529411764707" fill="#c5e0d7"/>
+    <ellipse cx="861.2549019607843" cy="607.0588235294117" rx="419.7647058823529" ry="234.7058823529412" fill="#efc6b1"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M191.0 499.6 C 351.0 409.6, 966.0 552.6, 1086.0 432.6" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M423.9 478.0 C 583.9 388.0, 22.4 509.3, 142.4 389.3" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M596.5 483.9 C 756.5 393.9, 255.1 548.8, 375.1 428.8" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M963.1 554.5 C 1123.1 464.5, 716.5 275.9, 836.5 155.9" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M915.7 109.4 C 1075.7 19.4, 620.9 377.5, 740.9 257.5" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M928.6 219.2 C 1088.6 129.2, 708.2 452.8, 828.2 332.8" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M1083.9 436.9 C 1243.9 346.9, 105.5 612.8, 225.5 492.8" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M104.7 391.8 C 264.7 301.8, 330.0 592.1, 450.0 472.1" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M346.3 432.9 C 506.3 342.9, 496.2 597.8, 616.2 477.8" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M825.1 148.6 C 985.1 58.6, 849.6 665.5, 969.6 545.5" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M725.9 254.5 C 885.9 164.5, 803.8 238.2, 923.8 118.2" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M816.5 332.9 C 976.5 242.9, 816.3 343.6, 936.3 223.6" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M191.0 499.6 C 351.0 409.6, 966.0 552.6, 1086.0 432.6" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M423.9 478.0 C 583.9 388.0, 22.4 509.3, 142.4 389.3" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>

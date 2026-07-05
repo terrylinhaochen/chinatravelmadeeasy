@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor destination illustration for Tianjin">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="129" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="291.921568627451" cy="261.05882352941177" rx="274.5098039215686" ry="207.41176470588235" fill="#bed8eb"/>
+    <ellipse cx="720.156862745098" cy="393.72549019607845" rx="427.6470588235294" ry="261.80392156862746" fill="#e6b8c2"/>
+    <ellipse cx="821.5686274509804" cy="607.0588235294117" rx="472.47058823529414" ry="183.41176470588235" fill="#e9dcc5"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M199.6 319.2 C 359.6 229.2, 895.3 552.6, 1015.3 432.6" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M596.5 195.7 C 756.5 105.7, 579.4 667.4, 699.4 547.4" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M277.3 383.9 C 437.3 293.9, 63.9 343.6, 183.9 223.6" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M566.3 521.2 C 726.3 431.2, 716.5 279.6, 836.5 159.6" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M294.5 372.2 C 454.5 282.2, 970.1 452.8, 1090.1 332.8" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M708.6 129.0 C 868.6 39.0, 255.1 313.5, 375.1 193.5" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M1010.6 436.9 C 1170.6 346.9, 113.8 439.6, 233.8 319.6" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M682.7 556.5 C 842.7 466.5, 496.2 321.1, 616.2 201.1" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M147.8 219.2 C 307.8 129.2, 188.6 501.8, 308.6 381.8" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M825.1 152.5 C 985.1 62.5, 467.1 633.5, 587.1 513.5" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M1088.2 332.9 C 1248.2 242.9, 205.3 490.5, 325.3 370.5" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M346.3 187.8 C 506.3 97.8, 604.3 257.1, 724.3 137.1" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M199.6 319.2 C 359.6 229.2, 895.3 552.6, 1015.3 432.6" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M596.5 195.7 C 756.5 105.7, 579.4 667.4, 699.4 547.4" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>

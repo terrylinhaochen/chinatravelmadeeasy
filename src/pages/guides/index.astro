@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import GuideCard from '../../components/GuideCard.astro';
+import Icon from '../../components/Icon.astro';
 import { getCollection } from 'astro:content';
 
 const guides = (await getCollection('guides')).sort(
@@ -33,18 +34,85 @@ const priorityGuides = [
   guideById['hotels-foreigners-china'],
   guideById['food-ordering-dietary'],
 ].filter(Boolean);
+const planningTopics = [
+  {
+    title: 'Start here',
+    icon: 'checklist',
+    question: 'What should I set up before my first China trip?',
+    body: 'Entry rules, apps, payments, internet, hotels, and booking windows in the order travelers actually need them.',
+    href: '/guides/china-pre-departure-checklist/',
+    guideIds: ['china-pre-departure-checklist', 'china-visa-free-2026', 'alipay-wechat-pay-foreign-cards'],
+  },
+  {
+    title: 'Places',
+    icon: 'map',
+    question: 'Which China destinations should I compare first?',
+    body: 'Start with the highest-intent regions, then open the full destination index when route shape matters.',
+    href: '/regions/',
+    guideIds: ['7-day-china-itinerary', 'neighborhoods-beyond-landmarks', 'festivals-and-local-experiences'],
+  },
+  {
+    title: 'Money and apps',
+    icon: 'wallet',
+    question: 'Can foreign visitors pay and use apps normally in China?',
+    body: 'Alipay, WeChat Pay, foreign cards, cash backup, eSIMs, blocked apps, and mobile setup.',
+    href: '/guides/alipay-wechat-pay-foreign-cards/',
+    guideIds: ['alipay-wechat-pay-foreign-cards', 'internet-esim-vpn-blocked-apps', 'china-pre-departure-checklist'],
+  },
+  {
+    title: 'Transport',
+    icon: 'train',
+    question: 'Should I use trains, Didi, metro, or domestic flights?',
+    body: 'High-speed rail, Didi, metro QR codes, airport pickup, and choosing rail versus flights.',
+    href: '/guides/china-high-speed-trains/',
+    guideIds: ['china-high-speed-trains', 'didi-metro-getting-around', '7-day-china-itinerary'],
+  },
+  {
+    title: 'Staying',
+    icon: 'bed',
+    question: 'How do I avoid hotel check-in problems?',
+    body: 'Hotels that accept foreign passports, police registration, neighborhood choices, and booking traps.',
+    href: '/guides/hotels-foreigners-china/',
+    guideIds: ['hotels-foreigners-china', 'translation-language-survival', 'china-pre-departure-checklist'],
+  },
+  {
+    title: 'Eating',
+    icon: 'bowl',
+    question: 'How do I order food without getting stuck at QR menus?',
+    body: 'Street food, QR menus, dietary needs, tea houses, spice levels, and food streets worth skipping.',
+    href: '/guides/street-food-night-markets/',
+    guideIds: ['street-food-night-markets', 'food-ordering-dietary', 'tea-houses-and-rituals'],
+  },
+];
+const topicFaqEntities = planningTopics.map((topic) => ({
+  '@type': 'Question',
+  name: topic.question,
+  acceptedAnswer: {
+    '@type': 'Answer',
+    text: topic.body,
+    url: new URL(topic.href, Astro.site).toString(),
+  },
+}));
 
 const description =
-  'Every China Travel Made Easy guide: payments, internet, visas, trains, city transport, language, hotels, food, and demand-backed travel questions from CrowdListen.';
+  'Every China Travel Made Easy guide and planning topic: payments, internet, visas, trains, city transport, language, hotels, food, and demand-backed travel answers.';
 
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'All China travel guides',
+    name: 'All China travel guides and planning topics',
     url: 'https://chinatravelmadeeasy.com/guides/',
     description,
     isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    name: 'China travel planning topics',
+    description,
+    inLanguage: 'en',
+    mainEntity: topicFaqEntities,
   },
 ];
 ---
@@ -81,7 +149,41 @@ const jsonLd = [
         </div>
       </div>
     </div>
-    <div class="mt-8">
+    <section id="topics" class="mt-10 scroll-mt-24">
+      <div class="grid gap-5 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
+        <div>
+          <p class="ds-eyebrow">Planning topics</p>
+          <h2 class="mt-2 text-3xl font-bold leading-tight">Plan by what you need to solve</h2>
+        </div>
+        <p class="leading-relaxed text-soft">
+          The former Topics hub now lives inside Guides, so travelers can move from a planning
+          question directly into the relevant guide without changing sections.
+        </p>
+      </div>
+      <div class="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {planningTopics.map((topic) => (
+          <a href={topic.href} class="ds-card-link group p-5">
+            <span class="ds-icon-tile">
+              <Icon name={topic.icon} class="h-5 w-5" />
+            </span>
+            <h3 class="mt-3 text-2xl font-medium group-hover:text-accent">{topic.title}</h3>
+            <p class="mt-3 font-medium leading-snug text-ink">{topic.question}</p>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{topic.body}</p>
+            <div class="mt-4 border-t border-line pt-3">
+              <p class="ds-tag">Related guides</p>
+              <div class="mt-2 flex flex-wrap gap-2">
+                {topic.guideIds.map((id) => guideById[id]).filter(Boolean).map((guide) => (
+                  <span class="ds-chip">
+                    {guide.data.category}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+    <div class="mt-10">
       <p class="ds-eyebrow">
         Highest-intent planning questions
       </p>

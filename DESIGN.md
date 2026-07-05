@@ -1,551 +1,511 @@
 ---
 version: alpha
-name: China-Travel-Made-Easy-airbnb-inspired-system
-description: A warm, photography-led travel guide system adapted from Airbnb's generous consumer marketplace language, but anchored on China Travel Made Easy red (#b3382c) instead of Airbnb pink. The red is the single brand voltage for primary CTAs, active states, inline brand links, and icon highlights. The rest of the interface stays mostly white canvas, near-black ink, restrained hairlines, soft cards, and practical travel photography.
+name: China-Travel-Made-Easy-elevenlabs-inspired-system
+description: A travel editorial system adapted from ElevenLabs' quietly cinematic marketing language. The base canvas is off-white (`#f5f5f5`) holding warm near-black ink (`#292524`); the brand voltage is AI-generated Sasi watercolor travel imagery rather than saturated CTA color. Display uses a light serif stack as the Waldenburg substitute. Inter/system sans carries body, navigation, captions. CTAs are subtle: a near-black ink pill is the primary, a transparent outline is the secondary.
 
 project_overrides:
-  note: "These overrides take precedence over source Airbnb references below. Do not use Airbnb pink or Rausch in this project."
-  primary_source: "China Travel Made Easy existing red"
-  primary_usage: "Primary CTAs, active navigation state, links, icon tiles, and sparse emphasis only"
-  forbidden_palette: "Airbnb pink / Rausch (#ff385c)"
+  active_reference: "Use this file as the active UI reference instead of the older Airbnb-inspired system."
+  imagery: "Use generated Sasi watercolor travel assets from public/images/generated, produced by pipeline/generate_nano_banana_images.mjs."
+  image_model: "Nano Banana via Gemini Interactions API when GEMINI_API_KEY is available; local watercolor fallback only for development without credentials."
+  navigation: "Guides contains the former Topics planning index. Questions is renamed to Answers in navigation and primary routes."
+  color_rule: "No saturated red CTA system. Primary actions use warm near-black ink pills; color moments come from watercolor imagery."
 
 colors:
-  primary: "#b3382c"
-  primary-active: "#93291f"
-  primary-disabled: "#ead0ca"
-  primary-error-text: "#c13515"
-  primary-error-text-hover: "#b32505"
-  luxe: "#460479"
-  plus: "#92174d"
-  ink: "#222222"
-  body: "#3f3f3f"
-  muted: "#6a6a6a"
-  muted-soft: "#929292"
-  hairline: "#dddddd"
-  hairline-soft: "#ebebeb"
-  border-strong: "#c1c1c1"
-  canvas: "#ffffff"
-  surface-soft: "#f7f4ef"
+  primary: "#292524"
+  primary-active: "#0c0a09"
+  ink: "#0c0a09"
+  body: "#4e4e4e"
+  body-strong: "#292524"
+  muted: "#777169"
+  muted-soft: "#a8a29e"
+  hairline: "#e7e5e4"
+  hairline-soft: "#f0efed"
+  hairline-strong: "#d6d3d1"
+  canvas: "#f5f5f5"
+  canvas-soft: "#fafafa"
+  canvas-deep: "#0c0a09"
   surface-card: "#ffffff"
-  surface-strong: "#f1ece5"
+  surface-strong: "#f0efed"
+  surface-dark: "#0c0a09"
+  surface-dark-elevated: "#1c1917"
   on-primary: "#ffffff"
   on-dark: "#ffffff"
-  legal-link: "#428bff"
-  star-rating: "#222222"
-  scrim: "#000000"
+  on-dark-soft: "#a8a29e"
+  gradient-mint: "#a7e5d3"
+  gradient-peach: "#f4c5a8"
+  gradient-lavender: "#c8b8e0"
+  gradient-sky: "#a8c8e8"
+  gradient-rose: "#e8b8c4"
+  semantic-error: "#dc2626"
+  semantic-success: "#16a34a"
 
 typography:
+  display-mega:
+    fontFamily: "'Waldenburg', 'Times New Roman', serif"
+    fontSize: 64px
+    fontWeight: 300
+    lineHeight: 1.05
+    letterSpacing: -1.92px
   display-xl:
-    fontFamily: "'Airbnb Cereal VF', Circular, -apple-system, system-ui, Roboto, 'Helvetica Neue', sans-serif"
-    fontSize: 28px
-    fontWeight: 700
-    lineHeight: 1.43
-    letterSpacing: 0
+    fontFamily: "'Waldenburg', serif"
+    fontSize: 48px
+    fontWeight: 300
+    lineHeight: 1.08
+    letterSpacing: -0.96px
   display-lg:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 22px
-    fontWeight: 500
-    lineHeight: 1.18
-    letterSpacing: -0.44px
+    fontFamily: "'Waldenburg', serif"
+    fontSize: 36px
+    fontWeight: 300
+    lineHeight: 1.17
+    letterSpacing: -0.36px
   display-md:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 21px
-    fontWeight: 700
-    lineHeight: 1.43
-    letterSpacing: 0
+    fontFamily: "'Waldenburg', serif"
+    fontSize: 32px
+    fontWeight: 300
+    lineHeight: 1.13
+    letterSpacing: -0.32px
   display-sm:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 20px
-    fontWeight: 600
-    lineHeight: 1.20
-    letterSpacing: -0.18px
+    fontFamily: "'Waldenburg', serif"
+    fontSize: 24px
+    fontWeight: 300
+    lineHeight: 1.2
+    letterSpacing: 0
   title-md:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 16px
-    fontWeight: 600
-    lineHeight: 1.25
+    fontFamily: "'Inter', sans-serif"
+    fontSize: 20px
+    fontWeight: 500
+    lineHeight: 1.35
     letterSpacing: 0
   title-sm:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 16px
+    fontFamily: "'Inter', sans-serif"
+    fontSize: 18px
     fontWeight: 500
-    lineHeight: 1.25
-    letterSpacing: 0
-  rating-display:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 64px
-    fontWeight: 700
-    lineHeight: 1.1
-    letterSpacing: -1px
+    lineHeight: 1.44
+    letterSpacing: 0.18px
   body-md:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
+    fontFamily: "'Inter', sans-serif"
     fontSize: 16px
     fontWeight: 400
     lineHeight: 1.5
-    letterSpacing: 0
-  body-sm:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 14px
-    fontWeight: 400
-    lineHeight: 1.43
-    letterSpacing: 0
-  caption:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 14px
-    fontWeight: 500
-    lineHeight: 1.29
-    letterSpacing: 0
-  caption-sm:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 13px
-    fontWeight: 400
-    lineHeight: 1.23
-    letterSpacing: 0
-  badge:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 11px
-    fontWeight: 600
-    lineHeight: 1.18
-    letterSpacing: 0
-  micro-label:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 12px
-    fontWeight: 700
-    lineHeight: 1.33
-    letterSpacing: 0
-  uppercase-tag:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 8px
-    fontWeight: 700
-    lineHeight: 1.25
-    letterSpacing: 0.32px
-    textTransform: uppercase
-  button-md:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
+    letterSpacing: 0.16px
+  body-strong:
+    fontFamily: "'Inter', sans-serif"
     fontSize: 16px
     fontWeight: 500
-    lineHeight: 1.25
-    letterSpacing: 0
-  button-sm:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 14px
-    fontWeight: 500
-    lineHeight: 1.29
-    letterSpacing: 0
-  link:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
+    lineHeight: 1.5
+    letterSpacing: 0.16px
+  body-sm:
+    fontFamily: "'Inter', sans-serif"
+    fontSize: 15px
+    fontWeight: 400
+    lineHeight: 1.47
+    letterSpacing: 0.15px
+  caption:
+    fontFamily: "'Inter', sans-serif"
     fontSize: 14px
     fontWeight: 400
-    lineHeight: 1.43
+    lineHeight: 1.5
+    letterSpacing: 0
+  caption-uppercase:
+    fontFamily: "'Inter', sans-serif"
+    fontSize: 12px
+    fontWeight: 600
+    lineHeight: 1.4
+    letterSpacing: 0.96px
+    textTransform: uppercase
+  button:
+    fontFamily: "'Inter', sans-serif"
+    fontSize: 15px
+    fontWeight: 500
+    lineHeight: 1.0
     letterSpacing: 0
   nav-link:
-    fontFamily: "'Airbnb Cereal VF', Circular, sans-serif"
-    fontSize: 16px
-    fontWeight: 600
-    lineHeight: 1.25
+    fontFamily: "'Inter', sans-serif"
+    fontSize: 15px
+    fontWeight: 500
+    lineHeight: 1.4
     letterSpacing: 0
 
 rounded:
   none: 0px
   xs: 4px
-  sm: 8px
-  md: 14px
-  lg: 20px
-  xl: 32px
+  sm: 6px
+  md: 8px
+  lg: 12px
+  xl: 16px
+  xxl: 24px
+  pill: 9999px
   full: 9999px
 
 spacing:
-  xxs: 2px
-  xs: 4px
-  sm: 8px
-  md: 12px
+  xxs: 4px
+  xs: 8px
+  sm: 12px
   base: 16px
+  md: 20px
   lg: 24px
   xl: 32px
   xxl: 48px
-  section: 64px
+  section: 96px
 
 components:
-  button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
-    typography: "{typography.button-md}"
-    rounded: "{rounded.sm}"
-    padding: 14px 24px
-    height: 48px
-  button-primary-active:
-    backgroundColor: "{colors.primary-active}"
-    textColor: "{colors.on-primary}"
-    rounded: "{rounded.sm}"
-  button-primary-disabled:
-    backgroundColor: "{colors.primary-disabled}"
-    textColor: "{colors.on-primary}"
-    rounded: "{rounded.sm}"
-  button-secondary:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.button-md}"
-    rounded: "{rounded.sm}"
-    padding: 13px 23px
-    height: 48px
-  button-tertiary-text:
-    backgroundColor: transparent
-    textColor: "{colors.ink}"
-    typography: "{typography.button-md}"
-  button-pill-rausch:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
-    typography: "{typography.button-sm}"
-    rounded: "{rounded.full}"
-    padding: 10px 20px
-  search-orb:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.on-primary}"
-    rounded: "{rounded.full}"
-    height: 48px
-  icon-button-circle:
-    backgroundColor: "{colors.surface-strong}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.full}"
-    height: 32px
-  icon-button-outline:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.full}"
-    height: 40px
   top-nav:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink}"
     typography: "{typography.nav-link}"
-    height: 80px
-  product-tab-active:
-    backgroundColor: transparent
-    textColor: "{colors.ink}"
-    typography: "{typography.nav-link}"
-    rounded: "{rounded.none}"
-  product-tab-inactive:
-    backgroundColor: transparent
-    textColor: "{colors.muted}"
-    typography: "{typography.nav-link}"
-  search-bar-pill:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.body-sm}"
-    rounded: "{rounded.full}"
-    padding: 14px 24px
     height: 64px
-  search-field-segment:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.button}"
+    rounded: "{rounded.pill}"
+    padding: 10px 20px
+    height: 40px
+  button-primary-active:
+    backgroundColor: "{colors.primary-active}"
+    textColor: "{colors.on-primary}"
+    rounded: "{rounded.pill}"
+  button-outline:
     backgroundColor: transparent
     textColor: "{colors.ink}"
-    typography: "{typography.caption}"
-    padding: 8px 24px
-  category-strip:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.muted}"
-    typography: "{typography.button-sm}"
-  category-tab-active:
+    typography: "{typography.button}"
+    rounded: "{rounded.pill}"
+    padding: 9px 19px
+    height: 40px
+  button-tertiary-text:
     backgroundColor: transparent
     textColor: "{colors.ink}"
-    typography: "{typography.button-sm}"
-    rounded: "{rounded.none}"
-  property-card:
+    typography: "{typography.button}"
+  hero-band:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink}"
-    typography: "{typography.body-sm}"
-    rounded: "{rounded.md}"
-  property-card-photo:
-    rounded: "{rounded.md}"
-  experience-card:
-    backgroundColor: "{colors.canvas}"
+    typography: "{typography.display-mega}"
+    padding: 96px
+  gradient-orb-card:
+    backgroundColor: "{colors.canvas-soft}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.xxl}"
+    padding: 32px
+  feature-card:
+    backgroundColor: "{colors.surface-card}"
     textColor: "{colors.ink}"
     typography: "{typography.title-md}"
-    rounded: "{rounded.md}"
-  city-link-block:
-    backgroundColor: transparent
+    rounded: "{rounded.xl}"
+    padding: 24px
+  product-card-stack:
+    backgroundColor: "{colors.surface-card}"
     textColor: "{colors.ink}"
-    typography: "{typography.title-sm}"
-  rating-display-card:
-    backgroundColor: transparent
-    textColor: "{colors.ink}"
-    typography: "{typography.rating-display}"
-  guest-favorite-badge:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.badge}"
-    rounded: "{rounded.full}"
-    padding: 4px 10px
-  new-tag:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.uppercase-tag}"
-    rounded: "{rounded.full}"
-    padding: 2px 6px
-  amenity-row:
+    typography: "{typography.body-md}"
+    rounded: "{rounded.xl}"
+    padding: 0
+  voice-row:
     backgroundColor: transparent
     textColor: "{colors.ink}"
     typography: "{typography.body-md}"
     padding: 12px 0
-  reviews-card:
-    backgroundColor: transparent
-    textColor: "{colors.ink}"
-    typography: "{typography.body-sm}"
-  host-card:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.ink}"
-    typography: "{typography.body-sm}"
-    rounded: "{rounded.md}"
-    padding: 24px
-  reservation-card:
-    backgroundColor: "{colors.canvas}"
+  voice-icon-circular:
+    backgroundColor: "{colors.surface-strong}"
+    rounded: "{rounded.full}"
+    size: 32px
+  pricing-tier-card:
+    backgroundColor: "{colors.surface-card}"
     textColor: "{colors.ink}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.md}"
-    padding: 24px
-  date-picker-day:
-    backgroundColor: transparent
-    textColor: "{colors.ink}"
-    typography: "{typography.body-sm}"
-    rounded: "{rounded.full}"
-  date-picker-day-selected:
-    backgroundColor: "{colors.ink}"
+    rounded: "{rounded.xl}"
+    padding: 32px
+  pricing-tier-featured:
+    backgroundColor: "{colors.surface-dark}"
     textColor: "{colors.on-dark}"
-    rounded: "{rounded.full}"
+    typography: "{typography.body-md}"
+    rounded: "{rounded.xl}"
+    padding: 32px
   text-input:
-    backgroundColor: "{colors.canvas}"
+    backgroundColor: "{colors.surface-card}"
     textColor: "{colors.ink}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.sm}"
-    padding: 14px 12px
-    height: 56px
-  footer-light:
+    rounded: "{rounded.md}"
+    padding: 12px 16px
+    height: 44px
+  badge-pill:
+    backgroundColor: "{colors.surface-strong}"
+    textColor: "{colors.ink}"
+    typography: "{typography.caption-uppercase}"
+    rounded: "{rounded.pill}"
+    padding: 4px 10px
+  cta-band:
     backgroundColor: "{colors.canvas}"
     textColor: "{colors.ink}"
+    typography: "{typography.display-lg}"
+    padding: 96px
+  testimonial-card:
+    backgroundColor: "{colors.surface-card}"
+    textColor: "{colors.body}"
+    typography: "{typography.body-md}"
+    rounded: "{rounded.xl}"
+    padding: 32px
+  audio-waveform-card:
+    backgroundColor: "{colors.surface-card}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.xl}"
+    padding: 24px
+  footer:
+    backgroundColor: "{colors.canvas}"
+    textColor: "{colors.body}"
     typography: "{typography.body-sm}"
-    padding: 48px 80px
+    padding: 64px 48px
   footer-link:
     backgroundColor: transparent
-    textColor: "{colors.ink}"
+    textColor: "{colors.body}"
     typography: "{typography.body-sm}"
-  legal-band:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.muted}"
-    typography: "{typography.caption-sm}"
 ---
 
 ## Overview
 
-This project uses Airbnb as the canonical example of a generous, photography-led consumer marketplace, then adapts the system to China Travel Made Easy. The base canvas is **pure white** (`{colors.canvas}` — #ffffff) with deep near-black ink (`{colors.ink}` — #222222) for headlines and body, and a single voltage of **China Travel red** (`{colors.primary}` — #b3382c) carrying every primary CTA, active state, icon highlight, and inline brand link. Airbnb pink / Rausch is a source reference only and should not appear in shipped UI.
+ElevenLabs reads like a quietly editorial print magazine that happens to be a voice-AI product. The base canvas is off-white `{colors.canvas}` (#f5f5f5) holding warm near-black ink `{colors.ink}` (#0c0a09). The brand voltage is **photographic, not chromatic**: soft pastel atmospheric gradient orbs (mint, peach, lavender, sky, rose) drift through the page as the only "color" moments. There is no neon accent, no saturated CTA color, no dark-canvas dev-tools atmosphere.
 
-Type runs **Airbnb Cereal VF** (a custom variable font Airbnb licenses), with **Circular** as the historic in-house fallback and a system stack underneath. Cereal sits at modest weights — display headlines render at 22–28px in weight 500–600, not the heavy 700+ weights that financial or enterprise systems lean on. The hero h1 ("Inspiration for future getaways") on the homepage is just 28px / 700, which would feel small on a typical SaaS page; here it works because the layout leans on photography (city collage, property cards) for visual weight rather than typographic muscle.
+Type pairs **Waldenburg Light** (custom serif at weight 300) for display with **Inter** for body, navigation, captions. The display weight at 300 is the editorial signature — never bold, never heavy.
 
-The shape language is **soft**. Buttons are 8px radius (`{rounded.sm}`), property cards are ~14px (`{rounded.md}`), the search bar is fully pill-shaped (`{rounded.full}`), wishlist hearts and search orbs are circles (`{rounded.full}`), and category strip rounded corners run at 32px (`{rounded.xl}`). There is essentially no hard corner anywhere except the body grid itself — every interactive element is rounded.
+CTAs are subtle: a near-black ink pill (`{component.button-primary}`) is the primary, a transparent outline (`{component.button-outline}`) is the secondary. The brand trusts atmospheric photography and modest type weights to carry brand work.
 
 **Key Characteristics:**
-- Single accent color: `{colors.primary}` (#b3382c — China Travel red) carries every primary CTA, active state, icon highlight, and brand link. Used scarcely — most pages are 90% white + ink with one or two red moments.
-- Custom variable type: `Airbnb Cereal VF`. Display weights sit at 500–700, body at 400. Modest weight is intentional — the system trusts photography for visual heft.
-- Three-product top nav: Homes, Experiences, Services — each with a hand-illustrated 32px icon and "NEW" badges (`{component.new-tag}`) on the two newer products. Active tab uses an underline rule (`{component.product-tab-active}`).
-- Pill-shaped global search bar: white surface, fully rounded (`{rounded.full}`), divided by 1px hairlines into Where / When / Who segments, terminated by a circular China Travel red search orb (`{component.search-orb}`).
-- Property cards are photo-first: aspect-ratio rectangles with `{rounded.md}` corner clipping, swipeable image carousel, "Guest favorite" floating badge top-left, heart icon top-right, then 4–5 lines of meta beneath.
-- Editorial dropdowns (footer, language picker) are clean text columns over the white canvas — no card surface, no shadow.
-- The design system caps elevation at one shadow tier (`box-shadow: rgba(0,0,0,0.02) 0 0 0 1px, rgba(0,0,0,0.04) 0 2px 6px, rgba(0,0,0,0.1) 0 4px 8px`) — used on hover-floated cards and search/account dropdowns.
-- 8px base spacing system, with major sections at `{spacing.section}` (64px) — generous but not airy enough to feel editorial-magazine; the marketplace density wants more cards per scroll.
+- Off-white canvas, warm near-black ink. No saturated CTA color.
+- Single primary action: ink pill at `{rounded.pill}`. Atmospheric gradients carry visual brand voltage.
+- Display runs Waldenburg Light at weight 300 — editorial magazine voice.
+- Body runs Inter at 400 with subtle letter-spacing (+0.15-0.18px).
+- Pastel gradient orbs (5 tokens: mint, peach, lavender, sky, rose) used as atmospheric brand decoration only.
+- Soft pill geometry (`{rounded.pill}` for CTAs, `{rounded.xl}` for cards).
+- 96px section rhythm.
 
 ## Colors
 
 ### Brand & Accent
-- **China Travel red** (`{colors.primary}` — #b3382c): The single brand color. Used for primary CTA backgrounds, active controls, icon highlights, and inline brand links.
-- **China Travel red active** (`{colors.primary-active}` — #93291f): The press / pointer-down variant. Used on `{component.button-primary-active}`.
-- **China Travel red disabled** (`{colors.primary-disabled}` — #ead0ca): A pale tint used on disabled CTAs.
-- **Luxe Purple** (`{colors.luxe}` — #460479): Sub-brand accent for Airbnb Luxe. Only appears inside Luxe-branded surfaces — never in mainline marketing.
-- **Plus Magenta** (`{colors.plus}` — #92174d): Sub-brand accent for Airbnb Plus. Same scoping as Luxe — sub-product only.
+- **Ink Primary** (`{colors.primary}` — #292524): The primary action color — warm near-black pill. Used scarcely.
+- **Ink Primary Active** (`{colors.primary-active}` — #0c0a09): Press state.
 
 ### Surface
-- **Canvas** (`{colors.canvas}` — #ffffff): The default page floor for every public page. Airbnb does not have a dark mode on the public web.
-- **Surface Soft** (`{colors.surface-soft}` — #f7f7f7): The lightest fill — used on disabled fields, sub-nav hover backgrounds, and the inline search filter band.
-- **Surface Strong** (`{colors.surface-strong}` — #f2f2f2): Slightly heavier fill — circular icon-button surface (e.g., the breadcrumb back-arrow and listing toolbar buttons).
+- **Canvas** (`{colors.canvas}` — #f5f5f5): Off-white page floor.
+- **Canvas Soft** (`{colors.canvas-soft}` — #fafafa): Lighter band for subtle alternating sections.
+- **Canvas Deep** (`{colors.canvas-deep}` — #0c0a09): Same as ink — used for the rare dark-mode hero (Agents page).
+- **Surface Card** (`{colors.surface-card}` — #ffffff): Pure white card.
+- **Surface Strong** (`{colors.surface-strong}` — #f0efed): Badges, voice-icon plates.
+- **Surface Dark** (`{colors.surface-dark}` — #0c0a09): Dark hero/CTA band canvas.
+- **Surface Dark Elevated** (`{colors.surface-dark-elevated}` — #1c1917): Cards on dark canvas.
 
-### Hairlines & Borders
-- **Hairline** (`{colors.hairline}` — #dddddd): The default 1px border tone — search bar dividers, table separators, footer column splitters, card 1px borders.
-- **Hairline Soft** (`{colors.hairline-soft}` — #ebebeb): A lighter divider used on long-scrolling editorial body separators.
-- **Border Strong** (`{colors.border-strong}` — #c1c1c1): A heavier stroke used on disabled outline buttons and form input outlines after focus.
+### Hairlines
+- **Hairline** (`{colors.hairline}` — #e7e5e4): Default 1px divider.
+- **Hairline Soft** (`{colors.hairline-soft}` — #f0efed): Lighter divider.
+- **Hairline Strong** (`{colors.hairline-strong}` — #d6d3d1): Stronger panel outline.
 
 ### Text
-- **Ink** (`{colors.ink}` — #222222): The dominant text color on light surfaces. Display headlines, body paragraphs, primary nav links, and most inline link text. Never pure black.
-- **Body** (`{colors.body}` — #3f3f3f): A secondary running-text color used inside long-form review and amenity copy where ink would feel too heavy.
-- **Muted** (`{colors.muted}` — #6a6a6a): Sub-titles inside city link blocks ("Cottage rentals", "Villa rentals"), inactive product-tab labels, footer category sub-labels, "View all" links.
-- **Muted Soft** (`{colors.muted-soft}` — #929292): Disabled link text. Used very sparingly.
-- **Star Rating** (`{colors.star-rating}` — #222222): The same ink token — Airbnb's star icon and "4.81" rating numbers all render in ink rather than a yellow/gold color, which is a deliberate brand choice (yellow stars feel cheap in travel context).
-- **On Primary** (`{colors.on-primary}` — #ffffff): White text on China Travel red CTAs.
+- **Ink** (`{colors.ink}` — #0c0a09): Display, primary text.
+- **Body** (`{colors.body}` — #4e4e4e): Default running-text.
+- **Body Strong** (`{colors.body-strong}` — #292524): Same as primary — emphasis.
+- **Muted** (`{colors.muted}` — #777169): Sub-titles.
+- **Muted Soft** (`{colors.muted-soft}` — #a8a29e): Disabled text.
+- **On Primary** (`{colors.on-primary}` — #ffffff): White text on ink pill.
+- **On Dark** (`{colors.on-dark}` — #ffffff): White text on dark hero.
+- **On Dark Soft** (`{colors.on-dark-soft}` — #a8a29e): Muted off-white on dark.
+
+### Atmospheric Gradient Stops (signature)
+- **Gradient Mint** (`{colors.gradient-mint}` — #a7e5d3): Mint green orb.
+- **Gradient Peach** (`{colors.gradient-peach}` — #f4c5a8): Peach orb.
+- **Gradient Lavender** (`{colors.gradient-lavender}` — #c8b8e0): Lavender orb.
+- **Gradient Sky** (`{colors.gradient-sky}` — #a8c8e8): Sky-blue orb.
+- **Gradient Rose** (`{colors.gradient-rose}` — #e8b8c4): Rose orb.
+
+These appear ONLY as soft radial-gradient atmospheric orbs inside `{component.gradient-orb-card}` and as background atmospheric blooms behind hero copy. Never as button fills, never as text colors.
 
 ### Semantic
-- **Error** (`{colors.primary-error-text}` — #c13515): Inline error text for form validation. Distinct from the brand red.
-- **Error Hover** (`{colors.primary-error-text-hover}` — #b32505): Darkens on link hover.
-- **Legal Link Blue** (`{colors.legal-link}` — #428bff): Inline links inside legal copy (Privacy, Terms). Only used inside the legal sub-band.
-
-### Scrim
-- **Scrim** (`{colors.scrim}` — #000000 at 50% opacity): The global modal backdrop tone — date picker, login dialog, language picker. Stored as the base hex; opacity is applied at render time.
+- **Success** (`{colors.semantic-success}` — #16a34a): Confirmation.
+- **Error** (`{colors.semantic-error}` — #dc2626): Validation errors.
 
 ## Typography
 
 ### Font Family
-The system runs **Airbnb Cereal VF** for everything — display, body, navigation, captions, microcopy. Fallbacks walk `Circular, -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif`. **Circular** is the historic in-house typeface still kept as the first non-variable fallback; system stacks back it up.
-
-There is no separate display family. The variable font carries the entire scale.
+**Waldenburg Light** is the licensed display serif at weight 300. **Inter** carries body, navigation, captions, and buttons. Fallback: `'Times New Roman', serif` for Waldenburg, `sans-serif` for Inter.
 
 ### Hierarchy
 
 | Token | Size | Weight | Line Height | Letter Spacing | Use |
 |---|---|---|---|---|---|
-| `{typography.rating-display}` | 64px | 700 | 1.1 | -1px | Listing detail rating display ("4.81") |
-| `{typography.display-xl}` | 28px | 700 | 1.43 | 0 | Homepage h1 ("Inspiration for future getaways") |
-| `{typography.display-lg}` | 22px | 500 | 1.18 | -0.44px | Listing detail h1 ("Close to Fethiye Aliyah Bali Beach…") |
-| `{typography.display-md}` | 21px | 700 | 1.43 | 0 | Section heads inside listing detail ("What this place offers") |
-| `{typography.display-sm}` | 20px | 600 | 1.20 | -0.18px | Sub-section titles ("Things to know") |
-| `{typography.title-md}` | 16px | 600 | 1.25 | 0 | City link block titles ("Wilmington", "Athens") |
-| `{typography.title-sm}` | 16px | 500 | 1.25 | 0 | Footer column heads ("Support", "Hosting", "Airbnb") |
-| `{typography.body-md}` | 16px | 400 | 1.5 | 0 | Default running-text inside listing copy |
-| `{typography.body-sm}` | 14px | 400 | 1.43 | 0 | Card meta lines, dates, prices, distance text |
-| `{typography.caption}` | 14px | 500 | 1.29 | 0 | Search field segment labels ("Where", "When", "Who") |
-| `{typography.caption-sm}` | 13px | 400 | 1.23 | 0 | Footer legal line ("© 2026 Airbnb, Inc.") |
-| `{typography.badge}` | 11px | 600 | 1.18 | 0 | "Guest favorite" floating badge text |
-| `{typography.micro-label}` | 12px | 700 | 1.33 | 0 | Card amenity micro-labels ("Inline 6") |
-| `{typography.uppercase-tag}` | 8px | 700 | 1.25 | 0.32px (uppercase) | "NEW" badge on product nav tabs |
-| `{typography.button-md}` | 16px | 500 | 1.25 | 0 | Primary CTA button labels |
-| `{typography.button-sm}` | 14px | 500 | 1.29 | 0 | Pill button labels (category strip) |
-| `{typography.link}` | 14px | 400 | 1.43 | 0 | Inline body links |
-| `{typography.nav-link}` | 16px | 600 | 1.25 | 0 | Top product-nav labels (Homes, Experiences, Services) |
+| `{typography.display-mega}` | 64px | 300 | 1.05 | -1.92px | Homepage hero h1 |
+| `{typography.display-xl}` | 48px | 300 | 1.08 | -0.96px | Subsidiary heroes |
+| `{typography.display-lg}` | 36px | 300 | 1.17 | -0.36px | Section heads |
+| `{typography.display-md}` | 32px | 300 | 1.13 | -0.32px | Sub-section heads |
+| `{typography.display-sm}` | 24px | 300 | 1.2 | 0 | Card group titles |
+| `{typography.title-md}` | 20px | 500 | 1.35 | 0 | Component titles — Inter |
+| `{typography.title-sm}` | 18px | 500 | 1.44 | 0.18px | List labels |
+| `{typography.body-md}` | 16px | 400 | 1.5 | 0.16px | Default body — Inter |
+| `{typography.body-strong}` | 16px | 500 | 1.5 | 0.16px | Emphasized body |
+| `{typography.body-sm}` | 15px | 400 | 1.47 | 0.15px | Footer body |
+| `{typography.caption}` | 14px | 400 | 1.5 | 0 | Photo captions |
+| `{typography.caption-uppercase}` | 12px | 600 | 1.4 | 0.96px | Section labels, badges |
+| `{typography.button}` | 15px | 500 | 1.0 | 0 | CTA pill |
+| `{typography.nav-link}` | 15px | 500 | 1.4 | 0 | Top-nav menu |
 
 ### Principles
-Display weights stay modest. The homepage h1 at 28px / 700 is deliberately small — it tucks under the search bar so photography and the city-link grid carry visual hierarchy. The listing-detail h1 at 22px / 500 is even quieter; the listing photo banner does the work above it.
-
-The single typographically loud moment in the entire system is the **rating display** (`{typography.rating-display}` — 64px / 700) on listing pages. That is the only place the system trusts type alone to carry hierarchy — rating numbers are a peak trust signal, so they get the loudest treatment.
+- **Display weight stays at 300.** Waldenburg Light is the editorial signature. Never bold display copy.
+- **Subtle letter-spacing on body.** Inter at +0.15-0.18px tracking — slightly looser than default Inter for a more editorial feel.
+- **Negative letter-spacing on display.** Waldenburg pulls -0.32px to -1.92px tighter on display sizes.
 
 ### Note on Font Substitutes
-If Airbnb Cereal VF and Circular are unavailable, **Inter** is the closest open-source substitute. Adjust display headlines down by ~2% in line-height to match Cereal's slightly tighter cap height; otherwise the proportions transfer cleanly.
+Waldenburg is licensed. Open-source substitute: **EB Garamond** at weight 300 (slightly more humanist) or **GT Sectra** (closer to Waldenburg's modernity). Use Inter directly for body — it's the same family ElevenLabs uses.
 
 ## Layout
 
 ### Spacing System
-- **Base unit:** 4px (with 2px micro-step).
-- **Tokens:** `{spacing.xxs}` 2px · `{spacing.xs}` 4px · `{spacing.sm}` 8px · `{spacing.md}` 12px · `{spacing.base}` 16px · `{spacing.lg}` 24px · `{spacing.xl}` 32px · `{spacing.xxl}` 48px · `{spacing.section}` 64px.
-- **Section padding (vertical):** `{spacing.section}` (64px) for major page bands; tighter than typical SaaS marketing (80–96px) because marketplace pages need higher card density per scroll.
-- **Card internal padding:** `{spacing.lg}` (24px) for `{component.host-card}` and `{component.reservation-card}`; `{spacing.base}` (16px) for property-card meta block; `{spacing.sm}` (8px) for caption / date-row gutters.
-- **Gutters:** `{spacing.base}` (16px) between cards in the homepage city grid; `{spacing.lg}` (24px) inside footer column gutters; `{spacing.xs}` (4px) on dense category-strip dividers.
+- **Base unit:** 4px.
+- **Tokens:** `{spacing.xxs}` 4px · `{spacing.xs}` 8px · `{spacing.sm}` 12px · `{spacing.base}` 16px · `{spacing.md}` 20px · `{spacing.lg}` 24px · `{spacing.xl}` 32px · `{spacing.xxl}` 48px · `{spacing.section}` 96px.
+- **Section padding:** 96px.
 
 ### Grid & Container
-- **Max content width:** ~1280px centered on the homepage and editorial pages. Listing detail pages cap closer to 1080px to keep the photo banner and reservation rail readable.
-- **City link grid (homepage footer):** 6-column grid at desktop with each cell housing a city name in `{typography.title-md}` and a category sub-label in `{typography.body-sm}` muted.
-- **Listing detail:** 2-column with photo / amenity body on the left (~64% width) and a sticky reservation card (`{component.reservation-card}`) on the right (~32%).
-- **Footer:** 3-column link list (Support / Hosting / Airbnb) at desktop, collapsing to 1-column on mobile.
+- Max content width: ~1200px.
+- Editorial body: 12-column grid.
+- Feature card grids: 2-up at desktop for hero splits, 3-up for benefit grids.
+- Footer: 5-column at desktop.
 
 ### Whitespace Philosophy
-The system gives editorial bands 64px of vertical breathing room but compresses card grids — property and city-link cards sit just 16px apart. The contrast is intentional: the page reads as "open hero, dense marketplace below," reinforcing the marketplace nature without overwhelming the visitor at the fold.
+Generous editorial pacing — print-magazine feel. 96px between bands; cards inside bands sit close (16-24px gap). The atmospheric gradient orbs occupy generous breathing space without competing with copy.
 
-## Elevation
+## Elevation & Depth
 
-The system has essentially **one shadow tier** plus the flat baseline.
+The system uses **hairline + soft drop**. Cards float above the off-white canvas via 1px hairlines and a single subtle shadow tier. Atmospheric depth comes from gradient orbs.
 
-- **Flat (no shadow):** Body, hero, footer, all editorial bands — 95% of surfaces.
-- **Card hover float:** `box-shadow: rgba(0, 0, 0, 0.02) 0 0 0 1px, rgba(0, 0, 0, 0.04) 0 2px 6px 0, rgba(0, 0, 0, 0.1) 0 4px 8px 0` — applied to property cards on pointer hover, the search bar at rest, and the dropdown menus (account menu, language picker, date picker). This is the single shadow definition in the entire system.
-- **Modal scrim:** `{colors.scrim}` rendered at 50% opacity — the global modal backdrop. Used on date pickers, login dialogs, language picker.
+| Level | Treatment | Use |
+|---|---|---|
+| Flat (canvas) | `{colors.canvas}` (#f5f5f5) | Body bands, footer |
+| Card | `{colors.surface-card}` (#ffffff) | Content cards |
+| Hairline border | 1px `{colors.hairline}` | Card outlines |
+| Soft drop | `0 4px 16px rgba(0, 0, 0, 0.04)` | Hovered cards (single shadow tier) |
+| Gradient orb | Radial gradient with one of `{colors.gradient-*}` | Atmospheric depth — never a card surface |
 
-There are no progressive elevation tiers — the system either has the one shadow or none. Depth comes from photography, the white-on-white surface separation, and rounded-corner clipping rather than from layered shadows.
+### Decorative Depth
+- **Pastel gradient orbs** are the brand's strongest atmospheric pattern. Soft radial blooms in mint, peach, lavender, sky, or rose drift through hero bands and feature sections without containing any content — they are pure atmosphere.
+
+## Shapes
+
+### Border Radius Scale
+
+| Token | Value | Use |
+|---|---|---|
+| `{rounded.none}` | 0px | Reserved |
+| `{rounded.xs}` | 4px | Inline tags |
+| `{rounded.sm}` | 6px | Compact rows |
+| `{rounded.md}` | 8px | Form inputs |
+| `{rounded.lg}` | 12px | Compact cards |
+| `{rounded.xl}` | 16px | Feature cards, pricing tiers |
+| `{rounded.xxl}` | 24px | Gradient orb cards (extra-soft) |
+| `{rounded.pill}` | 9999px | All CTA buttons, badges |
+| `{rounded.full}` | 9999px | Voice icon circles, avatars |
 
 ## Components
 
-### Buttons
-
-**`button-primary`** — China Travel red fill, white text, 8px radius, 14×24px padding, 48px height, weight 500. The most common CTA across the system: "Reserve", "Continue", "Search", account-flow primaries.
-
-**`button-primary-active`** — The press state. Background flips to `{colors.primary-active}`. No transform, no shadow change.
-
-**`button-primary-disabled`** — Pale China Travel red tint with white text. Cursor not-allowed.
-
-**`button-secondary`** — White fill with ink text and a 1px ink outline. 8px radius. Used for "Save", "Cancel", and inverse CTAs over brand surfaces.
-
-**`button-tertiary-text`** — Plain ink text, no surface, no border. Underlined on hover. Used for "Show more" type links and modal close labels.
-
-**`button-pill-primary`** — A pill-shaped China Travel red CTA used on featured cells — 9999px radius, 10×20px padding, 14px label.
-
-### Search Surface
-
-**`search-bar-pill`** — The signature global search bar. White fill, 9999px radius, 64px height, 1px hairline 1px-shadow border. Internally divided by vertical hairline rules into `{component.search-field-segment}` cells (Where / When / Who). Each segment holds an uppercase caption label above a placeholder line in `{typography.caption}`.
-
-**`search-orb`** — The circular China Travel red orb terminating the right edge of the search bar. 48×48px, fully rounded, white magnifying-glass icon centered. The hottest single color moment on the homepage.
-
 ### Top Navigation
 
-**`top-nav`** — White surface, 80px height, 1px bottom hairline. The Airbnb wordmark sits flush left, the three product tabs (Homes / Experiences / Services) sit in the dead center, and account utilities (host link, language globe, account menu) sit flush right.
+**`top-nav`** — Background `{colors.canvas}`, text `{colors.ink}`, height 64px. Layout: ElevenLabs wordmark left, primary horizontal menu (Creative / Agents / Video / Pricing / Enterprise / Docs), Sign In + "Try free" primary CTA right.
 
-**`product-tab-active`** — Ink label in `{typography.nav-link}`, 32px hand-illustrated icon, 2px ink underline rule beneath the icon-label pair.
+### Buttons
 
-**`product-tab-inactive`** — Muted label, illustrated icon, no underline. Becomes active on click.
+**`button-primary`** — Near-black ink pill. Background `{colors.primary}`, text `{colors.on-primary}`, type `{typography.button}` (15px / 500), padding 10px × 20px, height 40px, rounded `{rounded.pill}`.
 
-**`new-tag`** — A tiny rounded-pill badge (`{rounded.full}`) anchored top-right of an icon, carrying the uppercase "NEW" label in `{typography.uppercase-tag}` (8px / 700 with 0.32px tracking, uppercase). Used on Experiences and Services to signal recency.
+**`button-primary-active`** — Press state. Background `{colors.primary-active}`.
 
-### Listing Cards
+**`button-outline`** — Transparent pill with 1px ink border. Background transparent, text `{colors.ink}`, 1px `{colors.hairline-strong}` border.
 
-**`property-card`** — A photo-first card. 1:1 aspect-ratio image with `{rounded.md}` corner clipping, image carousel dots overlay, "Guest favorite" floating badge top-left (`{component.guest-favorite-badge}`), and a heart icon top-right (`{component.icon-button-circle}` in default outlined state, China Travel red-filled when saved). Beneath the image: 4–5 lines of meta — title (`{typography.title-md}`), distance / dates (`{typography.body-sm}` muted), and price ("$X night") right-aligned.
+**`button-tertiary-text`** — Inline ink text link.
 
-**`property-card-photo`** — The photo plate itself, separated as a token because some surfaces (wishlist, search results) reuse just the photo without the meta block.
+### Hero & Atmospheric
 
-**`experience-card`** — A taller-aspect card (4:5) for experience listings. Same `{rounded.md}` clipping, floating "NEW" badge top-left, heart top-right, and a single-line title beneath.
+**`hero-band`** — Background `{colors.canvas}`, full-width display headline in `{typography.display-mega}` (64px / 300 / -1.92px), subhead in `{typography.body-md}`, two CTAs, and an atmospheric gradient orb behind the centered headline.
 
-**`guest-favorite-badge`** — White rounded pill (`{rounded.full}`) at 11px / 600 weight. Sits over the photo with the system's only shadow tier applied for elevation.
+**`gradient-orb-card`** — A large card with a soft radial-gradient orb behind centered display copy. Background `{colors.canvas-soft}`, rounded `{rounded.xxl}` (24px), padding 32px. Each variant uses one of the five gradient tokens (`gradient-mint`, `gradient-peach`, `gradient-lavender`, `gradient-sky`, `gradient-rose`).
 
-### Listing Detail
+**`audio-waveform-card`** — A waveform visualization card. Background `{colors.surface-card}`, rounded `{rounded.xl}`, padding 24px. Holds a play button + waveform glyph + voice metadata.
 
-**`rating-display-card`** — The signature listing-detail moment. A 64px / 700 rating number ("4.81") flanked left and right by tiny laurel-wreath SVG ornaments. Beneath the rating: "Guest favorite" tagline and a row of ink stat columns. The largest typographic weight in the whole system.
+### Cards
 
-**`amenity-row`** — A 1-column list of amenity icons + ink labels in `{typography.body-md}`. 12px row padding, no border between rows; section is closed by a 1px hairline divider above and below.
+**`feature-card`** — 2-up or 3-up grids. Background `{colors.surface-card}`, text `{colors.ink}`, rounded `{rounded.xl}`, padding 24px, 1px hairline border.
 
-**`reviews-card`** — A 2-column grid of review excerpts. Each column holds an author row (avatar, name, date) above a 3-line excerpt with "Show more" tertiary link.
+**`product-card-stack`** — Stacked product preview cards. Background `{colors.surface-card}`, rounded `{rounded.xl}`, no padding (children fill the card edge-to-edge).
 
-**`host-card`** — A white card with `{rounded.md}` rounding and 24px padding holding a host avatar, name, "Superhost" badge, response-rate stat, and a "Contact host" `{component.button-secondary}`.
+**`testimonial-card`** — Quote card. Background `{colors.surface-card}`, text `{colors.body}`, rounded `{rounded.xl}`, padding 32px.
 
-**`reservation-card`** — The sticky right-rail card on listing detail pages. White surface, `{rounded.md}` rounding, 1px hairline border, 1px shadow tier elevation, 24px padding. Contains: nightly price (`{typography.display-md}` ink), date-range selector, guest-count stepper, "Reserve" primary CTA full-width, and a fee breakdown stack beneath in `{typography.body-sm}`.
+### Voice Library
 
-### Date Picker
+**`voice-row`** — Horizontal row in voice list. Background transparent, 1px hairline divider. Layout: 32px circular voice icon (`{component.voice-icon-circular}`) left, voice name + accent stack, optional preview button right.
 
-**`date-picker-day`** — A 40×40px circular cell carrying the day number in `{typography.body-sm}`. Default state is transparent fill, ink text.
+**`voice-icon-circular`** — Background `{colors.surface-strong}`, rounded `{rounded.full}`, 32px diameter. Holds initials or voice glyph.
 
-**`date-picker-day-selected`** — Ink fill, white text, full circle (`{rounded.full}`). Range states between two selected days carry a `{colors.surface-soft}` lozenge background that connects them.
+### Pricing
 
-### Forms
+**`pricing-tier-card`** — Background `{colors.surface-card}`, rounded `{rounded.xl}`, padding 32px, 1px hairline border.
 
-**`text-input`** — White surface, 1px hairline outline, `{rounded.sm}` 8px radius, 56px height, 14×12px padding. Stacked label above (in `{typography.caption}` muted), placeholder text in `{typography.body-md}` muted. On focus, the border thickens to 2px ink and the border color flips to `{colors.ink}` — no glow, no ring.
+**`pricing-tier-featured`** — Featured tier inverts. Background `{colors.surface-dark}`, text `{colors.on-dark}`. Same shape, dark inversion.
 
-### Footer
+### Forms & Tags
 
-**`footer-light`** — White surface (matches the page canvas — Airbnb has no contrast footer), 48×80px padding. Three columns of link blocks (Support / Hosting / Airbnb), separated by generous 24px gutters. Each column heads with a `{typography.title-sm}` ink label and stacks `{component.footer-link}` rows in `{typography.body-sm}` ink.
+**`text-input`** — Background `{colors.surface-card}`, text `{colors.ink}`, rounded `{rounded.md}` (8px), padding 12px × 16px, height 44px, 1px `{colors.hairline-strong}` border. On focus, border thickens to 2px ink.
 
-**`legal-band`** — A bottom strip beneath the footer columns carrying the copyright line, language picker (globe icon + "English (US)" link), currency picker, and social icons (Facebook, X, Instagram). All text in muted `{colors.muted}` at `{typography.caption-sm}`.
+**`badge-pill`** — Background `{colors.surface-strong}`, text `{colors.ink}`, type `{typography.caption-uppercase}`, rounded `{rounded.pill}`, padding 4px × 10px.
+
+### CTA / Footer
+
+**`cta-band`** — Pre-footer. Background `{colors.canvas}`, centered display headline in `{typography.display-lg}`, single ink pill CTA. 96px padding.
+
+**`footer`** — Closing footer. Background `{colors.canvas}`, text `{colors.body}`. 5-column link list. 64×48px padding.
+
+**`footer-link`** — Background transparent, text `{colors.body}`, type `{typography.body-sm}`.
+
+## Do's and Don'ts
+
+### Do
+- Reserve `{colors.primary}` (ink pill) for primary CTAs.
+- Use Waldenburg Light at weight 300 for every display headline. Never bold.
+- Use Inter at +0.15-0.18px tracking for body — the editorial dialect.
+- Use atmospheric gradient orbs (mint/peach/lavender/sky/rose) as decoration only.
+- Use the pill shape for every CTA and badge.
+
+### Don't
+- Don't introduce a saturated brand action color. Ink pill is the only CTA color.
+- Don't bold display copy. Display sits at weight 300 — bolding shifts the brand voice from editorial to consumer-marketing.
+- Don't use gradient orbs as button fills, text colors, or component backgrounds. They are pure atmosphere.
+- Don't use sharp `{rounded.none}` (0px) on CTAs. Pill geometry is the brand button.
+- Don't drop body Inter to weight 300 to match Waldenburg — body stays at 400/500 for legibility.
+- Don't extract a CTA color from a third-party widget (cookie consent, OneTrust). The brand's CTA color is what appears on actual product CTAs.
 
 ## Responsive Behavior
 
+### Breakpoints
+
 | Name | Width | Key Changes |
 |---|---|---|
-| Mobile | < 744px | Top nav collapses to logo + hamburger; product tabs hide behind a sheet; search bar collapses to a single tappable pill; property cards stack 1-up; city grid 1-column; listing detail collapses reservation card to a sticky bottom bar. |
-| Tablet | 744–1128px | Top nav keeps product tabs but search bar narrows; property cards 2-up; city grid 2–3 column; reservation card stays sticky right-rail at narrower width. |
-| Desktop | 1128–1440px | Full top nav with three product tabs centered; search bar at full pill width with all 3 segments visible; property cards 4-up; city grid 6-column; listing detail 2-column with reservation rail. |
-| Wide | > 1440px | Content width caps at 1440px on listing/search pages and ~1280px on editorial; gutters absorb the rest. |
+| Mobile | < 640px | Hero h1 64→32px; feature cards 1-up; nav hamburger; gradient orbs shrink. |
+| Tablet | 640–1024px | Hero h1 48px; feature cards 2-up. |
+| Desktop | 1024–1280px | Full hero h1 64px; feature cards 3-up. |
+| Wide | > 1280px | Content caps at 1200px. |
 
 ### Touch Targets
-- Primary CTAs at minimum 48×48px (above WCAG AAA).
-- Search orb is 48×48px circular — the most-tapped element on the page.
-- Heart save button is 32×32px circular — borderline for AAA but compensated by a generous 12px padding inside the photo card.
-- Date-picker day cells are 40×40px circular.
+- Primary pill at 40px height — at WCAG AA, padded for AAA.
+- Voice icon circles 32px — padded row creates effective 48px tap zone.
 
 ### Collapsing Strategy
-- Top product tabs collapse into a hamburger sheet below 744px.
-- Search bar's 3 segments collapse into a single-tap entry that opens a full-screen search overlay on mobile.
-- Property and city-link grids drop column counts cleanly at each breakpoint — never reflow rows; always reduce columns.
-- Reservation card on listing detail switches from sticky right-rail to a sticky bottom bar on mobile, carrying just the "Reserve" CTA + nightly price summary.
+- Top nav switches to hamburger below 768px.
+- Feature grid: 3-up → 2-up → 1-up.
+- Gradient orbs reduce diameter at every breakpoint but never disappear.
+
+## Iteration Guide
+
+1. Focus on a single component at a time.
+2. CTAs default to `{rounded.pill}`. Cards use `{rounded.xl}` (16px).
+3. Variants live as separate entries.
+4. Use `{token.refs}` everywhere — never inline hex.
+5. Hover state never documented.
+6. Waldenburg 300 for display, Inter 400/500 for body.
+7. Gradient orbs scoped to atmospheric decoration.
 
 ## Known Gaps
 
-- **Hover state colors:** intentionally not documented per the global no-hover policy — Airbnb's actual `:hover` styling for property cards is a subtle elevation lift, but precise extraction is unreliable.
-- **Loading states / skeleton screens:** not visible on the extracted surfaces.
-- **Map view styling:** the search-results map uses Mapbox-tinted tiles with custom China Travel red markers; not captured here.
-- **Form input error states:** error text color (`{colors.primary-error-text}`) is documented, but the full input outline + helper-text combination on validation failure was not visible in the captured surfaces.
-- **Sub-brand palettes:** Luxe (`{colors.luxe}`) and Plus (`{colors.plus}`) are documented as tokens, but their full sub-system (typography overrides, surface treatment) lives on separate sub-domains and is not captured here.
+- Waldenburg is a licensed typeface; EB Garamond / GT Sectra are documented substitutes.
+- Animation timings (orb drift, waveform pulse, hero entrance) out of scope.
+- In-product surfaces (voice library editor, agent playground) only partially captured via marketing mockups.
+- Form validation states beyond focus not visible on captured surfaces.

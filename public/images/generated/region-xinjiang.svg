@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor destination illustration for Kashgar">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="178" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="309.1764705882353" cy="295.6470588235294" rx="329.0980392156863" ry="188.11764705882354" fill="#bed8eb"/>
+    <ellipse cx="797.6470588235294" cy="295.37254901960785" rx="447.01960784313724" ry="229.9607843137255" fill="#e6b8c2"/>
+    <ellipse cx="891.4509803921569" cy="528.2352941176471" rx="360.78431372549016" ry="163.1764705882353" fill="#e9dcc5"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M285.9 238.8 C 445.9 148.8, 1003.4 300.4, 1123.4 180.4" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M807.8 344.7 C 967.8 254.7, 338.3 332.4, 458.3 212.4" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M652.5 160.4 C 812.5 70.4, 400.6 262.7, 520.6 142.7" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M389.4 572.2 C 549.4 482.2, 159.5 317.3, 279.5 197.3" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M622.4 258.4 C 782.4 168.4, 230.2 545.1, 350.2 425.1" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M216.9 287.8 C 376.9 197.8, 76.4 477.3, 196.4 357.3" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M1122.7 174.1 C 1282.7 84.1, 196.9 362.5, 316.9 242.5" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M432.5 207.5 C 592.5 117.5, 699.9 464.1, 819.9 344.1" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M497.3 134.9 C 657.3 44.9, 550.3 287.2, 670.3 167.2" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M247.1 191.8 C 407.1 101.8, 296.7 682.5, 416.7 562.5" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M320.4 429.0 C 480.4 339.0, 521.2 381.3, 641.2 261.3" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M160.8 358.4 C 320.8 268.4, 130.4 409.5, 250.4 289.5" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M285.9 238.8 C 445.9 148.8, 1003.4 300.4, 1123.4 180.4" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M807.8 344.7 C 967.8 254.7, 338.3 332.4, 458.3 212.4" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>

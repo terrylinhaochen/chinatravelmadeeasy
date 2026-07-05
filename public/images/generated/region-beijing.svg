@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor destination illustration for Forbidden City">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="75" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="415.29411764705884" cy="222.94117647058823" rx="373.6470588235294" ry="154.7058823529412" fill="#c7dfd4"/>
+    <ellipse cx="790.5098039215686" cy="453.2549019607843" rx="313.6470588235294" ry="237.09803921568627" fill="#efc3a7"/>
+    <ellipse cx="828.4705882352941" cy="586.4705882352941" rx="320.62745098039215" ry="181.05882352941177" fill="#c9bddf"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M816.5 99.6 C 976.5 9.6, 259.3 486.7, 379.3 366.7" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M363.5 331.0 C 523.5 241.0, 392.3 211.9, 512.3 91.9" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M958.8 519.2 C 1118.8 429.2, 97.2 334.2, 217.2 214.2" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M83.1 221.2 C 243.1 131.2, 571.1 548.8, 691.1 428.8" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M592.2 283.9 C 752.2 193.9, -35.8 351.2, 84.2 231.2" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M1006.3 144.7 C 1166.3 54.7, 234.4 610.9, 354.4 490.9" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M350.6 368.2 C 510.6 278.2, 708.2 228.8, 828.2 108.8" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M488.6 82.0 C 648.6 -8.0, 271.8 450.9, 391.8 330.9" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M182.4 209.4 C 342.4 119.4, 845.4 631.6, 965.4 511.6" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M674.1 432.9 C 834.1 342.9, 1.6 345.5, 121.6 225.5" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M44.3 227.1 C 204.3 137.1, 492.1 405.8, 612.1 285.8" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M324.7 497.6 C 484.7 407.6, 891.1 272.1, 1011.1 152.1" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M816.5 99.6 C 976.5 9.6, 259.3 486.7, 379.3 366.7" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M363.5 331.0 C 523.5 241.0, 392.3 211.9, 512.3 91.9" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>

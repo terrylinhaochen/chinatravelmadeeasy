@@ -22,7 +22,7 @@ and can be retrieved by search engines, answer engines, and map-planning workflo
    - FAQs in guide frontmatter become FAQPage JSON-LD automatically.
 
 4. **Indexing layer**
-   - `/questions/` is the stable traveler-facing QA page.
+   - `/answers/` is the stable traveler-facing QA page.
    - `/content-seeds/` is the public seed surface for emerging guide coverage and AI-search retrieval.
    - `/content-seeds.json` is the machine-readable version.
    - `/llms.txt` points answer engines to the canonical guide set and seed surface.
@@ -46,7 +46,7 @@ Then ask Codex to process `content-seed-queue.md`:
 3. Draft the answer in QA-first form.
 4. Add or update guide frontmatter FAQs.
 5. Add map-save candidates when the seed includes places.
-6. Update `/questions/` only when the question is stable enough to become canonical.
+6. Update `/answers/` only when the question is stable enough to become canonical.
 7. Run `npm run build` and visually verify the changed pages.
 
 ## Quality rules

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor destination illustration for Zhangjiajie National Forest Park">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="250" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="294.5098039215686" cy="346.47058823529414" rx="282.6666666666667" ry="196.11764705882354" fill="#c7dfd4"/>
+    <ellipse cx="914.9019607843137" cy="321.2549019607843" rx="269.6862745098039" ry="192.078431372549" fill="#efc3a7"/>
+    <ellipse cx="916.4705882352941" cy="560" rx="443.6078431372549" ry="248.35294117647058" fill="#c9bddf"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M212.5 272.2 C 372.5 182.2, 14.0 402.0, 134.0 282.0" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M1118.4 570.2 C 1278.4 480.2, 51.5 580.8, 171.5 460.8" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M333.3 219.2 C 493.3 129.2, 521.2 603.4, 641.2 483.4" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M462.7 105.5 C 622.7 15.5, 384.0 285.3, 504.0 165.3" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M1118.4 123.1 C 1278.4 33.1, 778.9 680.6, 898.9 560.6" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M346.3 344.7 C 506.3 254.7, 828.8 338.0, 948.8 218.0" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M96.1 280.0 C 256.1 190.0, 126.3 394.5, 246.3 274.5" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M134.9 466.3 C 294.9 376.3, 999.2 680.6, 1119.2 560.6" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M622.4 489.8 C 782.4 399.8, 242.7 343.6, 362.7 223.6" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M480.0 158.4 C 640.0 68.4, 367.4 234.5, 487.4 114.5" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M889.8 570.2 C 1049.8 480.2, 999.2 251.4, 1119.2 131.4" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M941.6 213.3 C 1101.6 123.3, 255.1 464.1, 375.1 344.1" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M212.5 272.2 C 372.5 182.2, 14.0 402.0, 134.0 282.0" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M1118.4 570.2 C 1278.4 480.2, 51.5 580.8, 171.5 460.8" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>

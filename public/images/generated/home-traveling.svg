@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor China transport guide scene">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="255" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="407.52941176470586" cy="350" rx="253.1764705882353" ry="259.1764705882353" fill="#d6d1e8"/>
+    <ellipse cx="878.1960784313726" cy="457.5686274509804" rx="268.19607843137254" ry="276.078431372549" fill="#c5e0d7"/>
+    <ellipse cx="888.8627450980392" cy="560" rx="400.3137254901961" ry="214.47058823529412" fill="#efc6b1"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M777.6 534.9 C 937.6 444.9, 5.7 402.0, 125.7 282.0" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M1140.0 499.6 C 1300.0 409.6, 687.5 450.9, 807.5 330.9" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M130.6 529.0 C 290.6 439.0, 388.2 467.9, 508.2 347.9" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M1040.8 101.6 C 1200.8 11.6, 384.0 531.9, 504.0 411.9" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M963.1 423.1 C 1123.1 333.1, 492.1 690.0, 612.1 570.0" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M1027.8 282.0 C 1187.8 192.0, 529.5 249.5, 649.5 129.5" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M87.5 280.0 C 247.5 190.0, 670.8 646.7, 790.8 526.7" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M794.9 331.0 C 954.9 241.0, 1020.0 612.8, 1140.0 492.8" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M484.3 348.6 C 644.3 258.6, 47.3 641.1, 167.3 521.1" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M480.0 415.3 C 640.0 325.3, 924.4 230.7, 1044.4 110.7" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M592.2 580.0 C 752.2 490.0, 849.6 539.4, 969.6 419.4" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M631.0 121.2 C 791.0 31.2, 911.9 403.9, 1031.9 283.9" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M777.6 534.9 C 937.6 444.9, 5.7 402.0, 125.7 282.0" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M1140.0 499.6 C 1300.0 409.6, 687.5 450.9, 807.5 330.9" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>

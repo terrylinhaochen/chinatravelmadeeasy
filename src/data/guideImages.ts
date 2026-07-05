@@ -1,3 +1,5 @@
+import { getGeneratedImage } from './generatedImages';
+
 export type GuideImage = {
   src: string;
   alt: string;
@@ -68,5 +70,6 @@ const FALLBACK_IMAGE: GuideImage = {
 };
 
 export function getGuideImage(id: string): GuideImage {
-  return GUIDE_IMAGES[id] ?? FALLBACK_IMAGE;
+  const generated = getGeneratedImage(`guide:${id}`);
+  return generated ? { src: generated.src, alt: generated.alt } : (GUIDE_IMAGES[id] ?? FALLBACK_IMAGE);
 }

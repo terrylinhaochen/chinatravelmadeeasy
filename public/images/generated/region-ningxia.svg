@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Watercolor destination illustration for Shapotou, Zhongwei">
+  <defs>
+    <filter id="paper" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="4" seed="211" result="noise"/>
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="bleed">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="760" fill="#f5f5f5"/>
+  <g filter="url(#bleed)" opacity="0.9">
+    <ellipse cx="338.5098039215686" cy="318.94117647058823" rx="320.94117647058823" ry="262" fill="#d6d1e8"/>
+    <ellipse cx="682.4313725490196" cy="330.7450980392157" rx="356.11764705882354" ry="260.156862745098" fill="#c5e0d7"/>
+    <ellipse cx="982.9019607843137" cy="607.6470588235294" rx="380.8627450980392" ry="165.05882352941177" fill="#efc6b1"/>
+  </g>
+  <g filter="url(#paper)">
+    <path d="M432.5 546.7 C 592.5 456.7, 496.2 554.5, 616.2 434.5" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="1"/>
+    <path d="M950.2 123.1 C 1110.2 33.1, 566.9 392.6, 686.9 272.6" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="2"/>
+    <path d="M596.5 240.8 C 756.5 150.8, 841.3 270.2, 961.3 150.2" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="3"/>
+    <path d="M1066.7 332.9 C 1226.7 242.9, 720.7 381.3, 840.7 261.3" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="1"/>
+    <path d="M134.9 366.3 C 294.9 276.3, 363.2 607.2, 483.2 487.2" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="2"/>
+    <path d="M393.7 495.7 C 553.7 405.7, 93.0 452.8, 213.0 332.8" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="3"/>
+    <path d="M596.5 438.8 C 756.5 348.8, 338.3 658.0, 458.3 538.0" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="1"/>
+    <path d="M669.8 270.2 C 829.8 180.2, 837.1 251.4, 957.1 131.4" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="2"/>
+    <path d="M954.5 142.7 C 1114.5 52.7, 496.2 364.4, 616.2 244.4" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="3"/>
+    <path d="M829.4 258.4 C 989.4 168.4, 949.3 452.8, 1069.3 332.8" fill="none" stroke="#292524" stroke-opacity="0.2" stroke-width="1"/>
+    <path d="M458.4 493.7 C 618.4 403.7, 51.5 484.8, 171.5 364.8" fill="none" stroke="#292524" stroke-opacity="0.1" stroke-width="2"/>
+    <path d="M178.0 332.9 C 338.0 242.9, 300.9 609.1, 420.9 489.1" fill="none" stroke="#292524" stroke-opacity="0.125" stroke-width="3"/>
+    <path d="M432.5 546.7 C 592.5 456.7, 496.2 554.5, 616.2 434.5" fill="none" stroke="#292524" stroke-opacity="0.15000000000000002" stroke-width="1"/>
+    <path d="M950.2 123.1 C 1110.2 33.1, 566.9 392.6, 686.9 272.6" fill="none" stroke="#292524" stroke-opacity="0.17500000000000002" stroke-width="2"/>
+    <path d="M120 610 C260 500 360 560 480 450 C610 330 760 430 900 300 C1000 210 1090 240 1140 200" fill="none" stroke="#292524" stroke-opacity="0.28" stroke-width="4"/>
+    <circle cx="210" cy="590" r="9" fill="#292524" fill-opacity="0.25"/>
+    <circle cx="515" cy="430" r="9" fill="#292524" fill-opacity="0.22"/>
+    <circle cx="890" cy="315" r="9" fill="#292524" fill-opacity="0.2"/>
+  </g>
+</svg>
