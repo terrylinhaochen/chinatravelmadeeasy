@@ -239,20 +239,33 @@ const jsonLd = [
       });
     }
 
+    function icon(name) {
+      if (name === 'map') {
+        return '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"></path><path d="M9 3v15"></path><path d="M15 6v15"></path></svg>';
+      }
+      if (name === 'plus') {
+        return '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>';
+      }
+      return '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>';
+    }
+
     function placeCard(place) {
       const apple = 'https://maps.apple.com/?ll=' + place.latitude + ',' + place.longitude + '&q=' + encodeURIComponent(place.name);
       const kept = keptIds.has(place.id);
+      const toggleLabel = kept ? 'Remove from kept pins' : 'Keep pin';
       return (
         '<article class="curated-place-card ' + (kept ? '' : 'is-muted') + '">' +
-          '<div>' +
-            '<p class="ds-tag">' + escapeHtml(regionLabels[place.regionBucket] || 'Place') + '</p>' +
+          '<div class="curated-place-card-head">' +
+            '<span class="ds-tag">' + escapeHtml(regionLabels[place.regionBucket] || 'Place') + '</span>' +
+            '<div class="curated-place-actions">' +
+              '<button type="button" class="curated-icon-button ' + (kept ? 'is-active' : '') + '" data-curated-toggle="' + escapeHtml(place.id) + '" aria-label="' + toggleLabel + '" title="' + toggleLabel + '">' + icon(kept ? 'check' : 'plus') + '</button>' +
+              '<a class="curated-icon-button" href="' + apple + '" target="_blank" rel="noopener" aria-label="Open in maps" title="Open in maps">' + icon('map') + '</a>' +
+            '</div>' +
+          '</div>' +
+          '<div class="curated-place-card-copy">' +
             '<h3 class="mt-1 text-2xl leading-tight">' + escapeHtml(place.name) + '</h3>' +
             '<p class="mt-2 text-sm leading-relaxed text-soft">' + escapeHtml(place.address) + '</p>' +
             (place.note ? '<p class="mt-2 text-sm leading-relaxed text-soft">Note: ' + escapeHtml(place.note) + '</p>' : '') +
-          '</div>' +
-          '<div class="mt-4 flex flex-wrap gap-2">' +
-            '<button type="button" class="ds-button ' + (kept ? 'ds-button-dark' : 'ds-button-secondary') + '" data-curated-toggle="' + escapeHtml(place.id) + '">' + (kept ? 'Kept' : 'Keep') + '</button>' +
-            '<a class="ds-button ds-button-secondary" href="' + apple + '" target="_blank" rel="noopener">Open map</a>' +
           '</div>' +
         '</article>'
       );
@@ -301,21 +314,84 @@ const jsonLd = [
     line-height: 1;
   }
 
-  .curated-place-card {
-    gap: 1rem;
+  :global(.curated-place-card) {
+    display: grid;
+    min-height: 11.5rem;
+    align-content: start;
+    gap: 0.85rem;
     border: 1px solid var(--color-line);
     border-radius: 12px;
     background: white;
     padding: 1rem;
+    box-shadow: 0 1px 2px rgb(12 10 9 / 0.04);
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease,
+      opacity 160ms ease;
   }
 
-  .curated-place-card.is-muted {
-    opacity: 0.54;
+  :global(.curated-place-card.is-muted) {
+    opacity: 0.58;
   }
 
-  .curated-place-card .ds-button {
-    min-height: 2.5rem;
-    padding: 0.55rem 0.8rem;
-    font-size: 0.85rem;
+  :global(.curated-place-card:hover) {
+    border-color: #d6d3d1;
+    box-shadow:
+      rgba(0, 0, 0, 0.02) 0 0 0 1px,
+      rgba(0, 0, 0, 0.06) 0 5px 18px;
+  }
+
+  :global(.curated-place-card-head) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  :global(.curated-place-card-copy) {
+    min-width: 0;
+  }
+
+  :global(.curated-place-actions) {
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 0.35rem;
+  }
+
+  :global(.curated-icon-button) {
+    display: inline-grid;
+    width: 2.35rem;
+    height: 2.35rem;
+    place-items: center;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: var(--color-paper);
+    color: var(--color-soft);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease;
+  }
+
+  :global(.curated-icon-button:hover),
+  :global(.curated-icon-button:focus-visible) {
+    border-color: rgb(140 47 34 / 0.45);
+    color: var(--color-accent);
+  }
+
+  :global(.curated-icon-button.is-active) {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: white;
+  }
+
+  :global(.curated-icon-button svg) {
+    width: 1.05rem;
+    height: 1.05rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
   }
 </style>
