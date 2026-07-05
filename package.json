@@ -11,11 +11,16 @@
     "prebuild": "npm run images:verify",
     "build": "astro build",
     "preview": "astro preview",
-    "images:generate": "node pipeline/generate_nano_banana_images.mjs",
-    "images:check": "node pipeline/generate_nano_banana_images.mjs --dry-run",
-    "images:fallback": "node pipeline/generate_nano_banana_images.mjs --fallback",
+    "images:generate": "node pipeline/prepare_curated_images.mjs",
+    "images:check": "node pipeline/prepare_curated_images.mjs --dry-run",
     "images:verify": "node pipeline/verify_generated_images.mjs",
+    "audit:seo-ai": "python3 pipeline/seo_ai_audit.py",
     "seed:content": "python3 pipeline/content_seeds_from_crowdlisten.py",
+    "capture:agent-reach": "python3 pipeline/capture_agent_reach_exports.py",
+    "import:agent-reach": "python3 pipeline/agent_reach_to_crowdlisten.py",
+    "test:agent-reach-import": "python3 pipeline/agent_reach_to_crowdlisten.py pipeline/agent-reach-sample.jsonl --out /tmp/china-agent-reach-normalized.json",
+    "sample:agent-reach": "python3 pipeline/agent_reach_to_crowdlisten.py pipeline/agent-reach-sample.jsonl --out pipeline/agent-reach-normalized-seeds.json",
+    "report:agent-reach-gap": "python3 pipeline/agent_reach_gap_report.py",
     "import:handoff": "python3 pipeline/import_handoff_from_crowdlisten.py",
     "draft:handoff": "python3 pipeline/materialize_handoff_drafts.py"
   },
@@ -23,6 +28,7 @@
     "@astrojs/sitemap": "^3.3.0",
     "@tailwindcss/vite": "^4.1.0",
     "astro": "^5.8.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.1.0"
   }
 }

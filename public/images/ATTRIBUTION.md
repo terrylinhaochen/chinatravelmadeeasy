@@ -2,9 +2,9 @@
 
 This folder includes project images from public sources. Public-domain files are noted where applicable.
 
-## Generated Watercolor Assets
+## Curated Site Images
 
-- `generated/*`: Site-specific Sasi watercolor travel illustrations created by `pipeline/generate_nano_banana_images.mjs`. The committed JPEG files are Nano Banana output. Run `npm run images:fallback` only when explicit local SVG preview assets are needed without model credentials.
+- `curated/*`: Optimized site crops prepared from authentic photographs by `pipeline/prepare_curated_images.mjs`. The pipeline only crops, resizes, and compresses real source images for performance. It does not use AI image generation or style transfer. Per-image source references are stored in `src/data/generatedImageManifest.json`.
 
 ## Wikimedia Commons
 

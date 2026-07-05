@@ -1,9 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
-import LocalizedQuestionsPage from '../components/LocalizedQuestionsPage.astro';
+import AnswerListingPage from '../components/AnswerListingPage.astro';
 import { questionAlternates, questionLocales } from '../data/localizedQuestions';
 
 const page = questionLocales.en;
+const perPage = 6;
+const answerItems = page.groups.flatMap((group) => group.questions);
+const currentPage = 1;
+const totalPages = Math.ceil(answerItems.length / perPage);
+const pagedItems = answerItems.slice(0, perPage);
 const faqEntities = page.groups.flatMap((group) =>
   group.questions.map((item) => ({
     '@type': 'Question',
@@ -36,5 +41,5 @@ const jsonLd = [
 ---
 
 <Base title={page.title} description={page.description} lang={page.lang} alternates={questionAlternates} jsonLd={jsonLd}>
-  <LocalizedQuestionsPage page={page} />
+  <AnswerListingPage page={page} items={pagedItems} currentPage={currentPage} totalPages={totalPages} />
 </Base>

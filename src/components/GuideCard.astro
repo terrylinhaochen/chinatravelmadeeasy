@@ -18,24 +18,22 @@ const fmt = updated.toLocaleDateString('en-US', {
 
 <a
   href={`/guides/${guide.id}/`}
-  class="ds-card-link group block overflow-hidden"
+  class="ds-listing-card group"
 >
-  <div class="aspect-[16/9] overflow-hidden bg-surface-strong">
-    <img src={image.src} alt={image.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+  <div class="ds-listing-thumb">
+    <img src={image.src} alt={image.alt} loading="lazy" />
   </div>
-  <div class="p-5">
-    <div class="flex items-start gap-3.5">
-      <span class="ds-icon-tile mt-0.5 h-9 w-9 shrink-0">
-        <Icon name={icon} class="w-5 h-5" />
+  <div class="ds-listing-body">
+    <div class="flex items-center gap-2">
+      <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent-soft text-accent">
+        <Icon name={icon} class="h-4 w-4" />
       </span>
-      <div class="min-w-0">
-        <p class="ds-tag">{category}</p>
-        <h3 class="mt-0.5 text-lg font-bold leading-snug transition-colors group-hover:text-accent">
-          {title}
-        </h3>
-        <p class="text-sm text-soft mt-1.5 leading-relaxed">{description}</p>
-        <p class="text-xs text-faint mt-2.5">Updated {fmt}</p>
-      </div>
+      <p class="ds-tag">{category}</p>
     </div>
+    <h3 class="ds-listing-title">
+      {title}
+    </h3>
+    <p class="ds-listing-copy">{description}</p>
+    <p class="mt-auto pt-4 text-xs text-faint">Updated {fmt}</p>
   </div>
 </a>

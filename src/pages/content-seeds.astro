@@ -56,19 +56,17 @@ const jsonLd = [
   },
   {
     '@context': 'https://schema.org',
-    '@type': 'Dataset',
-    name: 'China Travel Made Easy content seeds',
+    '@type': 'ItemList',
+    name: 'China travel guide update queue',
     description,
-    creator: {
-      '@type': 'Organization',
-      name: 'China Travel Made Easy',
-    },
-    dateModified: payload.generated_at,
-    distribution: {
-      '@type': 'DataDownload',
-      encodingFormat: 'application/json',
-      contentUrl: 'https://chinatravelmadeeasy.com/content-seeds.json',
-    },
+    numberOfItems: payload.seeds.length,
+    itemListElement: payload.seeds.slice(0, 12).map((seed, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: seed.question,
+      description: seed.answer_seed,
+      url: `https://chinatravelmadeeasy.com/content-seeds/#${seed.id}`,
+    })),
   },
 ];
 ---
@@ -123,7 +121,7 @@ const jsonLd = [
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
     <div class="grid gap-4 lg:grid-cols-2">
       {payload.seeds.map((seed) => (
-        <article class="ds-card p-5">
+        <article id={seed.id} class="ds-card scroll-mt-24 p-5">
           <div class="flex flex-wrap items-center gap-2">
             <span class="ds-chip">{seed.category}</span>
             <span class="ds-chip">{seed.kind}</span>

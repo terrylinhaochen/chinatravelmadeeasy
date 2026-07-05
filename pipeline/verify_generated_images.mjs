@@ -25,6 +25,10 @@ async function pathExists(file) {
 async function main() {
   const manifest = await readJson(manifestPath);
   const assets = manifest.assets ?? {};
+  const errors = [];
+  if (manifest.generator !== 'curated-authentic-photo') {
+    errors.push(`unexpected image manifest generator: ${manifest.generator}`);
+  }
   const guideFiles = (await fs.readdir(guideDir))
     .filter((file) => file.endsWith('.md'))
     .map((file) => file.replace(/\.md$/, ''));
@@ -35,15 +39,14 @@ async function main() {
     ...Object.keys(regionImages).map((slug) => `region:${slug}`),
   ];
 
-  const errors = [];
   for (const id of requiredIds) {
     const asset = assets[id];
     if (!asset) {
       errors.push(`missing manifest asset: ${id}`);
       continue;
     }
-    if (!asset.src?.startsWith('/images/generated/')) {
-      errors.push(`${id} uses non-generated src: ${asset.src}`);
+    if (!asset.src?.startsWith('/images/curated/')) {
+      errors.push(`${id} uses non-curated src: ${asset.src}`);
       continue;
     }
     const publicPath = path.join(root, 'public', asset.src);
@@ -53,8 +56,11 @@ async function main() {
     if (!asset.alt?.trim()) {
       errors.push(`${id} is missing alt text`);
     }
-    if (!asset.prompt?.includes('Sasi watercolor travel editorial style')) {
-      errors.push(`${id} is missing the Sasi watercolor prompt`);
+    if (!asset.source?.trim()) {
+      errors.push(`${id} is missing source attribution`);
+    }
+    if (asset.prompt) {
+      errors.push(`${id} still has prompt metadata; curated photos should not use image prompts`);
     }
   }
 
@@ -64,7 +70,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`Verified ${requiredIds.length} generated image assets from ${manifest.generator}.`);
+  console.log(`Verified ${requiredIds.length} curated authentic image assets.`);
 }
 
 main().catch((error) => {

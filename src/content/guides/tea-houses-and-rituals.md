@@ -1,6 +1,8 @@
 ---
 title: "Tea in China for Visitors: Tea Houses, Gongfu Basics & Avoiding the Tea Scam"
 description: "What actually happens in a Chinese tea house, what it costs, the regional teas worth trying, how gongfu brewing works, how to buy tea to bring home without overpaying — and how to dodge the infamous tea ceremony scam."
+seoTitle: "Chinese Tea Houses for Visitors"
+seoDescription: "Visit tea houses in China, understand gongfu tea basics, know fair prices, choose regional teas, and avoid tea scams."
 updated: 2026-06-12
 order: 12
 category: "Authentic China"

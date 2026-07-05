@@ -1,6 +1,8 @@
 ---
 title: "Internet in China: eSIMs, VPN Reality Check, and What's Blocked (2026)"
 description: "How to keep Google, WhatsApp, and Instagram working in China — why a travel eSIM beats a VPN, what's actually blocked, and the trade-offs of roaming vs a local SIM."
+seoTitle: "China eSIMs, VPNs, and Blocked Apps"
+seoDescription: "Keep Google, WhatsApp, Instagram, maps, and email working in China with eSIMs, roaming, VPN planning, and app backups."
 updated: 2026-06-07
 order: 3
 category: "Internet & Apps"

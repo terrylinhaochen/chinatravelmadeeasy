@@ -19,11 +19,23 @@ const matchedGuides = destination.guideIds
   .map((id) => guidesById[id])
   .filter(Boolean)
   .slice(0, 6);
+const featuredPlaces = destination.places.slice(0, 3);
+const appleMapsUrl = (query: string) => `https://maps.apple.com/?q=${encodeURIComponent(query)}`;
 const faqItems = [
   {
     q: `What is ${destination.name} best for on a China trip?`,
-    a: `${destination.name} is best for ${destination.summary.toLowerCase()} ${destination.why}`,
+    a: `${destination.name} is best for ${destination.summary.toLowerCase()}. ${destination.why}`,
   },
+  ...(featuredPlaces.length
+    ? [
+        {
+          q: `Where should backpackers start in ${destination.name}?`,
+          a: `Start with ${featuredPlaces
+            .map((place) => `${place.name} in ${place.area}`)
+            .join(', ')}. These places are chosen for authentic texture, practical routing, and better value than default tour stops.`,
+        },
+      ]
+    : []),
   {
     q: `Which guides should I read before visiting ${destination.name}?`,
     a: matchedGuides.length
@@ -39,7 +51,7 @@ const faqItems = [
   },
 ];
 
-const description = `${destination.name} China travel planning: ${destination.summary}. Find the best practical guides for this region.`;
+const description = `${destination.name} China travel planning: ${destination.summary}. Find practical guides and backpacker-friendly places to save.`;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -49,6 +61,22 @@ const jsonLd = [
     description,
     isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
   },
+  ...(featuredPlaces.length
+    ? [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: `${destination.name} backpacker places`,
+          itemListElement: featuredPlaces.map((place, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: place.name,
+            url: appleMapsUrl(place.mapQuery),
+            description: `${place.why} ${place.budgetTip}`,
+          })),
+        },
+      ]
+    : []),
   {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -69,14 +97,14 @@ const jsonLd = [
 
 <Base title={`${destination.name} travel guides`} description={description} image={destination.image.src} jsonLd={jsonLd}>
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-    <a href="/regions/" class="inline-flex items-center gap-2 text-sm font-semibold text-soft hover:text-accent">
+    <a href="/regions/" class="inline-flex min-h-8 items-center gap-2 text-sm font-semibold text-soft hover:text-accent">
       <Icon name="arrow" class="h-3.5 w-3.5 rotate-180" />
       All destinations
     </a>
     <div class="mt-6 grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
       <div>
         <p class="ds-eyebrow">{destination.type}</p>
-        <h1 class="mt-2 text-5xl font-bold leading-none sm:text-6xl">{destination.name}</h1>
+        <h1 class="mt-2 text-5xl leading-none sm:text-6xl">{destination.name}</h1>
       </div>
       <div>
         <p class="text-xl leading-relaxed text-soft">{destination.summary}</p>
@@ -87,33 +115,95 @@ const jsonLd = [
     <figure class="ds-photo mt-8">
       <img src={destination.image.src} alt={destination.image.alt} class="h-[280px] w-full object-cover sm:h-[420px]" fetchpriority="high" />
       <figcaption class="border-t border-line px-4 py-2 text-xs text-faint">
-        Cover source: <a href={destination.image.source} class="hover:text-accent" rel="noopener">{destination.image.title}</a>
+        Cover source: <a href={destination.image.source} class="inline-flex min-h-8 items-center hover:text-accent" rel="noopener">{destination.image.title}</a>
       </figcaption>
     </figure>
 
     <div class="mt-8 flex flex-wrap gap-3">
-      <a href={`https://maps.apple.com/?q=${encodeURIComponent(destination.mapQuery)}`} class="ds-button ds-button-primary">
+      <a href={appleMapsUrl(destination.mapQuery)} class="ds-button ds-button-primary">
         Open in Apple Maps
       </a>
       <a href="/map-import/" class="ds-button ds-button-secondary">
         Save social links
       </a>
     </div>
+
+    <div class="ds-map-panel mt-8 min-h-[18rem]">
+      <div class="ds-map-legend">
+        <p class="ds-eyebrow">Region pin</p>
+        <h2 class="mt-2 text-3xl leading-tight">{destination.name} on the planning map.</h2>
+        <p class="mt-3 text-sm leading-relaxed text-soft">
+          Use this as the regional anchor, then save nearby places from posts, screenshots, and community lists.
+        </p>
+      </div>
+      {destinations.map((region) => (
+        <a
+          href={`/regions/${region.slug}/`}
+          class="ds-map-pin"
+          style={`--pin-x: ${region.mapPin.x}%; --pin-y: ${region.mapPin.y}%`}
+          data-current={region.slug === destination.slug ? 'true' : 'false'}
+          aria-label={`${region.name}: ${region.summary}`}
+          title={region.name}
+        >
+          {region.slug === destination.slug ? '●' : region.name.slice(0, 2)}
+        </a>
+      ))}
+    </div>
   </section>
+
+  {featuredPlaces.length > 0 && (
+    <section class="mx-auto max-w-6xl px-4 sm:px-6">
+      <div class="ds-panel p-5 sm:p-8">
+        <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+          <div>
+            <p class="ds-eyebrow">Backpacker shortlist</p>
+            <h2 class="mt-2 text-3xl">Places to go in {destination.name}</h2>
+          </div>
+          <p class="leading-relaxed text-soft">
+            A starter list for travelers who care about authentic texture, easy routing, and cost control.
+            Use these as map anchors, then build nearby food, transit, and stay decisions around them.
+          </p>
+        </div>
+        <div class="mt-8 grid gap-4 lg:grid-cols-3">
+          {featuredPlaces.map((place, index) => (
+            <article class="ds-card flex h-full flex-col p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="ds-tag">{place.area}</p>
+                  <h3 class="mt-2 text-2xl">{place.name}</h3>
+                </div>
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-surface-strong text-sm font-semibold text-soft">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+              </div>
+              <p class="mt-4 text-sm leading-relaxed text-soft">{place.why}</p>
+              <p class="mt-4 border-t border-line pt-4 text-sm leading-relaxed text-ink">
+                <span class="font-semibold">Budget move:</span> {place.budgetTip}
+              </p>
+              <a href={appleMapsUrl(place.mapQuery)} class="mt-5 inline-flex min-h-8 items-center gap-2 text-sm font-semibold text-accent hover:underline">
+                Open in Apple Maps
+                <Icon name="arrow" class="h-3.5 w-3.5" />
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
 
   <section class="mx-auto max-w-6xl px-4 sm:px-6">
     <div class="ds-card p-5 sm:p-8">
       <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
         <div>
           <p class="ds-eyebrow">Guide matches</p>
-          <h2 class="mt-2 text-3xl font-bold">Start with these guides</h2>
+          <h2 class="mt-2 text-3xl">Start with these guides</h2>
         </div>
         <p class="leading-relaxed text-soft">
           These are the current China Travel Made Easy guides most relevant to planning {destination.name}.
-          CrowdListen seeds can add more region-specific answers as repeated questions and recommendations show up.
+          Start here for the logistics that affect cost, comfort, and avoidable mistakes before the route gets specific.
         </p>
       </div>
-      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+      <div class="ds-listing-grid mt-8">
         {matchedGuides.map((guide) => <GuideCard guide={guide} />)}
       </div>
     </div>
@@ -122,11 +212,11 @@ const jsonLd = [
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
     <div class="ds-panel p-5 sm:p-8">
       <p class="ds-eyebrow">Destination QA</p>
-      <h2 class="mt-2 text-3xl font-bold">Answers for planning {destination.name}</h2>
+      <h2 class="mt-2 text-3xl">Answers for planning {destination.name}</h2>
       <dl class="ds-card mt-5 divide-y divide-line">
         {faqItems.map((item) => (
           <div class="grid gap-2 p-4 sm:grid-cols-[0.85fr_1.15fr] sm:p-5">
-            <dt class="text-xl font-bold">{item.q}</dt>
+            <dt class="text-xl font-semibold">{item.q}</dt>
             <dd class="text-sm leading-relaxed text-soft">{item.a}</dd>
           </div>
         ))}

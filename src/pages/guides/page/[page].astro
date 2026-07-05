@@ -1,0 +1,43 @@
+---
+import Base from '../../../layouts/Base.astro';
+import GuideListingPage from '../../../components/GuideListingPage.astro';
+import { getCollection } from 'astro:content';
+
+const perPage = 6;
+
+export async function getStaticPaths() {
+  const pageSize = 6;
+  const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+  const totalPages = Math.ceil(guides.length / pageSize);
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => {
+    const page = index + 2;
+    return {
+      params: { page: String(page) },
+      props: {
+        currentPage: page,
+        totalPages,
+        guides: guides.slice((page - 1) * pageSize, page * pageSize),
+      },
+    };
+  });
+}
+
+const { guides, currentPage, totalPages } = Astro.props;
+const description =
+  `China Travel Made Easy guides, page ${currentPage}: payments, internet, visas, trains, city transport, language, hotels, food, and first-trip planning.`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `China travel guides page ${currentPage}`,
+    url: `https://chinatravelmadeeasy.com/guides/page/${currentPage}/`,
+    description,
+    isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
+  },
+];
+---
+
+<Base title={`Guides page ${currentPage}`} description={description} jsonLd={jsonLd}>
+  <GuideListingPage guides={guides} currentPage={currentPage} totalPages={totalPages} />
+</Base>

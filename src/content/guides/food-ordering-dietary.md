@@ -1,6 +1,8 @@
 ---
 title: "Eating in China Without Chinese: QR Menus, Dietary Needs & Delivery"
 description: "How scan-to-order restaurants work, translating menus on your own phone, communicating allergies and dietary restrictions in Chinese, and whether food delivery is worth it for visitors."
+seoTitle: "Ordering Food in China Without Chinese"
+seoDescription: "Order food in China with QR menus, camera translation, pointing, allergy cards, vegetarian phrases, and spice-level control."
 updated: 2026-06-02
 order: 9
 category: "Food"

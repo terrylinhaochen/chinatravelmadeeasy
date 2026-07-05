@@ -6,6 +6,8 @@ const guides = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    seoTitle: z.string().optional(),
+    seoDescription: z.string().optional(),
     updated: z.coerce.date(),
     order: z.number(),
     category: z.string(),

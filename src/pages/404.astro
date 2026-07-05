@@ -1,12 +1,29 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const description =
+  "This China Travel Made Easy page does not exist. Use the guide library to find current China travel planning answers.";
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Page not found',
+    description,
+    isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
+  },
+];
 ---
 
-<Base title="Page not found" description="This page doesn't exist on China Travel Made Easy.">
+<Base title="Page not found" description={description} robots="noindex, follow" jsonLd={jsonLd}>
   <section class="mx-auto max-w-3xl px-4 sm:px-6 py-24 text-center">
     <p class="text-6xl font-bold text-accent">404</p>
     <h1 class="mt-4 text-2xl font-bold">This page doesn't exist</h1>
-    <p class="text-soft mt-3">Maybe the guide moved, or the link was mistyped.</p>
+    <p class="text-soft mt-3">
+      Maybe the guide moved, or the link was mistyped. The current guide library covers China visas,
+      payments, eSIMs, trains, hotels, food, language, destination regions, and map-ready place lists.
+      If you arrived from a saved pin or old search result, start with the guide index and then save the
+      useful place back to your map once the current route or rule is clear.
+    </p>
     <a
       href="/guides/"
       class="ds-button ds-button-primary mt-6"

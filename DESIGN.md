@@ -1,14 +1,14 @@
 ---
 version: alpha
 name: China-Travel-Made-Easy-elevenlabs-inspired-system
-description: A travel editorial system adapted from ElevenLabs' quietly cinematic marketing language. The base canvas is off-white (`#f5f5f5`) holding warm near-black ink (`#292524`); the brand voltage is AI-generated Sasi watercolor travel imagery rather than saturated CTA color. Display uses a light serif stack as the Waldenburg substitute. Inter/system sans carries body, navigation, captions. CTAs are subtle: a near-black ink pill is the primary, a transparent outline is the secondary.
+description: A travel editorial system adapted from ElevenLabs' quietly cinematic marketing language. The base canvas is off-white (`#f5f5f5`) holding warm near-black ink (`#292524`); the brand voltage comes from authentic, source-attributed travel photography rather than saturated CTA color. Display uses a light serif stack as the Waldenburg substitute. Inter/system sans carries body, navigation, captions. CTAs are subtle: a near-black ink pill is the primary, a transparent outline is the secondary.
 
 project_overrides:
   active_reference: "Use this file as the active UI reference instead of the older Airbnb-inspired system."
-  imagery: "Use generated Sasi watercolor travel assets from public/images/generated, produced by pipeline/generate_nano_banana_images.mjs."
-  image_model: "Nano Banana via Gemini Interactions API for npm run images:generate; local watercolor fallback only through explicit npm run images:fallback."
+  imagery: "Use authentic, source-attributed travel photography from public/images/curated, prepared by pipeline/prepare_curated_images.mjs."
+  image_model: "No AI image generation in the site image workflow. npm run images:generate only crops, resizes, and compresses real source photos."
   navigation: "Guides contains the former Topics planning index. Questions is renamed to Answers in navigation and primary routes."
-  color_rule: "No saturated red CTA system. Primary actions use warm near-black ink pills; color moments come from watercolor imagery."
+  color_rule: "No saturated red CTA system. Primary actions use warm near-black ink pills; color moments come from authentic photography."
 
 colors:
   primary: "#292524"
@@ -258,6 +258,42 @@ components:
     textColor: "{colors.body}"
     typography: "{typography.body-sm}"
 ---
+
+## Repo implementation
+
+The active design system lives in `src/styles/global.css` under the `.ds-*` component layer.
+Use `DESIGN.md` as the source of truth for tone, tokens, and component intent.
+
+### Editorial media tiles
+
+Use `.ds-media-panel`, `.ds-media-grid`, `.ds-media-grid-four`, `.ds-media-tile`,
+`.ds-media-thumb`, `.ds-media-body`, `.ds-media-title`, and `.ds-media-copy` for compact
+image-backed navigation and listing surfaces. This is the shared pattern for:
+
+- Homepage Places / Eating / Traveling / Hospitality tiles.
+- Guides listing cards.
+- Answers listing cards.
+
+The tile should feel like a quiet editorial index: real photo first, small uppercase label,
+light serif title, short practical copy. Avoid heavy nested cards, icon-heavy metadata, and
+large saturated accent blocks.
+
+### Product surface
+
+The Save to Maps block is the product differentiator. Lead with a single promise:
+travelers can bring posts, screenshots, captions, notes, or shared pin lists and turn them
+into clean map-ready places. Do not disclose provider names, semantic search, sharing,
+or remixing as up-front feature chips. The staged UI should reveal those details only after
+the user extracts places or saves a list.
+
+Default homepage priority:
+
+1. Product hero: save places to maps.
+2. Paste/upload/drop surface.
+3. Extracted places preview.
+4. Map choice after the user clicks Save to maps.
+5. Saved-list search/remix after the user has saved something.
+6. Travel guides as supporting context, not the main homepage identity.
 
 ## Overview
 

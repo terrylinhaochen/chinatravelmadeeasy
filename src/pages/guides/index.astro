@@ -1,198 +1,29 @@
 ---
 import Base from '../../layouts/Base.astro';
-import GuideCard from '../../components/GuideCard.astro';
-import Icon from '../../components/Icon.astro';
+import GuideListingPage from '../../components/GuideListingPage.astro';
 import { getCollection } from 'astro:content';
 
-const guides = (await getCollection('guides')).sort(
-  (a, b) => a.data.order - b.data.order
-);
-const guideById = Object.fromEntries(guides.map((guide) => [guide.id, guide]));
-const demandUpdates = [
-  {
-    label: 'Updated from traveler payment failures',
-    title: 'Foreign-card payments need fallback planning, not just setup steps',
-    href: '/guides/alipay-wechat-pay-foreign-cards/',
-    body: 'The payment guide now covers linked-card failures, private QR problems, second-card strategy, and cash fallback order.',
-  },
-  {
-    label: 'Next guide queue',
-    title: 'Visa routing, hotel passport checks, food ordering, and social-save workflows',
-    href: '/content-seeds/',
-    body: 'The public seed queue shows which traveler questions are ready for evidence gathering and guide updates.',
-  },
-  {
-    label: 'Product workflow',
-    title: 'Turn social travel links into save-ready map places',
-    href: '/map-import/',
-    body: 'A lightweight place extraction flow converts social inspiration into Apple Maps and AMap search cards.',
-  },
-];
-const priorityGuides = [
-  guideById['alipay-wechat-pay-foreign-cards'],
-  guideById['china-visa-free-2026'],
-  guideById['hotels-foreigners-china'],
-  guideById['food-ordering-dietary'],
-].filter(Boolean);
-const planningTopics = [
-  {
-    title: 'Start here',
-    icon: 'checklist',
-    question: 'What should I set up before my first China trip?',
-    body: 'Entry rules, apps, payments, internet, hotels, and booking windows in the order travelers actually need them.',
-    href: '/guides/china-pre-departure-checklist/',
-    guideIds: ['china-pre-departure-checklist', 'china-visa-free-2026', 'alipay-wechat-pay-foreign-cards'],
-  },
-  {
-    title: 'Places',
-    icon: 'map',
-    question: 'Which China destinations should I compare first?',
-    body: 'Start with the highest-intent regions, then open the full destination index when route shape matters.',
-    href: '/regions/',
-    guideIds: ['7-day-china-itinerary', 'neighborhoods-beyond-landmarks', 'festivals-and-local-experiences'],
-  },
-  {
-    title: 'Money and apps',
-    icon: 'wallet',
-    question: 'Can foreign visitors pay and use apps normally in China?',
-    body: 'Alipay, WeChat Pay, foreign cards, cash backup, eSIMs, blocked apps, and mobile setup.',
-    href: '/guides/alipay-wechat-pay-foreign-cards/',
-    guideIds: ['alipay-wechat-pay-foreign-cards', 'internet-esim-vpn-blocked-apps', 'china-pre-departure-checklist'],
-  },
-  {
-    title: 'Transport',
-    icon: 'train',
-    question: 'Should I use trains, Didi, metro, or domestic flights?',
-    body: 'High-speed rail, Didi, metro QR codes, airport pickup, and choosing rail versus flights.',
-    href: '/guides/china-high-speed-trains/',
-    guideIds: ['china-high-speed-trains', 'didi-metro-getting-around', '7-day-china-itinerary'],
-  },
-  {
-    title: 'Staying',
-    icon: 'bed',
-    question: 'How do I avoid hotel check-in problems?',
-    body: 'Hotels that accept foreign passports, police registration, neighborhood choices, and booking traps.',
-    href: '/guides/hotels-foreigners-china/',
-    guideIds: ['hotels-foreigners-china', 'translation-language-survival', 'china-pre-departure-checklist'],
-  },
-  {
-    title: 'Eating',
-    icon: 'bowl',
-    question: 'How do I order food without getting stuck at QR menus?',
-    body: 'Street food, QR menus, dietary needs, tea houses, spice levels, and food streets worth skipping.',
-    href: '/guides/street-food-night-markets/',
-    guideIds: ['street-food-night-markets', 'food-ordering-dietary', 'tea-houses-and-rituals'],
-  },
-];
-const topicFaqEntities = planningTopics.map((topic) => ({
-  '@type': 'Question',
-  name: topic.question,
-  acceptedAnswer: {
-    '@type': 'Answer',
-    text: topic.body,
-    url: new URL(topic.href, Astro.site).toString(),
-  },
-}));
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+const perPage = 6;
+const currentPage = 1;
+const totalPages = Math.ceil(guides.length / perPage);
+const pagedGuides = guides.slice(0, perPage);
 
 const description =
-  'Every China Travel Made Easy guide and planning topic: payments, internet, visas, trains, city transport, language, hotels, food, and demand-backed travel answers.';
+  'China Travel Made Easy guides for payments, internet, visas, trains, city transport, language, hotels, food, and first-trip planning.';
 
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'All China travel guides and planning topics',
+    name: 'China travel guides',
     url: 'https://chinatravelmadeeasy.com/guides/',
     description,
     isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
   },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    name: 'China travel planning topics',
-    description,
-    inLanguage: 'en',
-    mainEntity: topicFaqEntities,
-  },
 ];
 ---
 
-<Base title="All guides" description={description} jsonLd={jsonLd}>
-  <section class="mx-auto max-w-6xl px-4 sm:px-6 py-12">
-    <h1 class="text-3xl font-bold">All guides</h1>
-    <p class="text-soft mt-3 max-w-2xl leading-relaxed">
-      Read the <a href="/guides/china-pre-departure-checklist/" class="text-accent underline">pre-departure
-      checklist</a> first — it links to everything else in the order you'll actually need it.
-    </p>
-    <div class="ds-panel mt-8 p-5 sm:p-6">
-      <div class="grid gap-5 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
-        <div>
-          <p class="ds-eyebrow">
-            CrowdListen guide desk
-          </p>
-          <h2 class="mt-2 text-3xl font-bold leading-tight">
-            Demand-backed updates to make the site less sparse.
-          </h2>
-          <p class="mt-3 text-soft leading-relaxed">
-            The guide queue starts from repeated traveler problems, then turns them into finished
-            pages, FAQ blocks, and save-ready planning tools.
-          </p>
-        </div>
-        <div class="grid gap-3">
-          {demandUpdates.map((update) => (
-            <a href={update.href} class="ds-card-link group p-4">
-              <p class="ds-tag">{update.label}</p>
-              <h3 class="mt-1 text-xl font-bold leading-snug group-hover:text-accent">{update.title}</h3>
-              <p class="mt-2 text-sm leading-relaxed text-soft">{update.body}</p>
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-    <section id="topics" class="mt-10 scroll-mt-24">
-      <div class="grid gap-5 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
-        <div>
-          <p class="ds-eyebrow">Planning topics</p>
-          <h2 class="mt-2 text-3xl font-bold leading-tight">Plan by what you need to solve</h2>
-        </div>
-        <p class="leading-relaxed text-soft">
-          The former Topics hub now lives inside Guides, so travelers can move from a planning
-          question directly into the relevant guide without changing sections.
-        </p>
-      </div>
-      <div class="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {planningTopics.map((topic) => (
-          <a href={topic.href} class="ds-card-link group p-5">
-            <span class="ds-icon-tile">
-              <Icon name={topic.icon} class="h-5 w-5" />
-            </span>
-            <h3 class="mt-3 text-2xl font-medium group-hover:text-accent">{topic.title}</h3>
-            <p class="mt-3 font-medium leading-snug text-ink">{topic.question}</p>
-            <p class="mt-2 text-sm leading-relaxed text-soft">{topic.body}</p>
-            <div class="mt-4 border-t border-line pt-3">
-              <p class="ds-tag">Related guides</p>
-              <div class="mt-2 flex flex-wrap gap-2">
-                {topic.guideIds.map((id) => guideById[id]).filter(Boolean).map((guide) => (
-                  <span class="ds-chip">
-                    {guide.data.category}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </section>
-    <div class="mt-10">
-      <p class="ds-eyebrow">
-        Highest-intent planning questions
-      </p>
-      <div class="grid sm:grid-cols-2 gap-4 mt-3">
-        {priorityGuides.map((guide) => <GuideCard guide={guide} />)}
-      </div>
-    </div>
-    <div class="grid sm:grid-cols-2 gap-4 mt-8">
-      {guides.map((guide) => <GuideCard guide={guide} />)}
-    </div>
-  </section>
+<Base title="Guides" description={description} jsonLd={jsonLd}>
+  <GuideListingPage guides={pagedGuides} currentPage={currentPage} totalPages={totalPages} />
 </Base>

@@ -1,6 +1,8 @@
 ---
 title: "A First-Timer's 7-Day China Itinerary: Beijing, Xi'an & Shanghai"
 description: "A realistic one-week route through Beijing, Xi'an, and Shanghai with the logistics built in — which tickets to book when, train times, neighborhood choices, and where first-timers lose half a day."
+seoTitle: "7-Day China Itinerary for First-Timers"
+seoDescription: "Plan one week in Beijing, Xi'an, and Shanghai with train timing, key bookings, neighborhoods, and visa-free routing."
 updated: 2026-06-01
 order: 10
 category: "Planning"

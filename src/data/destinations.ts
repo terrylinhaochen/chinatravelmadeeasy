@@ -1,4 +1,5 @@
 import { requireGeneratedImage } from './generatedImages';
+import { backpackerPlaces, type BackpackerPlace } from './backpackerPlaces';
 
 export interface DestinationImage {
   src: string;
@@ -16,6 +17,11 @@ export interface Destination {
   featured?: boolean;
   guideIds: string[];
   mapQuery: string;
+  mapPin: {
+    x: number;
+    y: number;
+  };
+  places: BackpackerPlace[];
   image: DestinationImage;
 }
 
@@ -26,7 +32,7 @@ const defaultGuideIds = [
   'translation-language-survival',
 ];
 
-const destinationRecords: Omit<Destination, 'image'>[] = [
+const destinationRecords: Omit<Destination, 'image' | 'mapPin'>[] = [
   {
     name: 'Hong Kong',
     slug: 'hong-kong',
@@ -339,6 +345,43 @@ const destinationRecords: Omit<Destination, 'image'>[] = [
   },
 ];
 
+const mapPins: Record<string, Destination['mapPin']> = {
+  'hong-kong': { x: 61, y: 82 },
+  taiwan: { x: 75, y: 79 },
+  shanghai: { x: 73, y: 61 },
+  beijing: { x: 67, y: 35 },
+  tianjin: { x: 69, y: 37 },
+  chongqing: { x: 51, y: 64 },
+  anhui: { x: 65, y: 59 },
+  fujian: { x: 68, y: 75 },
+  gansu: { x: 43, y: 43 },
+  guangdong: { x: 59, y: 80 },
+  guizhou: { x: 50, y: 73 },
+  hainan: { x: 55, y: 91 },
+  hebei: { x: 65, y: 39 },
+  heilongjiang: { x: 78, y: 13 },
+  henan: { x: 61, y: 50 },
+  hubei: { x: 59, y: 60 },
+  hunan: { x: 58, y: 68 },
+  jiangsu: { x: 70, y: 57 },
+  jiangxi: { x: 64, y: 68 },
+  jilin: { x: 80, y: 22 },
+  liaoning: { x: 75, y: 31 },
+  qinghai: { x: 37, y: 58 },
+  shaanxi: { x: 53, y: 51 },
+  shandong: { x: 68, y: 45 },
+  shanxi: { x: 59, y: 43 },
+  sichuan: { x: 45, y: 65 },
+  yunnan: { x: 42, y: 79 },
+  zhejiang: { x: 70, y: 66 },
+  guangxi: { x: 52, y: 78 },
+  'inner-mongolia': { x: 55, y: 25 },
+  ningxia: { x: 49, y: 45 },
+  tibet: { x: 25, y: 67 },
+  xinjiang: { x: 20, y: 38 },
+  macau: { x: 60, y: 83 },
+};
+
 export const destinations: Destination[] = destinationRecords.map((destination) => {
   const generated = requireGeneratedImage(`region:${destination.slug}`);
   const image = {
@@ -347,7 +390,7 @@ export const destinations: Destination[] = destinationRecords.map((destination) 
     source: generated.source,
     title: generated.title,
   };
-  return { ...destination, image };
+  return { ...destination, mapPin: mapPins[destination.slug], places: backpackerPlaces[destination.slug] ?? [], image };
 });
 
 export const featuredDestinations = destinations.filter((destination) => destination.featured);

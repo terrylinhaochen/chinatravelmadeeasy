@@ -1,0 +1,69 @@
+---
+import GuideCard from './GuideCard.astro';
+import Pagination from './Pagination.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  guides: CollectionEntry<'guides'>[];
+  currentPage: number;
+  totalPages: number;
+}
+
+const { guides, currentPage, totalPages } = Astro.props;
+---
+
+<section class="ds-section">
+  <p class="ds-eyebrow">Guides</p>
+  <div class="ds-section-head mt-3">
+    <div>
+      <h1 class="ds-section-title">China travel guides</h1>
+    </div>
+    <p class="text-lg leading-relaxed text-soft">
+      Start with the essentials, then open the guide that matches the problem in front of you:
+      payments, internet, trains, hotels, food, language, or route planning.
+    </p>
+  </div>
+
+  <div class="ds-listing-grid mt-8">
+    {guides.map((guide) => <GuideCard guide={guide} />)}
+  </div>
+
+  <section class="ds-panel mt-10 p-5 sm:p-6" aria-labelledby="guide-use-heading">
+    <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+      <div>
+        <p class="ds-eyebrow">Guide finder</p>
+        <h2 id="guide-use-heading" class="mt-2 text-3xl leading-tight">Which guide should I open first?</h2>
+      </div>
+      <div class="grid gap-4 text-sm leading-relaxed text-soft sm:grid-cols-3">
+        <p>
+          If you have not booked flights, start with visas, payments, phone setup, and the
+          pre-departure checklist. Those decisions are hardest to repair after landing.
+        </p>
+        <p>
+          If your route is already set, open the train, hotel, food, and city-transport guides.
+          They help turn a saved place into a day that works on the ground.
+        </p>
+        <p>
+          If you are collecting recommendations from friends or social posts, use Save Places
+          first, then return here for the guide that explains the practical context behind each pin.
+        </p>
+        <p>
+          Later guide pages are still part of the core planning flow. They cover timing, local
+          experiences, tea houses, neighborhood wandering, food safety, and other decisions that make
+          a low-cost trip feel less generic.
+        </p>
+        <p>
+          Use the cards as a checklist instead of reading everything in order. Open the guide that
+          matches today&apos;s booking or map decision, then come back when the next part of the route
+          needs context.
+        </p>
+        <p>
+          Every guide is written to support quick lookup: a direct answer, practical caveats, and links
+          back to related places or tools when the advice should become a saved pin.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Pagination basePath="/guides/" currentPage={currentPage} totalPages={totalPages} />
+</section>

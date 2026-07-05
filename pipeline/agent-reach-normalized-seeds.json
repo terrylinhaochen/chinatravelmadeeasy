@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-07-05T04:12:25.776981+00:00",
+  "source": "agent-reach-export",
+  "note": "Normalized from Agent-Reach platform exports. Review before publishing.",
+  "seeds": [
+    {
+      "id": "where-should-backpackers-go-in-shanghai-for-authentic-good-value-experie",
+      "source": "agent-reach",
+      "kind": "recommendation",
+      "category": "Places",
+      "priority": 55,
+      "question": "Where should backpackers go in Shanghai for authentic, good-value experiences?",
+      "concern": "Agent-Reach cluster from 1 row(s) across xiaohongshu.",
+      "destinations": [
+        "shanghai"
+      ],
+      "recommended_places": [],
+      "evidence_summary": "1 Agent-Reach row(s), total engagement 180.",
+      "evidence_count": 1,
+      "source_mix": [
+        "xiaohongshu"
+      ],
+      "evidence": [
+        {
+          "platform": "xiaohongshu",
+          "query": "上海 背包客 省钱 citywalk",
+          "title": "上海citywalk省钱路线",
+          "quote": "上海citywalk省钱路线 老西门和弄堂路线，便宜面馆，不走游客商场，适合第一次来上海的背包客。 上海 背包客 省钱 citywalk 上海 citywalk 省钱",
+          "url": "https://www.xiaohongshu.com/explore/example-shanghai-citywalk",
+          "engagement": 180
+        }
+      ],
+      "codex_brief": "Review sources, merge with CrowdListen clusters, then update destination places, guide FAQs, or content seeds.",
+      "status": "needs_crowdlisten_review"
+    },
+    {
+      "id": "where-should-budget-travelers-eat-in-shanghai",
+      "source": "agent-reach",
+      "kind": "recommendation",
+      "category": "Eating",
+      "priority": 47,
+      "question": "Where should budget travelers eat in Shanghai?",
+      "concern": "Agent-Reach cluster from 1 row(s) across reddit.",
+      "destinations": [
+        "shanghai"
+      ],
+      "recommended_places": [],
+      "evidence_summary": "1 Agent-Reach row(s), total engagement 27.",
+      "evidence_count": 1,
+      "source_mix": [
+        "reddit"
+      ],
+      "evidence": [
+        {
+          "platform": "reddit",
+          "query": "china backpacking budget travel reddit",
+          "title": "Best cheap neighborhoods in Shanghai?",
+          "quote": "Best cheap neighborhoods in Shanghai? I want authentic food, city walks, and hostels without spending too much on a first China trip. china backpacking budget travel reddit",
+          "url": "https://reddit.com/r/travel/example-shanghai-budget",
+          "engagement": 27
+        }
+      ],
+      "codex_brief": "Review sources, merge with CrowdListen clusters, then update destination places, guide FAQs, or content seeds.",
+      "status": "needs_crowdlisten_review"
+    }
+  ]
+}

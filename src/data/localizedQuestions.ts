@@ -17,14 +17,6 @@ export const questionLocales = {
     heading: 'Common China travel answers, matched to the right guide.',
     intro:
       'Answer pages should match how travelers actually search: short concerns, direct answers, and a guide when they need more detail.',
-    whyTitle: 'Why QA works for travel planning',
-    whyCopy:
-      'Visitors rarely start with a table of contents. They ask whether Alipay works, where to stay, how trains work, or what to set up before flying. Keeping pages in question-and-answer form makes the content easier to scan, translate, index, and retrieve.',
-    steps: [
-      ['Listen', 'Collect review language, forum questions, social posts, and trip reports.'],
-      ['Localize', 'Rewrite the same intent in the way English, Korean, and Japanese travelers ask it.'],
-      ['Answer', 'Give a short answer first, then point to the full guide or map-saving tool.'],
-    ],
     readAnswer: 'Read answer',
     submitTitle: 'What should we answer next?',
     submitCopy: 'Send a real planning question. The best questions become new guides or updates to existing ones.',
@@ -133,19 +125,11 @@ export const questionLocales = {
     label: '한국어',
     title: '중국 여행 질문과 답변',
     description:
-      '비자, 결제, eSIM, 호텔, 음식, 기차, 언어, 일정에 대한 중국 여행 질문을 한국어 QA 형식으로 정리했습니다.',
+      '비자, 결제, eSIM, 호텔, 음식, 기차, 언어, 일정, 지도 저장에 대한 중국 여행 질문을 한국어 QA 형식으로 정리하고 관련 가이드로 연결합니다.',
     eyebrow: '여행자 질문',
     heading: '중국 여행 전에 가장 많이 묻는 질문.',
     intro:
       '한국어 검색 사용자는 짧고 구체적인 질문으로 정보를 찾는 경우가 많습니다. 그래서 답변은 먼저 결론을 말하고, 필요한 경우 자세한 가이드로 연결합니다.',
-    whyTitle: '왜 QA 형식인가',
-    whyCopy:
-      '중국 여행 정보는 앱, 결제, 호텔, 교통처럼 불안한 지점이 뚜렷합니다. 질문 단위로 정리하면 검색에도 잘 잡히고, 여행자가 필요한 답만 빠르게 찾을 수 있습니다.',
-    steps: [
-      ['수집', '후기, 커뮤니티 질문, 현지 SNS, 여행 기록에서 실제 표현을 모읍니다.'],
-      ['현지화', '영어 문장을 그대로 번역하지 않고 한국어 여행자가 묻는 방식으로 다시 씁니다.'],
-      ['답변', '짧은 결론을 먼저 보여주고, 더 자세한 가이드로 연결합니다.'],
-    ],
     readAnswer: '답변 보기',
     submitTitle: '다음에 어떤 질문을 답하면 좋을까요?',
     submitCopy: '실제 여행 준비 중 생긴 질문을 보내 주세요. 좋은 질문은 새 가이드나 기존 가이드 업데이트로 반영합니다.',
@@ -230,19 +214,11 @@ export const questionLocales = {
     label: '日本語',
     title: '中国旅行の質問と回答',
     description:
-      'ビザ、決済、eSIM、ホテル、食事、鉄道、言語、旅程に関する中国旅行の疑問を日本語のQA形式で整理しています。',
+      'ビザ、決済、eSIM、ホテル、食事、鉄道、言語、旅程、地図保存に関する中国旅行の疑問を日本語のQA形式で整理し、関連ガイドと実用的な準備手順へつなげます。',
     eyebrow: '旅行者の質問',
     heading: '中国旅行の前に知りたいこと。',
     intro:
       '日本語の旅行検索では、具体的な不安をそのまま質問することが多いです。短い答えを先に出し、必要な人だけ詳しいガイドへ進める構成にします。',
-    whyTitle: 'なぜQA形式なのか',
-    whyCopy:
-      '中国旅行では、決済、通信、ホテル、移動など「事前に失敗したくない」疑問が多くあります。質問単位で整理すると、検索にも引っかかりやすく、旅行者も必要な答えをすぐ見つけられます。',
-    steps: [
-      ['収集', 'レビュー、掲示板、SNS、旅行記から実際の不安や表現を集めます。'],
-      ['ローカライズ', '英語を直訳せず、日本語の旅行者が検索しそうな聞き方に直します。'],
-      ['回答', 'まず結論を出し、必要に応じて詳しいガイドへつなげます。'],
-    ],
     readAnswer: '答えを見る',
     submitTitle: '次に答えてほしい質問は？',
     submitCopy: '旅行準備中に出てきた疑問を送ってください。よい質問は新しいガイドや既存ガイドの更新に使います。',

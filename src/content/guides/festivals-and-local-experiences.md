@@ -1,6 +1,8 @@
 ---
 title: "Timing Your China Trip: Festivals Worth Planning Around, Crowds to Avoid & Local Nightlife"
 description: "Which Chinese festivals are actually worth building a trip around (and which dates to flee), plus the local experiences — KTV, square dancing, bathhouses, late-night crayfish — that turn a sightseeing trip into a real one."
+seoTitle: "Best Times and Festivals for China Travel"
+seoDescription: "Choose China travel dates around festivals, avoid Golden Week crowds, and find local nightlife and cultural experiences."
 updated: 2026-06-12
 order: 14
 category: "Authentic China"

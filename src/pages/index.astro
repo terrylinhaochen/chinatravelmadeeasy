@@ -1,20 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
-import GuideCard from '../components/GuideCard.astro';
 import Icon from '../components/Icon.astro';
-import { getCollection } from 'astro:content';
-import { featuredDestinations } from '../data/destinations';
+import { destinations } from '../data/destinations';
 import { getGeneratedImage } from '../data/generatedImages';
 
-const guides = (await getCollection('guides')).sort(
-  (a, b) => a.data.order - b.data.order
-);
-
-const guideById = Object.fromEntries(guides.map((guide) => [guide.id, guide]));
-const heroImage = getGeneratedImage('home:hero') ?? {
-  src: '/images/generated/home-hero.svg',
-  alt: 'Watercolor China travel guide hero scene',
+const heroImage = getGeneratedImage('region:beijing') ?? {
+  src: '/images/curated/region-beijing.jpg',
+  alt: 'Forbidden City palace roofs in Beijing',
 };
+const homepageDestinations = destinations.slice(0, 8);
 
 const travelModes = [
   {
@@ -22,71 +16,111 @@ const travelModes = [
     icon: 'map',
     body: 'Start with the most-searched entry regions, then open the full region guide when you need every province-level destination.',
     href: '/regions/',
-    image: getGeneratedImage('home:places')?.src ?? '/images/generated/home-places.svg',
-    alt: getGeneratedImage('home:places')?.alt ?? 'Watercolor China destination planning scene',
+    image: getGeneratedImage('home:places')?.src ?? '/images/curated/home-places.jpg',
+    alt: getGeneratedImage('home:places')?.alt ?? 'Great Wall landscape in northern China',
   },
   {
     title: 'Eating',
     icon: 'bowl',
     body: 'Street food, QR menus, spice levels, allergy cards, tea houses, and where tourists overpay.',
     href: '/guides/street-food-night-markets/',
-    image: getGeneratedImage('home:eating')?.src ?? '/images/generated/home-eating.svg',
-    alt: getGeneratedImage('home:eating')?.alt ?? 'Watercolor China eating guide scene',
+    image: getGeneratedImage('home:eating')?.src ?? '/images/curated/home-eating.jpg',
+    alt: getGeneratedImage('home:eating')?.alt ?? 'Street food stall in China',
   },
   {
     title: 'Traveling',
     icon: 'train',
     body: 'High-speed rail, Didi, metro QR codes, airport pickup, and how to move without Chinese.',
     href: '/guides/china-high-speed-trains/',
-    image: getGeneratedImage('home:traveling')?.src ?? '/images/generated/home-traveling.svg',
-    alt: getGeneratedImage('home:traveling')?.alt ?? 'Watercolor China transport guide scene',
+    image: getGeneratedImage('home:traveling')?.src ?? '/images/curated/home-traveling.jpg',
+    alt: getGeneratedImage('home:traveling')?.alt ?? 'High-speed train at a China rail platform',
   },
   {
     title: 'Hospitality',
     icon: 'passport',
     body: 'Hotels that accept foreign passports, neighborhoods to stay in, and booking-platform traps.',
     href: '/guides/hotels-foreigners-china/',
-    image: getGeneratedImage('home:hospitality')?.src ?? '/images/generated/home-hospitality.svg',
-    alt: getGeneratedImage('home:hospitality')?.alt ?? 'Watercolor China hotel and hospitality scene',
+    image: getGeneratedImage('home:hospitality')?.src ?? '/images/curated/home-hospitality.jpg',
+    alt: getGeneratedImage('home:hospitality')?.alt ?? 'Hotel lobby in China',
   },
 ];
 
-const crowdPicks = [
+const essentialCards = [
   {
-    label: 'Crowd signal',
-    title: 'Travelers worry about visas too late',
-    body: 'The fix is not a long immigration essay. First determine whether you qualify for 30-day visa-free entry or the 240-hour transit route, then book flights that match the rule.',
+    label: 'Entry',
+    title: 'Check the visa route first',
+    body: 'Know whether you need a tourist visa, 30-day visa-free entry, or the 240-hour transit route before you book flights.',
     href: '/guides/china-visa-free-2026/',
+    image: getGeneratedImage('guide:china-visa-free-2026')?.src ?? '/images/curated/visa-free-entry.jpg',
+    alt: getGeneratedImage('guide:china-visa-free-2026')?.alt ?? 'China immigration and arrival area',
   },
   {
-    label: 'Crowd signal',
-    title: 'Payments are the real day-one failure',
-    body: 'Set up both wallets before the airport, but also plan for linked-card failures, private QR issues, and a cash or second-card fallback.',
+    label: 'Payments',
+    title: 'Set up mobile payments',
+    body: 'Prepare Alipay and WeChat Pay before arrival, then keep a second card or cash fallback for the places that still fail.',
     href: '/guides/alipay-wechat-pay-foreign-cards/',
+    image: getGeneratedImage('guide:alipay-wechat-pay-foreign-cards')?.src ?? '/images/curated/mobile-payment.jpg',
+    alt: getGeneratedImage('guide:alipay-wechat-pay-foreign-cards')?.alt ?? 'Mobile payment QR codes in China',
   },
   {
-    label: 'Crowd signal',
-    title: 'Social posts should become save-ready places',
-    body: 'Travel inspiration is scattered across short videos and posts. Extract the place, city, and map query before it disappears into screenshots.',
-    href: '/map-import/',
+    label: 'Internet',
+    title: 'Pick your phone setup',
+    body: 'A travel eSIM is usually easier than relying on hotel Wi-Fi or downloading a VPN after you land.',
+    href: '/guides/internet-esim-vpn-blocked-apps/',
+    image: getGeneratedImage('guide:internet-esim-vpn-blocked-apps')?.src ?? '/images/curated/internet-esim.jpg',
+    alt: getGeneratedImage('guide:internet-esim-vpn-blocked-apps')?.alt ?? 'Smartphone store in Shenzhen for China mobile setup planning',
   },
   {
-    label: 'Crowd signal',
-    title: 'The best food is usually not the famous market',
-    body: 'Walk two streets away from the landmark, look for local queues, point at what is being cooked hot, and pay with a QR code.',
+    label: 'Transport',
+    title: 'Use trains, metro, and Didi',
+    body: 'Book high-speed rail between cities, use metro QR codes in town, and keep Didi ready for hard addresses.',
+    href: '/guides/china-high-speed-trains/',
+    image: getGeneratedImage('guide:china-high-speed-trains')?.src ?? '/images/curated/high-speed-train.jpg',
+    alt: getGeneratedImage('guide:china-high-speed-trains')?.alt ?? 'China railway ticket detail for train booking planning',
+  },
+  {
+    label: 'Food',
+    title: 'Eat well without Chinese',
+    body: 'Learn QR menus, pointing, basic dietary phrases, and how to avoid paying tourist prices at famous food streets.',
     href: '/guides/street-food-night-markets/',
+    image: getGeneratedImage('guide:street-food-night-markets')?.src ?? '/images/curated/street-food.jpg',
+    alt: getGeneratedImage('guide:street-food-night-markets')?.alt ?? "Xi'an Muslim food street market at night",
+  },
+  {
+    label: 'Stay',
+    title: 'Book hotels that accept foreigners',
+    body: 'Check passport acceptance, Chinese addresses, and neighborhood tradeoffs before the first night.',
+    href: '/guides/hotels-foreigners-china/',
+    image: getGeneratedImage('guide:hotels-foreigners-china')?.src ?? '/images/curated/hotel-checkin.jpg',
+    alt: getGeneratedImage('guide:hotels-foreigners-china')?.alt ?? 'Hotel reception desk for China check-in planning',
   },
 ];
 
-const essentials = [
-  guideById['china-pre-departure-checklist'],
-  guideById['internet-esim-vpn-blocked-apps'],
-  guideById['translation-language-survival'],
-  guideById['food-ordering-dietary'],
-].filter(Boolean);
+const homeFaqs = [
+  {
+    question: 'What can I save?',
+    answer:
+      'Paste a caption, a note, a friend list, or a screenshot filename with place names. The tool extracts likely places and turns them into a cleaner map list.',
+  },
+  {
+    question: 'Who is this for?',
+    answer:
+      'It is built for independent travelers and backpackers who already collect pins from social posts, friends, and guides, then need a faster way to make those places usable.',
+  },
+  {
+    question: 'Can I still use the travel guides?',
+    answer:
+      'Yes. The guides are there when you need practical context, but the homepage is centered on collecting, cleaning, and saving places.',
+  },
+  {
+    question: 'Why not just keep pins in one map app?',
+    answer:
+      'Travel inspiration comes from too many places: screenshots, captions, shared lists, and different map apps. This keeps the list portable before you choose where to save it.',
+  },
+];
 
 const description =
-  'A Lonely Planet-style China travel guide built around authentic, crowd-vetted planning questions: places, eating, transport, hotels, payments, visas, internet, and language.';
+  'Local treasures, saved to your map. Drop links, screenshots, captions, or shared lists and turn them into clean map-ready pins.';
 
 const jsonLd = [
   {
@@ -102,29 +136,41 @@ const jsonLd = [
       url: 'https://chinatravelmadeeasy.com/',
     },
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    name: 'China Travel Made Easy homepage questions',
+    mainEntity: homeFaqs.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  },
 ];
 ---
 
-<Base title="China Travel Made Easy — crowd-vetted China travel guide" description={description} jsonLd={jsonLd}>
+<Base title="Local treasures, saved to your map" description={description} image={heroImage.src} imageAlt={heroImage.alt} jsonLd={jsonLd}>
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
     <div class="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
       <div>
         <p class="ds-eyebrow">
-          China travel guide · Crowd-vetted planning
+          China map planning
         </p>
-        <h1 class="mt-4 text-5xl font-bold leading-none sm:text-7xl lg:text-8xl">
-          China
+        <h1 class="mt-4 text-5xl leading-none sm:text-7xl lg:text-8xl">
+          Local treasures, saved to your map.
         </h1>
         <p class="mt-5 max-w-xl text-lg leading-relaxed text-soft sm:text-xl">
-          Where to go, what to eat, how to travel, where to stay, and which practical setup steps
-          matter before you fly.
+          Drop a link, screenshot, or list. Get clean pins you can save, remix, or share.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#places" class="ds-button ds-button-primary">
-            Explore places
+          <a href="#save-places" class="ds-button ds-button-primary">
+            Paste or upload
           </a>
-          <a href="/guides/china-pre-departure-checklist/" class="ds-button ds-button-secondary">
-            Start planning
+          <a href="/map-import/" class="ds-button ds-button-secondary">
+            Open full tool
           </a>
         </div>
       </div>
@@ -134,20 +180,140 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="ds-panel p-3 sm:p-4">
-      <div class="grid gap-3 sm:grid-cols-2">
-        {travelModes.map((mode) => (
-          <a href={mode.href} class="ds-card-link group grid grid-cols-[6.5rem_1fr] overflow-hidden sm:grid-cols-[7.5rem_1fr]">
-            <div class="h-full min-h-32 overflow-hidden bg-surface-strong">
-              <img src={mode.image} alt={mode.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+  <section id="save-places" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-12 sm:px-6 sm:py-16">
+    <div class="ds-panel overflow-hidden p-5 sm:p-8">
+      <div class="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
+        <div>
+          <p class="ds-eyebrow">Add places</p>
+          <h2 class="mt-2 text-3xl leading-tight sm:text-4xl">Drop a link or screenshot</h2>
+          <p class="mt-4 max-w-md leading-relaxed text-soft">
+            We pull out the places and return a map-ready pin list.
+          </p>
+        </div>
+
+        <div class="grid gap-4">
+          <div class="map-preview" aria-label="Map pin preview">
+            <div class="map-preview-canvas">
+              <div class="map-preview-river"></div>
+              <div class="map-preview-road map-preview-road-a"></div>
+              <div class="map-preview-road map-preview-road-b"></div>
+              <div class="map-preview-road map-preview-road-c"></div>
+              <div id="homeMapPreviewPins" class="map-preview-pins"></div>
+              <div class="map-preview-zoom" aria-hidden="true">
+                <span class="map-preview-zoom-plus"></span>
+                <span class="map-preview-zoom-minus"></span>
+              </div>
             </div>
-            <div class="p-4 sm:p-5">
+            <div class="map-preview-drawer">
+              <div>
+                <p class="ds-eyebrow">Map preview</p>
+                <h3 class="mt-1 text-2xl">Pins before you save</h3>
+              </div>
+              <p id="homeMapPreviewCount" class="text-sm text-soft">Drop a list to preview extracted places.</p>
+            <div id="homeMapPreviewList" class="mt-3 grid gap-2"></div>
+            <div class="mt-4 flex flex-wrap items-center gap-3">
+              <button id="homeMapPreviewAdd" type="button" class="ds-button ds-button-dark min-h-0 px-4 py-2">Add to your map</button>
+              <span id="homeMapPreviewHint" class="text-sm text-faint">Try the sample or paste a list first.</span>
+            </div>
+          </div>
+        </div>
+
+          <label
+            id="homeMapDropZone"
+            for="homeMapFile"
+            class="block cursor-pointer rounded-md border-2 border-dashed border-line bg-white/70 p-6 transition-colors hover:border-accent/50"
+          >
+            <input id="homeMapFile" type="file" accept="image/*,.txt,.md" class="hidden" />
+            <span class="ds-eyebrow">Upload or drop</span>
+            <span class="mt-2 block text-2xl">Link, screenshot, note, or list</span>
+            <span id="homeMapFileName" class="mt-2 block text-sm leading-relaxed text-soft">
+              For screenshots, use a descriptive filename or paste the caption below.
+            </span>
+          </label>
+
+          <textarea
+            id="homeMapText"
+            class="ds-input min-h-28 resize-y text-sm"
+            placeholder="Paste a post, caption, or shared list, e.g. Shanghai crawl: Jia Jia Tang Bao, Wukang Road, The Bund..."
+          ></textarea>
+
+          <div class="flex flex-wrap justify-end gap-2">
+            <button type="button" id="homeMapSample" class="ds-button ds-button-secondary">Try sample</button>
+            <button type="button" id="homeMapAnalyze" class="ds-button ds-button-dark">Save to maps</button>
+          </div>
+
+          <p id="homeMapStatus" class="hidden rounded-md border border-line bg-white p-3 text-sm leading-relaxed text-soft"></p>
+          <div id="homeMapResults" class="hidden grid gap-3"></div>
+
+          <div id="homeMapMapChoice" class="hidden rounded-md border border-line bg-white p-4">
+            <p class="ds-eyebrow">Choose a map</p>
+            <p class="mt-1 text-sm leading-relaxed text-soft">
+              Pick where this place should open after sign-in.
+            </p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button type="button" data-map-provider="apple" class="homeMapProvider ds-button ds-button-dark">Apple Maps</button>
+              <button type="button" data-map-provider="amap" class="homeMapProvider ds-button ds-button-secondary">AMap</button>
+            </div>
+          </div>
+
+          <div id="homeMapSignIn" class="hidden rounded-md border border-line bg-white p-4">
+            <p class="ds-eyebrow">Sign in to save</p>
+            <p class="mt-1 text-sm leading-relaxed text-soft">
+              Enter an email to save this place and open it in your selected map.
+            </p>
+            <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_auto]">
+              <input id="homeMapEmail" type="email" class="ds-input text-sm" placeholder="you@example.com" />
+              <button id="homeMapContinue" type="button" class="ds-button ds-button-dark">Continue</button>
+            </div>
+          </div>
+
+          <div id="homeMapSavedWorkspace" class="hidden rounded-md border border-line bg-white p-4">
+            <div class="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-start">
+              <div>
+                <p class="ds-eyebrow">Saved lists</p>
+                <p class="mt-1 text-sm leading-relaxed text-soft">
+                  Search the places you saved here, then remix a list back into the planner.
+                </p>
+              </div>
+              <span class="ds-chip justify-center">Your pins</span>
+            </div>
+            <input
+              id="homeMapSearch"
+              type="search"
+              class="ds-input mt-4 text-sm"
+              placeholder="Search saved places..."
+            />
+            <div id="homeMapSavedLists" class="mt-4 grid gap-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="grid gap-6 border-t border-line pt-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
+      <div>
+        <p class="ds-eyebrow">Use it for China planning</p>
+        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Keep the trip research, not the clutter</h2>
+      </div>
+      <p class="leading-relaxed text-soft">
+        The guides below help explain what to save. The main workflow stays the same:
+        collect places, clean the list, then save it to maps.
+      </p>
+    </div>
+    <div class="ds-media-panel mt-8">
+      <div class="ds-media-grid-four">
+        {travelModes.map((mode) => (
+          <a href={mode.href} class="ds-media-tile group">
+            <div class="ds-media-thumb">
+              <img src={mode.image} alt={mode.alt} loading="lazy" />
+            </div>
+            <div class="ds-media-body">
               <span class="ds-icon-tile">
                 <Icon name={mode.icon} class="h-5 w-5" />
               </span>
-              <h2 class="mt-3 text-xl font-bold group-hover:text-accent">{mode.title}</h2>
-              <p class="mt-2 text-sm leading-relaxed text-soft">{mode.body}</p>
+              <h2 class="ds-media-title">{mode.title}</h2>
+              <p class="ds-media-copy">{mode.body}</p>
             </div>
           </a>
         ))}
@@ -158,16 +324,16 @@ const jsonLd = [
   <section id="places" class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
     <div class="grid gap-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
       <div>
-        <p class="ds-eyebrow">Where to go</p>
-        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Start with the places travelers search first</h2>
+        <p class="ds-eyebrow">Places worth saving</p>
+        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Start a list from the places travelers ask about first</h2>
       </div>
       <p class="text-soft leading-relaxed">
-        The homepage stays focused on the four highest-intent entry regions. The full destination index
-        lists every province-level planning region and links each one to guide recommendations.
+        Use these regions as anchors when a saved post has no context. Open the full index when
+        you need to place a pin inside a wider route.
       </p>
     </div>
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {featuredDestinations.map((destination) => (
+      {homepageDestinations.map((destination) => (
         <a href={`/regions/${destination.slug}/`} class="ds-card-link group overflow-hidden">
           <div class="aspect-[4/3] overflow-hidden bg-surface-strong">
             <img src={destination.image.src} alt={destination.image.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -189,80 +355,569 @@ const jsonLd = [
   </section>
 
   <section class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="ds-panel grid gap-8 px-5 py-10 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:py-12">
+    <div class="grid gap-6 border-t border-line pt-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
       <div>
-        <p class="ds-eyebrow">Authentic crowd-vetted opinions</p>
-        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">What travelers keep learning the hard way</h2>
-        <p class="mt-4 leading-relaxed text-soft">
-          The guide is organized around repeated planning questions and field reports. CrowdListen
-          turns those signals into finished guide updates, FAQ entries, and save-ready place workflows.
-        </p>
-        <a href="/content-seeds/" class="ds-button ds-button-secondary mt-5">
-          View the guide queue
-        </a>
+        <p class="ds-eyebrow">Guide context</p>
+        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Fix the details behind the places you save</h2>
       </div>
-      <div class="grid gap-4">
-        {crowdPicks.map((pick) => (
-          <a href={pick.href} class="ds-card-link group p-5">
-            <p class="ds-tag text-accent">{pick.label}</p>
-            <h3 class="mt-2 text-2xl font-bold group-hover:text-accent">{pick.title}</h3>
-            <p class="mt-2 leading-relaxed text-soft">{pick.body}</p>
-          </a>
+      <p class="leading-relaxed text-soft">
+        Pins are easier to use when the basics work: payment, internet, trains, hotels,
+        translation, and food ordering.
+      </p>
+    </div>
+    <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {essentialCards.map((card) => (
+        <a href={card.href} class="ds-card-link group overflow-hidden">
+          <div class="aspect-[16/9] overflow-hidden bg-surface-strong">
+            <img src={card.image} alt={card.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+          </div>
+          <div class="p-5">
+            <p class="ds-tag text-accent">{card.label}</p>
+            <h3 class="mt-2 text-2xl font-bold group-hover:text-accent">{card.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{card.body}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <div class="border-t border-line pt-8">
+      <p class="ds-eyebrow">FAQ</p>
+      <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Quick answers before you save places</h2>
+      <div class="mt-6 grid gap-3">
+        {homeFaqs.map((item) => (
+          <details class="group ds-card p-0">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4">
+              <h3 class="text-xl font-bold leading-snug">{item.question}</h3>
+              <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-sm font-bold text-soft group-open:border-accent group-open:text-accent">
+                <span class="group-open:hidden">+</span>
+                <span class="hidden group-open:inline">-</span>
+              </span>
+            </summary>
+            <p class="px-5 pb-5 leading-relaxed text-soft">{item.answer}</p>
+          </details>
         ))}
       </div>
     </div>
   </section>
-
-  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
-    <div class="grid gap-8 lg:grid-cols-[1fr_1fr]">
-      <div class="ds-card overflow-hidden">
-        <img src={getGeneratedImage('guide:china-high-speed-trains')?.src ?? '/images/generated/high-speed-train.svg'} alt={getGeneratedImage('guide:china-high-speed-trains')?.alt ?? 'Watercolor high-speed train at a China station'} class="h-64 w-full object-cover sm:h-72" />
-        <div class="p-6">
-          <p class="ds-eyebrow">Traveling China</p>
-          <h2 class="mt-2 text-3xl font-bold">Trains, Didi, metro, and the airport-to-hotel handoff</h2>
-          <p class="mt-3 leading-relaxed text-soft">
-            China is easier when you treat transport as a system: book high-speed rail between
-            cities, use Didi when addresses are hard, and use Alipay transport QR codes for metro.
-          </p>
-          <div class="mt-5 flex flex-wrap gap-3">
-            <a href="/guides/china-high-speed-trains/" class="ds-button ds-button-primary">Train guide</a>
-            <a href="/guides/didi-metro-getting-around/" class="ds-button ds-button-secondary">City transport</a>
-          </div>
-        </div>
-      </div>
-      <div class="ds-card overflow-hidden">
-        <img src={getGeneratedImage('guide:street-food-night-markets')?.src ?? '/images/generated/street-food.svg'} alt={getGeneratedImage('guide:street-food-night-markets')?.alt ?? 'Watercolor China street food night market'} class="h-64 w-full object-cover sm:h-72" />
-        <div class="p-6">
-          <p class="ds-eyebrow">Eating China</p>
-          <h2 class="mt-2 text-3xl font-bold">Street food, tea houses, QR menus, and dietary survival</h2>
-          <p class="mt-3 leading-relaxed text-soft">
-            The best meals are often visible, pointable, and cheap. The trick is knowing how to
-            order, how to pay, and which famous food streets are mostly theater.
-          </p>
-          <div class="mt-5 flex flex-wrap gap-3">
-            <a href="/guides/street-food-night-markets/" class="ds-button ds-button-primary">Street food</a>
-            <a href="/guides/food-ordering-dietary/" class="ds-button ds-button-secondary">Ordering guide</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="ds-card p-5 sm:p-8">
-      <div class="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-        <div>
-          <p class="ds-eyebrow">Travel essentials</p>
-          <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Before you fly, fix the basics</h2>
-        </div>
-        <p class="leading-relaxed text-soft">
-          Visa rules, mobile payments, eSIMs, translation, hotels, and train bookings are the
-          practical layer underneath every good China trip.
-        </p>
-      </div>
-      <div class="mt-8 grid gap-4 sm:grid-cols-2">
-        {essentials.map((guide) => <GuideCard guide={guide} />)}
-      </div>
-    </div>
-  </section>
 </Base>
+
+<script>
+  import { amapUrl, appleMapsUrl, displayName, extractTripPlaces, normalizeSource } from '../utils/placeExtraction.js';
+
+  const homeMapDropZone = document.querySelector('#homeMapDropZone');
+  const homeMapFile = document.querySelector('#homeMapFile');
+  const homeMapFileName = document.querySelector('#homeMapFileName');
+  const homeMapText = document.querySelector('#homeMapText');
+  const homeMapAnalyze = document.querySelector('#homeMapAnalyze');
+  const homeMapSample = document.querySelector('#homeMapSample');
+  const homeMapStatus = document.querySelector('#homeMapStatus');
+  const homeMapResults = document.querySelector('#homeMapResults');
+  const homeMapPreviewPins = document.querySelector('#homeMapPreviewPins');
+  const homeMapPreviewCount = document.querySelector('#homeMapPreviewCount');
+  const homeMapPreviewList = document.querySelector('#homeMapPreviewList');
+  const homeMapPreviewAdd = document.querySelector('#homeMapPreviewAdd');
+  const homeMapPreviewHint = document.querySelector('#homeMapPreviewHint');
+  const homeMapMapChoice = document.querySelector('#homeMapMapChoice');
+  const homeMapSignIn = document.querySelector('#homeMapSignIn');
+  const homeMapEmail = document.querySelector('#homeMapEmail');
+  const homeMapContinue = document.querySelector('#homeMapContinue');
+  const homeMapSearch = document.querySelector('#homeMapSearch');
+  const homeMapSavedWorkspace = document.querySelector('#homeMapSavedWorkspace');
+  const homeMapSavedLists = document.querySelector('#homeMapSavedLists');
+  const homeMapProviderButtons = document.querySelectorAll('.homeMapProvider');
+  const homeMapUserKey = 'ctme-map-user';
+  const homeMapSavedKey = 'ctme-map-saved-places';
+  let homeMapProvider = 'apple';
+  let homeMapFileText = '';
+  let homeMapPlaces = [];
+  let homeMapPendingPlace = null;
+  let homeMapDisplayedSaved = [];
+  const homeMapPreviewSeed = [
+    { name: 'Jia Jia Tang Bao', city: 'Shanghai', category: 'Food' },
+    { name: 'Wukang Road', city: 'Shanghai', category: 'Walk' },
+    { name: 'The Bund', city: 'Shanghai', category: 'View' },
+  ];
+  const homeMapPinPositions = [
+    { x: 62, y: 34 },
+    { x: 38, y: 45 },
+    { x: 70, y: 58 },
+    { x: 48, y: 68 },
+    { x: 26, y: 57 },
+    { x: 78, y: 42 },
+  ];
+
+  homeMapProviderButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      homeMapProvider = button.dataset.mapProvider;
+      homeMapProviderButtons.forEach((item) => {
+        const active = item.dataset.mapProvider === homeMapProvider;
+        item.classList.toggle('ds-button-dark', active);
+        item.classList.toggle('ds-button-secondary', !active);
+      });
+      if (homeMapPendingPlace) requestHomeMapSignIn(homeMapPendingPlace);
+    });
+  });
+
+  homeMapFile.addEventListener('change', () => readHomeMapFile(homeMapFile.files?.[0]));
+  ['dragenter', 'dragover'].forEach((eventName) => {
+    homeMapDropZone.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      homeMapDropZone.classList.add('border-accent');
+    });
+  });
+  ['dragleave', 'drop'].forEach((eventName) => {
+    homeMapDropZone.addEventListener(eventName, (event) => {
+      event.preventDefault();
+      homeMapDropZone.classList.remove('border-accent');
+    });
+  });
+  homeMapDropZone.addEventListener('drop', (event) => readHomeMapFile(event.dataTransfer?.files?.[0]));
+
+  homeMapSample.addEventListener('click', () => {
+    homeMapText.value = 'Shanghai crawl: lunch at Jia Jia Tang Bao, walk Wukang Road, sunset at The Bund, then snack around Huanghe Road.';
+    homeMapFileText = '';
+    homeMapFileName.textContent = 'Sample caption ready to analyze.';
+    analyzeHomeMapInput({ previewOnly: true });
+  });
+  homeMapAnalyze.addEventListener('click', analyzeHomeMapInput);
+  homeMapPreviewAdd.addEventListener('click', addHomeMapPreviewToMap);
+  homeMapSearch.addEventListener('input', () => renderHomeMapSavedLists(homeMapSearch.value));
+  homeMapContinue.addEventListener('click', () => {
+    const email = homeMapEmail.value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      showHomeMapStatus('Enter an email to save this place.', true);
+      return;
+    }
+    localStorage.setItem(homeMapUserKey, JSON.stringify({ email, createdAt: new Date().toISOString() }));
+    homeMapSignIn.classList.add('hidden');
+    if (homeMapPendingPlace) saveHomeMapPlace(homeMapPendingPlace, true);
+  });
+  renderHomeMapPreview(homeMapPreviewSeed);
+  renderHomeMapSavedLists();
+
+  function readHomeMapFile(file) {
+    if (!file) return;
+    homeMapFileName.textContent = file.name;
+    homeMapFileText = file.name.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ');
+    if (/^text\/|markdown|json/i.test(file.type) || /\.(txt|md|json)$/i.test(file.name)) {
+      const reader = new FileReader();
+      reader.addEventListener('load', () => {
+        homeMapFileText = [homeMapFileText, String(reader.result || '')].join('\n');
+        showHomeMapStatus('File loaded. Click Save to maps when ready.', false);
+      });
+      reader.readAsText(file);
+    } else {
+      showHomeMapStatus('Image added. Paste the caption too if the filename does not include the place name.', false);
+    }
+  }
+
+  function analyzeHomeMapInput(options = {}) {
+    const text = [homeMapText.value, homeMapFileText].filter(Boolean).join('\n');
+    if (!text.trim()) {
+      showHomeMapStatus('Drop a file or paste a caption first.', true);
+      return;
+    }
+    const result = extractTripPlaces(normalizeSource({ text }));
+    homeMapPlaces = result.places;
+    homeMapPendingPlace = null;
+    homeMapSignIn.classList.add('hidden');
+    homeMapMapChoice.classList.add('hidden');
+    if (!homeMapPlaces.length) {
+      homeMapResults.classList.add('hidden');
+      showHomeMapStatus('No clear place found yet. Add a city and place name, then try again.', true);
+      return;
+    }
+    const message = options.previewOnly
+      ? 'Sample pins loaded. Add the list to your map when ready.'
+      : 'Found ' + homeMapPlaces.length + ' place' + (homeMapPlaces.length === 1 ? '' : 's') + '. Add the list or choose a place below.';
+    showHomeMapStatus(message, false);
+    renderHomeMapPreview(homeMapPlaces);
+    if (options.previewOnly) {
+      homeMapResults.classList.add('hidden');
+      homeMapResults.innerHTML = '';
+    } else {
+      renderHomeMapResults();
+    }
+  }
+
+  function renderHomeMapResults() {
+    homeMapResults.classList.remove('hidden');
+    homeMapResults.innerHTML = homeMapPlaces.map((place, index) => (
+      '<article class="ds-card p-4">' +
+        '<p class="ds-tag">' + escapeHomeMapHtml(place.category || 'Place') + '</p>' +
+        '<h3 class="mt-1 text-2xl font-bold">' + escapeHomeMapHtml(displayName(place)) + '</h3>' +
+        '<p class="mt-2 text-sm leading-relaxed text-soft">' + escapeHomeMapHtml(place.note || 'Found in the uploaded note.') + '</p>' +
+        '<div class="mt-4 flex flex-wrap gap-2">' +
+          '<button type="button" data-home-map-save="' + index + '" class="ds-button ds-button-dark">Save to maps</button>' +
+        '</div>' +
+      '</article>'
+    )).join('');
+    document.querySelectorAll('[data-home-map-save]').forEach((button) => {
+      button.addEventListener('click', () => showHomeMapMapChoice(homeMapPlaces[Number(button.dataset.homeMapSave)]));
+    });
+  }
+
+  function showHomeMapMapChoice(item) {
+    homeMapPendingPlace = item;
+    homeMapMapChoice.classList.remove('hidden');
+    homeMapSignIn.classList.add('hidden');
+    renderHomeMapPreview(homeMapPlaces, item);
+    showHomeMapStatus('Choose where to save ' + displaySaveName(item) + '.', false);
+  }
+
+  function addHomeMapPreviewToMap() {
+    if (!homeMapPlaces.length) {
+      showHomeMapStatus('Try the sample or paste a list first.', true);
+      return;
+    }
+    const listItem = {
+      name: homeMapPlaces.length === 1 ? displayName(homeMapPlaces[0]) : 'Map list with ' + homeMapPlaces.length + ' places',
+      category: 'Saved list',
+      note: 'Extracted from the current pin preview.',
+      places: homeMapPlaces,
+    };
+    showHomeMapMapChoice(listItem);
+  }
+
+  function requestHomeMapSignIn(item) {
+    homeMapPendingPlace = item;
+    homeMapSignIn.classList.remove('hidden');
+    homeMapEmail.focus();
+    showHomeMapStatus('Sign in to save ' + displaySaveName(item) + ' to ' + mapProviderName() + '.', false);
+  }
+
+  function saveHomeMapPlace(saveItem, openAfterSave) {
+    const user = getHomeMapUser();
+    if (!user) {
+      requestHomeMapSignIn(saveItem);
+      return;
+    }
+    const saved = getHomeMapSaved();
+    const places = placesForSave(saveItem);
+    const firstPlace = places[0];
+    const savedItem = {
+      id: Date.now(),
+      name: displaySaveName(saveItem),
+      platform: 'Homepage upload',
+      savedAt: new Date().toISOString(),
+      savedBy: user.email,
+      mapProvider: homeMapProvider,
+      places,
+    };
+    localStorage.setItem(homeMapSavedKey, JSON.stringify([savedItem, ...saved].slice(0, 24)));
+    showHomeMapStatus('Saved to your trip list. Opening ' + mapProviderName() + '.', false);
+    homeMapPendingPlace = null;
+    renderHomeMapPreview(places, firstPlace);
+    renderHomeMapSavedLists(homeMapSearch.value);
+    if (openAfterSave && firstPlace) window.open(homeMapProvider === 'amap' ? amapUrl(firstPlace) : appleMapsUrl(firstPlace), '_blank', 'noopener');
+  }
+
+  function showHomeMapStatus(message, isError) {
+    homeMapStatus.textContent = message;
+    homeMapStatus.classList.remove('hidden');
+    homeMapStatus.classList.toggle('border-accent', Boolean(isError));
+  }
+  function renderHomeMapPreview(places, selectedPlace) {
+    const previewPlaces = (places && places.length ? places : homeMapPreviewSeed).slice(0, 6);
+    const isExamplePreview = places === homeMapPreviewSeed || !places || !places.length;
+    homeMapPreviewCount.textContent = isExamplePreview
+      ? 'Example pin preview. Drop a list to replace it.'
+      : previewPlaces.length + ' place' + (previewPlaces.length === 1 ? '' : 's') + ' ready to review.';
+    homeMapPreviewAdd.disabled = isExamplePreview;
+    homeMapPreviewAdd.classList.toggle('opacity-40', isExamplePreview);
+    homeMapPreviewAdd.classList.toggle('pointer-events-none', isExamplePreview);
+    homeMapPreviewHint.textContent = isExamplePreview
+      ? 'Try the sample or paste a list first.'
+      : 'Add all visible pins to your own map.';
+    homeMapPreviewPins.innerHTML = previewPlaces.map((place, index) => {
+      const position = homeMapPinPositions[index] || homeMapPinPositions[0];
+      const active = selectedPlace && displayName(place) === displayName(selectedPlace);
+      return (
+        '<button type="button" class="map-preview-pin' + (active ? ' is-active' : '') + '" data-index="' + (index + 1) + '" style="left:' + position.x + '%; top:' + position.y + '%" aria-label="' + escapeHomeMapHtml(displayName(place)) + '">' +
+        '</button>'
+      );
+    }).join('');
+    homeMapPreviewList.innerHTML = previewPlaces.map((place, index) => {
+      const active = selectedPlace && displayName(place) === displayName(selectedPlace);
+      return (
+        '<div class="map-preview-row' + (active ? ' is-active' : '') + '">' +
+          '<span>' + (index + 1) + '</span>' +
+          '<p>' + escapeHomeMapHtml(displayName(place)) + '</p>' +
+        '</div>'
+      );
+    }).join('');
+  }
+  function mapProviderName() { return homeMapProvider === 'amap' ? 'AMap' : 'Apple Maps'; }
+  function placesForSave(item) { return Array.isArray(item?.places) ? item.places : [item].filter(Boolean); }
+  function displaySaveName(item) { return item?.places ? item.name : displayName(item); }
+  function getHomeMapUser() { try { return JSON.parse(localStorage.getItem(homeMapUserKey) || 'null'); } catch { return null; } }
+  function getHomeMapSaved() { try { return JSON.parse(localStorage.getItem(homeMapSavedKey) || '[]'); } catch { return []; } }
+  function renderHomeMapSavedLists(query) {
+    const saved = getHomeMapSaved();
+    homeMapDisplayedSaved = filterHomeMapSaved(saved, query);
+    if (!saved.length) {
+      homeMapSavedWorkspace.classList.add('hidden');
+      homeMapSavedLists.innerHTML = '<p class="rounded-md border border-line bg-paper p-3 text-sm leading-relaxed text-soft">Saved and shared place lists appear here after sign-in.</p>';
+      return;
+    }
+    homeMapSavedWorkspace.classList.remove('hidden');
+    if (!homeMapDisplayedSaved.length) {
+      homeMapSavedLists.innerHTML = '<p class="rounded-md border border-line bg-paper p-3 text-sm leading-relaxed text-soft">No saved list matches that search yet. Try food, metro, neighborhood, or first trip.</p>';
+      return;
+    }
+    homeMapSavedLists.innerHTML = homeMapDisplayedSaved.map((item, index) => (
+      '<article class="rounded-md border border-line bg-paper p-3">' +
+        '<div class="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-start">' +
+          '<div>' +
+            '<p class="ds-tag">Saved list</p>' +
+            '<h3 class="mt-1 text-xl font-bold">' + escapeHomeMapHtml(item.name || 'Saved places') + '</h3>' +
+            '<p class="mt-1 text-sm leading-relaxed text-soft">' + escapeHomeMapHtml(summarizeHomeMapItem(item)) + '</p>' +
+          '</div>' +
+          '<div class="flex flex-wrap gap-2 sm:justify-end">' +
+            '<button type="button" data-home-map-remix="' + index + '" class="ds-button ds-button-dark min-h-0 px-3 py-2 text-sm">Remix</button>' +
+            '<button type="button" data-home-map-copy="' + index + '" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm">Copy</button>' +
+          '</div>' +
+        '</div>' +
+      '</article>'
+    )).join('');
+    document.querySelectorAll('[data-home-map-remix]').forEach((button) => {
+      button.addEventListener('click', () => remixHomeMapList(homeMapDisplayedSaved[Number(button.dataset.homeMapRemix)]));
+    });
+    document.querySelectorAll('[data-home-map-copy]').forEach((button) => {
+      button.addEventListener('click', () => copyHomeMapList(homeMapDisplayedSaved[Number(button.dataset.homeMapCopy)]));
+    });
+  }
+  function filterHomeMapSaved(saved, query) {
+    const terms = expandHomeMapQuery(query);
+    if (!terms.length) return saved.slice(0, 4);
+    return saved.filter((item) => {
+      const haystack = [
+        item.name,
+        item.platform,
+        item.mapProvider,
+        ...(item.places || []).flatMap((place) => [place.name, place.city, place.category, place.note]),
+      ].join(' ').toLowerCase();
+      return terms.some((term) => haystack.includes(term));
+    }).slice(0, 6);
+  }
+  function expandHomeMapQuery(query) {
+    const terms = String(query || '').toLowerCase().split(/[^a-z0-9\u4e00-\u9fff]+/).filter(Boolean);
+    const hints = {
+      cheap: ['cheap', 'budget', 'street', 'market', 'snack'],
+      food: ['food', 'eat', 'restaurant', 'dumpling', 'bao', 'tea', 'market'],
+      metro: ['metro', 'station', 'subway', 'transport'],
+      neighborhood: ['neighborhood', 'lane', 'road', 'hutong', 'street'],
+      rainy: ['rainy', 'museum', 'tea', 'indoor'],
+      classic: ['classic', 'bund', 'great', 'wall', 'forbidden', 'first'],
+    };
+    return Array.from(new Set(terms.flatMap((term) => hints[term] || [term])));
+  }
+  function summarizeHomeMapItem(item) {
+    const places = item.places || [];
+    const names = places.map(displayName).slice(0, 3).join(', ');
+    return names ? names + (places.length > 3 ? ' +' + (places.length - 3) + ' more' : '') : 'Ready to remix into a new trip list.';
+  }
+  function remixHomeMapList(item) {
+    if (!item) return;
+    homeMapText.value = (item.places || []).map((place) => displayName(place)).join(', ');
+    homeMapFileText = '';
+    showHomeMapStatus('Remix loaded. Add or remove places, then save to maps again.', false);
+    homeMapText.focus();
+  }
+  function copyHomeMapList(item) {
+    if (!item) return;
+    const text = (item.places || []).map((place) => displayName(place)).join('\n');
+    if (navigator.clipboard && text) {
+      navigator.clipboard.writeText(text);
+      showHomeMapStatus('Copied list text. Share it or paste it into a new plan.', false);
+    } else {
+      showHomeMapStatus('No place text to copy yet.', true);
+    }
+  }
+  function escapeHomeMapHtml(value) {
+    return String(value || '').replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[char]));
+  }
+</script>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .map-preview {
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 24px;
+    background: white;
+  }
+
+  .map-preview-canvas {
+    position: relative;
+    min-height: 18rem;
+    overflow: hidden;
+    background:
+      linear-gradient(90deg, rgba(231, 229, 228, 0.55) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(231, 229, 228, 0.55) 1px, transparent 1px),
+      linear-gradient(135deg, #fafafa 0%, #f0efed 100%);
+    background-size: 4.5rem 4.5rem, 4.5rem 4.5rem, auto;
+  }
+
+  .map-preview-river {
+    position: absolute;
+    inset: -15% 46% -10% 39%;
+    transform: rotate(18deg);
+    border-radius: 999px;
+    background: rgba(168, 200, 232, 0.62);
+  }
+
+  .map-preview-road {
+    position: absolute;
+    height: 0.42rem;
+    border-radius: 999px;
+    background: rgba(214, 211, 209, 0.82);
+  }
+
+  .map-preview-road-a {
+    left: -8%;
+    top: 38%;
+    width: 78%;
+    transform: rotate(-12deg);
+  }
+
+  .map-preview-road-b {
+    right: -10%;
+    top: 64%;
+    width: 80%;
+    transform: rotate(16deg);
+  }
+
+  .map-preview-road-c {
+    left: 16%;
+    top: 18%;
+    width: 58%;
+    transform: rotate(34deg);
+  }
+
+  .map-preview-pins {
+    position: absolute;
+    inset: 0;
+  }
+
+  .map-preview-pin {
+    position: absolute;
+    display: grid;
+    width: 2rem;
+    height: 2.35rem;
+    place-items: center;
+    transform: translate(-50%, -100%);
+    color: white;
+    cursor: default;
+  }
+
+  .map-preview-pin::before {
+    position: absolute;
+    inset: 0.12rem 0.25rem 0.45rem;
+    content: "";
+    transform: rotate(45deg);
+    border: 1px solid var(--color-accent-dark);
+    border-radius: 50% 50% 50% 0;
+    background: var(--color-accent);
+    box-shadow: rgba(0, 0, 0, 0.14) 0 8px 16px;
+  }
+
+  .map-preview-pin::after {
+    position: relative;
+    z-index: 1;
+    content: attr(data-index);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .map-preview-pin.is-active::before {
+    background: #0c0a09;
+    box-shadow:
+      rgba(12, 10, 9, 0.22) 0 10px 20px,
+      rgba(12, 10, 9, 0.16) 0 0 0 6px;
+  }
+
+  .map-preview-zoom {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    display: grid;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.88);
+  }
+
+  .map-preview-zoom span {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .map-preview-zoom span + span {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .map-preview-zoom-plus::before {
+    content: "+";
+  }
+
+  .map-preview-zoom-minus::before {
+    content: "-";
+  }
+
+  .map-preview-drawer {
+    border-top: 1px solid var(--color-line);
+    padding: 1rem;
+  }
+
+  .map-preview-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.65rem;
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    background: var(--color-paper);
+    padding: 0.6rem 0.7rem;
+  }
+
+  .map-preview-row span {
+    display: grid;
+    width: 1.4rem;
+    height: 1.4rem;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--color-accent);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .map-preview-row p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    color: var(--color-soft);
+  }
+
+  .map-preview-row.is-active {
+    border-color: var(--color-accent);
+    background: white;
+  }
+
+  .map-preview-row.is-active p {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AnswerListingPage from '../../../components/AnswerListingPage.astro';
+import { questionAlternates, questionLocales } from '../../../data/localizedQuestions';
+
+const perPage = 6;
+const page = questionLocales.en;
+const allItems = page.groups.flatMap((group) => group.questions);
+
+export function getStaticPaths() {
+  const pageSize = 6;
+  const staticItems = questionLocales.en.groups.flatMap((group) => group.questions);
+  const totalPages = Math.ceil(staticItems.length / pageSize);
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => {
+    const currentPage = index + 2;
+    return {
+      params: { page: String(currentPage) },
+      props: {
+        currentPage,
+        totalPages,
+        items: staticItems.slice((currentPage - 1) * pageSize, currentPage * pageSize),
+      },
+    };
+  });
+}
+
+const { items, currentPage, totalPages } = Astro.props;
+const faqEntities = allItems.map((item) => ({
+  '@type': 'Question',
+  name: item.q,
+  acceptedAnswer: {
+    '@type': 'Answer',
+    text: item.answer,
+    url: new URL(item.href, Astro.site).toString(),
+  },
+}));
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${page.title} page ${currentPage}`,
+    description: page.description,
+    inLanguage: page.lang,
+    about: ['China travel planning', 'China visas', 'China payments', 'China transport'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    name: page.title,
+    description: page.description,
+    inLanguage: page.lang,
+    mainEntity: faqEntities,
+  },
+];
+---
+
+<Base title={`${page.title} page ${currentPage}`} description={page.description} lang={page.lang} alternates={questionAlternates} jsonLd={jsonLd}>
+  <AnswerListingPage page={page} items={items} currentPage={currentPage} totalPages={totalPages} />
+</Base>

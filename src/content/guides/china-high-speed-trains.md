@@ -1,6 +1,8 @@
 ---
 title: "China's High-Speed Trains: Booking on 12306 or Trip.com as a Foreigner"
 description: "How to book Chinese high-speed rail with a foreign passport — 12306 vs Trip.com, seat classes explained, passport gates at stations, and the timing rules that matter."
+seoTitle: "China High-Speed Trains for Foreigners"
+seoDescription: "Book China high-speed rail with a foreign passport, compare 12306 and Trip.com, choose seats, and pass station gates."
 updated: 2026-06-06
 order: 5
 category: "Transport"

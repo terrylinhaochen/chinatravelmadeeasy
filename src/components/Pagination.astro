@@ -1,0 +1,57 @@
+---
+interface Props {
+  basePath: string;
+  currentPage: number;
+  totalPages: number;
+}
+
+const { basePath, currentPage, totalPages } = Astro.props;
+const pageHref = (page: number) => (page === 1 ? basePath : `${basePath}page/${page}/`);
+const controlClass = 'ds-button ds-button-secondary';
+const disabledControlClass = `${controlClass} pointer-events-none opacity-40`;
+---
+
+{
+  totalPages > 1 && (
+    <nav class="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6" aria-label="Pagination">
+      {
+        currentPage === 1 ? (
+          <span class={disabledControlClass} aria-disabled="true">
+            Previous
+          </span>
+        ) : (
+          <a href={pageHref(currentPage - 1)} class={controlClass}>
+            Previous
+          </a>
+        )
+      }
+      <div class="flex flex-wrap justify-center gap-2">
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+          <a
+            href={pageHref(page)}
+            class:list={[
+              'grid h-10 w-10 place-items-center rounded-md border text-sm font-bold transition-colors',
+              page === currentPage
+                ? 'border-accent bg-accent text-white'
+                : 'border-line bg-white text-soft hover:border-accent/50 hover:text-accent',
+            ]}
+            aria-current={page === currentPage ? 'page' : undefined}
+          >
+            {page}
+          </a>
+        ))}
+      </div>
+      {
+        currentPage === totalPages ? (
+          <span class={disabledControlClass} aria-disabled="true">
+            Next
+          </span>
+        ) : (
+          <a href={pageHref(currentPage + 1)} class={controlClass}>
+            Next
+          </a>
+        )
+      }
+    </nav>
+  )
+}

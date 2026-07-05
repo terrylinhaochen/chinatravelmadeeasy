@@ -1,6 +1,8 @@
 ---
 title: "Alipay & WeChat Pay With a Foreign Card: Full Setup Guide (2026)"
 description: "Step-by-step setup of Alipay and WeChat Pay with an international Visa, Mastercard, or Amex - fees, limits, what foreign cards still can't do, and where you genuinely need cash."
+seoTitle: "Alipay and WeChat Pay With Foreign Cards"
+seoDescription: "Set up Alipay and WeChat Pay for China with a foreign card, understand fees and limits, and keep cash or card fallbacks ready."
 updated: 2026-07-04T12:00:00-07:00
 order: 2
 category: "Money & Payments"

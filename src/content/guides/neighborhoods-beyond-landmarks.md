@@ -1,6 +1,8 @@
 ---
 title: "Beyond the Landmarks: Hutongs, Longtang & Everyday Neighborhoods Worth Wandering"
 description: "Where to see China actually living — Beijing hutongs past the touristy ones, Shanghai's former French Concession side streets, Chengdu's slow life, wet markets, and morning park culture — plus how to wander respectfully without speaking Chinese."
+seoTitle: "China Neighborhoods Beyond Landmarks"
+seoDescription: "Find Beijing hutongs, Shanghai longtang lanes, Chengdu parks, wet markets, and everyday neighborhoods worth wandering."
 updated: 2026-06-12
 order: 13
 category: "Authentic China"

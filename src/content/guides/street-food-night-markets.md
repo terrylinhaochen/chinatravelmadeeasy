@@ -1,6 +1,8 @@
 ---
 title: "Street Food & Night Markets in China: What to Eat, Where, and How to Order"
 description: "The street foods actually worth seeking out — jianbing, roujiamo, lamb skewers, tanghulu — plus how to spot safe stalls, what things cost, which famous night markets are tourist traps, and how to order everything by pointing."
+seoTitle: "China Street Food and Night Markets"
+seoDescription: "Eat China street food safely, find better night markets, know fair prices, and order jianbing, skewers, roujiamo, and snacks."
 updated: 2026-06-12
 order: 11
 category: "Authentic China"

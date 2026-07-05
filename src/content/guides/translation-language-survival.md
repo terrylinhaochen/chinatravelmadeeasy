@@ -1,6 +1,8 @@
 ---
 title: "Surviving China Without Chinese: Translation Tools, Phrases & Menus"
 description: "The translation toolkit that actually works in China — offline packs, camera translation for menus, WeChat's built-in translator, and the 15 phrases worth memorizing."
+seoTitle: "China Translation and Language Survival"
+seoDescription: "Use translation apps, camera menus, offline packs, WeChat translate, and key phrases to travel China without speaking Chinese."
 updated: 2026-06-04
 order: 7
 category: "Language"

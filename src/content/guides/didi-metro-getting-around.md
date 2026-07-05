@@ -1,6 +1,8 @@
 ---
 title: "Getting Around Chinese Cities: Didi for Foreigners, Metro QR Codes & More"
 description: "How to use Didi ride-hailing without a Chinese phone number, pay for the metro with Alipay QR codes, and navigate Chinese cities when taxis can't read your destination."
+seoTitle: "Didi, Taxis, and Metro QR Codes in China"
+seoDescription: "Use Didi, taxis, airport pickups, and metro QR codes in China when you do not speak Chinese or have a local number."
 updated: 2026-06-05
 order: 6
 category: "Transport"

@@ -7,19 +7,23 @@ interface Props {
   description: string;
   ogType?: string;
   image?: string;
+  imageAlt?: string;
   jsonLd?: object[];
   lang?: string;
   alternates?: { hreflang: string; href: string }[];
+  robots?: string;
 }
 
 const {
   title,
   description,
   ogType = 'website',
-  image = getGeneratedImage('home:hero')?.src ?? '/images/generated/home-hero.svg',
+  image = getGeneratedImage('home:hero')?.src ?? '/images/curated/home-hero.jpg',
+  imageAlt = 'China travel planning guide preview',
   jsonLd = [],
   lang = 'en',
   alternates = [],
+  robots = 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(image, Astro.site);
@@ -43,6 +47,7 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
     {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -59,10 +64,12 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     {jsonLd.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
@@ -96,7 +103,6 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
         <nav class="flex w-full items-center gap-4 overflow-x-auto text-sm font-semibold text-soft sm:w-auto sm:gap-6 sm:overflow-visible">
           <a href="/guides/" class="flex min-h-11 items-center hover:text-accent transition-colors">Guides</a>
           <a href="/answers/" class="flex min-h-11 items-center hover:text-accent transition-colors">Answers</a>
-          <a href="/about/" class="flex min-h-11 items-center hover:text-accent transition-colors">About</a>
           <a
             href="/map-import/"
             class="ds-button ds-button-primary hidden min-h-0 px-4 py-2 sm:inline-flex"

@@ -1,6 +1,8 @@
 ---
 title: "Hotels in China for Foreigners: Who Accepts You, Registration & Booking"
 description: "Why some Chinese hotels turn away foreign guests, how police registration works, which booking platforms to trust, and how to avoid the midnight 'we can't host foreigners' surprise."
+seoTitle: "China Hotels That Accept Foreigners"
+seoDescription: "Book China hotels that accept foreign passports, understand police registration, avoid refusal risks, and choose reliable platforms."
 updated: 2026-06-03
 order: 8
 category: "Accommodation"

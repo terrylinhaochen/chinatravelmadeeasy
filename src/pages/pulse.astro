@@ -34,9 +34,45 @@ const updated = pulse.generated_at
 
 const description =
   'How China Travel Made Easy turns long-form reviews, local social posts, and traveler questions into crowd-vetted China travel guides.';
+const pulseFaqs = [
+  {
+    q: 'What makes a crowd signal useful for China travel planning?',
+    a: 'A useful signal repeats across more than one source type and changes a practical decision: where to stay, which place to save, what app to set up, or what route to avoid.',
+  },
+  {
+    q: 'Why not publish every trend as a guide?',
+    a: 'The page filters for evidence-backed traveler problems. A signal becomes a guide update only when it can produce a clear answer, a map-ready place, or a concrete planning step.',
+  },
+  {
+    q: 'How does this help AI search?',
+    a: 'Each signal is turned into question-led copy, FAQ schema, internal guide links, and concise answer text so search engines and AI assistants can retrieve the practical takeaway.',
+  },
+];
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Crowd signals for China travel guides',
+    description,
+    url: 'https://chinatravelmadeeasy.com/pulse/',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    name: 'Crowd signal questions',
+    mainEntity: pulseFaqs.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  },
+];
 ---
 
-<Base title="Crowd signals — how traveler questions become guides" description={description}>
+<Base title="Crowd signals for China travel guides" description={description} jsonLd={jsonLd}>
   <section class="bg-card">
     <div class="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
       <p class="ds-eyebrow">
@@ -96,6 +132,27 @@ const description =
         </div>
       </div>
     </div>
+
+    <section class="mt-8" aria-labelledby="pulse-faq-heading">
+      <div class="grid gap-5 lg:grid-cols-[0.7fr_1.3fr]">
+        <div>
+          <p class="ds-eyebrow">Signal quality</p>
+          <h2 id="pulse-faq-heading" class="mt-2 text-2xl font-bold">What makes a crowd signal publishable?</h2>
+          <p class="mt-3 text-sm leading-relaxed text-soft">
+            The site favors signals that help a backpacker make a decision, not vague trend summaries.
+            A useful update should answer a planning question, point to a place, or reduce wasted time.
+          </p>
+        </div>
+        <dl class="grid gap-3">
+          {pulseFaqs.map((item) => (
+            <div class="ds-card p-4">
+              <dt class="font-semibold text-ink">{item.q}</dt>
+              <dd class="mt-2 text-sm leading-relaxed text-soft">{item.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
 
     {
       pulse.insights.length === 0 ? (

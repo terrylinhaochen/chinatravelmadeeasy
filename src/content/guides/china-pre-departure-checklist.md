@@ -1,6 +1,8 @@
 ---
 title: "China Pre-Departure Checklist: What to Set Up Before You Fly"
 description: "The two-week countdown for first-time visitors to China — apps to install, accounts to verify, bookings to make, and the mistakes that are hard to fix after landing."
+seoTitle: "China Pre-Departure Checklist"
+seoDescription: "Set up payments, eSIMs, trains, hotel details, attraction bookings, and backups before your first China trip."
 updated: 2026-06-08
 order: 1
 category: "Start Here"

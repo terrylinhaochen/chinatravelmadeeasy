@@ -22,6 +22,13 @@ npm run preview
 
 Requires Node 22+.
 
+## Design system
+
+`DESIGN.md` is the active UI reference. The implemented component primitives live
+in `src/styles/global.css` as `.ds-*` classes: editorial media tiles, panels,
+chips, inputs, and pill buttons. Guides, Answers, and the homepage category
+tiles should reuse those primitives instead of one-off card styles.
+
 ## Adding or updating a guide
 
 1. Edit or add a markdown file in `src/content/guides/`. The filename is the URL slug.
@@ -40,21 +47,21 @@ Requires Node 22+.
 - `/answers/`, `/content-seeds/`, and `/content-seeds.json` for QA-first AI-search retrieval
 - CNAME for the custom domain lives in `public/CNAME`
 
-## Generated imagery
+## Curated imagery
 
-The site uses generated Sasi watercolor assets from `public/images/generated`.
+The site uses authentic, source-attributed photography from `public/images/curated`.
 `npm run build` verifies that every homepage, guide, and region image points at a
-generated asset before Astro builds.
+prepared site asset before Astro builds. The image pipeline crops, resizes, and
+compresses real source photos; it does not use AI image generation or style transfer.
 
 ```sh
-npm run images:verify   # checks manifest coverage and generated files
-npm run images:check    # dry-runs the 53 Nano Banana prompts
-npm run images:fallback # intentionally writes local SVG preview assets
-GEMINI_API_KEY=... npm run images:generate
+npm run images:verify   # checks manifest coverage, source attribution, and files
+npm run images:check    # dry-runs the 53 curated photo assets
+npm run images:generate # prepares optimized site crops from authentic photos
 ```
 
-`images:generate` requires `GEMINI_API_KEY`, `GOOGLE_API_KEY`, or
-`GOOGLE_GENAI_API_KEY`; it will not silently fall back to placeholders.
+Image source references live in `src/data/generatedImageManifest.json` and
+`src/data/regionImages.json`.
 
 ## Analytics and Search Console
 
@@ -79,6 +86,23 @@ npm run build
 The script writes `src/data/contentSeeds.json`, `public/content-seeds.json`, and
 `content-seed-queue.md`. See `docs/crowdlisten-content-loop.md` for the workflow
 and quality rules.
+
+### Agent-Reach supply adapter
+
+Agent-Reach can collect raw Reddit questions and Xiaohongshu place notes when
+operator login state is available. Normalize those exports before reviewing them
+in CrowdListen:
+
+```sh
+npm run capture:agent-reach -- --preflight --backend auto
+npm run import:agent-reach -- pipeline/agent-reach-exports/china-backpacker.jsonl
+npm run test:agent-reach-import
+npm run report:agent-reach-gap
+```
+
+This writes `pipeline/agent-reach-normalized-seeds.json` and
+`pipeline/agent-reach-gap-report.md`. See `docs/agent-reach-sourcing.md` for the
+handoff shape, login boundaries, and comparison workflow.
 
 ## Deploy
 

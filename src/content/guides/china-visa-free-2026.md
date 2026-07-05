@@ -1,6 +1,8 @@
 ---
 title: "China Visa-Free Entry & 240-Hour Transit in 2026: Who Qualifies"
 description: "Which passports can enter China without a visa in 2026, how the 240-hour (10-day) visa-free transit works for Americans, Brits, and Canadians, and the rules that trip people up."
+seoTitle: "China Visa-Free Entry and Transit Rules"
+seoDescription: "Check China visa-free entry, 240-hour transit rules, eligible passports, onward-ticket requirements, and routing traps."
 updated: 2026-06-08
 order: 4
 category: "Visas & Entry"

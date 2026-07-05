@@ -1,53 +1,122 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Icon from '../../components/Icon.astro';
 import { destinations } from '../../data/destinations';
 
 const description =
-  'All China destination regions for trip planning, with each region linked to practical China Travel Made Easy guides.';
+  'All destination regions for trip planning, with each region linked to practical China Travel Made Easy guides.';
+const regionFaqs = [
+  {
+    q: 'How should I choose a China destination region?',
+    a: 'Start with your entry city, trip length, and transport budget. The pinned map helps you jump from a province-level region to starter places, practical guides, and nearby route decisions.',
+  },
+  {
+    q: 'Why include Hong Kong, Macau, and Taiwan here?',
+    a: 'Travelers often search them together with mainland China routes, visa-free exits, food planning, and flight connections, so the index treats them as planning regions.',
+  },
+  {
+    q: 'What should I save after opening a region?',
+    a: 'Save two or three anchor places first, then add food streets, transit stations, neighborhoods, and hotel areas once the route is realistic.',
+  },
+];
 
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'China destination regions',
+    name: 'Destination regions',
     url: 'https://chinatravelmadeeasy.com/regions/',
     description,
     isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    name: 'Destination region planning questions',
+    mainEntity: regionFaqs.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  },
 ];
 ---
 
-<Base title="China destination regions" description={description} jsonLd={jsonLd}>
+<Base title="Destination regions" description={description} jsonLd={jsonLd}>
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
     <div class="grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
       <div>
         <p class="ds-eyebrow">Where to go</p>
-        <h1 class="mt-2 text-4xl font-bold leading-tight sm:text-5xl">China destination regions</h1>
+        <h1 class="mt-2 text-4xl leading-tight sm:text-5xl">Destination regions</h1>
       </div>
       <p class="text-lg leading-relaxed text-soft">
         One planning map for municipalities, provinces, autonomous regions, Hong Kong, Macau, and Taiwan as a traveler search region. Each destination links to the guides that matter most for that route.
       </p>
     </div>
 
-    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="ds-map-panel mt-8">
+      <div class="ds-map-legend">
+        <p class="ds-eyebrow">Pinned regions</p>
+        <h2 class="mt-2 text-3xl leading-tight">Tap a pin, open the route.</h2>
+        <p class="mt-3 text-sm leading-relaxed text-soft">
+          A province-level planning map for quickly jumping from a region to its practical guides and starter places.
+        </p>
+      </div>
       {destinations.map((destination) => (
-        <a href={`/regions/${destination.slug}/`} class="ds-card-link group grid grid-cols-[6.5rem_1fr] overflow-hidden">
-          <div class="h-full min-h-28 overflow-hidden bg-surface-strong">
+        <a
+          href={`/regions/${destination.slug}/`}
+          class="ds-map-pin"
+          style={`--pin-x: ${destination.mapPin.x}%; --pin-y: ${destination.mapPin.y}%`}
+          data-featured={destination.featured ? 'true' : 'false'}
+          aria-label={`${destination.name}: ${destination.summary}`}
+          title={destination.name}
+        >
+          {destination.name.slice(0, 2)}
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {destinations.map((destination) => (
+        <a href={`/regions/${destination.slug}/`} class="ds-card-link group overflow-hidden">
+          <div class="aspect-[4/3] overflow-hidden bg-surface-strong">
             <img src={destination.image.src} alt={destination.image.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
           </div>
-          <div class="p-4">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <p class="ds-tag">{destination.type}</p>
-                <h2 class="mt-1 text-xl font-bold group-hover:text-accent">{destination.name}</h2>
+          <div class="p-5">
+            <p class="ds-tag">{destination.type}</p>
+            <h2 class="mt-2 text-2xl leading-tight group-hover:text-accent">{destination.name}</h2>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{destination.summary}</p>
+            {destination.places.length > 0 && (
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                {destination.places.slice(0, 2).map((place) => (
+                  <span class="inline-flex min-h-8 items-center rounded-full border border-line bg-white px-2 py-1 text-[0.68rem] font-semibold text-soft">
+                    {place.name}
+                  </span>
+                ))}
               </div>
-              <Icon name="arrow" class="mt-1 h-4 w-4 shrink-0 text-faint group-hover:text-accent" />
-            </div>
-            <p class="mt-3 text-sm leading-relaxed text-soft">{destination.summary}</p>
+            )}
           </div>
         </a>
       ))}
     </div>
+
+    <section class="ds-panel mt-10 p-5 sm:p-6" aria-labelledby="regions-faq-heading">
+      <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr]">
+        <div>
+          <p class="ds-eyebrow">Region planning</p>
+          <h2 id="regions-faq-heading" class="mt-2 text-2xl font-bold">How do I use this destination map?</h2>
+        </div>
+        <dl class="grid gap-3">
+          {regionFaqs.map((item) => (
+            <div class="ds-card p-4">
+              <dt class="font-semibold text-ink">{item.q}</dt>
+              <dd class="mt-2 text-sm leading-relaxed text-soft">{item.a}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
   </section>
 </Base>
