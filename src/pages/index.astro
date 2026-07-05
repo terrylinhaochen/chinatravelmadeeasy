@@ -9,13 +9,13 @@ const heroImage = getGeneratedImage('region:beijing') ?? {
   src: '/images/curated/region-beijing.jpg',
   alt: 'Forbidden City palace roofs in Beijing',
 };
-const homepageDestinations = destinations.slice(0, 8);
+const homepageDestinations = destinations.slice(0, 6);
 
 const travelModes = [
   {
     title: 'Places',
     icon: 'map',
-    body: 'Start with the most-searched entry regions, then open the full region guide when you need every province-level destination.',
+    body: 'Find entry regions and starter pins before you build the route.',
     href: '/regions/',
     image: getGeneratedImage('home:places')?.src ?? '/images/curated/home-places.jpg',
     alt: getGeneratedImage('home:places')?.alt ?? 'Great Wall landscape in northern China',
@@ -23,7 +23,7 @@ const travelModes = [
   {
     title: 'Eating',
     icon: 'bowl',
-    body: 'Street food, QR menus, spice levels, allergy cards, tea houses, and where tourists overpay.',
+    body: 'Save food streets, tea houses, and local meals worth detouring for.',
     href: '/guides/street-food-night-markets/',
     image: getGeneratedImage('home:eating')?.src ?? '/images/curated/home-eating.jpg',
     alt: getGeneratedImage('home:eating')?.alt ?? 'Street food stall in China',
@@ -31,7 +31,7 @@ const travelModes = [
   {
     title: 'Traveling',
     icon: 'train',
-    body: 'High-speed rail, Didi, metro QR codes, airport pickup, and how to move without Chinese.',
+    body: 'Keep trains, metros, and hard-to-find addresses tied to the same plan.',
     href: '/guides/china-high-speed-trains/',
     image: getGeneratedImage('home:traveling')?.src ?? '/images/curated/home-traveling.jpg',
     alt: getGeneratedImage('home:traveling')?.alt ?? 'High-speed train at a China rail platform',
@@ -39,7 +39,7 @@ const travelModes = [
   {
     title: 'Hospitality',
     icon: 'passport',
-    body: 'Hotels that accept foreign passports, neighborhoods to stay in, and booking-platform traps.',
+    body: 'Choose neighborhoods and hotels that actually work for foreign passports.',
     href: '/guides/hotels-foreigners-china/',
     image: getGeneratedImage('home:hospitality')?.src ?? '/images/curated/home-hospitality.jpg',
     alt: getGeneratedImage('home:hospitality')?.alt ?? 'Hotel lobby in China',
@@ -154,71 +154,64 @@ const jsonLd = [
 ---
 
 <Base title="Local treasures, saved to your map" description={description} image={heroImage.src} imageAlt={heroImage.alt} jsonLd={jsonLd}>
-  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-    <div class="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-      <div>
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
+    <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div class="max-w-xl">
         <p class="ds-eyebrow">
-          China map planning
+          Save places
         </p>
-        <h1 class="mt-4 text-5xl leading-none sm:text-7xl lg:text-8xl">
+        <h1 class="mt-4 text-5xl leading-[0.98] sm:text-6xl lg:text-7xl">
           Local treasures, saved to your map.
         </h1>
-        <p class="mt-5 max-w-xl text-lg leading-relaxed text-soft sm:text-xl">
-          Drop a link, screenshot, or list. Get clean pins you can save, remix, or share.
+        <p class="mt-5 text-lg leading-relaxed text-soft">
+          Drop a link or screenshot. Get clean pins to save or share.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="#save-places" class="ds-button ds-button-primary">
-            Paste or upload
+            Add places
           </a>
-          <a href="/map-import/" class="ds-button ds-button-secondary">
-            Open full tool
+          <a href="#places" class="ds-button ds-button-secondary">
+            Browse regions
           </a>
         </div>
       </div>
-      <div class="ds-photo">
-        <img src={heroImage.src} alt={heroImage.alt} class="h-[260px] w-full object-cover sm:h-[360px] lg:h-[420px]" fetchpriority="high" />
+      <div class="relative overflow-hidden rounded-3xl border border-line bg-surface-strong">
+        <img src={heroImage.src} alt={heroImage.alt} class="h-[280px] w-full object-cover sm:h-[380px] lg:h-[440px]" fetchpriority="high" />
       </div>
     </div>
   </section>
 
-  <section id="save-places" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-12 sm:px-6 sm:py-16">
+  <section class="mx-auto max-w-6xl px-4 pb-8 sm:px-6 sm:pb-10">
+    <div class="ds-context-grid">
+      {travelModes.map((mode) => (
+        <a href={mode.href} class="ds-context-card group">
+          <div class="ds-context-thumb">
+            <img src={mode.image} alt={mode.alt} loading="lazy" />
+          </div>
+          <div class="p-4">
+            <span class="ds-icon-tile">
+              <Icon name={mode.icon} class="h-5 w-5" />
+            </span>
+            <h2 class="mt-4 text-2xl leading-tight group-hover:text-accent">{mode.title}</h2>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{mode.body}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section id="save-places" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:px-6 sm:py-12">
     <div class="ds-panel overflow-hidden p-5 sm:p-8">
-      <div class="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
+      <div class="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
         <div>
           <p class="ds-eyebrow">Add places</p>
-          <h2 class="mt-2 text-3xl leading-tight sm:text-4xl">Drop a link or screenshot</h2>
+          <h2 class="mt-2 text-3xl leading-tight sm:text-4xl">Drop a link, file, or screenshot</h2>
           <p class="mt-4 max-w-md leading-relaxed text-soft">
-            We pull out the places and return a map-ready pin list.
+            Add the raw travel thing you already saved. We extract likely places and show map options only after review.
           </p>
         </div>
 
         <div class="grid gap-4">
-          <div class="map-preview" aria-label="Map pin preview">
-            <div class="map-preview-canvas">
-              <div class="map-preview-river"></div>
-              <div class="map-preview-road map-preview-road-a"></div>
-              <div class="map-preview-road map-preview-road-b"></div>
-              <div class="map-preview-road map-preview-road-c"></div>
-              <div id="homeMapPreviewPins" class="map-preview-pins"></div>
-              <div class="map-preview-zoom" aria-hidden="true">
-                <span class="map-preview-zoom-plus"></span>
-                <span class="map-preview-zoom-minus"></span>
-              </div>
-            </div>
-            <div class="map-preview-drawer">
-              <div>
-                <p class="ds-eyebrow">Map preview</p>
-                <h3 class="mt-1 text-2xl">Pins before you save</h3>
-              </div>
-              <p id="homeMapPreviewCount" class="text-sm text-soft">Drop a list to preview extracted places.</p>
-            <div id="homeMapPreviewList" class="mt-3 grid gap-2"></div>
-            <div class="mt-4 flex flex-wrap items-center gap-3">
-              <button id="homeMapPreviewAdd" type="button" class="ds-button ds-button-dark min-h-0 px-4 py-2">Add to your map</button>
-              <span id="homeMapPreviewHint" class="text-sm text-faint">Try the sample or paste a list first.</span>
-            </div>
-          </div>
-        </div>
-
           <label
             id="homeMapDropZone"
             for="homeMapFile"
@@ -226,21 +219,20 @@ const jsonLd = [
           >
             <input id="homeMapFile" type="file" accept="image/*,.txt,.md" class="hidden" />
             <span class="ds-eyebrow">Upload or drop</span>
-            <span class="mt-2 block text-2xl">Link, screenshot, note, or list</span>
+            <span class="mt-2 block text-2xl">Screenshot, note, text file, or saved list</span>
             <span id="homeMapFileName" class="mt-2 block text-sm leading-relaxed text-soft">
-              For screenshots, use a descriptive filename or paste the caption below.
+              Use a descriptive filename or paste the caption/link below.
             </span>
           </label>
 
           <textarea
             id="homeMapText"
             class="ds-input min-h-28 resize-y text-sm"
-            placeholder="Paste a post, caption, or shared list, e.g. Shanghai crawl: Jia Jia Tang Bao, Wukang Road, The Bund..."
+            placeholder="Paste a link, caption, or shared list: Shanghai crawl: Jia Jia Tang Bao, Wukang Road, The Bund..."
           ></textarea>
 
           <div class="flex flex-wrap justify-end gap-2">
-            <button type="button" id="homeMapSample" class="ds-button ds-button-secondary">Try sample</button>
-            <button type="button" id="homeMapAnalyze" class="ds-button ds-button-dark">Save to maps</button>
+            <button type="button" id="homeMapAnalyze" class="ds-button ds-button-dark">Extract places</button>
           </div>
 
           <p id="homeMapStatus" class="hidden rounded-md border border-line bg-white p-3 text-sm leading-relaxed text-soft"></p>
@@ -291,58 +283,18 @@ const jsonLd = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 pb-12 sm:px-6 sm:pb-16">
-    <PinDensityPanel
-      eyebrow="Pin density"
-      title="See where traveler pins keep clustering."
-      description="Use the map like a trip profile: darker regions have more saved-place signal, and each place carries traveler notes you can collect or export."
-      class="bg-card"
-    />
-  </section>
-
-  <section class="mx-auto max-w-6xl px-4 sm:px-6">
-    <div class="grid gap-6 border-t border-line pt-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
-      <div>
-        <p class="ds-eyebrow">Use it for China planning</p>
-        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Keep the trip research, not the clutter</h2>
-      </div>
-      <p class="leading-relaxed text-soft">
-        The guides below help explain what to save. The main workflow stays the same:
-        collect places, clean the list, then save it to maps.
-      </p>
-    </div>
-    <div class="ds-media-panel mt-8">
-      <div class="ds-media-grid-four">
-        {travelModes.map((mode) => (
-          <a href={mode.href} class="ds-media-tile group">
-            <div class="ds-media-thumb">
-              <img src={mode.image} alt={mode.alt} loading="lazy" />
-            </div>
-            <div class="ds-media-body">
-              <span class="ds-icon-tile">
-                <Icon name={mode.icon} class="h-5 w-5" />
-              </span>
-              <h2 class="ds-media-title">{mode.title}</h2>
-              <p class="ds-media-copy">{mode.body}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <section id="places" class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
     <div class="grid gap-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
       <div>
-        <p class="ds-eyebrow">Places worth saving</p>
-        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Start a list from the places travelers ask about first</h2>
+        <p class="ds-eyebrow">Where to go</p>
+        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Start with the places travelers search first</h2>
       </div>
       <p class="text-soft leading-relaxed">
-        Use these regions as anchors when a saved post has no context. Open the full index when
-        you need to place a pin inside a wider route.
+        The homepage stays focused on the four highest-intent entry regions. The full destination index
+        lists every province-level planning region and links each one to guide recommendations.
       </p>
     </div>
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-8 grid grid-cols-3 gap-4">
       {homepageDestinations.map((destination) => (
         <a href={`/regions/${destination.slug}/`} class="ds-card-link group overflow-hidden">
           <div class="aspect-[4/3] overflow-hidden bg-surface-strong">
@@ -364,15 +316,24 @@ const jsonLd = [
     </div>
   </section>
 
+  <section class="mx-auto max-w-6xl px-4 pb-12 sm:px-6 sm:pb-16">
+    <PinDensityPanel
+      eyebrow="Pin density"
+      title="See where traveler pins keep clustering."
+      description="A compact activity map for province-level saved-place signal. Guides stay location-based; answers stay question-based."
+      class="bg-card"
+    />
+  </section>
+
   <section class="mx-auto max-w-6xl px-4 sm:px-6">
     <div class="grid gap-6 border-t border-line pt-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
       <div>
-        <p class="ds-eyebrow">Guide context</p>
-        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Fix the details behind the places you save</h2>
+        <p class="ds-eyebrow">Travel essentials</p>
+        <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Fix the basics first</h2>
       </div>
       <p class="leading-relaxed text-soft">
-        Pins are easier to use when the basics work: payment, internet, trains, hotels,
-        translation, and food ordering.
+        Visa rules, mobile payments, eSIMs, hotels, and train bookings are the practical layer underneath
+        every good China trip.
       </p>
     </div>
     <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -421,14 +382,8 @@ const jsonLd = [
   const homeMapFileName = document.querySelector('#homeMapFileName');
   const homeMapText = document.querySelector('#homeMapText');
   const homeMapAnalyze = document.querySelector('#homeMapAnalyze');
-  const homeMapSample = document.querySelector('#homeMapSample');
   const homeMapStatus = document.querySelector('#homeMapStatus');
   const homeMapResults = document.querySelector('#homeMapResults');
-  const homeMapPreviewPins = document.querySelector('#homeMapPreviewPins');
-  const homeMapPreviewCount = document.querySelector('#homeMapPreviewCount');
-  const homeMapPreviewList = document.querySelector('#homeMapPreviewList');
-  const homeMapPreviewAdd = document.querySelector('#homeMapPreviewAdd');
-  const homeMapPreviewHint = document.querySelector('#homeMapPreviewHint');
   const homeMapMapChoice = document.querySelector('#homeMapMapChoice');
   const homeMapSignIn = document.querySelector('#homeMapSignIn');
   const homeMapEmail = document.querySelector('#homeMapEmail');
@@ -444,19 +399,6 @@ const jsonLd = [
   let homeMapPlaces = [];
   let homeMapPendingPlace = null;
   let homeMapDisplayedSaved = [];
-  const homeMapPreviewSeed = [
-    { name: 'Jia Jia Tang Bao', city: 'Shanghai', category: 'Food' },
-    { name: 'Wukang Road', city: 'Shanghai', category: 'Walk' },
-    { name: 'The Bund', city: 'Shanghai', category: 'View' },
-  ];
-  const homeMapPinPositions = [
-    { x: 62, y: 34 },
-    { x: 38, y: 45 },
-    { x: 70, y: 58 },
-    { x: 48, y: 68 },
-    { x: 26, y: 57 },
-    { x: 78, y: 42 },
-  ];
 
   homeMapProviderButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -485,14 +427,7 @@ const jsonLd = [
   });
   homeMapDropZone.addEventListener('drop', (event) => readHomeMapFile(event.dataTransfer?.files?.[0]));
 
-  homeMapSample.addEventListener('click', () => {
-    homeMapText.value = 'Shanghai crawl: lunch at Jia Jia Tang Bao, walk Wukang Road, sunset at The Bund, then snack around Huanghe Road.';
-    homeMapFileText = '';
-    homeMapFileName.textContent = 'Sample caption ready to analyze.';
-    analyzeHomeMapInput({ previewOnly: true });
-  });
   homeMapAnalyze.addEventListener('click', analyzeHomeMapInput);
-  homeMapPreviewAdd.addEventListener('click', addHomeMapPreviewToMap);
   homeMapSearch.addEventListener('input', () => renderHomeMapSavedLists(homeMapSearch.value));
   homeMapContinue.addEventListener('click', () => {
     const email = homeMapEmail.value.trim();
@@ -504,7 +439,6 @@ const jsonLd = [
     homeMapSignIn.classList.add('hidden');
     if (homeMapPendingPlace) saveHomeMapPlace(homeMapPendingPlace, true);
   });
-  renderHomeMapPreview(homeMapPreviewSeed);
   renderHomeMapSavedLists();
 
   function readHomeMapFile(file) {
@@ -523,7 +457,7 @@ const jsonLd = [
     }
   }
 
-  function analyzeHomeMapInput(options = {}) {
+  function analyzeHomeMapInput() {
     const text = [homeMapText.value, homeMapFileText].filter(Boolean).join('\n');
     if (!text.trim()) {
       showHomeMapStatus('Drop a file or paste a caption first.', true);
@@ -539,17 +473,8 @@ const jsonLd = [
       showHomeMapStatus('No clear place found yet. Add a city and place name, then try again.', true);
       return;
     }
-    const message = options.previewOnly
-      ? 'Sample pins loaded. Add the list to your map when ready.'
-      : 'Found ' + homeMapPlaces.length + ' place' + (homeMapPlaces.length === 1 ? '' : 's') + '. Add the list or choose a place below.';
-    showHomeMapStatus(message, false);
-    renderHomeMapPreview(homeMapPlaces);
-    if (options.previewOnly) {
-      homeMapResults.classList.add('hidden');
-      homeMapResults.innerHTML = '';
-    } else {
-      renderHomeMapResults();
-    }
+    showHomeMapStatus('Found ' + homeMapPlaces.length + ' place' + (homeMapPlaces.length === 1 ? '' : 's') + '. Review the result before saving.', false);
+    renderHomeMapResults();
   }
 
   function renderHomeMapResults() {
@@ -573,22 +498,7 @@ const jsonLd = [
     homeMapPendingPlace = item;
     homeMapMapChoice.classList.remove('hidden');
     homeMapSignIn.classList.add('hidden');
-    renderHomeMapPreview(homeMapPlaces, item);
     showHomeMapStatus('Choose where to save ' + displaySaveName(item) + '.', false);
-  }
-
-  function addHomeMapPreviewToMap() {
-    if (!homeMapPlaces.length) {
-      showHomeMapStatus('Try the sample or paste a list first.', true);
-      return;
-    }
-    const listItem = {
-      name: homeMapPlaces.length === 1 ? displayName(homeMapPlaces[0]) : 'Map list with ' + homeMapPlaces.length + ' places',
-      category: 'Saved list',
-      note: 'Extracted from the current pin preview.',
-      places: homeMapPlaces,
-    };
-    showHomeMapMapChoice(listItem);
   }
 
   function requestHomeMapSignIn(item) {
@@ -619,7 +529,6 @@ const jsonLd = [
     localStorage.setItem(homeMapSavedKey, JSON.stringify([savedItem, ...saved].slice(0, 24)));
     showHomeMapStatus('Saved to your trip list. Opening ' + mapProviderName() + '.', false);
     homeMapPendingPlace = null;
-    renderHomeMapPreview(places, firstPlace);
     renderHomeMapSavedLists(homeMapSearch.value);
     if (openAfterSave && firstPlace) window.open(homeMapProvider === 'amap' ? amapUrl(firstPlace) : appleMapsUrl(firstPlace), '_blank', 'noopener');
   }
@@ -628,36 +537,6 @@ const jsonLd = [
     homeMapStatus.textContent = message;
     homeMapStatus.classList.remove('hidden');
     homeMapStatus.classList.toggle('border-accent', Boolean(isError));
-  }
-  function renderHomeMapPreview(places, selectedPlace) {
-    const previewPlaces = (places && places.length ? places : homeMapPreviewSeed).slice(0, 6);
-    const isExamplePreview = places === homeMapPreviewSeed || !places || !places.length;
-    homeMapPreviewCount.textContent = isExamplePreview
-      ? 'Example pin preview. Drop a list to replace it.'
-      : previewPlaces.length + ' place' + (previewPlaces.length === 1 ? '' : 's') + ' ready to review.';
-    homeMapPreviewAdd.disabled = isExamplePreview;
-    homeMapPreviewAdd.classList.toggle('opacity-40', isExamplePreview);
-    homeMapPreviewAdd.classList.toggle('pointer-events-none', isExamplePreview);
-    homeMapPreviewHint.textContent = isExamplePreview
-      ? 'Try the sample or paste a list first.'
-      : 'Add all visible pins to your own map.';
-    homeMapPreviewPins.innerHTML = previewPlaces.map((place, index) => {
-      const position = homeMapPinPositions[index] || homeMapPinPositions[0];
-      const active = selectedPlace && displayName(place) === displayName(selectedPlace);
-      return (
-        '<button type="button" class="map-preview-pin' + (active ? ' is-active' : '') + '" data-index="' + (index + 1) + '" style="left:' + position.x + '%; top:' + position.y + '%" aria-label="' + escapeHomeMapHtml(displayName(place)) + '">' +
-        '</button>'
-      );
-    }).join('');
-    homeMapPreviewList.innerHTML = previewPlaces.map((place, index) => {
-      const active = selectedPlace && displayName(place) === displayName(selectedPlace);
-      return (
-        '<div class="map-preview-row' + (active ? ' is-active' : '') + '">' +
-          '<span>' + (index + 1) + '</span>' +
-          '<p>' + escapeHomeMapHtml(displayName(place)) + '</p>' +
-        '</div>'
-      );
-    }).join('');
   }
   function mapProviderName() { return homeMapProvider === 'amap' ? 'AMap' : 'Apple Maps'; }
   function placesForSave(item) { return Array.isArray(item?.places) ? item.places : [item].filter(Boolean); }
@@ -756,178 +635,4 @@ const jsonLd = [
     display: none;
   }
 
-  .map-preview {
-    overflow: hidden;
-    border: 1px solid var(--color-line);
-    border-radius: 24px;
-    background: white;
-  }
-
-  .map-preview-canvas {
-    position: relative;
-    min-height: 18rem;
-    overflow: hidden;
-    background:
-      linear-gradient(90deg, rgba(231, 229, 228, 0.55) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(231, 229, 228, 0.55) 1px, transparent 1px),
-      linear-gradient(135deg, #fafafa 0%, #f0efed 100%);
-    background-size: 4.5rem 4.5rem, 4.5rem 4.5rem, auto;
-  }
-
-  .map-preview-river {
-    position: absolute;
-    inset: -15% 46% -10% 39%;
-    transform: rotate(18deg);
-    border-radius: 999px;
-    background: rgba(168, 200, 232, 0.62);
-  }
-
-  .map-preview-road {
-    position: absolute;
-    height: 0.42rem;
-    border-radius: 999px;
-    background: rgba(214, 211, 209, 0.82);
-  }
-
-  .map-preview-road-a {
-    left: -8%;
-    top: 38%;
-    width: 78%;
-    transform: rotate(-12deg);
-  }
-
-  .map-preview-road-b {
-    right: -10%;
-    top: 64%;
-    width: 80%;
-    transform: rotate(16deg);
-  }
-
-  .map-preview-road-c {
-    left: 16%;
-    top: 18%;
-    width: 58%;
-    transform: rotate(34deg);
-  }
-
-  .map-preview-pins {
-    position: absolute;
-    inset: 0;
-  }
-
-  .map-preview-pin {
-    position: absolute;
-    display: grid;
-    width: 2rem;
-    height: 2.35rem;
-    place-items: center;
-    transform: translate(-50%, -100%);
-    color: white;
-    cursor: default;
-  }
-
-  .map-preview-pin::before {
-    position: absolute;
-    inset: 0.12rem 0.25rem 0.45rem;
-    content: "";
-    transform: rotate(45deg);
-    border: 1px solid var(--color-accent-dark);
-    border-radius: 50% 50% 50% 0;
-    background: var(--color-accent);
-    box-shadow: rgba(0, 0, 0, 0.14) 0 8px 16px;
-  }
-
-  .map-preview-pin::after {
-    position: relative;
-    z-index: 1;
-    content: attr(data-index);
-    font-size: 0.75rem;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  .map-preview-pin.is-active::before {
-    background: #0c0a09;
-    box-shadow:
-      rgba(12, 10, 9, 0.22) 0 10px 20px,
-      rgba(12, 10, 9, 0.16) 0 0 0 6px;
-  }
-
-  .map-preview-zoom {
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
-    display: grid;
-    overflow: hidden;
-    border: 1px solid var(--color-line);
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.88);
-  }
-
-  .map-preview-zoom span {
-    display: grid;
-    width: 2rem;
-    height: 2rem;
-    place-items: center;
-    color: var(--color-ink);
-    font-weight: 600;
-  }
-
-  .map-preview-zoom span + span {
-    border-top: 1px solid var(--color-line);
-  }
-
-  .map-preview-zoom-plus::before {
-    content: "+";
-  }
-
-  .map-preview-zoom-minus::before {
-    content: "-";
-  }
-
-  .map-preview-drawer {
-    border-top: 1px solid var(--color-line);
-    padding: 1rem;
-  }
-
-  .map-preview-row {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 0.65rem;
-    border: 1px solid var(--color-line);
-    border-radius: 8px;
-    background: var(--color-paper);
-    padding: 0.6rem 0.7rem;
-  }
-
-  .map-preview-row span {
-    display: grid;
-    width: 1.4rem;
-    height: 1.4rem;
-    place-items: center;
-    border-radius: 999px;
-    background: var(--color-accent);
-    color: white;
-    font-size: 0.72rem;
-    font-weight: 700;
-  }
-
-  .map-preview-row p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 0.875rem;
-    color: var(--color-soft);
-  }
-
-  .map-preview-row.is-active {
-    border-color: var(--color-accent);
-    background: white;
-  }
-
-  .map-preview-row.is-active p {
-    color: var(--color-ink);
-    font-weight: 600;
-  }
 </style>

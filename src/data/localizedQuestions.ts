@@ -14,7 +14,7 @@ export const questionLocales = {
     description:
       'Common China travel answers in a retrieval-friendly QA format, matched to crowd-vetted guides on visas, payments, eSIMs, hotels, food, trains, language, and itineraries.',
     eyebrow: 'Traveler answers',
-    heading: 'Common China travel answers, matched to the right guide.',
+    heading: 'China travel answers',
     intro:
       'Answer pages should match how travelers actually search: short concerns, direct answers, and a guide when they need more detail.',
     readAnswer: 'Read answer',

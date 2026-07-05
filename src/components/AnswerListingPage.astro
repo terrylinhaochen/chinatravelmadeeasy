@@ -86,41 +86,5 @@ function imageForHref(href: string) {
     })}
   </div>
 
-  <section class="ds-panel mt-10 p-5 sm:p-6" aria-labelledby="answers-use-heading">
-    <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
-      <div>
-        <p class="ds-eyebrow">Answer format</p>
-        <h2 id="answers-use-heading" class="mt-2 text-3xl leading-tight">How should I use these answers?</h2>
-      </div>
-      <div class="grid gap-4 text-sm leading-relaxed text-soft sm:grid-cols-3">
-        <p>
-          Start with the question closest to your real blocker. Each card gives the short answer first,
-          then links to the guide with dates, caveats, and setup steps.
-        </p>
-        <p>
-          The index is written for search and AI retrieval: one traveler problem, one direct answer,
-          and one canonical guide path instead of scattered notes.
-        </p>
-        <p>
-          If a question involves maps, food, hotels, transport, or payments, save the relevant place
-          first and use the linked guide to check whether the plan will work in China.
-        </p>
-        <p>
-          Use pagination as a filtered reading path rather than a deep archive. Later pages still keep
-          the same answer structure so a saved search result can explain the problem, the fix, and the
-          next place to open.
-        </p>
-        <p>
-          When a result is not enough, move from the answer card to the full guide. The longer guide
-          carries examples, tradeoffs, and warnings that would make the index harder to scan.
-        </p>
-        <p>
-          For trip planning, the best rhythm is simple: answer the blocker, save the place or route,
-          then keep the practical guide open while booking transport, hotels, or food stops.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <Pagination basePath="/answers/" currentPage={currentPage} totalPages={totalPages} />
 </section>

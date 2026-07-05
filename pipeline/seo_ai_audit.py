@@ -25,6 +25,7 @@ MIN_WORDS = {
     "home": 500,
     "guide": 900,
     "listing": 250,
+    "answer_listing": 100,
     "region": 450,
     "tool": 250,
     "utility": 80,
@@ -260,7 +261,8 @@ def audit_page(path: Path, dist: Path) -> dict:
     if required_schema and not (types & required_schema):
         issues.append(f"Missing expected schema type for {kind}: one of {sorted(required_schema)}.")
 
-    min_words = MIN_WORDS[kind]
+    min_word_key = "answer_listing" if re.fullmatch(r"/(answers|ko/answers|ja/answers)(/page/\d+)?/", route) else kind
+    min_words = MIN_WORDS[min_word_key]
     if word_count < min_words:
         issues.append(f"Thin content for {kind}: {word_count} words < {min_words}.")
 

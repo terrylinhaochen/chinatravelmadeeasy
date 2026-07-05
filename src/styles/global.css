@@ -282,6 +282,60 @@ h2 {
     color: var(--color-soft);
   }
 
+  .ds-context-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 520px) {
+    .ds-context-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .ds-context-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .ds-context-card {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    background: var(--color-card);
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .ds-context-card:hover {
+    border-color: #d6d3d1;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.05);
+    transform: translateY(-1px);
+  }
+
+  .ds-context-thumb {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--color-surface-strong);
+  }
+
+  .ds-context-thumb img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 500ms ease;
+  }
+
+  .ds-context-card:hover .ds-context-thumb img {
+    transform: scale(1.04);
+  }
+
   .ds-listing-grid {
     display: grid;
     gap: 1rem;

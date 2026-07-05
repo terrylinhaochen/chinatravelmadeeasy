@@ -29,10 +29,10 @@ const faqItems = [
   ...(featuredPlaces.length
     ? [
         {
-          q: `Where should backpackers start in ${destination.name}?`,
+          q: `Where should travelers start in ${destination.name}?`,
           a: `Start with ${featuredPlaces
             .map((place) => `${place.name} in ${place.area}`)
-            .join(', ')}. These places are chosen for authentic texture, practical routing, and better value than default tour stops.`,
+            .join(', ')}. These are useful first pins before adding nearby food, transit, and stay ideas.`,
         },
       ]
     : []),
@@ -46,12 +46,12 @@ const faqItems = [
       : `Start with the pre-departure, payment, internet, transport, and hotel guides before planning ${destination.name}.`,
   },
   {
-    q: `Can I save ${destination.name} recommendations from TikTok or Instagram?`,
-    a: `Yes. Use Save Places to paste a TikTok or Instagram link, extract the likely place, and keep it in a trip collection with Apple Maps as the default map option.`,
+    q: `Can I save ${destination.name} recommendations from posts or screenshots?`,
+    a: `Yes. Use Save Places to paste a link, note, or screenshot text, then turn the extracted places into a map-ready list.`,
   },
 ];
 
-const description = `${destination.name} China travel planning: ${destination.summary}. Find practical guides and backpacker-friendly places to save.`;
+const description = `${destination.name} China travel planning: ${destination.summary}. Find practical guides and starter places to save.`;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -66,7 +66,7 @@ const jsonLd = [
         {
           '@context': 'https://schema.org',
           '@type': 'ItemList',
-          name: `${destination.name} backpacker places`,
+          name: `${destination.name} starter places`,
           itemListElement: featuredPlaces.map((place, index) => ({
             '@type': 'ListItem',
             position: index + 1,
@@ -124,30 +124,8 @@ const jsonLd = [
         Open in Apple Maps
       </a>
       <a href="/map-import/" class="ds-button ds-button-secondary">
-        Save social links
+        Save places
       </a>
-    </div>
-
-    <div class="ds-map-panel mt-8 min-h-[18rem]">
-      <div class="ds-map-legend">
-        <p class="ds-eyebrow">Region pin</p>
-        <h2 class="mt-2 text-3xl leading-tight">{destination.name} on the planning map.</h2>
-        <p class="mt-3 text-sm leading-relaxed text-soft">
-          Use this as the regional anchor, then save nearby places from posts, screenshots, and community lists.
-        </p>
-      </div>
-      {destinations.map((region) => (
-        <a
-          href={`/regions/${region.slug}/`}
-          class="ds-map-pin"
-          style={`--pin-x: ${region.mapPin.x}%; --pin-y: ${region.mapPin.y}%`}
-          data-current={region.slug === destination.slug ? 'true' : 'false'}
-          aria-label={`${region.name}: ${region.summary}`}
-          title={region.name}
-        >
-          {region.slug === destination.slug ? '●' : region.name.slice(0, 2)}
-        </a>
-      ))}
     </div>
   </section>
 
@@ -156,12 +134,11 @@ const jsonLd = [
       <div class="ds-panel p-5 sm:p-8">
         <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
           <div>
-            <p class="ds-eyebrow">Backpacker shortlist</p>
-            <h2 class="mt-2 text-3xl">Places to go in {destination.name}</h2>
+            <p class="ds-eyebrow">Places</p>
+            <h2 class="mt-2 text-3xl">Start with these pins</h2>
           </div>
           <p class="leading-relaxed text-soft">
-            A starter list for travelers who care about authentic texture, easy routing, and cost control.
-            Use these as map anchors, then build nearby food, transit, and stay decisions around them.
+            Open a few useful starter pins, then add nearby food, transit, and stay ideas as the route takes shape.
           </p>
         </div>
         <div class="mt-8 grid gap-4 lg:grid-cols-3">
@@ -177,9 +154,7 @@ const jsonLd = [
                 </span>
               </div>
               <p class="mt-4 text-sm leading-relaxed text-soft">{place.why}</p>
-              <p class="mt-4 border-t border-line pt-4 text-sm leading-relaxed text-ink">
-                <span class="font-semibold">Budget move:</span> {place.budgetTip}
-              </p>
+              <p class="mt-4 border-t border-line pt-4 text-sm leading-relaxed text-ink">{place.budgetTip}</p>
               <a href={appleMapsUrl(place.mapQuery)} class="mt-5 inline-flex min-h-8 items-center gap-2 text-sm font-semibold text-accent hover:underline">
                 Open in Apple Maps
                 <Icon name="arrow" class="h-3.5 w-3.5" />
