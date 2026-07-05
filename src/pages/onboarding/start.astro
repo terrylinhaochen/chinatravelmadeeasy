@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro';
+import PinDensityPanel from '../../components/PinDensityPanel.astro';
+import { getGeneratedImage } from '../../data/generatedImages';
+
+const description =
+  'Start a China trip map from province-level pin density, traveler notes, collectable places, and Apple or Google Maps export links.';
+const heroImage = getGeneratedImage('home:places') ?? {
+  src: '/images/curated/home-places.jpg',
+  alt: 'Great Wall landscape in northern China',
+};
+const faqs = [
+  {
+    q: 'What is the point of the map profile?',
+    a: 'It shows where traveler pins cluster, then lets you inspect places inside each region before collecting or exporting them.',
+  },
+  {
+    q: 'Can I export places to my own map?',
+    a: 'Yes. Each place opens in Apple Maps or Google Maps, and selected regional lists can be copied or exported as a Google route.',
+  },
+  {
+    q: 'Where do traveler notes come in?',
+    a: 'Each place includes a practical experience note and a budget move, so the pin is more useful than a bare location name.',
+  },
+];
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Start a China travel map',
+    description,
+    url: 'https://chinatravelmadeeasy.com/onboarding/start/',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    name: 'China travel map onboarding questions',
+    mainEntity: faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  },
+];
+---
+
+<Base title="Start a China travel map" description={description} image={heroImage.src} imageAlt={heroImage.alt} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+    <div class="grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
+      <div>
+        <p class="ds-eyebrow">Map onboarding</p>
+        <h1 class="mt-3 max-w-3xl text-5xl leading-tight sm:text-6xl">
+          Build your trip from pins people actually used.
+        </h1>
+      </div>
+      <p class="text-lg leading-relaxed text-soft">
+        Start with regional density, open the places under each province, collect what feels useful,
+        then export pins to Apple Maps or Google Maps.
+      </p>
+    </div>
+    <figure class="ds-photo mt-8">
+      <img src={heroImage.src} alt={heroImage.alt} class="h-56 w-full object-cover sm:h-72" loading="eager" />
+    </figure>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-12 sm:px-6 sm:pb-16">
+    <PinDensityPanel
+      eyebrow="Map tracker"
+      title="A visible trail of useful places."
+      description="Open regions, collect traveler-backed pins, and build a stash of places for the China routes that keep showing up."
+      class="bg-card"
+    />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
+    <div class="grid gap-3 md:grid-cols-3">
+      {faqs.map((item) => (
+        <article class="ds-card p-5">
+          <h2 class="text-2xl leading-tight">{item.q}</h2>
+          <p class="mt-3 text-sm leading-relaxed text-soft">{item.a}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</Base>

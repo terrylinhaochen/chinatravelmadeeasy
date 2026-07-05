@@ -1,0 +1,492 @@
+---
+import { destinations } from '../data/destinations';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  class?: string;
+}
+
+const {
+  eyebrow = 'Map profile',
+  title = 'Track where useful pins keep showing up.',
+  description =
+    'A province-level map of collectable places, traveler notes, and export links for the map app you already use.',
+} = Astro.props;
+const className = Astro.props.class ?? '';
+
+function placeId(slug: string, index: number) {
+  return `${slug}-${index}`;
+}
+
+function mapUrl(query: string, provider: 'apple' | 'google') {
+  const encoded = encodeURIComponent(query);
+  return provider === 'apple'
+    ? `https://maps.apple.com/?q=${encoded}`
+    : `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+}
+
+function densityFor(destination: (typeof destinations)[number]) {
+  const base = destination.places.length * 2 + destination.guideIds.length;
+  const bonus = destination.featured ? 4 : destination.type === 'Municipality' ? 2 : 0;
+  return Math.min(5, Math.max(1, Math.round((base + bonus) / 3)));
+}
+
+const mapRegions = destinations.map((destination) => {
+  const density = densityFor(destination);
+  return {
+    name: destination.name,
+    slug: destination.slug,
+    type: destination.type,
+    summary: destination.summary,
+    mapPin: destination.mapPin,
+    density,
+    places: destination.places.map((place, index) => ({
+      id: placeId(destination.slug, index),
+      name: place.name,
+      area: place.area,
+      why: place.why,
+      budgetTip: place.budgetTip,
+      mapQuery: place.mapQuery,
+      region: destination.name,
+      appleUrl: mapUrl(place.mapQuery, 'apple'),
+      googleUrl: mapUrl(place.mapQuery, 'google'),
+      travelerNotes: [
+        {
+          by: 'Backpacker note',
+          text: place.why,
+        },
+        {
+          by: 'Budget move',
+          text: place.budgetTip,
+        },
+      ],
+    })),
+  };
+});
+
+const initialRegion = mapRegions.find((region) => region.slug === 'beijing') ?? mapRegions[0];
+const stats = [
+  ['regions', 'Regions mapped', mapRegions.length],
+  ['pins', 'Place pins', mapRegions.reduce((sum, region) => sum + region.places.length, 0)],
+  ['notes', 'Traveler notes', mapRegions.reduce((sum, region) => sum + region.places.length * 2, 0)],
+  ['saved', 'Saved pins', 0],
+];
+const routeHref = (places: typeof initialRegion.places) => {
+  const selected = places.slice(0, 6);
+  const destination = selected.at(-1);
+  if (!destination) return 'https://www.google.com/maps/';
+  const waypoints = selected.slice(0, -1).map((place) => place.mapQuery).join('|');
+  const params = new URLSearchParams({
+    api: '1',
+    destination: destination.mapQuery,
+  });
+  if (waypoints) params.set('waypoints', waypoints);
+  return `https://www.google.com/maps/dir/?${params.toString()}`;
+};
+---
+
+<section class={`pin-density-panel ds-panel overflow-hidden p-5 sm:p-6 lg:p-8 ${className}`} data-pin-density-panel>
+  <script type="application/json" data-pin-density-data set:html={JSON.stringify({ regions: mapRegions })} />
+
+  <div class="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
+    <div class="min-w-0">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div>
+          <p class="ds-eyebrow">{eyebrow}</p>
+          <h2 class="mt-3 max-w-xl text-4xl leading-tight sm:text-5xl">{title}</h2>
+          <p class="mt-4 max-w-xl leading-relaxed text-soft">{description}</p>
+        </div>
+        <a href="/regions/" class="inline-flex min-h-8 shrink-0 items-center text-sm font-medium text-ink underline underline-offset-4 hover:text-soft">
+          Open regions
+        </a>
+      </div>
+
+      <div class="mt-6 grid grid-cols-2 gap-3">
+        {stats.map(([key, label, value]) => (
+          <div class="rounded-md border border-line bg-white/75 p-4">
+            <p class="ds-tag">{label}</p>
+            <p class="mt-2 text-3xl leading-none" data-pin-density-stat={key}>{value}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-6 rounded-md border border-line bg-white p-4" data-pin-density-region-summary>
+        <p class="ds-tag">Selected region</p>
+        <h3 class="mt-2 text-2xl">{initialRegion.name}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-soft">{initialRegion.summary}</p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <a href={routeHref(initialRegion.places)} class="ds-button ds-button-dark min-h-0 px-3 py-2 text-sm" data-pin-density-google-route target="_blank" rel="noopener">
+            Export route to Google
+          </a>
+          <button type="button" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm" data-pin-density-copy>
+            Copy pins
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-4 rounded-md border border-line bg-white p-4" data-pin-density-collection>
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <p class="ds-tag">Collected</p>
+            <p class="mt-1 text-sm leading-relaxed text-soft">Save traveler pins here before exporting.</p>
+          </div>
+          <span class="ds-chip" data-pin-density-collection-count>0 pins</span>
+        </div>
+        <div class="mt-3 grid gap-2" data-pin-density-collection-list>
+          <p class="text-sm leading-relaxed text-soft">No saved pins yet.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="min-w-0">
+      <div class="pin-density-map" aria-label="China pin density map">
+        <div class="pin-density-map-shape"></div>
+        {mapRegions.map((region) => (
+          <button
+            type="button"
+            class="pin-density-region"
+            style={`--pin-x: ${region.mapPin.x}%; --pin-y: ${region.mapPin.y}%; --pin-density-size: ${1.95 + region.density * 0.28}rem; --pin-alpha: ${0.44 + region.density * 0.1};`}
+            data-pin-density-region={region.slug}
+            data-density={region.density}
+            aria-label={`${region.name}: ${region.places.length} place pins`}
+            title={`${region.name}: ${region.places.length} place pins`}
+          >
+            <span>{region.name.slice(0, 2)}</span>
+          </button>
+        ))}
+        <div class="pin-density-map-copy">
+          <p class="ds-eyebrow">Pin density</p>
+          <h3 class="mt-2 text-3xl leading-tight">Darker regions have more saved-place signal.</h3>
+          <p class="mt-3 text-sm leading-relaxed text-soft">Tap a region to inspect traveler notes and collect pins.</p>
+        </div>
+        <div class="pin-density-legend" aria-hidden="true">
+          <span>Less</span>
+          <i data-level="1"></i>
+          <i data-level="3"></i>
+          <i data-level="5"></i>
+          <span>More</span>
+        </div>
+      </div>
+
+      <div class="mt-4 grid gap-3" data-pin-density-places>
+        {initialRegion.places.map((place) => (
+          <article class="pin-density-place ds-card p-4" data-place-id={place.id}>
+            <div class="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p class="ds-tag">{place.area}</p>
+                <h3 class="mt-1 text-2xl">{place.name}</h3>
+              </div>
+              <button type="button" class="ds-button ds-button-dark min-h-0 px-3 py-2 text-sm" data-pin-density-collect={place.id}>
+                Collect
+              </button>
+            </div>
+            <div class="mt-4 grid gap-3 sm:grid-cols-2">
+              {place.travelerNotes.map((note) => (
+                <blockquote class="rounded-md border border-line bg-paper p-3 text-sm leading-relaxed text-soft">
+                  <p class="ds-tag">{note.by}</p>
+                  <p class="mt-2">{note.text}</p>
+                </blockquote>
+              ))}
+            </div>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a href={place.appleUrl} target="_blank" rel="noopener" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm">Apple Maps</a>
+              <a href={place.googleUrl} target="_blank" rel="noopener" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm">Google Maps</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const pinDensityPanels = document.querySelectorAll('[data-pin-density-panel]');
+  const pinDensityStorageKey = 'ctme-density-collected-pins';
+
+  pinDensityPanels.forEach((panel) => {
+    const dataNode = panel.querySelector('[data-pin-density-data]');
+    if (!dataNode) return;
+    const data = JSON.parse(dataNode.textContent || '{"regions":[]}');
+    const regions = data.regions || [];
+    let selectedRegion = regions.find((region) => region.slug === 'beijing') || regions[0];
+    let collected = readCollectedPins();
+
+    const placeContainer = panel.querySelector('[data-pin-density-places]');
+    const summary = panel.querySelector('[data-pin-density-region-summary]');
+    const collectionList = panel.querySelector('[data-pin-density-collection-list]');
+    const collectionCount = panel.querySelector('[data-pin-density-collection-count]');
+    const savedStat = panel.querySelector('[data-pin-density-stat="saved"]');
+    const copyButton = panel.querySelector('[data-pin-density-copy]');
+
+    panel.querySelectorAll('[data-pin-density-region]').forEach((button) => {
+      button.addEventListener('click', () => {
+        selectedRegion = regions.find((region) => region.slug === button.dataset.pinDensityRegion) || selectedRegion;
+        renderRegion();
+      });
+    });
+
+    copyButton?.addEventListener('click', async () => {
+      const pins = collected.length ? collected : selectedRegion.places;
+      const text = pins.map((place) => `${place.name}, ${place.region || selectedRegion.name}`).join('\n');
+      try {
+        await navigator.clipboard.writeText(text);
+        copyButton.textContent = 'Copied';
+      } catch {
+        copyButton.textContent = 'Copy failed';
+      }
+      window.setTimeout(() => {
+        copyButton.textContent = 'Copy pins';
+      }, 1600);
+    });
+
+    renderRegion();
+    renderCollection();
+
+    function renderRegion() {
+      panel.querySelectorAll('[data-pin-density-region]').forEach((button) => {
+        const active = button.dataset.pinDensityRegion === selectedRegion.slug;
+        button.classList.toggle('is-active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      if (summary) {
+        summary.innerHTML = `
+          <p class="ds-tag">Selected region</p>
+          <h3 class="mt-2 text-2xl">${escapeHtml(selectedRegion.name)}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-soft">${escapeHtml(selectedRegion.summary)}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="${googleRouteUrl(selectedRegion.places)}" class="ds-button ds-button-dark min-h-0 px-3 py-2 text-sm" target="_blank" rel="noopener">Export route to Google</a>
+            <a href="${appleUrl(selectedRegion.places[0])}" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm" target="_blank" rel="noopener">Open first in Apple</a>
+          </div>
+        `;
+      }
+      if (!placeContainer) return;
+      placeContainer.innerHTML = selectedRegion.places.map((place) => placeCard(place)).join('');
+      placeContainer.querySelectorAll('[data-pin-density-collect]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const place = selectedRegion.places.find((item) => item.id === button.dataset.pinDensityCollect);
+          if (!place) return;
+          collected = [place, ...collected.filter((item) => item.id !== place.id)].slice(0, 24);
+          writeCollectedPins(collected);
+          renderRegion();
+          renderCollection();
+        });
+      });
+    }
+
+    function renderCollection() {
+      if (collectionCount) collectionCount.textContent = `${collected.length} pin${collected.length === 1 ? '' : 's'}`;
+      if (savedStat) savedStat.textContent = String(collected.length);
+      if (!collectionList) return;
+      if (!collected.length) {
+        collectionList.innerHTML = '<p class="text-sm leading-relaxed text-soft">No saved pins yet.</p>';
+        return;
+      }
+      collectionList.innerHTML = collected.slice(0, 5).map((place) => `
+        <div class="grid gap-2 rounded-md border border-line bg-paper p-3 sm:grid-cols-[1fr_auto] sm:items-center">
+          <p class="text-sm font-semibold text-ink">${escapeHtml(place.name)} <span class="font-normal text-soft">· ${escapeHtml(place.region || '')}</span></p>
+          <div class="flex flex-wrap gap-2">
+            <a href="${appleUrl(place)}" target="_blank" rel="noopener" class="inline-flex min-h-8 items-center text-sm font-semibold text-accent underline underline-offset-4">Apple</a>
+            <a href="${googleUrl(place)}" target="_blank" rel="noopener" class="inline-flex min-h-8 items-center text-sm font-semibold text-accent underline underline-offset-4">Google</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function placeCard(place) {
+      const saved = collected.some((item) => item.id === place.id);
+      return `
+        <article class="pin-density-place ds-card p-4" data-place-id="${escapeHtml(place.id)}">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="ds-tag">${escapeHtml(place.area)}</p>
+              <h3 class="mt-1 text-2xl">${escapeHtml(place.name)}</h3>
+            </div>
+            <button type="button" class="ds-button ${saved ? 'ds-button-secondary' : 'ds-button-dark'} min-h-0 px-3 py-2 text-sm" data-pin-density-collect="${escapeHtml(place.id)}">
+              ${saved ? 'Collected' : 'Collect'}
+            </button>
+          </div>
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            ${(place.travelerNotes || []).map((note) => `
+              <blockquote class="rounded-md border border-line bg-paper p-3 text-sm leading-relaxed text-soft">
+                <p class="ds-tag">${escapeHtml(note.by)}</p>
+                <p class="mt-2">${escapeHtml(note.text)}</p>
+              </blockquote>
+            `).join('')}
+          </div>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href="${appleUrl(place)}" target="_blank" rel="noopener" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm">Apple Maps</a>
+            <a href="${googleUrl(place)}" target="_blank" rel="noopener" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm">Google Maps</a>
+          </div>
+        </article>
+      `;
+    }
+  });
+
+  function readCollectedPins() {
+    try {
+      return JSON.parse(localStorage.getItem(pinDensityStorageKey) || '[]');
+    } catch {
+      return [];
+    }
+  }
+  function writeCollectedPins(pins) {
+    localStorage.setItem(pinDensityStorageKey, JSON.stringify(pins));
+  }
+  function appleUrl(place) {
+    return 'https://maps.apple.com/?q=' + encodeURIComponent(place?.mapQuery || place?.name || '');
+  }
+  function googleUrl(place) {
+    return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(place?.mapQuery || place?.name || '');
+  }
+  function googleRouteUrl(places) {
+    const selected = (places || []).slice(0, 6);
+    const destination = selected[selected.length - 1];
+    if (!destination) return 'https://www.google.com/maps/';
+    const params = new URLSearchParams({ api: '1', destination: destination.mapQuery });
+    const waypoints = selected.slice(0, -1).map((place) => place.mapQuery).join('|');
+    if (waypoints) params.set('waypoints', waypoints);
+    return 'https://www.google.com/maps/dir/?' + params.toString();
+  }
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[char]));
+  }
+</script>
+
+<style>
+  .pin-density-map {
+    position: relative;
+    min-height: 31rem;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 24px;
+    background:
+      linear-gradient(90deg, rgb(231 229 228 / 0.5) 1px, transparent 1px),
+      linear-gradient(0deg, rgb(231 229 228 / 0.5) 1px, transparent 1px),
+      linear-gradient(135deg, #ffffff, #f0efed);
+    background-size: 4.25rem 4.25rem, 4.25rem 4.25rem, auto;
+  }
+
+  .pin-density-map-shape {
+    position: absolute;
+    inset: 2.4rem 1.6rem 4.2rem;
+    border: 1px solid color-mix(in srgb, var(--color-line) 76%, transparent);
+    border-radius: 42% 47% 44% 50%;
+    background:
+      radial-gradient(circle at 67% 37%, rgb(140 47 34 / 0.22), transparent 11%),
+      radial-gradient(circle at 58% 67%, rgb(140 47 34 / 0.18), transparent 12%),
+      radial-gradient(circle at 45% 60%, rgb(140 47 34 / 0.14), transparent 12%),
+      linear-gradient(145deg, rgb(255 255 255 / 0.74), rgb(245 245 245 / 0.2));
+    clip-path: polygon(
+      48% 4%,
+      62% 8%,
+      70% 18%,
+      78% 27%,
+      83% 43%,
+      80% 57%,
+      86% 70%,
+      78% 82%,
+      65% 87%,
+      55% 94%,
+      43% 88%,
+      31% 86%,
+      22% 76%,
+      18% 62%,
+      10% 51%,
+      17% 39%,
+      17% 25%,
+      31% 17%
+    );
+  }
+
+  .pin-density-region {
+    position: absolute;
+    left: var(--pin-x);
+    top: var(--pin-y);
+    z-index: 2;
+    display: grid;
+    width: max(2rem, var(--pin-density-size));
+    height: max(2rem, var(--pin-density-size));
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 0.75);
+    border-radius: 9999px;
+    background:
+      radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.28), transparent 32%),
+      rgb(140 47 34 / var(--pin-alpha));
+    color: white;
+    cursor: pointer;
+    font-size: 0.68rem;
+    font-weight: 700;
+    line-height: 1;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 10px 24px rgb(12 10 9 / 0.2);
+    transition:
+      background-color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .pin-density-region:hover,
+  .pin-density-region:focus-visible,
+  .pin-density-region.is-active {
+    outline: 2px solid white;
+    outline-offset: 2px;
+    transform: translate(-50%, -50%) scale(1.12);
+    box-shadow: 0 14px 28px rgb(12 10 9 / 0.28);
+  }
+
+  .pin-density-map-copy {
+    position: relative;
+    z-index: 3;
+    max-width: 20rem;
+    padding: 1.25rem;
+  }
+
+  .pin-density-legend {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    border: 1px solid var(--color-line);
+    border-radius: 9999px;
+    background: rgb(255 255 255 / 0.82);
+    padding: 0.45rem 0.7rem;
+    color: var(--color-faint);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .pin-density-legend i {
+    display: block;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 9999px;
+    background: rgb(140 47 34 / 0.4);
+  }
+
+  .pin-density-legend i[data-level="3"] {
+    background: rgb(140 47 34 / 0.68);
+  }
+
+  .pin-density-legend i[data-level="5"] {
+    background: rgb(140 47 34 / 0.95);
+  }
+
+  @media (max-width: 640px) {
+    .pin-density-map {
+      min-height: 29rem;
+    }
+
+    .pin-density-map-shape {
+      inset: 5.8rem 0.6rem 4.6rem;
+    }
+
+    .pin-density-map-copy {
+      max-width: none;
+    }
+  }
+</style>

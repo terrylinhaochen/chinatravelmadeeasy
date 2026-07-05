@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import PinDensityPanel from '../components/PinDensityPanel.astro';
 import { destinations } from '../data/destinations';
 import { getGeneratedImage } from '../data/generatedImages';
 
@@ -288,6 +289,15 @@ const jsonLd = [
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-12 sm:px-6 sm:pb-16">
+    <PinDensityPanel
+      eyebrow="Pin density"
+      title="See where traveler pins keep clustering."
+      description="Use the map like a trip profile: darker regions have more saved-place signal, and each place carries traveler notes you can collect or export."
+      class="bg-card"
+    />
   </section>
 
   <section class="mx-auto max-w-6xl px-4 sm:px-6">
