@@ -12,6 +12,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "images:generate": "node pipeline/prepare_curated_images.mjs",
+    "atlas:generate": "node pipeline/generate_world_pixel_atlas.mjs",
+    "lists:ingest:google": "node pipeline/ingest_google_maps_list.mjs",
     "images:check": "node pipeline/prepare_curated_images.mjs --dry-run",
     "images:verify": "node pipeline/verify_generated_images.mjs",
     "audit:seo-ai": "python3 pipeline/seo_ai_audit.py",

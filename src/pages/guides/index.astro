@@ -4,7 +4,7 @@ import GuideListingPage from '../../components/GuideListingPage.astro';
 import { getCollection } from 'astro:content';
 
 const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
-const perPage = 6;
+const perPage = 12;
 const currentPage = 1;
 const totalPages = Math.ceil(guides.length / perPage);
 const pagedGuides = guides.slice(0, perPage);
@@ -32,7 +32,7 @@ const jsonLd = [
       position: index + 1,
       name: guide.data.seoTitle ?? guide.data.title,
       description: guide.data.seoDescription ?? guide.data.description,
-      url: `https://chinatravelmadeeasy.com/guides/${guide.slug}/`,
+      url: `https://chinatravelmadeeasy.com/guides/${guide.id}/`,
     })),
   },
 ];

@@ -1,5 +1,7 @@
 ---
 import { destinations } from '../data/destinations';
+import { destinationCoordinates } from '../data/destinationCoordinates';
+import { isWorldPixelLand, projectLonLatToWorldCell, worldPixelAtlas, worldPixelKey } from '../data/worldPixelAtlas';
 
 interface Props {
   eyebrow?: string;
@@ -14,36 +16,11 @@ const {
   description = 'A shareable block atlas for saved-place signal. Darker pixels mean more pins, guides, and repeat traveler interest.',
 } = Astro.props;
 const className = Astro.props.class ?? '';
-const mapColumns = 46;
-const mapRows = 24;
+const mapColumns = worldPixelAtlas.columns;
+const mapRows = worldPixelAtlas.rows;
 
-const countryRegionCount = 4;
+const regionCount = destinations.length;
 const cityAreaCount = new Set(destinations.flatMap((destination) => destination.places.map((place) => place.area))).size;
-
-function isWorldLandBlock(column: number, row: number) {
-  const bands: Record<number, Array<[number, number]>> = {
-    2: [[18, 21]],
-    3: [[17, 22]],
-    4: [[5, 12], [17, 21]],
-    5: [[4, 15], [24, 29], [32, 39]],
-    6: [[3, 16], [23, 31], [31, 43]],
-    7: [[3, 15], [24, 31], [32, 45]],
-    8: [[4, 15], [25, 32], [32, 45]],
-    9: [[6, 15], [24, 32], [33, 44]],
-    10: [[8, 15], [25, 33], [33, 43]],
-    11: [[12, 18], [26, 33], [34, 42]],
-    12: [[16, 19], [27, 33], [35, 41]],
-    13: [[17, 20], [27, 32], [37, 41]],
-    14: [[17, 20], [28, 32], [37, 40]],
-    15: [[18, 21], [29, 32], [38, 43]],
-    16: [[18, 21], [30, 32], [38, 44]],
-    17: [[19, 21], [39, 44]],
-    18: [[20, 22]],
-    19: [[20, 22]],
-    20: [[21, 22]],
-  };
-  return (bands[row] ?? []).some(([start, end]) => column >= start && column <= end);
-}
 
 function densityFor(destination: (typeof destinations)[number]) {
   const base = destination.places.length * 2 + destination.guideIds.length;
@@ -53,16 +30,22 @@ function densityFor(destination: (typeof destinations)[number]) {
 
 const mapRegions = destinations.map((destination) => {
   const density = densityFor(destination);
-  const gridX = Math.min(43, Math.max(33, Math.round(33 + (destination.mapPin.x / 100) * 10)));
-  const gridY = Math.min(16, Math.max(6, Math.round(6 + (destination.mapPin.y / 100) * 10)));
+  const coordinate = destinationCoordinates[destination.slug];
+  const projected = coordinate
+    ? projectLonLatToWorldCell(coordinate.lon, coordinate.lat)
+    : {
+        column: Math.min(mapColumns, Math.max(1, Math.round((destination.mapPin.x / 100) * mapColumns))),
+        row: Math.min(mapRows, Math.max(1, Math.round((destination.mapPin.y / 100) * mapRows))),
+      };
   return {
     name: destination.name,
     slug: destination.slug,
     density,
     placeCount: destination.places.length,
     regionHref: `/regions/${destination.slug}/`,
-    gridX,
-    gridY,
+    column: projected.column,
+    row: projected.row,
+    coordinate,
   };
 });
 
@@ -71,7 +54,7 @@ const mostActive = [...mapRegions].sort((a, b) => b.density - a.density || b.pla
 const regionCells = new Map<string, (typeof mapRegions)[number] & { regionCount: number }>();
 
 for (const region of mapRegions) {
-  const key = `${region.gridX}-${region.gridY}`;
+  const key = worldPixelKey(region.column, region.row);
   const existing = regionCells.get(key);
   if (!existing || region.density > existing.density || region.placeCount > existing.placeCount) {
     regionCells.set(key, { ...region, regionCount: (existing?.regionCount ?? 0) + 1 });
@@ -83,8 +66,8 @@ for (const region of mapRegions) {
 const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => {
   const column = (index % mapColumns) + 1;
   const row = Math.floor(index / mapColumns) + 1;
-  const active = regionCells.get(`${column}-${row}`);
-  return { column, row, isLand: isWorldLandBlock(column, row), active };
+  const active = regionCells.get(worldPixelKey(column, row));
+  return { column, row, isLand: isWorldPixelLand(column, row), active };
 });
 ---
 
@@ -97,11 +80,11 @@ const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => 
 
       <div class="pin-density-stats mt-6">
         <div class="rounded-md border border-line bg-white/75 p-4">
-          <p class="ds-tag">Countries/regions</p>
-          <p class="mt-2 text-3xl leading-none">{countryRegionCount}</p>
+          <p class="ds-tag">Regions</p>
+          <p class="mt-2 text-3xl leading-none">{regionCount}</p>
         </div>
         <div class="rounded-md border border-line bg-white/75 p-4">
-          <p class="ds-tag">Cities/areas</p>
+          <p class="ds-tag">Cities</p>
           <p class="mt-2 text-3xl leading-none">{cityAreaCount}</p>
         </div>
         <div class="rounded-md border border-line bg-white/75 p-4">
@@ -112,8 +95,8 @@ const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => 
     </div>
 
     <div class="min-w-0">
-      <div class="pin-density-activity" aria-label="World-style saved place activity map">
-        <div class="pin-density-world-grid">
+      <div class="pin-density-activity" aria-label="Equal Earth saved place pixel atlas">
+        <div class="pin-density-world-grid" style={`--atlas-columns: ${mapColumns};`} data-projection={worldPixelAtlas.projection}>
           {mapCells.map((cell) => (
             cell.active ? (
               <a
@@ -122,13 +105,15 @@ const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => 
                 data-land="true"
                 data-active="true"
                 data-density={cell.active.density}
-                aria-label={`${cell.active.name}: ${cell.active.placeCount} saved-place signals`}
+                data-cell={`${cell.column}:${cell.row}`}
+                aria-label={`${cell.active.name}: ${cell.active.placeCount} saved-place signals on the atlas`}
                 title={`${cell.active.name}: ${cell.active.placeCount} saved-place signals`}
               ></a>
             ) : (
               <span
                 class="pin-density-world-cell"
                 data-land={cell.isLand ? 'true' : 'false'}
+                data-cell={`${cell.column}:${cell.row}`}
                 aria-hidden="true"
               ></span>
             )
@@ -170,8 +155,8 @@ const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => 
 
   .pin-density-world-grid {
     display: grid;
-    grid-template-columns: repeat(46, minmax(0, 1fr));
-    gap: clamp(0.08rem, 0.3vw, 0.22rem);
+    grid-template-columns: repeat(var(--atlas-columns), minmax(0, 1fr));
+    gap: clamp(0.04rem, 0.16vw, 0.12rem);
   }
 
   .pin-density-world-cell {

@@ -5,6 +5,7 @@ This folder includes project images from public sources. Public-domain files are
 ## Curated Site Images
 
 - `curated/*`: Optimized site crops prepared from authentic photographs by `pipeline/prepare_curated_images.mjs`. The pipeline only crops, resizes, and compresses real source images for performance. It does not use AI image generation or style transfer. Per-image source references are stored in `src/data/generatedImageManifest.json`.
+- `curated/home-local-treasures.jpg`: User-provided photo, original filename `WechatIMG4641.jpg`.
 
 ## Wikimedia Commons
 

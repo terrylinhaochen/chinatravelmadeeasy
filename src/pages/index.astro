@@ -5,9 +5,9 @@ import PinDensityPanel from '../components/PinDensityPanel.astro';
 import { destinations } from '../data/destinations';
 import { getGeneratedImage } from '../data/generatedImages';
 
-const heroImage = getGeneratedImage('region:beijing') ?? {
-  src: '/images/curated/region-beijing.jpg',
-  alt: 'Forbidden City palace roofs in Beijing',
+const heroImage = getGeneratedImage('home:hero') ?? {
+  src: '/images/curated/home-local-treasures.jpg',
+  alt: 'Night street storefront with Chinese calligraphy signs and warm lantern light',
 };
 const homepageDestinations = destinations.slice(0, 6);
 
@@ -175,8 +175,26 @@ const jsonLd = [
           </a>
         </div>
       </div>
-      <div class="relative overflow-hidden rounded-3xl border border-line bg-surface-strong">
-        <img src={heroImage.src} alt={heroImage.alt} class="h-[280px] w-full object-cover sm:h-[380px] lg:h-[440px]" fetchpriority="high" />
+      <div id="heroFlipCard" class="hero-flip-card" tabindex="0">
+        <div class="hero-flip-inner">
+          <div class="hero-flip-face hero-flip-front">
+            <img src={heroImage.src} alt={heroImage.alt} class="h-full w-full object-cover" fetchpriority="high" />
+          </div>
+          <div class="hero-flip-face hero-flip-back" aria-label="Pinned map preview for the hero photo">
+            <div class="hero-pin-map" aria-hidden="true">
+              <div class="hero-map-route"></div>
+              <div class="hero-map-pin"></div>
+            </div>
+            <div class="hero-pin-copy">
+              <p class="ds-eyebrow">Pinned from photo</p>
+              <h2 class="mt-2 text-3xl leading-tight">Local night street storefront, China</h2>
+              <p class="mt-2 text-sm leading-relaxed text-soft">
+                Saved from WechatIMG4641.jpg. Confirm the exact address before routing.
+              </p>
+              <button id="heroSavePlace" type="button" class="ds-button ds-button-dark mt-5">Save to maps</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -369,9 +387,172 @@ const jsonLd = [
       </div>
     </div>
   </section>
+
+  <div id="heroSignupModal" class="hero-signup-modal hidden" role="dialog" aria-modal="true" aria-labelledby="heroSignupTitle">
+    <div class="hero-signup-backdrop" data-hero-modal-close></div>
+    <div class="hero-signup-dialog">
+      <button id="heroSignupClose" type="button" class="hero-signup-close" aria-label="Close sign in modal">×</button>
+      <p class="ds-eyebrow">Sign in to save</p>
+      <h2 id="heroSignupTitle" class="mt-2 text-3xl leading-tight">Sign in to save</h2>
+      <p class="mt-2 text-sm leading-relaxed text-soft">
+        Enter an email to save this place and open it in your selected map.
+      </p>
+      <div class="mt-5 rounded-md border border-line bg-paper p-4">
+        <h3 class="text-xl font-bold">Local night street storefront, China</h3>
+        <p class="mt-2 text-sm leading-relaxed text-soft">
+          Saved from WechatIMG4641.jpg. Confirm the exact address before routing.
+        </p>
+      </div>
+      <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
+        <input id="heroSignupEmail" type="email" class="ds-input text-sm" placeholder="you@example.com" />
+        <button id="heroSignupContinue" type="button" class="ds-button ds-button-dark">Continue</button>
+      </div>
+      <p id="heroSignupStatus" class="mt-3 hidden text-sm leading-relaxed text-soft"></p>
+    </div>
+  </div>
 </Base>
 
 <style>
+  .hero-flip-card {
+    position: relative;
+    min-height: 408px;
+    perspective: 1200px;
+    outline: none;
+  }
+
+  .hero-flip-inner {
+    position: relative;
+    min-height: 408px;
+    transform-style: preserve-3d;
+    transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero-flip-card:hover .hero-flip-inner,
+  .hero-flip-card:focus-within .hero-flip-inner,
+  .hero-flip-card.is-flipped .hero-flip-inner {
+    transform: rotateY(180deg);
+  }
+
+  .hero-flip-face {
+    min-height: 408px;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 24px;
+    background: var(--color-surface-strong);
+    backface-visibility: hidden;
+  }
+
+  .hero-flip-front {
+    position: relative;
+  }
+
+  .hero-flip-back {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-rows: 8.75rem auto;
+    align-content: start;
+    padding: 0.75rem;
+    transform: rotateY(180deg);
+  }
+
+  .hero-pin-map {
+    position: relative;
+    min-height: 8.75rem;
+    overflow: hidden;
+    border-radius: 18px;
+    background:
+      linear-gradient(90deg, rgb(231 229 228 / 0.72) 1px, transparent 1px),
+      linear-gradient(0deg, rgb(231 229 228 / 0.72) 1px, transparent 1px),
+      radial-gradient(circle at 66% 36%, rgb(140 47 34 / 0.16), transparent 22%),
+      linear-gradient(135deg, #f8f7f5, #edeae5);
+    background-size:
+      42px 42px,
+      42px 42px,
+      auto,
+      auto;
+  }
+
+  .hero-map-route {
+    position: absolute;
+    inset: 26% 14% 30% 16%;
+    border-bottom: 3px solid rgb(140 47 34 / 0.42);
+    border-left: 3px solid rgb(140 47 34 / 0.18);
+    border-radius: 999px;
+    transform: rotate(-8deg);
+  }
+
+  .hero-map-pin {
+    position: absolute;
+    top: 31%;
+    left: 61%;
+    width: 1.8rem;
+    height: 1.8rem;
+    border: 4px solid white;
+    border-radius: 999px 999px 999px 0;
+    background: #8c2f22;
+    box-shadow: 0 18px 28px rgb(12 10 9 / 0.22);
+    transform: rotate(-45deg);
+  }
+
+  .hero-map-pin::after {
+    content: "";
+    position: absolute;
+    inset: 0.32rem;
+    border-radius: 999px;
+    background: white;
+  }
+
+  .hero-pin-copy {
+    padding: 1rem 0.25rem 0.25rem;
+  }
+
+  .hero-signup-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+  }
+
+  .hero-signup-modal.hidden {
+    display: none;
+  }
+
+  .hero-signup-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgb(12 10 9 / 0.36);
+    backdrop-filter: blur(6px);
+  }
+
+  .hero-signup-dialog {
+    position: relative;
+    width: min(100%, 32rem);
+    border: 1px solid var(--color-line);
+    border-radius: 24px;
+    background: var(--color-card);
+    padding: 1.25rem;
+    box-shadow: 0 24px 80px rgb(12 10 9 / 0.2);
+  }
+
+  .hero-signup-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: grid;
+    width: 2.25rem;
+    height: 2.25rem;
+    place-items: center;
+    border: 1px solid var(--color-line);
+    border-radius: 9999px;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
   .home-destination-grid {
     display: grid;
     gap: 1rem;
@@ -382,12 +563,28 @@ const jsonLd = [
   }
 
   @media (min-width: 640px) {
+    .hero-flip-card,
+    .hero-flip-inner,
+    .hero-flip-face {
+      min-height: 380px;
+    }
+
+    .hero-flip-back {
+      grid-template-rows: minmax(11rem, 1fr) auto;
+    }
+
     .home-destination-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
   @media (min-width: 1024px) {
+    .hero-flip-card,
+    .hero-flip-inner,
+    .hero-flip-face {
+      min-height: 440px;
+    }
+
     .home-destination-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -442,6 +639,20 @@ const jsonLd = [
   const homeMapSavedWorkspace = document.querySelector('#homeMapSavedWorkspace');
   const homeMapSavedLists = document.querySelector('#homeMapSavedLists');
   const homeMapProviderButtons = document.querySelectorAll('.homeMapProvider');
+  const heroFlipCard = document.querySelector('#heroFlipCard');
+  const heroSavePlace = document.querySelector('#heroSavePlace');
+  const heroSignupModal = document.querySelector('#heroSignupModal');
+  const heroSignupClose = document.querySelector('#heroSignupClose');
+  const heroSignupEmail = document.querySelector('#heroSignupEmail');
+  const heroSignupContinue = document.querySelector('#heroSignupContinue');
+  const heroSignupStatus = document.querySelector('#heroSignupStatus');
+  const heroPhotoPlace = {
+    name: 'Local night street storefront',
+    city: 'China',
+    category: 'See',
+    confidence: 'photo pin',
+    note: 'Saved from WechatIMG4641.jpg. Confirm the exact address before routing.',
+  };
   const homeMapUserKey = 'ctme-map-user';
   const homeMapSavedKey = 'ctme-map-saved-places';
   let homeMapProvider = 'apple';
@@ -460,6 +671,33 @@ const jsonLd = [
       });
       if (homeMapPendingPlace) requestHomeMapSignIn(homeMapPendingPlace);
     });
+  });
+
+  heroFlipCard.addEventListener('click', (event) => {
+    if (event.target instanceof Element && event.target.closest('button')) return;
+    heroFlipCard.classList.toggle('is-flipped');
+  });
+  heroSavePlace.addEventListener('click', () => {
+    homeMapPendingPlace = heroPhotoPlace;
+    openHeroSignupModal();
+  });
+  heroSignupClose.addEventListener('click', closeHeroSignupModal);
+  heroSignupModal.addEventListener('click', (event) => {
+    if (event.target.matches('[data-hero-modal-close]')) closeHeroSignupModal();
+  });
+  heroSignupContinue.addEventListener('click', () => {
+    const email = heroSignupEmail.value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      showHeroSignupStatus('Enter an email to save this place.', true);
+      return;
+    }
+    localStorage.setItem(homeMapUserKey, JSON.stringify({ email, createdAt: new Date().toISOString() }));
+    saveHeroPhotoPlace(email);
+    showHeroSignupStatus('Saved. Opening Apple Maps.', false);
+    setTimeout(closeHeroSignupModal, 450);
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !heroSignupModal.classList.contains('hidden')) closeHeroSignupModal();
   });
 
   homeMapFile.addEventListener('change', () => readHomeMapFile(homeMapFile.files?.[0]));
@@ -587,6 +825,35 @@ const jsonLd = [
     homeMapStatus.textContent = message;
     homeMapStatus.classList.remove('hidden');
     homeMapStatus.classList.toggle('border-accent', Boolean(isError));
+  }
+  function openHeroSignupModal() {
+    heroSignupModal.classList.remove('hidden');
+    heroSignupStatus.classList.add('hidden');
+    heroSignupStatus.textContent = '';
+    heroSignupEmail.focus();
+  }
+  function closeHeroSignupModal() {
+    heroSignupModal.classList.add('hidden');
+  }
+  function showHeroSignupStatus(message, isError) {
+    heroSignupStatus.textContent = message;
+    heroSignupStatus.classList.remove('hidden');
+    heroSignupStatus.classList.toggle('text-error', Boolean(isError));
+  }
+  function saveHeroPhotoPlace(email) {
+    const saved = getHomeMapSaved();
+    const savedItem = {
+      id: Date.now(),
+      name: displayName(heroPhotoPlace),
+      platform: 'Homepage photo',
+      savedAt: new Date().toISOString(),
+      savedBy: email,
+      mapProvider: 'apple',
+      places: [heroPhotoPlace],
+    };
+    localStorage.setItem(homeMapSavedKey, JSON.stringify([savedItem, ...saved].slice(0, 24)));
+    renderHomeMapSavedLists(homeMapSearch.value);
+    window.open(appleMapsUrl(heroPhotoPlace), '_blank', 'noopener');
   }
   function mapProviderName() { return homeMapProvider === 'amap' ? 'AMap' : 'Apple Maps'; }
   function placesForSave(item) { return Array.isArray(item?.places) ? item.places : [item].filter(Boolean); }

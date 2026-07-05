@@ -3,10 +3,10 @@ import Base from '../../../layouts/Base.astro';
 import GuideListingPage from '../../../components/GuideListingPage.astro';
 import { getCollection } from 'astro:content';
 
-const perPage = 6;
+const perPage = 12;
 
 export async function getStaticPaths() {
-  const pageSize = 6;
+  const pageSize = 12;
   const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
   const totalPages = Math.ceil(guides.length / pageSize);
   return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => {
@@ -46,7 +46,7 @@ const jsonLd = [
       position: (currentPage - 1) * perPage + index + 1,
       name: guide.data.seoTitle ?? guide.data.title,
       description: guide.data.seoDescription ?? guide.data.description,
-      url: `https://chinatravelmadeeasy.com/guides/${guide.slug}/`,
+      url: `https://chinatravelmadeeasy.com/guides/${guide.id}/`,
     })),
   },
 ];

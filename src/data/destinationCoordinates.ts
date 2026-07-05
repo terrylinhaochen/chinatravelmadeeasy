@@ -1,0 +1,41 @@
+export interface DestinationCoordinate {
+  lon: number;
+  lat: number;
+}
+
+export const destinationCoordinates: Record<string, DestinationCoordinate> = {
+  'hong-kong': { lon: 114.1694, lat: 22.3193 },
+  taiwan: { lon: 120.9605, lat: 23.6978 },
+  shanghai: { lon: 121.4737, lat: 31.2304 },
+  beijing: { lon: 116.4074, lat: 39.9042 },
+  tianjin: { lon: 117.3616, lat: 39.3434 },
+  chongqing: { lon: 106.5516, lat: 29.563 },
+  anhui: { lon: 117.283, lat: 31.8612 },
+  fujian: { lon: 117.9849, lat: 26.0745 },
+  gansu: { lon: 103.8263, lat: 36.0594 },
+  guangdong: { lon: 113.2665, lat: 23.1322 },
+  guizhou: { lon: 106.7135, lat: 26.5783 },
+  hainan: { lon: 110.3492, lat: 19.5664 },
+  hebei: { lon: 114.5149, lat: 38.0428 },
+  heilongjiang: { lon: 126.6424, lat: 45.7567 },
+  henan: { lon: 113.7536, lat: 34.7657 },
+  hubei: { lon: 114.3054, lat: 30.5931 },
+  hunan: { lon: 112.9823, lat: 28.1941 },
+  jiangsu: { lon: 118.7969, lat: 32.0603 },
+  jiangxi: { lon: 115.8582, lat: 28.6829 },
+  jilin: { lon: 125.3235, lat: 43.8171 },
+  liaoning: { lon: 123.4315, lat: 41.8057 },
+  qinghai: { lon: 101.7782, lat: 36.6171 },
+  shaanxi: { lon: 108.9398, lat: 34.3416 },
+  shandong: { lon: 117.1201, lat: 36.6512 },
+  shanxi: { lon: 112.5492, lat: 37.8706 },
+  sichuan: { lon: 104.0665, lat: 30.5728 },
+  yunnan: { lon: 102.8329, lat: 24.8801 },
+  zhejiang: { lon: 120.1551, lat: 30.2741 },
+  guangxi: { lon: 108.3275, lat: 22.8152 },
+  'inner-mongolia': { lon: 111.7492, lat: 40.8426 },
+  ningxia: { lon: 106.2309, lat: 38.4872 },
+  tibet: { lon: 91.1172, lat: 29.6469 },
+  xinjiang: { lon: 87.6168, lat: 43.8256 },
+  macau: { lon: 113.5439, lat: 22.1987 },
+};

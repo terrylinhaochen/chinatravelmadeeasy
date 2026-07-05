@@ -5,10 +5,10 @@
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
   "assets": {
     "home:hero": {
-      "src": "/images/curated/home-hero.jpg",
-      "alt": "Shanghai skyline on the Huangpu River",
-      "source": "/images/shanghai-skyline.jpg",
-      "title": "Shanghai skyline"
+      "src": "/images/curated/home-local-treasures.jpg",
+      "alt": "Night street storefront with Chinese calligraphy signs and warm lantern light",
+      "source": "User-provided WeChat photo: WechatIMG4641.jpg",
+      "title": "Local China night street storefront"
     },
     "home:places": {
       "src": "/images/curated/home-places.jpg",

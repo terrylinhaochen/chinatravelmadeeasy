@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import PinDensityPanel from '../../components/PinDensityPanel.astro';
 import { destinations } from '../../data/destinations';
 
 const description =
@@ -42,27 +43,12 @@ const jsonLd = [
       </p>
     </div>
 
-    <div class="ds-map-panel mt-8">
-      <div class="ds-map-legend">
-        <p class="ds-eyebrow">Map view</p>
-        <h2 class="mt-2 text-3xl leading-tight">Where should you start?</h2>
-        <p class="mt-3 text-sm leading-relaxed text-soft">
-          Tap a pin for starter places and related guides.
-        </p>
-      </div>
-      {destinations.map((destination) => (
-        <a
-          href={`/regions/${destination.slug}/`}
-          class="ds-map-pin"
-          style={`--pin-x: ${destination.mapPin.x}%; --pin-y: ${destination.mapPin.y}%`}
-          data-featured={destination.featured ? 'true' : 'false'}
-          aria-label={`${destination.name}: ${destination.summary}`}
-          title={destination.name}
-        >
-          {destination.name.slice(0, 2)}
-        </a>
-      ))}
-    </div>
+    <PinDensityPanel
+      eyebrow="Explored map"
+      title="Browse regions by saved-place signal"
+      description="Darker pixels show where traveler lists and starter pins cluster. Open a region when the map matches the trip you want to build."
+      class="mt-8 bg-card"
+    />
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {destinations.map((destination) => (
