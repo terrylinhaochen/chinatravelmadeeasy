@@ -201,38 +201,35 @@ const jsonLd = [
   </section>
 
   <section id="save-places" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-10 sm:px-6 sm:py-12">
-    <div class="ds-panel overflow-hidden p-5 sm:p-8">
-      <div class="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+    <div class="ds-panel home-save-panel overflow-hidden p-5 sm:p-8">
+      <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
         <div>
           <p class="ds-eyebrow">Add places</p>
-          <h2 class="mt-2 text-3xl leading-tight sm:text-4xl">Drop a link, file, or screenshot</h2>
-          <p class="mt-4 max-w-md leading-relaxed text-soft">
-            Add the raw travel thing you already saved. We extract likely places and show map options only after review.
-          </p>
+          <h2 class="mt-2 text-3xl leading-tight sm:text-4xl">Drop a link or upload</h2>
         </div>
 
         <div class="grid gap-4">
           <label
             id="homeMapDropZone"
             for="homeMapFile"
-            class="block cursor-pointer rounded-md border-2 border-dashed border-line bg-white/70 p-6 transition-colors hover:border-accent/50"
+            class="block cursor-pointer rounded-md border-2 border-dashed border-line bg-white/70 p-5 transition-colors hover:border-accent/50 sm:p-6"
           >
             <input id="homeMapFile" type="file" accept="image/*,.txt,.md" class="hidden" />
-            <span class="ds-eyebrow">Upload or drop</span>
-            <span class="mt-2 block text-2xl">Screenshot, note, text file, or saved list</span>
-            <span id="homeMapFileName" class="mt-2 block text-sm leading-relaxed text-soft">
-              Use a descriptive filename or paste the caption/link below.
+            <span class="ds-eyebrow">Upload</span>
+            <span class="mt-2 block text-xl">Screenshot or saved list</span>
+            <span id="homeMapFileName" class="mt-2 block text-sm text-soft">
+              Or paste a link below.
             </span>
           </label>
 
           <textarea
             id="homeMapText"
-            class="ds-input min-h-28 resize-y text-sm"
-            placeholder="Paste a link, caption, or shared list: Shanghai crawl: Jia Jia Tang Bao, Wukang Road, The Bund..."
+            class="ds-input min-h-20 resize-y text-sm"
+            placeholder="Paste a link or place list..."
           ></textarea>
 
           <div class="flex flex-wrap justify-end gap-2">
-            <button type="button" id="homeMapAnalyze" class="ds-button ds-button-dark">Extract places</button>
+            <button type="button" id="homeMapAnalyze" class="ds-button ds-button-dark">Extract pins</button>
           </div>
 
           <p id="homeMapStatus" class="hidden rounded-md border border-line bg-white p-3 text-sm leading-relaxed text-soft"></p>
