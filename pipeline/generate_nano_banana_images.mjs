@@ -1,16 +1,25 @@
 #!/usr/bin/env node
 import fs from 'node:fs/promises';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 
 const root = process.cwd();
 const model = process.env.NANO_BANANA_MODEL || 'gemini-3.1-flash-image';
-const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.GOOGLE_GENAI_API_KEY || '';
+const geminiImageMime = process.env.GEMINI_IMAGE_MIME || 'image/jpeg';
+const geminiImageExtension = geminiImageMime === 'image/png' ? 'png' : 'jpg';
 const forceFallback = process.argv.includes('--fallback');
 const dryRun = process.argv.includes('--dry-run');
 const outDir = path.join(root, 'public/images/generated');
 const manifestPath = path.join(root, 'src/data/generatedImageManifest.json');
 const regionImagesPath = path.join(root, 'src/data/regionImages.json');
+const geminiKeyEnvPaths = [
+  path.join(root, '.env'),
+  path.join(root, '.env.local'),
+  '/Users/terry/Desktop/crowdlisten_files/platform/crowdlisten_deployed/frontend/.env.local',
+  '/Users/terry/Desktop/crowdlisten_files/platform/crowdlisten_agent/crowdlisten-agent/.env',
+  '/Users/terry/Desktop/crowdlisten_files/.env',
+];
 
 const style =
   'Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.';
@@ -124,7 +133,11 @@ async function writeFallback(asset) {
 
 function findImageData(value) {
   if (!value || typeof value !== 'object') return null;
+  if (typeof value.data === 'string' && (value.mime_type?.startsWith?.('image/') || value.mimeType?.startsWith?.('image/'))) {
+    return value.data;
+  }
   if (value.output_image?.data) return value.output_image.data;
+  if (value.outputImage?.data) return value.outputImage.data;
   if (value.inline_data?.data) return value.inline_data.data;
   if (value.inlineData?.data) return value.inlineData.data;
   for (const nested of Object.values(value)) {
@@ -141,7 +154,35 @@ function findImageData(value) {
   return null;
 }
 
+function readEnvValue(envPath, key) {
+  if (!existsSync(envPath)) return null;
+  const line = readFileSync(envPath, 'utf8')
+    .split('\n')
+    .find((value) => value.trim().startsWith(`${key}=`));
+  if (!line) return null;
+  return line.split('=').slice(1).join('=').trim().replace(/^["']|["']$/g, '');
+}
+
+function geminiApiKey() {
+  if (process.env.GEMINI_API_KEY) return process.env.GEMINI_API_KEY;
+  if (process.env.GOOGLE_AI_API_KEY) return process.env.GOOGLE_AI_API_KEY;
+  if (process.env.VITE_GOOGLE_AI_API_KEY) return process.env.VITE_GOOGLE_AI_API_KEY;
+  if (process.env.GOOGLE_API_KEY) return process.env.GOOGLE_API_KEY;
+  if (process.env.GOOGLE_GENAI_API_KEY) return process.env.GOOGLE_GENAI_API_KEY;
+  for (const envPath of geminiKeyEnvPaths) {
+    const key =
+      readEnvValue(envPath, 'GEMINI_API_KEY') ??
+      readEnvValue(envPath, 'GOOGLE_AI_API_KEY') ??
+      readEnvValue(envPath, 'VITE_GOOGLE_AI_API_KEY') ??
+      readEnvValue(envPath, 'GOOGLE_API_KEY') ??
+      readEnvValue(envPath, 'GOOGLE_GENAI_API_KEY');
+    if (key) return key;
+  }
+  return null;
+}
+
 async function generateWithNanoBanana(asset) {
+  const apiKey = geminiApiKey();
   const response = await fetch('https://generativelanguage.googleapis.com/v1beta/interactions', {
     method: 'POST',
     headers: {
@@ -153,7 +194,7 @@ async function generateWithNanoBanana(asset) {
       input: [{ type: 'text', text: asset.prompt }],
       response_format: {
         type: 'image',
-        mime_type: 'image/png',
+        mime_type: geminiImageMime,
         aspect_ratio: asset.aspect,
         image_size: '1K',
       },
@@ -166,7 +207,7 @@ async function generateWithNanoBanana(asset) {
   const json = await response.json();
   const data = findImageData(json);
   if (!data) throw new Error(`Nano Banana response did not include image data for ${asset.id}`);
-  const file = `${asset.slug}.png`;
+  const file = `${asset.slug}.${geminiImageExtension}`;
   await fs.writeFile(path.join(outDir, file), Buffer.from(data, 'base64'));
   return `/images/generated/${file}`;
 }
@@ -174,12 +215,14 @@ async function generateWithNanoBanana(asset) {
 async function main() {
   const assets = await loadAssets();
   const useFallback = forceFallback;
+  const hasApiKey = Boolean(geminiApiKey());
 
   if (dryRun) {
     console.log(JSON.stringify({
       generator: useFallback ? 'local-watercolor-fallback' : 'nano-banana',
       model: useFallback ? null : model,
       assets: assets.length,
+      hasApiKey,
       firstAsset: {
         id: assets[0]?.id,
         aspect: assets[0]?.aspect,
@@ -189,9 +232,9 @@ async function main() {
     return;
   }
 
-  if (!useFallback && !apiKey) {
+  if (!useFallback && !hasApiKey) {
     throw new Error(
-      'GEMINI_API_KEY, GOOGLE_API_KEY, or GOOGLE_GENAI_API_KEY is required for Nano Banana generation. Use npm run images:fallback only when you intentionally want local preview placeholders.'
+      'GEMINI_API_KEY, GOOGLE_AI_API_KEY, VITE_GOOGLE_AI_API_KEY, GOOGLE_API_KEY, or GOOGLE_GENAI_API_KEY is required for Nano Banana generation. Use npm run images:fallback only when you intentionally want local preview placeholders.'
     );
   }
 

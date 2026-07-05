@@ -4,7 +4,7 @@ This folder includes project images from public sources. Public-domain files are
 
 ## Generated Watercolor Assets
 
-- `generated/*`: Site-specific Sasi watercolor travel illustrations created by `pipeline/generate_nano_banana_images.mjs`. The committed SVG files are explicit local fallback assets for development and preview. Re-run `npm run images:generate` with Gemini credentials to replace them with Nano Banana PNG output.
+- `generated/*`: Site-specific Sasi watercolor travel illustrations created by `pipeline/generate_nano_banana_images.mjs`. The committed JPEG files are Nano Banana output. Run `npm run images:fallback` only when explicit local SVG preview assets are needed without model credentials.
 
 ## Wikimedia Commons
 

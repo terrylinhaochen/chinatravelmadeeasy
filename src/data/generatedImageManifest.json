@@ -1,377 +1,377 @@
 {
-  "generated_at": "2026-07-05T00:58:46.609Z",
-  "generator": "local-watercolor-fallback",
-  "model": null,
-  "note": "Fallback SVGs were generated locally by explicit --fallback mode. Re-run npm run images:generate with Gemini credentials to create Nano Banana assets.",
+  "generated_at": "2026-07-05T01:19:38.355Z",
+  "generator": "nano-banana",
+  "model": "gemini-3.1-flash-image",
+  "note": "Generated with Nano Banana via the Gemini Interactions API.",
   "assets": {
     "home:hero": {
-      "src": "/images/generated/home-hero.svg",
+      "src": "/images/generated/home-hero.jpg",
       "alt": "Watercolor China travel guide hero scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "home:hero",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Shanghai skyline, river reflections, train line, lantern hint, and travel map marks composed as a quiet editorial hero.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "home:places": {
-      "src": "/images/generated/home-places.svg",
+      "src": "/images/generated/home-places.jpg",
       "alt": "Watercolor China destination planning scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "home:places",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Great Wall, river towns, skyline silhouettes, and route dots for comparing destinations.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "home:eating": {
-      "src": "/images/generated/home-eating.svg",
+      "src": "/images/generated/home-eating.jpg",
       "alt": "Watercolor China eating guide scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "home:eating",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: tea house table, street food steam, menu card, chopsticks, and market lanterns.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "home:traveling": {
-      "src": "/images/generated/home-traveling.svg",
+      "src": "/images/generated/home-traveling.jpg",
       "alt": "Watercolor China transport guide scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "home:traveling",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: high-speed train, metro sign, Didi pickup curb, and airport-to-hotel route line.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "home:hospitality": {
-      "src": "/images/generated/home-hospitality.svg",
+      "src": "/images/generated/home-hospitality.jpg",
       "alt": "Watercolor China hotel and hospitality scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "home:hospitality",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: hotel lobby desk, passport, room card, suitcase, and neighborhood window.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:7-day-china-itinerary": {
-      "src": "/images/generated/great-wall-route.svg",
+      "src": "/images/generated/great-wall-route.jpg",
       "alt": "Watercolor China first-trip route with Great Wall and city landmarks",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:7-day-china-itinerary",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Great Wall ridge, Beijing roofs, Xian city wall, and Shanghai river lights arranged as a first-trip route map.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:alipay-wechat-pay-foreign-cards": {
-      "src": "/images/generated/mobile-payment.svg",
+      "src": "/images/generated/mobile-payment.jpg",
       "alt": "Watercolor mobile payment setup scene in China",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:alipay-wechat-pay-foreign-cards",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: a traveler hand holding a phone with abstract QR payment squares beside a tea stall counter.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:china-high-speed-trains": {
-      "src": "/images/generated/high-speed-train.svg",
+      "src": "/images/generated/high-speed-train.jpg",
       "alt": "Watercolor high-speed train at a China station",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:china-high-speed-trains",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: a sleek high-speed train sliding past a station platform with pale rail lines and luggage silhouettes.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:china-pre-departure-checklist": {
-      "src": "/images/generated/predeparture-checklist.svg",
+      "src": "/images/generated/predeparture-checklist.jpg",
       "alt": "Watercolor China pre-departure planning desk",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:china-pre-departure-checklist",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: passport, phone, train ticket, hotel address card, and suitcase arranged on a planning desk.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:china-visa-free-2026": {
-      "src": "/images/generated/visa-free-entry.svg",
+      "src": "/images/generated/visa-free-entry.jpg",
       "alt": "Watercolor visa-free China entry planning scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:china-visa-free-2026",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: passport stamps, arrival gate signage, and a route arrow through an airport concourse.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:didi-metro-getting-around": {
-      "src": "/images/generated/city-transport.svg",
+      "src": "/images/generated/city-transport.jpg",
       "alt": "Watercolor China city transport scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:didi-metro-getting-around",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: metro entrance, Didi pickup curb, traffic lights, and transit arrows in one calm city transport scene.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:festivals-and-local-experiences": {
-      "src": "/images/generated/festivals-local.svg",
+      "src": "/images/generated/festivals-local.jpg",
       "alt": "Watercolor local China festival and park scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:festivals-and-local-experiences",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: lanterns, market banners, morning park dancers, and seasonal festival lights.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:food-ordering-dietary": {
-      "src": "/images/generated/food-ordering.svg",
+      "src": "/images/generated/food-ordering.jpg",
       "alt": "Watercolor food ordering and dietary card scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:food-ordering-dietary",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: QR menu, allergy note card, chopsticks, steaming bowls, and a small restaurant table.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:hotels-foreigners-china": {
-      "src": "/images/generated/hotel-checkin.svg",
+      "src": "/images/generated/hotel-checkin.jpg",
       "alt": "Watercolor hotel check-in with foreign passport",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:hotels-foreigners-china",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: hotel reception desk, passport, room key card, and luggage under warm lobby light.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:internet-esim-vpn-blocked-apps": {
-      "src": "/images/generated/internet-esim.svg",
+      "src": "/images/generated/internet-esim.jpg",
       "alt": "Watercolor eSIM and internet setup scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:internet-esim-vpn-blocked-apps",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: phone eSIM settings, signal waves, city skyline, and cloud icons over a travel map.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:neighborhoods-beyond-landmarks": {
-      "src": "/images/generated/neighborhoods.svg",
+      "src": "/images/generated/neighborhoods.jpg",
       "alt": "Watercolor China neighborhood lane beyond landmarks",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:neighborhoods-beyond-landmarks",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: hutong lane, longtang doorway, bicycles, plants, and quiet local street texture.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:street-food-night-markets": {
-      "src": "/images/generated/street-food.svg",
+      "src": "/images/generated/street-food.jpg",
       "alt": "Watercolor China street food night market",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:street-food-night-markets",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: night market stall, steam, skewers, bowls, and small QR payment sign in warm light.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:tea-houses-and-rituals": {
-      "src": "/images/generated/tea-house.svg",
+      "src": "/images/generated/tea-house.jpg",
       "alt": "Watercolor Chengdu tea house ritual scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:tea-houses-and-rituals",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Chengdu tea table, gaiwan cups, bamboo chairs, and soft courtyard shade.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "guide:translation-language-survival": {
-      "src": "/images/generated/translation-language.svg",
+      "src": "/images/generated/translation-language.jpg",
       "alt": "Watercolor language translation survival scene",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "guide:translation-language-survival",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: street signs, camera translation overlay shapes, phrase card, and a traveler phone.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:hong-kong": {
-      "src": "/images/generated/region-hong-kong.svg",
+      "src": "/images/generated/region-hong-kong.jpg",
       "alt": "Watercolor destination illustration for Victoria Harbour",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:hong-kong",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Victoria Harbour as a China travel planning destination, using Victoria Harbour skyline in Hong Kong as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:taiwan": {
-      "src": "/images/generated/region-taiwan.svg",
+      "src": "/images/generated/region-taiwan.jpg",
       "alt": "Watercolor destination illustration for Taipei 101",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:taiwan",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Taipei 101 as a China travel planning destination, using Taipei 101 skyline in Taiwan as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:shanghai": {
-      "src": "/images/generated/region-shanghai.svg",
+      "src": "/images/generated/region-shanghai.jpg",
       "alt": "Watercolor destination illustration for Shanghai",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:shanghai",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Shanghai as a China travel planning destination, using Shanghai skyline as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:beijing": {
-      "src": "/images/generated/region-beijing.svg",
+      "src": "/images/generated/region-beijing.jpg",
       "alt": "Watercolor destination illustration for Forbidden City",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:beijing",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Forbidden City as a China travel planning destination, using Forbidden City palace roofs in Beijing as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:tianjin": {
-      "src": "/images/generated/region-tianjin.svg",
+      "src": "/images/generated/region-tianjin.jpg",
       "alt": "Watercolor destination illustration for Tianjin",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:tianjin",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Tianjin as a China travel planning destination, using Tianjin riverside architecture as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:chongqing": {
-      "src": "/images/generated/region-chongqing.svg",
+      "src": "/images/generated/region-chongqing.jpg",
       "alt": "Watercolor destination illustration for Chongqing",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:chongqing",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Chongqing as a China travel planning destination, using Chongqing mountain city skyline as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:anhui": {
-      "src": "/images/generated/region-anhui.svg",
+      "src": "/images/generated/region-anhui.jpg",
       "alt": "Watercolor destination illustration for Huangshan",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:anhui",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Huangshan as a China travel planning destination, using Huangshan mountains in Anhui as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:fujian": {
-      "src": "/images/generated/region-fujian.svg",
+      "src": "/images/generated/region-fujian.jpg",
       "alt": "Watercolor destination illustration for Fujian tulou",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:fujian",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Fujian tulou as a China travel planning destination, using Fujian tulou round houses as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:gansu": {
-      "src": "/images/generated/region-gansu.svg",
+      "src": "/images/generated/region-gansu.jpg",
       "alt": "Watercolor destination illustration for Mogao Caves",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:gansu",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Mogao Caves as a China travel planning destination, using Mogao Caves in Dunhuang, Gansu as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:guangdong": {
-      "src": "/images/generated/region-guangdong.svg",
+      "src": "/images/generated/region-guangdong.jpg",
       "alt": "Watercolor destination illustration for Canton Tower",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:guangdong",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Canton Tower as a China travel planning destination, using Canton Tower in Guangzhou, Guangdong as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:guizhou": {
-      "src": "/images/generated/region-guizhou.svg",
+      "src": "/images/generated/region-guizhou.jpg",
       "alt": "Watercolor destination illustration for Huangguoshu Waterfall",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:guizhou",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Huangguoshu Waterfall as a China travel planning destination, using Huangguoshu Waterfall in Guizhou as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:hainan": {
-      "src": "/images/generated/region-hainan.svg",
+      "src": "/images/generated/region-hainan.jpg",
       "alt": "Watercolor destination illustration for Yalong Bay",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:hainan",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Yalong Bay as a China travel planning destination, using Yalong Bay beach in Hainan as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:hebei": {
-      "src": "/images/generated/region-hebei.svg",
+      "src": "/images/generated/region-hebei.jpg",
       "alt": "Watercolor destination illustration for Shanhai Pass",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:hebei",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Shanhai Pass as a China travel planning destination, using Shanhai Pass Great Wall in Hebei as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:heilongjiang": {
-      "src": "/images/generated/region-heilongjiang.svg",
+      "src": "/images/generated/region-heilongjiang.jpg",
       "alt": "Watercolor destination illustration for Harbin International Ice and Snow Sculpture Festival",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:heilongjiang",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Harbin International Ice and Snow Sculpture Festival as a China travel planning destination, using Harbin ice festival in Heilongjiang as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:henan": {
-      "src": "/images/generated/region-henan.svg",
+      "src": "/images/generated/region-henan.jpg",
       "alt": "Watercolor destination illustration for Longmen Grottoes",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:henan",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Longmen Grottoes as a China travel planning destination, using Longmen Grottoes in Henan as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:hubei": {
-      "src": "/images/generated/region-hubei.svg",
+      "src": "/images/generated/region-hubei.jpg",
       "alt": "Watercolor destination illustration for Yellow Crane Tower",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:hubei",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Yellow Crane Tower as a China travel planning destination, using Yellow Crane Tower in Wuhan, Hubei as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:hunan": {
-      "src": "/images/generated/region-hunan.svg",
+      "src": "/images/generated/region-hunan.jpg",
       "alt": "Watercolor destination illustration for Zhangjiajie National Forest Park",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:hunan",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Zhangjiajie National Forest Park as a China travel planning destination, using Zhangjiajie sandstone pillars in Hunan as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:jiangsu": {
-      "src": "/images/generated/region-jiangsu.svg",
+      "src": "/images/generated/region-jiangsu.jpg",
       "alt": "Watercolor destination illustration for Classical Gardens of Suzhou",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:jiangsu",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Classical Gardens of Suzhou as a China travel planning destination, using Suzhou classical garden in Jiangsu as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:jiangxi": {
-      "src": "/images/generated/region-jiangxi.svg",
+      "src": "/images/generated/region-jiangxi.jpg",
       "alt": "Watercolor destination illustration for Jingdezhen",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:jiangxi",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Jingdezhen as a China travel planning destination, using Jingdezhen porcelain city in Jiangxi as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:jilin": {
-      "src": "/images/generated/region-jilin.svg",
+      "src": "/images/generated/region-jilin.jpg",
       "alt": "Watercolor destination illustration for Mount Paektu",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:jilin",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Mount Paektu as a China travel planning destination, using Changbai Mountain volcanic lake in Jilin as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:liaoning": {
-      "src": "/images/generated/region-liaoning.svg",
+      "src": "/images/generated/region-liaoning.jpg",
       "alt": "Watercolor destination illustration for Dalian",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:liaoning",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Dalian as a China travel planning destination, using Dalian coast in Liaoning as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:qinghai": {
-      "src": "/images/generated/region-qinghai.svg",
+      "src": "/images/generated/region-qinghai.jpg",
       "alt": "Watercolor destination illustration for Qinghai Lake",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:qinghai",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Qinghai Lake as a China travel planning destination, using Qinghai Lake plateau scenery as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:shaanxi": {
-      "src": "/images/generated/region-shaanxi.svg",
+      "src": "/images/generated/region-shaanxi.jpg",
       "alt": "Watercolor destination illustration for Terracotta Army",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:shaanxi",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Terracotta Army as a China travel planning destination, using Terracotta Army in Shaanxi as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:shandong": {
-      "src": "/images/generated/region-shandong.svg",
+      "src": "/images/generated/region-shandong.jpg",
       "alt": "Watercolor destination illustration for Qingdao",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:shandong",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Qingdao as a China travel planning destination, using Qingdao coast in Shandong as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:shanxi": {
-      "src": "/images/generated/region-shanxi.svg",
+      "src": "/images/generated/region-shanxi.jpg",
       "alt": "Watercolor destination illustration for Pingyao",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:shanxi",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Pingyao as a China travel planning destination, using Pingyao old city in Shanxi as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:sichuan": {
-      "src": "/images/generated/region-sichuan.svg",
+      "src": "/images/generated/region-sichuan.jpg",
       "alt": "Watercolor destination illustration for Chengdu Research Base of Giant Panda Breeding",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:sichuan",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Chengdu Research Base of Giant Panda Breeding as a China travel planning destination, using Giant panda at Chengdu Research Base in Sichuan as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:yunnan": {
-      "src": "/images/generated/region-yunnan.svg",
+      "src": "/images/generated/region-yunnan.jpg",
       "alt": "Watercolor destination illustration for Old Town of Lijiang",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:yunnan",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Old Town of Lijiang as a China travel planning destination, using Lijiang old town in Yunnan as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:zhejiang": {
-      "src": "/images/generated/region-zhejiang.svg",
+      "src": "/images/generated/region-zhejiang.jpg",
       "alt": "Watercolor destination illustration for West Lake",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:zhejiang",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: West Lake as a China travel planning destination, using West Lake in Hangzhou, Zhejiang as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:guangxi": {
-      "src": "/images/generated/region-guangxi.svg",
+      "src": "/images/generated/region-guangxi.jpg",
       "alt": "Watercolor destination illustration for Yangshuo County",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:guangxi",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Yangshuo County as a China travel planning destination, using Yangshuo karst landscape in Guangxi as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:inner-mongolia": {
-      "src": "/images/generated/region-inner-mongolia.svg",
+      "src": "/images/generated/region-inner-mongolia.jpg",
       "alt": "Watercolor destination illustration for Hulunbuir",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:inner-mongolia",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Hulunbuir as a China travel planning destination, using Hulunbuir grassland in Inner Mongolia as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:ningxia": {
-      "src": "/images/generated/region-ningxia.svg",
+      "src": "/images/generated/region-ningxia.jpg",
       "alt": "Watercolor destination illustration for Shapotou, Zhongwei",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:ningxia",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Shapotou, Zhongwei as a China travel planning destination, using Shapotou desert landscape in Ningxia as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:tibet": {
-      "src": "/images/generated/region-tibet.svg",
+      "src": "/images/generated/region-tibet.jpg",
       "alt": "Watercolor destination illustration for Potala Palace",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:tibet",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Potala Palace as a China travel planning destination, using Potala Palace in Tibet as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:xinjiang": {
-      "src": "/images/generated/region-xinjiang.svg",
+      "src": "/images/generated/region-xinjiang.jpg",
       "alt": "Watercolor destination illustration for Kashgar",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:xinjiang",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Kashgar as a China travel planning destination, using Kashgar old city in Xinjiang as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     },
     "region:macau": {
-      "src": "/images/generated/region-macau.svg",
+      "src": "/images/generated/region-macau.jpg",
       "alt": "Watercolor destination illustration for Ruins of Saint Paul's",
-      "source": "Local watercolor fallback for Nano Banana pipeline",
+      "source": "Nano Banana generated image",
       "title": "region:macau",
       "prompt": "Sasi watercolor travel editorial style: translucent layered watercolor washes, quiet ink linework, cream paper grain, soft atmospheric edges, muted mineral pigments, no photorealism, no text, no logos, no watermark.\nSubject: Ruins of Saint Paul's as a China travel planning destination, using Ruins of Saint Paul's in Macau as subject context.\nComposition: spacious editorial travel illustration, useful as a website image crop, no readable text."
     }
