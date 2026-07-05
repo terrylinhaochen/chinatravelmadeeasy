@@ -66,9 +66,30 @@ export function extractTripPlaces(source) {
   }
 }
 
-export function appleMapsUrl(place) { return 'https://maps.apple.com/?q=' + encodeURIComponent(displayName(place)); }
-export function amapUrl(place) { return 'https://uri.amap.com/search?keyword=' + encodeURIComponent(displayName(place)) + '&view=map&src=chinatravelmadeeasy&callnative=1'; }
+export function appleMapsUrl(place) {
+  const coordinate = coordinateForPlace(place);
+  if (coordinate) {
+    const label = encodeURIComponent(displayName(place));
+    return 'https://maps.apple.com/?ll=' + coordinate.lat + ',' + coordinate.lon + '&q=' + label;
+  }
+  return 'https://maps.apple.com/?q=' + encodeURIComponent(displayName(place));
+}
+export function amapUrl(place) {
+  const coordinate = coordinateForPlace(place);
+  if (coordinate) {
+    const label = encodeURIComponent(displayName(place));
+    return 'https://uri.amap.com/marker?position=' + coordinate.lon + ',' + coordinate.lat + '&name=' + label + '&src=chinatravelmadeeasy&coordinate=gaode&callnative=1';
+  }
+  return 'https://uri.amap.com/search?keyword=' + encodeURIComponent(displayName(place)) + '&view=map&src=chinatravelmadeeasy&callnative=1';
+}
 export function displayName(place) { return [place.name, place.city].filter(Boolean).join(', '); }
+
+function coordinateForPlace(place) {
+  const lat = Number(place?.latitude ?? place?.lat);
+  const lon = Number(place?.longitude ?? place?.lon ?? place?.lng);
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  return { lat: lat.toFixed(5), lon: lon.toFixed(5) };
+}
 
 function textFromUrl(url) {
   if (!url) return '';

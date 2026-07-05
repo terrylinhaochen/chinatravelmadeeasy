@@ -1,0 +1,190 @@
+---
+import Base from '../../layouts/Base.astro';
+import CuratedCollectionMap from '../../components/CuratedCollectionMap.astro';
+import { curatedCollections } from '../../data/curatedCollections';
+
+const description =
+  'Curated map collections from real people, ready to collect, scan, and remix into your own trip.';
+
+function collectionHref(collection: (typeof curatedCollections)[number]) {
+  const owner = collection.owner.slug;
+  const list = collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return `/curated/${owner}/${list}/`;
+}
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Curated map collections',
+    url: 'https://chinatravelmadeeasy.com/curated/',
+    description,
+    isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Curated map collections',
+    numberOfItems: curatedCollections.length,
+    itemListElement: curatedCollections.map((collection, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: `${collection.title} by ${collection.owner.name}`,
+      description: `${collection.placeCount} imported pins ready to collect and remix`,
+      url: `https://chinatravelmadeeasy.com${collectionHref(collection)}`,
+    })),
+  },
+];
+---
+
+<Base title="Curated" description={description} jsonLd={jsonLd}>
+  <section class="ds-section">
+    <p class="ds-eyebrow">Curated</p>
+    <div class="ds-section-head mt-3">
+      <div>
+        <h1 class="ds-section-title">Maps worth remixing</h1>
+      </div>
+      <p class="text-lg leading-relaxed text-soft">
+        Collect real map lists. Keep the pins that fit your trip.
+      </p>
+    </div>
+
+    <div class="mt-8 grid gap-5">
+      {curatedCollections.map((collection) => (
+        <article
+          class="curated-card ds-card grid gap-5 p-4 sm:p-5 lg:grid-cols-[0.64fr_1.36fr] lg:items-start"
+          data-curated-card={collection.slug}
+        >
+          <div class="min-w-0">
+            <div class="flex items-center gap-3">
+              <span class="curated-owner-mark" aria-hidden="true">{collection.owner.name.slice(0, 1)}</span>
+              <div class="min-w-0">
+                <h2 class="mt-1 text-3xl leading-tight">{collection.title}</h2>
+                <p class="mt-1 text-sm text-soft">{collection.owner.name}</p>
+              </div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-3 gap-2">
+              <div class="curated-stat">
+                <p class="ds-tag">Pins</p>
+                <p class="mt-2 text-2xl leading-none">{collection.placeCount}</p>
+              </div>
+              <div class="curated-stat">
+                <p class="ds-tag">Regions</p>
+                <p class="mt-2 text-2xl leading-none">{Object.keys(collection.regionBuckets).length}</p>
+              </div>
+              <div class="curated-stat">
+                <p class="ds-tag">Notes</p>
+                <p class="mt-2 text-2xl leading-none">{collection.places.filter((place) => place.note).length}</p>
+              </div>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <button
+                type="button"
+                class="ds-button ds-button-dark"
+                data-curated-collect={collection.slug}
+                data-curated-title={collection.title}
+                data-curated-owner={collection.owner.name}
+                data-curated-href={collectionHref(collection)}
+                data-curated-count={collection.placeCount}
+              >
+                Collect
+              </button>
+              <a href={collectionHref(collection)} class="ds-button ds-button-secondary">Open collection</a>
+            </div>
+            <p class="mt-3 hidden text-sm leading-relaxed text-soft" data-curated-collect-status={collection.slug}></p>
+          </div>
+
+          <a href={collectionHref(collection)} aria-label={`Open ${collection.title} by ${collection.owner.name}`}>
+            <CuratedCollectionMap collection={collection} compact />
+          </a>
+        </article>
+      ))}
+    </div>
+
+  </section>
+</Base>
+
+<script>
+  const collectButtons = document.querySelectorAll('[data-curated-collect]');
+  const collectedKey = 'ctme-collected-curated';
+
+  collectButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const collected = getCollected();
+      const id = button.dataset.curatedCollect;
+      const item = {
+        id,
+        title: button.dataset.curatedTitle,
+        owner: button.dataset.curatedOwner,
+        href: button.dataset.curatedHref,
+        placeCount: Number(button.dataset.curatedCount || 0),
+        savedAt: new Date().toISOString(),
+      };
+      localStorage.setItem(collectedKey, JSON.stringify([item, ...collected.filter((entry) => entry.id !== id)].slice(0, 24)));
+      button.textContent = 'Collected';
+      button.classList.remove('ds-button-dark');
+      button.classList.add('ds-button-secondary');
+      const status = document.querySelector(`[data-curated-collect-status="${id}"]`);
+      if (status) {
+        status.textContent = 'Saved to your collected maps on this device.';
+        status.classList.remove('hidden');
+      }
+    });
+  });
+
+  function getCollected() {
+    try {
+      return JSON.parse(localStorage.getItem(collectedKey) || '[]');
+    } catch {
+      return [];
+    }
+  }
+</script>
+
+<style>
+  .curated-card {
+    overflow: hidden;
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .curated-card:hover {
+    border-color: #d6d3d1;
+    box-shadow:
+      rgba(0, 0, 0, 0.02) 0 0 0 1px,
+      rgba(0, 0, 0, 0.04) 0 2px 6px,
+      rgba(0, 0, 0, 0.1) 0 4px 8px;
+  }
+
+  .curated-owner-mark {
+    display: inline-flex;
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: var(--color-accent);
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .curated-stat {
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: white;
+    padding: 0.85rem;
+  }
+
+  @media (max-width: 640px) {
+    .curated-stat {
+      padding: 0.75rem;
+    }
+  }
+</style>

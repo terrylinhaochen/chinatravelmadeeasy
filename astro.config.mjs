@@ -7,7 +7,11 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://chinatravelmadeeasy.com',
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/curated/fanny-chen/'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

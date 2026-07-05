@@ -96,6 +96,8 @@ const essentialCards = [
     alt: getGeneratedImage('guide:hotels-foreigners-china')?.alt ?? 'Hotel reception desk for China check-in planning',
   },
 ];
+const primaryEssentialCards = essentialCards.slice(0, 3);
+const extraEssentialCards = essentialCards.slice(3);
 
 const homeFaqs = [
   {
@@ -187,9 +189,9 @@ const jsonLd = [
             </div>
             <div class="hero-pin-copy">
               <p class="ds-eyebrow">Pinned from photo</p>
-              <h2 class="mt-2 text-3xl leading-tight">Local night street storefront, China</h2>
+              <h2 class="mt-2 text-3xl leading-tight">Chongqing night street storefront</h2>
               <p class="mt-2 text-sm leading-relaxed text-soft">
-                Saved from WechatIMG4641.jpg. Confirm the exact address before routing.
+                Saved from WechatIMG4641.jpg at 29.56086 N, 106.57751 E.
               </p>
               <button id="heroSavePlace" type="button" class="ds-button ds-button-dark mt-5">Save to maps</button>
             </div>
@@ -352,7 +354,7 @@ const jsonLd = [
       </p>
     </div>
     <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {essentialCards.map((card) => (
+      {primaryEssentialCards.map((card) => (
         <a href={card.href} class="ds-card-link group overflow-hidden">
           <div class="aspect-[16/9] overflow-hidden bg-surface-strong">
             <img src={card.image} alt={card.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
@@ -364,6 +366,31 @@ const jsonLd = [
           </div>
         </a>
       ))}
+    </div>
+    <div id="essentialMore" class="mt-4 hidden grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {extraEssentialCards.map((card) => (
+        <a href={card.href} class="ds-card-link group overflow-hidden">
+          <div class="aspect-[16/9] overflow-hidden bg-surface-strong">
+            <img src={card.image} alt={card.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+          </div>
+          <div class="p-5">
+            <p class="ds-tag text-accent">{card.label}</p>
+            <h3 class="mt-2 text-2xl font-bold group-hover:text-accent">{card.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{card.body}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+    <div class="mt-5">
+      <button
+        id="essentialToggle"
+        type="button"
+        class="ds-button ds-button-secondary"
+        aria-expanded="false"
+        aria-controls="essentialMore"
+      >
+        Expand essentials
+      </button>
     </div>
   </section>
 
@@ -398,9 +425,9 @@ const jsonLd = [
         Enter an email to save this place and open it in your selected map.
       </p>
       <div class="mt-5 rounded-md border border-line bg-paper p-4">
-        <h3 class="text-xl font-bold">Local night street storefront, China</h3>
+        <h3 class="text-xl font-bold">Chongqing night street storefront</h3>
         <p class="mt-2 text-sm leading-relaxed text-soft">
-          Saved from WechatIMG4641.jpg. Confirm the exact address before routing.
+          Saved from WechatIMG4641.jpg at 29.56086 N, 106.57751 E.
         </p>
       </div>
       <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
@@ -646,12 +673,16 @@ const jsonLd = [
   const heroSignupEmail = document.querySelector('#heroSignupEmail');
   const heroSignupContinue = document.querySelector('#heroSignupContinue');
   const heroSignupStatus = document.querySelector('#heroSignupStatus');
+  const essentialMore = document.querySelector('#essentialMore');
+  const essentialToggle = document.querySelector('#essentialToggle');
   const heroPhotoPlace = {
-    name: 'Local night street storefront',
-    city: 'China',
+    name: 'Chongqing night street storefront',
+    city: 'Chongqing',
     category: 'See',
-    confidence: 'photo pin',
-    note: 'Saved from WechatIMG4641.jpg. Confirm the exact address before routing.',
+    confidence: 'coordinate pin',
+    latitude: 29.56086,
+    longitude: 106.57751,
+    note: 'Saved from WechatIMG4641.jpg at 29.56086 N, 106.57751 E.',
   };
   const homeMapUserKey = 'ctme-map-user';
   const homeMapSavedKey = 'ctme-map-saved-places';
@@ -660,6 +691,13 @@ const jsonLd = [
   let homeMapPlaces = [];
   let homeMapPendingPlace = null;
   let homeMapDisplayedSaved = [];
+
+  essentialToggle?.addEventListener('click', () => {
+    const expanded = essentialToggle.getAttribute('aria-expanded') === 'true';
+    essentialToggle.setAttribute('aria-expanded', String(!expanded));
+    essentialToggle.textContent = expanded ? 'Expand essentials' : 'Collapse essentials';
+    essentialMore?.classList.toggle('hidden', expanded);
+  });
 
   homeMapProviderButtons.forEach((button) => {
     button.addEventListener('click', () => {

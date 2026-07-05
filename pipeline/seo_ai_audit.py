@@ -26,6 +26,7 @@ MIN_WORDS = {
     "guide": 900,
     "listing": 250,
     "answer_listing": 100,
+    "curated_tool": 40,
     "region": 450,
     "tool": 250,
     "utility": 80,
@@ -140,6 +141,8 @@ def page_kind(route: str) -> str:
         return "guide"
     if route.startswith("/regions/") and route != "/regions/":
         return "region"
+    if route == "/curated/" or route.startswith("/curated/"):
+        return "curated_tool"
     if route in {"/map-import/", "/content-seeds/", "/pulse/"}:
         return "tool"
     if route == "/404.html":
@@ -256,6 +259,7 @@ def audit_page(path: Path, dist: Path) -> dict:
         "guide": {"Article", "BreadcrumbList"},
         "region": {"CollectionPage", "FAQPage"},
         "listing": {"CollectionPage", "WebPage", "FAQPage"},
+        "curated_tool": {"CollectionPage", "ItemList"},
         "tool": {"WebPage", "FAQPage", "ItemList"},
     }.get(kind, set())
     if required_schema and not (types & required_schema):

@@ -1,0 +1,321 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CuratedCollectionMap from '../../../components/CuratedCollectionMap.astro';
+import { curatedCollections } from '../../../data/curatedCollections';
+
+export function getStaticPaths() {
+  return curatedCollections.map((item) => ({
+    params: {
+      owner: item.owner.slug,
+      collection: item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+    },
+    props: { item },
+  }));
+}
+
+const { item } = Astro.props;
+const noteCount = item.places.filter((place) => place.note).length;
+const displayTitle = item.title.replace(/\b\w/g, (letter) => letter.toUpperCase());
+const regionLabels: Record<string, string> = {
+  nyc: 'NYC',
+  milan: 'Milan',
+  rome: 'Rome',
+  switzerland: 'Switzerland',
+  unknown: 'Other',
+};
+const description = `${item.owner.name}'s ${item.title} list with ${item.placeCount} saved restaurant pins to scan, keep, and open in maps.`;
+const collectionPayload = {
+  id: item.slug,
+  title: item.title,
+  displayTitle,
+  owner: item.owner.name,
+  sourceUrl: item.canonicalUrl || item.sourceUrl,
+  places: item.places.map(({ sourceProvider: _sourceProvider, ...place }) => place),
+};
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${item.title} by ${item.owner.name}`,
+    description,
+    url: `https://chinatravelmadeeasy.com/curated/${item.owner.slug}/${Astro.params.collection}/`,
+    isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${item.title} pins`,
+    numberOfItems: item.places.length,
+    itemListElement: item.places.map((place, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: place.name,
+      description: place.note || place.address,
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: place.latitude,
+        longitude: place.longitude,
+      },
+    })),
+  },
+];
+---
+
+<Base title={`${displayTitle} by ${item.owner.name}`} description={description} jsonLd={jsonLd}>
+  <section class="ds-section curated-detail" data-curated-root>
+    <div class="flex flex-wrap items-center gap-2 text-sm text-faint">
+      <a href="/curated/" class="hover:text-accent">Curated</a>
+      <span>/</span>
+      <span>{item.owner.name}</span>
+    </div>
+
+    <div class="mt-6 grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+      <div>
+        <p class="ds-eyebrow">Curated list</p>
+        <h1 class="mt-3 text-5xl leading-tight sm:text-6xl">{displayTitle}</h1>
+        <div class="mt-5 flex items-center gap-3">
+          <span class="curated-owner-mark" aria-hidden="true">{item.owner.name.slice(0, 1)}</span>
+          <div>
+            <p class="font-semibold">{item.owner.name}</p>
+            <p class="text-sm text-soft">{item.placeCount} saved places, ready to scan and collect.</p>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-3 gap-2">
+          <div class="rounded-md border border-line bg-white p-3">
+            <p class="ds-tag">Pins</p>
+            <p class="mt-2 text-3xl leading-none" data-curated-active-count>{item.placeCount}</p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-3">
+            <p class="ds-tag">Regions</p>
+            <p class="mt-2 text-3xl leading-none">{Object.keys(item.regionBuckets).length}</p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-3">
+            <p class="ds-tag">Notes</p>
+            <p class="mt-2 text-3xl leading-none">{noteCount}</p>
+          </div>
+        </div>
+
+        <div class="mt-5 flex flex-wrap gap-2">
+          <button
+            type="button"
+            class="ds-button ds-button-dark"
+            data-curated-detail-collect
+          >
+            Collect
+          </button>
+          <a href={item.canonicalUrl || item.sourceUrl} class="ds-button ds-button-secondary" target="_blank" rel="noopener">Open source</a>
+        </div>
+        <p class="mt-3 hidden text-sm leading-relaxed text-soft" data-curated-status></p>
+      </div>
+
+      <div>
+        <CuratedCollectionMap collection={item} />
+        <div class="mt-4 flex flex-wrap gap-2">
+          <button type="button" class="ds-chip curated-filter !border-accent" data-curated-filter="all">All pins</button>
+          {Object.entries(item.regionBuckets).map(([region, count]) => (
+            <button type="button" class="ds-chip curated-filter" data-curated-filter={region}>
+              {regionLabels[region] ?? region}: {count}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <section class="mt-8" aria-label="Collection pins">
+      <div class="grid gap-3 md:grid-cols-[1fr_minmax(14rem,0.45fr)] md:items-end">
+        <div>
+          <p class="ds-eyebrow">Pins</p>
+          <h2 class="mt-2 text-3xl leading-tight">Places in this collection</h2>
+        </div>
+        <input data-curated-search class="ds-input text-sm" type="search" placeholder="Search places" />
+      </div>
+      <div class="mt-5 grid gap-3 md:grid-cols-2" data-curated-list></div>
+      <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <p class="text-sm text-soft" data-curated-count-label></p>
+        <button type="button" class="ds-button ds-button-secondary" data-curated-show-more>Show more</button>
+      </div>
+    </section>
+  </section>
+
+  <script type="application/json" id="curatedCollectionPayload" set:html={JSON.stringify(collectionPayload)} />
+
+  <script>
+    const payload = JSON.parse(document.querySelector('#curatedCollectionPayload').textContent);
+    const storageKey = 'ctme-curated-remix:' + payload.id;
+    const list = document.querySelector('[data-curated-list]');
+    const search = document.querySelector('[data-curated-search]');
+    const status = document.querySelector('[data-curated-status]');
+    const activeCount = document.querySelector('[data-curated-active-count]');
+    const filters = document.querySelectorAll('[data-curated-filter]');
+    const collectList = document.querySelector('[data-curated-detail-collect]');
+    const showMore = document.querySelector('[data-curated-show-more]');
+    const countLabel = document.querySelector('[data-curated-count-label]');
+    const regionLabels = { nyc: 'NYC', milan: 'Milan', rome: 'Rome', switzerland: 'Switzerland', unknown: 'Other' };
+    const collectedKey = 'ctme-collected-curated';
+    const visibleStep = 12;
+    let activeFilter = 'all';
+    let visibleLimit = visibleStep;
+    let keptIds = loadKeptIds();
+    let places = payload.places;
+
+    render();
+
+    search.addEventListener('input', render);
+    showMore.addEventListener('click', () => {
+      visibleLimit += visibleStep;
+      render();
+    });
+    collectList.addEventListener('click', () => {
+      const collected = getCollected();
+      const item = {
+        id: payload.id,
+        title: payload.title,
+        owner: payload.owner,
+        href: location.pathname,
+        placeCount: payload.places.length,
+        savedAt: new Date().toISOString(),
+      };
+      localStorage.setItem(collectedKey, JSON.stringify([item, ...collected.filter((entry) => entry.id !== item.id)].slice(0, 24)));
+      collectList.textContent = 'Collected';
+      collectList.classList.remove('ds-button-dark');
+      collectList.classList.add('ds-button-secondary');
+      showStatus('Collected. This list is saved on this device.');
+    });
+    filters.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeFilter = button.dataset.curatedFilter;
+        visibleLimit = visibleStep;
+        filters.forEach((item) => item.classList.toggle('!border-accent', item === button));
+        render();
+      });
+    });
+
+    function loadKeptIds() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+        if (Array.isArray(saved)) return new Set(saved);
+      } catch {}
+      return new Set(payload.places.map((place) => place.id));
+    }
+
+    function persist() {
+      localStorage.setItem(storageKey, JSON.stringify(Array.from(keptIds)));
+    }
+
+    function getCollected() {
+      try {
+        return JSON.parse(localStorage.getItem(collectedKey) || '[]');
+      } catch {
+        return [];
+      }
+    }
+
+    function render() {
+      const query = search.value.trim().toLowerCase();
+      const visible = places.filter((place) => {
+        if (activeFilter !== 'all' && place.regionBucket !== activeFilter) return false;
+        if (!query) return true;
+        return [place.name, place.address, place.note, regionLabels[place.regionBucket]]
+          .filter(Boolean)
+          .some((value) => String(value).toLowerCase().includes(query));
+      });
+      const rendered = visible.slice(0, visibleLimit);
+      activeCount.textContent = String(keptIds.size);
+      list.innerHTML = rendered.map(placeCard).join('');
+      countLabel.textContent = 'Showing ' + Math.min(visibleLimit, visible.length) + ' of ' + visible.length + ' pins';
+      showMore.hidden = visibleLimit >= visible.length;
+      list.querySelectorAll('[data-curated-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const id = button.dataset.curatedToggle;
+          if (keptIds.has(id)) {
+            keptIds.delete(id);
+          } else {
+            keptIds.add(id);
+          }
+          persist();
+          render();
+        });
+      });
+    }
+
+    function placeCard(place) {
+      const apple = 'https://maps.apple.com/?ll=' + place.latitude + ',' + place.longitude + '&q=' + encodeURIComponent(place.name);
+      const kept = keptIds.has(place.id);
+      return (
+        '<article class="curated-place-card ' + (kept ? '' : 'is-muted') + '">' +
+          '<div>' +
+            '<p class="ds-tag">' + escapeHtml(regionLabels[place.regionBucket] || 'Place') + '</p>' +
+            '<h3 class="mt-1 text-2xl leading-tight">' + escapeHtml(place.name) + '</h3>' +
+            '<p class="mt-2 text-sm leading-relaxed text-soft">' + escapeHtml(place.address) + '</p>' +
+            (place.note ? '<p class="mt-2 text-sm leading-relaxed text-soft">Note: ' + escapeHtml(place.note) + '</p>' : '') +
+          '</div>' +
+          '<div class="mt-4 flex flex-wrap gap-2">' +
+            '<button type="button" class="ds-button ' + (kept ? 'ds-button-dark' : 'ds-button-secondary') + '" data-curated-toggle="' + escapeHtml(place.id) + '">' + (kept ? 'Kept' : 'Keep') + '</button>' +
+            '<a class="ds-button ds-button-secondary" href="' + apple + '" target="_blank" rel="noopener">Open map</a>' +
+          '</div>' +
+        '</article>'
+      );
+    }
+
+    function showStatus(message) {
+      status.textContent = message;
+      status.classList.remove('hidden');
+    }
+
+    function escapeHtml(value) {
+      return String(value || '').replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;',
+      })[char]);
+    }
+  </script>
+</Base>
+
+<style>
+  .curated-detail :global(.ds-input) {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: white;
+    padding: 0.85rem 1rem;
+    color: var(--color-ink);
+  }
+
+  .curated-owner-mark {
+    display: inline-flex;
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: var(--color-accent);
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .curated-place-card {
+    gap: 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: white;
+    padding: 1rem;
+  }
+
+  .curated-place-card.is-muted {
+    opacity: 0.54;
+  }
+
+  .curated-place-card .ds-button {
+    min-height: 2.5rem;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.85rem;
+  }
+</style>
