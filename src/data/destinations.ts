@@ -1,5 +1,4 @@
-import regionImages from './regionImages.json';
-import { getGeneratedImage } from './generatedImages';
+import { requireGeneratedImage } from './generatedImages';
 
 export interface DestinationImage {
   src: string;
@@ -341,18 +340,13 @@ const destinationRecords: Omit<Destination, 'image'>[] = [
 ];
 
 export const destinations: Destination[] = destinationRecords.map((destination) => {
-  const generated = getGeneratedImage(`region:${destination.slug}`);
-  const image = generated
-    ? {
-        src: generated.src,
-        alt: generated.alt,
-        source: generated.source,
-        title: generated.title,
-      }
-    : regionImages[destination.slug as keyof typeof regionImages];
-  if (!image) {
-    throw new Error(`Missing region image for ${destination.slug}`);
-  }
+  const generated = requireGeneratedImage(`region:${destination.slug}`);
+  const image = {
+    src: generated.src,
+    alt: generated.alt,
+    source: generated.source,
+    title: generated.title,
+  };
   return { ...destination, image };
 });
 
