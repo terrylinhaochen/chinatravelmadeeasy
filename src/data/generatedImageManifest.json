@@ -2,7 +2,7 @@
   "generated_at": "2026-07-05T00:58:46.609Z",
   "generator": "local-watercolor-fallback",
   "model": null,
-  "note": "Fallback SVGs are generated locally because GEMINI_API_KEY was not available. Re-run npm run images:generate with GEMINI_API_KEY to create Nano Banana assets.",
+  "note": "Fallback SVGs were generated locally by explicit --fallback mode. Re-run npm run images:generate with Gemini credentials to create Nano Banana assets.",
   "assets": {
     "home:hero": {
       "src": "/images/generated/home-hero.svg",

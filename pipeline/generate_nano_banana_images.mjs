@@ -5,8 +5,9 @@ import crypto from 'node:crypto';
 
 const root = process.cwd();
 const model = process.env.NANO_BANANA_MODEL || 'gemini-3.1-flash-image';
-const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || '';
+const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.GOOGLE_GENAI_API_KEY || '';
 const forceFallback = process.argv.includes('--fallback');
+const dryRun = process.argv.includes('--dry-run');
 const outDir = path.join(root, 'public/images/generated');
 const manifestPath = path.join(root, 'src/data/generatedImageManifest.json');
 const regionImagesPath = path.join(root, 'src/data/regionImages.json');
@@ -171,15 +172,36 @@ async function generateWithNanoBanana(asset) {
 }
 
 async function main() {
-  await fs.mkdir(outDir, { recursive: true });
   const assets = await loadAssets();
-  const useFallback = forceFallback || !apiKey;
+  const useFallback = forceFallback;
+
+  if (dryRun) {
+    console.log(JSON.stringify({
+      generator: useFallback ? 'local-watercolor-fallback' : 'nano-banana',
+      model: useFallback ? null : model,
+      assets: assets.length,
+      firstAsset: {
+        id: assets[0]?.id,
+        aspect: assets[0]?.aspect,
+        prompt: assets[0]?.prompt,
+      },
+    }, null, 2));
+    return;
+  }
+
+  if (!useFallback && !apiKey) {
+    throw new Error(
+      'GEMINI_API_KEY, GOOGLE_API_KEY, or GOOGLE_GENAI_API_KEY is required for Nano Banana generation. Use npm run images:fallback only when you intentionally want local preview placeholders.'
+    );
+  }
+
+  await fs.mkdir(outDir, { recursive: true });
   const manifest = {
     generated_at: new Date().toISOString(),
     generator: useFallback ? 'local-watercolor-fallback' : 'nano-banana',
     model: useFallback ? null : model,
     note: useFallback
-      ? 'Fallback SVGs are generated locally because GEMINI_API_KEY was not available. Re-run npm run images:generate with GEMINI_API_KEY to create Nano Banana assets.'
+      ? 'Fallback SVGs were generated locally by explicit --fallback mode. Re-run npm run images:generate with Gemini credentials to create Nano Banana assets.'
       : 'Generated with Nano Banana via the Gemini Interactions API.',
     assets: {},
   };

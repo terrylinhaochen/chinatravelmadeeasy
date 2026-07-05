@@ -6,7 +6,7 @@ description: A travel editorial system adapted from ElevenLabs' quietly cinemati
 project_overrides:
   active_reference: "Use this file as the active UI reference instead of the older Airbnb-inspired system."
   imagery: "Use generated Sasi watercolor travel assets from public/images/generated, produced by pipeline/generate_nano_banana_images.mjs."
-  image_model: "Nano Banana via Gemini Interactions API when GEMINI_API_KEY is available; local watercolor fallback only for development without credentials."
+  image_model: "Nano Banana via Gemini Interactions API for npm run images:generate; local watercolor fallback only through explicit npm run images:fallback."
   navigation: "Guides contains the former Topics planning index. Questions is renamed to Answers in navigation and primary routes."
   color_rule: "No saturated red CTA system. Primary actions use warm near-black ink pills; color moments come from watercolor imagery."
 

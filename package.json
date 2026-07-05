@@ -11,6 +11,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "images:generate": "node pipeline/generate_nano_banana_images.mjs",
+    "images:check": "node pipeline/generate_nano_banana_images.mjs --dry-run",
     "images:fallback": "node pipeline/generate_nano_banana_images.mjs --fallback",
     "seed:content": "python3 pipeline/content_seeds_from_crowdlisten.py",
     "import:handoff": "python3 pipeline/import_handoff_from_crowdlisten.py",
