@@ -5,6 +5,20 @@ import { destinations } from '../../data/destinations';
 
 const description =
   'Destination regions for China trip planning, with each region linked to useful starter places and practical guides.';
+const faqs = [
+  {
+    q: 'How should I choose a China region for a first trip?',
+    a: 'Start with your entry city, then match the region to the trip you want: Beijing for history, Shanghai for city life, Chengdu and Sichuan for food, Yunnan for scenery, and Hong Kong or Macau for an easier landing.',
+  },
+  {
+    q: 'Can I save places from each region to my map?',
+    a: 'Yes. Open a region to inspect starter places, then use Save Places to turn links, notes, or screenshot text into map-ready pins for Apple Maps or AMap.',
+  },
+  {
+    q: 'Which regions are best if I care about food and local neighborhoods?',
+    a: 'Chengdu, Sichuan, Shanghai, Xi’an, Guangdong, and Yunnan are strong starting points because they combine repeat food recommendations with walkable neighborhoods and practical transport options.',
+  },
+];
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -26,6 +40,19 @@ const jsonLd = [
       name: destination.name,
       description: destination.summary,
       url: `https://chinatravelmadeeasy.com/regions/${destination.slug}/`,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    name: 'China destination region questions',
+    mainEntity: faqs.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
     })),
   },
 ];
@@ -73,5 +100,18 @@ const jsonLd = [
         </a>
       ))}
     </div>
+
+    <section class="mt-12 border-t border-line pt-8">
+      <p class="ds-eyebrow">Region planning</p>
+      <h2 class="mt-2 text-3xl leading-tight">How should I choose where to go in China?</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        {faqs.map((item) => (
+          <article class="ds-card p-5">
+            <h3 class="text-xl leading-tight">{item.q}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-soft">{item.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
   </section>
 </Base>
