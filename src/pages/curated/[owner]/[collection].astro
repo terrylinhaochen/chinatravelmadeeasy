@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import CuratedCitySnapshot from '../../../components/CuratedCitySnapshot.astro';
 import CuratedCollectionMap from '../../../components/CuratedCollectionMap.astro';
 import {
   curatedCollections,
@@ -139,6 +140,9 @@ const jsonLd = [
       <div class="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
         {cityEditions.map((edition) => (
           <button type="button" class="curated-city-card curated-filter" data-curated-filter={edition.city}>
+            <span class="curated-city-snapshot" aria-hidden="true">
+              <CuratedCitySnapshot city={edition.city} places={edition.places} compact />
+            </span>
             <span class="ds-tag">{edition.meta.annotation}</span>
             <span class="mt-3 block text-3xl leading-tight">{edition.meta.label}</span>
             <span class="mt-3 block text-sm leading-relaxed text-soft">{edition.meta.focus}</span>
@@ -354,7 +358,7 @@ const jsonLd = [
 
   .curated-city-card {
     display: block;
-    min-height: 12.5rem;
+    min-height: 16rem;
     border: 1px solid var(--color-line);
     border-radius: 12px;
     background:
@@ -366,6 +370,16 @@ const jsonLd = [
       border-color 160ms ease,
       box-shadow 160ms ease,
       transform 160ms ease;
+  }
+
+  .curated-city-snapshot {
+    display: block;
+    height: 6.8rem;
+    margin-bottom: 0.9rem;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: var(--color-paper);
   }
 
   .curated-city-card:hover,
