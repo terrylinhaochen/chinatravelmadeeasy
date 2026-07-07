@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import CuratedCitySnapshot from '../components/CuratedCitySnapshot.astro';
 import CuratedCollectionMap from '../components/CuratedCollectionMap.astro';
 import {
   curatedCollections,
@@ -110,7 +109,7 @@ const jsonLd = [
             <a class="profile-cover" href={edition.href} aria-label={`Open ${edition.meta.edition}`}>
               <img class="profile-cover-image" src={edition.meta.cover.src} alt={edition.meta.cover.alt} loading="lazy" />
               <div class="profile-cover-map" aria-hidden="true">
-                <CuratedCitySnapshot city={edition.city} places={edition.places} compact />
+                <CuratedCollectionMap collection={edition.collection} places={edition.places} compact />
               </div>
               <div class="profile-cover-copy">
                 <span class="profile-owner-mark is-small" aria-hidden="true">{owner?.name.slice(0, 1) ?? 'P'}</span>
