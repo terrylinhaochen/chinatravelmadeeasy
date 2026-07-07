@@ -127,6 +127,7 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
           <a
             href="/profile/"
             class="ds-button ds-button-primary min-h-0 px-4 py-2"
+            data-profile-nav
             >Profile</a
           >
         </nav>
@@ -144,5 +145,94 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
         <p>&copy; {new Date().getFullYear()} chinatravelmadeeasy.com</p>
       </div>
     </footer>
+
+    <div id="ctmeSigninModal" class="ctme-modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="ctmeSigninTitle">
+      <div class="ctme-modal-backdrop" data-ctme-signin-close></div>
+      <div class="ctme-modal-panel">
+        <button type="button" class="ctme-modal-close" data-ctme-signin-close aria-label="Close sign in">×</button>
+        <p class="ds-eyebrow">Sign in</p>
+        <h2 id="ctmeSigninTitle" class="mt-2 text-3xl leading-tight">Save this to your profile.</h2>
+        <p id="ctmeSigninCopy" class="mt-2 text-sm leading-relaxed text-soft">Enter an email to keep uploaded lists and collected maps in this browser.</p>
+        <div class="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
+          <input id="ctmeSigninEmail" type="email" class="ds-input text-sm" placeholder="you@example.com" />
+          <button id="ctmeSigninSubmit" type="button" class="ds-button ds-button-dark">Continue</button>
+        </div>
+        <p id="ctmeSigninError" class="mt-3 hidden text-sm text-error">Enter a valid email.</p>
+      </div>
+    </div>
+
+    <script>
+      import { CTME_STATE_EVENT, getUser, isValidEmail, setUser } from '../utils/localPrototypeState.js';
+      import { isSupabaseConfigured, sendSupabaseEmailLink } from '../utils/supabaseAuth.js';
+
+      const modal = document.querySelector('#ctmeSigninModal');
+      const modalEmail = document.querySelector('#ctmeSigninEmail');
+      const modalCopy = document.querySelector('#ctmeSigninCopy');
+      const modalError = document.querySelector('#ctmeSigninError');
+      const modalSubmit = document.querySelector('#ctmeSigninSubmit');
+      const profileNav = document.querySelector('[data-profile-nav]');
+      let signinResolver = null;
+
+      renderSignedInState();
+
+      window.addEventListener(CTME_STATE_EVENT, renderSignedInState);
+      document.querySelectorAll('[data-ctme-signin-close]').forEach((button) => {
+        button.addEventListener('click', () => resolveSignin(null));
+      });
+      modalSubmit.addEventListener('click', submitSignin);
+      modalEmail.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') submitSignin();
+      });
+
+      window.ctmeRequireUser = function requireUser(actionCopy = 'save this to your profile') {
+        const existing = getUser();
+        if (existing) return Promise.resolve(existing);
+        modalCopy.textContent = 'Enter an email to ' + actionCopy + '. This prototype stores it in this browser.';
+        modalError.classList.add('hidden');
+        modal.classList.remove('is-hidden');
+        modalEmail.focus();
+        return new Promise((resolve) => {
+          signinResolver = resolve;
+        });
+      };
+
+      async function submitSignin() {
+        const email = modalEmail.value.trim();
+        if (!isValidEmail(email)) {
+          modalError.classList.remove('hidden');
+          return;
+        }
+        modalSubmit.disabled = true;
+        modalSubmit.textContent = 'Sending...';
+        if (isSupabaseConfigured()) {
+          const result = await sendSupabaseEmailLink(email, window.location.pathname || '/profile/');
+          modalSubmit.disabled = false;
+          modalSubmit.textContent = 'Continue';
+          if (result.error) {
+            modalError.textContent = result.error.message || 'Could not send the email link.';
+            modalError.classList.remove('hidden');
+            return;
+          }
+          modalCopy.textContent = 'Check your email. The link will return here and finish sign-in before opening your profile.';
+          modalError.classList.add('hidden');
+          return;
+        }
+        modalSubmit.disabled = false;
+        modalSubmit.textContent = 'Continue';
+        resolveSignin(setUser(email));
+      }
+
+      function resolveSignin(user) {
+        modal.classList.add('is-hidden');
+        if (signinResolver) signinResolver(user);
+        signinResolver = null;
+      }
+
+      function renderSignedInState() {
+        const user = getUser();
+        if (!profileNav) return;
+        profileNav.textContent = user ? 'Profile · ' + user.email.split('@')[0] : 'Profile';
+      }
+    </script>
   </body>
 </html>

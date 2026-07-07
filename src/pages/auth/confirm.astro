@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const description = 'Confirm a Supabase email sign-in link and return to the travel profile.';
+---
+
+<Base title="Confirm sign in" description={description} robots="noindex, nofollow">
+  <section class="ds-section">
+    <div class="ds-card max-w-2xl p-5 sm:p-6">
+      <p class="ds-eyebrow">Sign in</p>
+      <h1 class="mt-2 text-4xl leading-tight">Checking your email link.</h1>
+      <p class="mt-3 text-sm leading-relaxed text-soft" data-auth-status>
+        Hold on while we finish signing you in.
+      </p>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <a href="/profile/" class="ds-button ds-button-secondary">Open Profile</a>
+        <a href="/" class="ds-button ds-button-secondary">Go home</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { completeSupabaseEmailLink } from '../../utils/supabaseAuth.js';
+
+    const status = document.querySelector('[data-auth-status]');
+
+    completeSupabaseEmailLink().then((result) => {
+      if (result.ok) {
+        status.textContent = 'Signed in. Redirecting to your profile.';
+        window.location.replace(result.next || '/profile/');
+        return;
+      }
+
+      status.textContent = result.configured
+        ? result.error
+        : 'Supabase is not configured for this local build, so the email link cannot be exchanged here.';
+    }).catch((error) => {
+      status.textContent = error?.message || 'Could not confirm this email link.';
+    });
+  </script>
+</Base>

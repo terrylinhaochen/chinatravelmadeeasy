@@ -170,6 +170,8 @@ const jsonLd = [
   <script type="application/json" id="curatedCollectionPayload" set:html={JSON.stringify(collectionPayload)} />
 
   <script>
+    import { collectCuratedCollection, getCollectedCollections } from '../../../utils/localPrototypeState.js';
+
     const payload = JSON.parse(document.querySelector('#curatedCollectionPayload').textContent);
     const storageKey = 'ctme-curated-remix:' + payload.id;
     const list = document.querySelector('[data-curated-list]');
@@ -182,7 +184,6 @@ const jsonLd = [
     const countLabel = document.querySelector('[data-curated-count-label]');
     const listTitle = document.querySelector('[data-curated-list-title]');
     const regionLabels = Object.fromEntries(Object.entries(payload.regionMeta).map(([key, value]) => [key, value.label]));
-    const collectedKey = 'ctme-collected-curated';
     const visibleStep = 12;
     const requestedCity = new URLSearchParams(location.search).get('city');
     const validCities = new Set(payload.places.map((place) => place.regionBucket));
@@ -191,6 +192,9 @@ const jsonLd = [
     let keptIds = loadKeptIds();
     let places = payload.places;
 
+    if (getCollectedCollections().some((entry) => entry.id === payload.id)) {
+      markCollected();
+    }
     render();
 
     search.addEventListener('input', render);
@@ -198,21 +202,23 @@ const jsonLd = [
       visibleLimit += visibleStep;
       render();
     });
-    collectList.addEventListener('click', () => {
-      const collected = getCollected();
+    collectList.addEventListener('click', async () => {
+      const user = window.ctmeRequireUser
+        ? await window.ctmeRequireUser('collect this map to your profile')
+        : null;
+      if (!user) return;
       const item = {
         id: payload.id,
         title: payload.title,
         owner: payload.owner,
         href: location.pathname,
         placeCount: payload.places.length,
+        source: 'Curated',
         savedAt: new Date().toISOString(),
       };
-      localStorage.setItem(collectedKey, JSON.stringify([item, ...collected.filter((entry) => entry.id !== item.id)].slice(0, 24)));
-      collectList.textContent = 'Collected';
-      collectList.classList.remove('ds-button-dark');
-      collectList.classList.add('ds-button-secondary');
-      showStatus('Collected. This list is saved on this device.');
+      collectCuratedCollection(item);
+      markCollected();
+      showStatus('Collected to Profile.');
     });
     filters.forEach((button) => {
       button.addEventListener('click', () => {
@@ -234,12 +240,10 @@ const jsonLd = [
       localStorage.setItem(storageKey, JSON.stringify(Array.from(keptIds)));
     }
 
-    function getCollected() {
-      try {
-        return JSON.parse(localStorage.getItem(collectedKey) || '[]');
-      } catch {
-        return [];
-      }
+    function markCollected() {
+      collectList.textContent = 'Collected';
+      collectList.classList.remove('ds-button-dark');
+      collectList.classList.add('ds-button-secondary');
     }
 
     function render() {

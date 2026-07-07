@@ -128,7 +128,10 @@ const jsonLd = [
           <h2 class="mt-1 text-2xl font-bold">My saved pin lists</h2>
           <p class="mt-1 text-sm text-soft">Places ready to open, save, or remix in a map app.</p>
         </div>
-        <p id="userBadge" class="text-sm text-faint"></p>
+        <div class="flex flex-wrap items-center gap-3">
+          <p id="userBadge" class="text-sm text-faint"></p>
+          <a href="/profile/" class="ds-button ds-button-secondary min-h-0 px-3 py-2">View Profile</a>
+        </div>
       </div>
       <div id="savedList" class="mt-4 grid gap-2 text-sm text-soft"></div>
     </div>
@@ -157,6 +160,7 @@ const jsonLd = [
 
   <script>
     import { amapUrl, appleMapsUrl, displayName, extractTripPlaces, normalizeSource, sourceFromShareOrLink } from '../utils/placeExtraction.js';
+    import { getSavedPinLists, getUser, savePinList, setUser } from '../utils/localPrototypeState.js';
 
     const linkInput = document.querySelector('#linkInput');
     const extractBtn = document.querySelector('#extractBtn');
@@ -175,8 +179,6 @@ const jsonLd = [
     const savedSection = document.querySelector('#savedSection');
     const savedList = document.querySelector('#savedList');
     const userBadge = document.querySelector('#userBadge');
-    const userKey = 'ctme-map-user';
-    const savedKey = 'ctme-map-saved-places';
     const sampleSources = {
       'tiktok-shanghai': {
         collectionName: 'TikTok Shanghai food crawl',
@@ -214,7 +216,7 @@ const jsonLd = [
         alert('Enter an email to save places.');
         return;
       }
-      localStorage.setItem(userKey, JSON.stringify({ email, createdAt: new Date().toISOString() }));
+      setUser(email);
       loginSection.classList.add('hidden');
       renderSaved();
       if (pendingSave) saveCollection(pendingSave.places, pendingSave.openMap);
@@ -282,10 +284,10 @@ const jsonLd = [
         emailInput.focus();
         return;
       }
-      const current = getSaved();
       const sourceUrl = selectedSource?.url || cleanPlaces[0]?.sourceUrl || '';
+      const fingerprint = slugify(sourceUrl || selectedCollectionName || cleanPlaces.map((place) => displayName(place)).join('-'));
       const collection = {
-        id: Date.now(),
+        id: 'upload:' + fingerprint,
         name: cleanPlaces.length === 1 ? displayName(cleanPlaces[0]) : selectedCollectionName,
         platform: selectedSource?.platform || cleanPlaces[0]?.sourcePlatform || 'Source',
         sourceUrl,
@@ -293,7 +295,7 @@ const jsonLd = [
         savedBy: user.email,
         places: cleanPlaces,
       };
-      localStorage.setItem(savedKey, JSON.stringify([collection, ...current].slice(0, 24)));
+      savePinList(collection);
       renderSaved();
       showStage('saved');
       if (openMap && cleanPlaces.length === 1) window.open(appleMapsUrl(cleanPlaces[0]), '_blank', 'noopener');
@@ -303,7 +305,7 @@ const jsonLd = [
     function renderSaved() {
       const user = getUser();
       userBadge.textContent = user ? user.email : 'Not signed in';
-      const saved = getSaved();
+      const saved = getSavedPinLists();
       if (!saved.length) {
         savedList.innerHTML = '<div class="ds-card border-dashed p-4">Saved collections will appear here after sign-in.</div>';
         return;
@@ -316,6 +318,7 @@ const jsonLd = [
           '<h3 class="text-xl font-bold text-ink">' + escapeHtml(collection.name || displayName(places[0])) + '</h3></div>' +
           '<span class="text-xs text-faint">' + places.length + ' place' + (places.length === 1 ? '' : 's') + '</span></div>' +
           '<div class="mt-3 flex flex-wrap gap-2">' + places.map((place) => '<a target="_blank" rel="noopener" href="' + appleMapsUrl(place) + '" class="ds-chip hover:border-accent/50 hover:text-accent">' + escapeHtml(displayName(place)) + '</a>').join('') + '</div>' +
+          '<a href="/profile/" class="mt-4 inline-flex text-sm font-semibold text-ink hover:text-accent">See it on Profile</a>' +
         '</article>';
       }).join('');
     }
@@ -331,9 +334,14 @@ const jsonLd = [
       statusText.classList.remove('hidden');
       statusText.classList.toggle('border-accent', Boolean(isError));
     }
-    function getUser() { try { return JSON.parse(localStorage.getItem(userKey) || 'null'); } catch { return null; } }
-    function getSaved() { try { return JSON.parse(localStorage.getItem(savedKey) || '[]'); } catch { return []; } }
     function keyFor(place) { return String(place.name || '').toLowerCase() + '|' + String(place.city || '').toLowerCase(); }
+    function slugify(value) {
+      return String(value || 'list')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+        .slice(0, 96) || 'list';
+    }
     function escapeHtml(value) { return String(value || '').replace(/[&<>"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[char])); }
   </script>
 </Base>

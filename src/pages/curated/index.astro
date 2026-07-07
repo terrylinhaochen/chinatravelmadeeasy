@@ -164,14 +164,21 @@ const jsonLd = [
 </Base>
 
 <script>
+  import { collectCuratedCollection, getCollectedCollections } from '../../utils/localPrototypeState.js';
+
   const collectButtons = document.querySelectorAll('[data-curated-collect]');
   const guideButtons = document.querySelectorAll('[data-curated-guide-filter]');
   const curatedCards = document.querySelectorAll('[data-curated-card]');
-  const collectedKey = 'ctme-collected-curated';
 
   collectButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const collected = getCollected();
+    const existing = getCollectedCollections().find((entry) => entry.id === button.dataset.curatedCollect);
+    if (existing) markCollected(button);
+
+    button.addEventListener('click', async () => {
+      const user = window.ctmeRequireUser
+        ? await window.ctmeRequireUser('collect this city map to your profile')
+        : null;
+      if (!user) return;
       const id = button.dataset.curatedCollect;
       const item = {
         id,
@@ -179,15 +186,14 @@ const jsonLd = [
         owner: button.dataset.curatedOwner,
         href: button.dataset.curatedHref,
         placeCount: Number(button.dataset.curatedCount || 0),
+        source: 'Curated',
         savedAt: new Date().toISOString(),
       };
-      localStorage.setItem(collectedKey, JSON.stringify([item, ...collected.filter((entry) => entry.id !== id)].slice(0, 24)));
-      button.textContent = 'Collected';
-      button.classList.remove('ds-button-dark');
-      button.classList.add('ds-button-secondary');
+      collectCuratedCollection(item);
+      markCollected(button);
       const status = document.querySelector(`[data-curated-collect-status="${id}"]`);
       if (status) {
-        status.textContent = 'Saved on this device.';
+        status.innerHTML = 'Saved to Profile. <a class="font-semibold text-ink hover:text-accent" href="/profile/">Open Profile</a>';
         status.classList.remove('hidden');
       }
     });
@@ -203,12 +209,10 @@ const jsonLd = [
     });
   });
 
-  function getCollected() {
-    try {
-      return JSON.parse(localStorage.getItem(collectedKey) || '[]');
-    } catch {
-      return [];
-    }
+  function markCollected(button) {
+    button.textContent = 'Collected';
+    button.classList.remove('ds-button-dark');
+    button.classList.add('ds-button-secondary');
   }
 </script>
 
