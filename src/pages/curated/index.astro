@@ -1,16 +1,41 @@
 ---
 import Base from '../../layouts/Base.astro';
 import CuratedCollectionMap from '../../components/CuratedCollectionMap.astro';
-import { curatedCollections } from '../../data/curatedCollections';
+import {
+  curatedCollections,
+  curatedRegionMeta,
+  type CuratedCollectionRegionBucket,
+} from '../../data/curatedCollections';
 
 const description =
-  'Curated map collections from real people, ready to collect, scan, and remix into your own trip.';
+  'Curated map collections from real people, split by city so travelers can collect, scan, and remix useful pins.';
 
-function collectionHref(collection: (typeof curatedCollections)[number]) {
+function collectionHref(collection: (typeof curatedCollections)[number], city?: CuratedCollectionRegionBucket) {
   const owner = collection.owner.slug;
   const list = collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  return `/curated/${owner}/${list}/`;
+  return `/curated/${owner}/${list}/${city ? `?city=${city}` : ''}`;
 }
+
+const cityEditions = curatedCollections
+  .flatMap((collection) =>
+    Object.entries(collection.regionBuckets).map(([region, count]) => {
+      const city = region as CuratedCollectionRegionBucket;
+      const places = collection.places.filter((place) => place.regionBucket === city);
+      return {
+        id: `${collection.slug}:${city}`,
+        collection,
+        city,
+        count,
+        places,
+        meta: curatedRegionMeta[city],
+        guide: curatedRegionMeta[city].guide,
+        noteCount: places.filter((place) => place.note).length,
+        href: collectionHref(collection, city),
+      };
+    })
+  )
+  .sort((a, b) => (b.count ?? 0) - (a.count ?? 0));
+const guideFilters = ['All', ...Array.from(new Set(cityEditions.map((edition) => edition.guide)))];
 
 const jsonLd = [
   {
@@ -24,14 +49,14 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Curated map collections',
-    numberOfItems: curatedCollections.length,
-    itemListElement: curatedCollections.map((collection, index) => ({
+    name: 'Curated city map editions',
+    numberOfItems: cityEditions.length,
+    itemListElement: cityEditions.map((edition, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      name: `${collection.title} by ${collection.owner.name}`,
-      description: `${collection.placeCount} imported pins ready to collect and remix`,
-      url: `https://chinatravelmadeeasy.com${collectionHref(collection)}`,
+      name: `${edition.meta.edition} by ${edition.collection.owner.name}`,
+      description: `${edition.count} imported pins ready to collect and remix`,
+      url: `https://chinatravelmadeeasy.com${edition.href}`,
     })),
   },
 ];
@@ -42,72 +67,106 @@ const jsonLd = [
     <p class="ds-eyebrow">Curated</p>
     <div class="ds-section-head mt-3">
       <div>
-        <h1 class="ds-section-title">Maps worth remixing</h1>
+        <h1 class="ds-section-title">City maps worth remixing</h1>
       </div>
       <p class="text-lg leading-relaxed text-soft">
-        Collect real map lists. Keep the pins that fit your trip.
+        Ingest a real map, cluster the pins, add travel context, and collect the useful set.
       </p>
     </div>
 
-    <div class="mt-8 grid gap-5">
-      {curatedCollections.map((collection) => (
-        <article
-          class="curated-card ds-card grid gap-5 p-4 sm:p-5 lg:grid-cols-[0.64fr_1.36fr] lg:items-start"
-          data-curated-card={collection.slug}
+    <div class="mt-8 flex flex-wrap items-center gap-2" aria-label="Guide selector">
+      {guideFilters.map((guide, index) => (
+        <button
+          type="button"
+          class:list={['ds-chip curated-guide-filter', index === 0 && '!border-accent']}
+          data-curated-guide-filter={guide}
         >
-          <div class="min-w-0">
-            <div class="flex items-center gap-3">
-              <span class="curated-owner-mark" aria-hidden="true">{collection.owner.name.slice(0, 1)}</span>
-              <div class="min-w-0">
-                <h2 class="mt-1 text-3xl leading-tight">{collection.title}</h2>
-                <p class="mt-1 text-sm text-soft">{collection.owner.name}</p>
+          {guide}
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-5 grid gap-5">
+      {cityEditions.map((edition) => (
+        <article
+          class="curated-card ds-card grid gap-5 p-4 sm:p-5 xl:grid-cols-[0.72fr_1.28fr] xl:items-stretch"
+          data-curated-card={edition.id}
+          data-curated-guide={edition.guide}
+        >
+          <a class="curated-cover" href={edition.href} aria-label={`Open ${edition.meta.edition} by ${edition.collection.owner.name}`}>
+            <img class="curated-cover-image" src={edition.meta.cover.src} alt={edition.meta.cover.alt} loading="lazy" />
+            <div class="curated-cover-map" aria-hidden="true">
+              <CuratedCollectionMap collection={edition.collection} places={edition.places} compact />
+            </div>
+            <div class="curated-cover-copy">
+              <span class="curated-owner-mark" aria-hidden="true">{edition.collection.owner.name.slice(0, 1)}</span>
+              <div>
+                <p class="ds-tag">{edition.meta.annotation}</p>
+                <h2 class="mt-2 text-4xl leading-none">{edition.meta.label}</h2>
+                <p class="mt-2 text-sm text-soft">{edition.collection.title} · {edition.collection.owner.name}</p>
               </div>
             </div>
+          </a>
+
+          <div class="min-w-0">
+            <p class="ds-eyebrow">{edition.collection.owner.name}</p>
+            <div class="mt-2 flex flex-wrap items-start justify-between gap-3">
+              <h3 class="text-3xl leading-tight">{edition.meta.edition}</h3>
+              <span class="ds-tag">{edition.guide}</span>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-soft">{edition.meta.focus}</p>
 
             <div class="mt-5 grid grid-cols-3 gap-2">
               <div class="curated-stat">
                 <p class="ds-tag">Pins</p>
-                <p class="mt-2 text-2xl leading-none">{collection.placeCount}</p>
+                <p class="mt-2 text-2xl leading-none">{edition.count}</p>
               </div>
               <div class="curated-stat">
-                <p class="ds-tag">Regions</p>
-                <p class="mt-2 text-2xl leading-none">{Object.keys(collection.regionBuckets).length}</p>
+                <p class="ds-tag">City</p>
+                <p class="mt-2 text-lg leading-none">{edition.meta.label}</p>
               </div>
               <div class="curated-stat">
                 <p class="ds-tag">Notes</p>
-                <p class="mt-2 text-2xl leading-none">{collection.places.filter((place) => place.note).length}</p>
+                <p class="mt-2 text-2xl leading-none">{edition.noteCount}</p>
               </div>
+            </div>
+
+            <div class="mt-5 rounded-md border border-line bg-paper p-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <p class="ds-tag">Why collect</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.12em] text-faint">Pipeline output</p>
+              </div>
+              <a class="curated-preview-copy mt-3" href={edition.href}>
+                {edition.meta.hook}
+              </a>
             </div>
 
             <div class="mt-5 flex flex-wrap gap-2">
               <button
                 type="button"
                 class="ds-button ds-button-dark"
-                data-curated-collect={collection.slug}
-                data-curated-title={collection.title}
-                data-curated-owner={collection.owner.name}
-                data-curated-href={collectionHref(collection)}
-                data-curated-count={collection.placeCount}
+                data-curated-collect={edition.id}
+                data-curated-title={`${edition.meta.edition}: ${edition.collection.title}`}
+                data-curated-owner={edition.collection.owner.name}
+                data-curated-href={edition.href}
+                data-curated-count={edition.count}
               >
                 Collect
               </button>
-              <a href={collectionHref(collection)} class="ds-button ds-button-secondary">Open collection</a>
+              <a href={edition.href} class="ds-button ds-button-secondary">Open city</a>
             </div>
-            <p class="mt-3 hidden text-sm leading-relaxed text-soft" data-curated-collect-status={collection.slug}></p>
+            <p class="mt-3 hidden text-sm leading-relaxed text-soft" data-curated-collect-status={edition.id}></p>
           </div>
-
-          <a href={collectionHref(collection)} aria-label={`Open ${collection.title} by ${collection.owner.name}`}>
-            <CuratedCollectionMap collection={collection} compact />
-          </a>
         </article>
       ))}
     </div>
-
   </section>
 </Base>
 
 <script>
   const collectButtons = document.querySelectorAll('[data-curated-collect]');
+  const guideButtons = document.querySelectorAll('[data-curated-guide-filter]');
+  const curatedCards = document.querySelectorAll('[data-curated-card]');
   const collectedKey = 'ctme-collected-curated';
 
   collectButtons.forEach((button) => {
@@ -128,9 +187,19 @@ const jsonLd = [
       button.classList.add('ds-button-secondary');
       const status = document.querySelector(`[data-curated-collect-status="${id}"]`);
       if (status) {
-        status.textContent = 'Saved to your collected maps on this device.';
+        status.textContent = 'Saved on this device.';
         status.classList.remove('hidden');
       }
+    });
+  });
+
+  guideButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const guide = button.dataset.curatedGuideFilter;
+      guideButtons.forEach((item) => item.classList.toggle('!border-accent', item === button));
+      curatedCards.forEach((card) => {
+        card.hidden = guide !== 'All' && card.dataset.curatedGuide !== guide;
+      });
     });
   });
 
@@ -159,6 +228,62 @@ const jsonLd = [
       rgba(0, 0, 0, 0.1) 0 4px 8px;
   }
 
+  .curated-cover {
+    position: relative;
+    display: grid;
+    min-height: 22rem;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 14px;
+    background:
+      linear-gradient(160deg, rgb(250 250 249 / 0.92), rgb(245 245 244 / 0.8)),
+      var(--color-paper);
+    color: inherit;
+  }
+
+  .curated-cover-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.92) contrast(0.96);
+  }
+
+  .curated-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.16), transparent 32%),
+      linear-gradient(0deg, rgb(255 255 255 / 0.94), rgb(255 255 255 / 0.62) 46%, transparent 72%);
+    pointer-events: none;
+  }
+
+  .curated-cover-map {
+    position: absolute;
+    inset: 0.9rem 0.9rem 6rem;
+    opacity: 0.62;
+    mix-blend-mode: multiply;
+  }
+
+  .curated-cover-map :global(.curated-map) {
+    height: 100%;
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+
+  .curated-cover-copy {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 100%;
+    align-items: end;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
   .curated-owner-mark {
     display: inline-flex;
     width: 3rem;
@@ -182,7 +307,23 @@ const jsonLd = [
     padding: 0.85rem;
   }
 
+  .curated-preview-copy {
+    display: block;
+    color: var(--color-ink);
+    font-size: 1rem;
+    font-weight: 650;
+    line-height: 1.45;
+  }
+
+  .curated-summary {
+    background: rgb(255 255 255 / 0.72);
+  }
+
   @media (max-width: 640px) {
+    .curated-cover {
+      min-height: 18rem;
+    }
+
     .curated-stat {
       padding: 0.75rem;
     }

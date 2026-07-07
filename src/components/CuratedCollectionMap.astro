@@ -5,14 +5,15 @@ import { isWorldPixelLand, projectLonLatToWorldCell, worldPixelAtlas, worldPixel
 interface Props {
   collection: CuratedCollection;
   compact?: boolean;
+  places?: CuratedCollection['places'];
 }
 
-const { collection, compact = false } = Astro.props;
+const { collection, compact = false, places = collection.places } = Astro.props;
 const mapColumns = worldPixelAtlas.columns;
 const mapRows = worldPixelAtlas.rows;
 const cellCounts = new Map<string, { count: number; names: string[]; column: number; row: number }>();
 
-for (const place of collection.places) {
+for (const place of places) {
   const projected = projectLonLatToWorldCell(place.longitude, place.latitude);
   const key = worldPixelKey(projected.column, projected.row);
   const existing = cellCounts.get(key);

@@ -1,5 +1,88 @@
 export type CuratedCollectionRegionBucket = 'nyc' | 'milan' | 'rome' | 'switzerland' | 'unknown';
 
+export const curatedRegionMeta = {
+  nyc: {
+    label: 'NYC',
+    city: 'New York City',
+    edition: 'NYC food map',
+    focus: 'Downtown dinners, Korean comfort, omakase, and West Village stops.',
+    hook: 'Use this when you want a dense downtown food crawl without starting from generic best-of lists.',
+    annotation: 'Dense restaurant crawl',
+    guide: 'Urban',
+    cover: {
+      src: '/images/curated/city-nyc-restaurant-row.jpg',
+      alt: 'Restaurant Row street scene in New York City',
+    },
+  },
+  milan: {
+    label: 'Milan',
+    city: 'Milan',
+    edition: 'Milan short list',
+    focus: 'A compact set of restaurants for a northern Italy stop.',
+    hook: 'A small Milan set for choosing one or two meals near the core route.',
+    annotation: 'Few pins, high intent',
+    guide: 'Urban',
+    cover: {
+      src: '/images/curated/city-milan-brera.jpg',
+      alt: 'Bar Brera street scene in Milan',
+    },
+  },
+  rome: {
+    label: 'Rome',
+    city: 'Rome',
+    edition: 'Rome short list',
+    focus: 'Saved meals to compare before building a walking route.',
+    hook: 'A dinner-first Rome set for pairing food stops with a historic walk.',
+    annotation: 'Starter dinner map',
+    guide: 'Historic',
+    cover: {
+      src: '/images/curated/city-rome-trastevere.jpg',
+      alt: 'Restaurant exterior in Trastevere, Rome',
+    },
+  },
+  switzerland: {
+    label: 'Switzerland',
+    city: 'Switzerland',
+    edition: 'Swiss stops',
+    focus: 'Small cross-city restaurant notes for a wider route.',
+    hook: 'Useful when the trip is spread across scenic stops and you need food pins between moves.',
+    annotation: 'Route-side saves',
+    guide: 'Scenic',
+    cover: {
+      src: '/images/curated/city-switzerland-muerren.jpg',
+      alt: 'Murren mountain village in the Bernese Oberland, Switzerland',
+    },
+  },
+  unknown: {
+    label: 'Other',
+    city: 'Other',
+    edition: 'Other saves',
+    focus: 'Places that need a cleaner city label before remixing.',
+    hook: 'Review these pins before turning them into a travel-ready set.',
+    annotation: 'Needs review',
+    guide: 'Mixed',
+    cover: {
+      src: '/images/curated/home-local-treasures.jpg',
+      alt: 'Scenic travel cover for uncategorized saved places',
+    },
+  },
+} satisfies Record<
+  CuratedCollectionRegionBucket,
+  {
+    label: string;
+    city: string;
+    edition: string;
+    focus: string;
+    hook: string;
+    annotation: string;
+    guide: string;
+    cover: {
+      src: string;
+      alt: string;
+    };
+  }
+>;
+
 export interface CuratedCollectionOwner {
   name: string;
   slug: string;
