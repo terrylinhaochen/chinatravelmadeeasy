@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-13T17:16:11.782Z",
+  "prepared_at": "2026-07-13T17:30:54.721Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -315,6 +315,12 @@
       "alt": "Boats, pavilions, and city life at Green Lake Park in Kunming",
       "source": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Boats_at_Green_Lake_Park.jpg",
       "title": "Green Lake Park, Kunming"
+    },
+    "region:dali": {
+      "src": "/images/curated/region-dali.jpg",
+      "alt": "Cangshan mountain rising above Dali in Yunnan",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Dali%2C_Cangshan.jpg",
+      "title": "Dali and Cangshan"
     },
     "region:zhejiang": {
       "src": "/images/curated/region-zhejiang.jpg",

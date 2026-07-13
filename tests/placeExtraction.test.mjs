@@ -220,6 +220,24 @@ test('Kunming city handoff keeps history branches, flower trade, seasonal ecolog
   assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
 });
 
+test('Dali city handoff keeps arrival, heritage, corridor, and cableway identities separate', () => {
+  const result = extractTripPlaces({
+    title: 'Dali field-guide places',
+    text: '1. Dali Ancient City South Gate Visitor Center / 大理古城南门游客中心 — Dali — Preserve the Xiaguan-to-old-city arrival handoff.\n2. Dali City Museum / 大理市博物馆 — Dali — Keep the municipal museum distinct from the prefecture museum.\n3. Chongsheng Temple Three Pagodas Cultural Tourism Area entrance / 崇圣寺三塔文化旅游区入口 — Dali — Attach the ticket and original-versus-reconstructed context to the entrance.\n4. Yan Family Courtyard Museum / 喜洲严家大院博物馆 — Dali — Ground Xizhou merchant architecture at the exact courtyard.\n5. Longkan entrance to the Erhai Ecological Corridor / 洱海生态廊道龙龛入口 — Dali — Use a named slow-mobility route start rather than generic Erhai.\n6. Cangshan Grand Cableway lower station / 苍山大索道下站（天龙八部影视城） — Dali — Do not substitute Gantong or Zhonghe cableways.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '大理古城南门游客中心',
+    '大理市博物馆',
+    '崇圣寺三塔文化旅游区入口',
+    '喜洲严家大院博物馆',
+    '洱海生态廊道龙龛入口',
+    '苍山大索道下站（天龙八部影视城）',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Dali'));
+  assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',

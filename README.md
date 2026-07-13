@@ -72,7 +72,7 @@ compresses real source photos; it does not use AI image generation or style tran
 
 ```sh
 npm run images:verify   # checks manifest coverage, source attribution, and files
-npm run images:check    # dry-runs the 60 curated photo assets
+npm run images:check    # dry-runs the 61 curated photo assets
 npm run images:generate # prepares optimized site crops from authentic photos
 ```
 

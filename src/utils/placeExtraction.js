@@ -44,6 +44,12 @@ const knownPlaces = [
   { name: 'Kunming Dounan Flower Market main hall', localName: '昆明斗南花卉市场（主场馆）', city: 'Kunming', category: 'See', aliases: ['kunming dounan flower market main hall', 'dounan flower market main hall', 'dounan flower market', '昆明斗南花卉市场（主场馆）', '斗南花卉市场'] },
   { name: 'Haigeng Dam viewing section', localName: '海埂大坝（观景路观鸥段）', city: 'Kunming', category: 'See', aliases: ['haigeng dam viewing section', 'haigeng dam', '海埂大坝（观景路观鸥段）', '海埂大坝'] },
   { name: 'Stone Forest Scenic Area visitor center', localName: '石林风景区游客中心', city: 'Kunming', category: 'See', aliases: ['stone forest scenic area visitor center', 'stone forest visitor center', '石林风景区游客中心'] },
+  { name: 'Dali Ancient City South Gate Visitor Center', localName: '大理古城南门游客中心', city: 'Dali', category: 'See', aliases: ['dali ancient city south gate visitor center', 'dali old town south gate visitor center', '大理古城南门游客中心'] },
+  { name: 'Dali City Museum', localName: '大理市博物馆', city: 'Dali', category: 'See', aliases: ['dali city museum', 'dali municipal museum', '大理市博物馆'] },
+  { name: 'Chongsheng Temple Three Pagodas Cultural Tourism Area entrance', localName: '崇圣寺三塔文化旅游区入口', city: 'Dali', category: 'See', aliases: ['chongsheng temple three pagodas cultural tourism area entrance', 'three pagodas entrance', '崇圣寺三塔文化旅游区入口', '崇圣寺三塔'] },
+  { name: 'Yan Family Courtyard Museum', localName: '喜洲严家大院博物馆', city: 'Dali', category: 'See', aliases: ['yan family courtyard museum', 'xizhou yan family courtyard', '喜洲严家大院博物馆', '严家大院'] },
+  { name: 'Longkan entrance to the Erhai Ecological Corridor', localName: '洱海生态廊道龙龛入口', city: 'Dali', category: 'See', aliases: ['longkan entrance to the erhai ecological corridor', 'longkan corridor entrance', '洱海生态廊道龙龛入口', '龙龛入口'] },
+  { name: 'Cangshan Grand Cableway lower station', localName: '苍山大索道下站（天龙八部影视城）', city: 'Dali', category: 'See', aliases: ['cangshan grand cableway lower station', 'cangshan cableway lower station', '苍山大索道下站（天龙八部影视城）', '苍山大索道下站'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -212,13 +218,14 @@ function inferCity(text) {
   if (/深圳|Shenzhen|Lianhua Hill|Nantou|Sea World Culture|Dafen|Futian Checkpoint|莲花山|南头古城|海上世界文化|大芬美术馆|福田口岸/i.test(text)) return 'Shenzhen';
   if (/杭州|Hangzhou|Broken Bridge|Bai Causeway|Lingyin|Feilai Peak|Shuangfeng|Deshou Palace|Liangzhu|断桥残雪|白堤|灵隐飞来峰|双峰馆区|德寿宫|中国京杭大运河博物馆|良渚博物院/i.test(text)) return 'Hangzhou';
   if (/昆明|Kunming|Green Lake|Cuihu|Dounan|Haigeng|Stone Forest|翠湖公园|昆明市博物馆|云南省博物馆|斗南花卉市场|海埂大坝|石林风景区/i.test(text)) return 'Kunming';
+  if (/大理|\bDali\b|Cangshan|Erhai|Longkan|Xizhou|Yan Family Courtyard|Three Pagodas|苍山|洱海|龙龛|喜洲|严家大院|崇圣寺三塔/i.test(text)) return 'Dali';
   return '';
 }
 function inferCategory(text) {
   const subject = String(text || '')
     .replace(/^\s*\d{1,2}[.)、:]\s+/, '')
     .split(/\s+\/\s+|\s+[—–-]\s+/)[0];
-  if (/flower market|scenic area visitor cent(?:er|re)|花卉市场|景区游客中心/i.test(subject)) return 'See';
+  if (/flower market|scenic area visitor cent(?:er|re)|cableway lower station|花卉市场|景区游客中心|索道下站/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|noodle|bakery|market|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包|市场/i.test(subject)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
   if (/station|airport|metro|train|checkpoint|\bport\b|terminal|站|机场|口岸|码头|航站楼/i.test(subject)) return 'Move';

@@ -8,9 +8,11 @@ const outDir = path.join(root, 'public/images/curated');
 const manifestPath = path.join(root, 'src/data/generatedImageManifest.json');
 const regionImagesPath = path.join(root, 'src/data/regionImages.json');
 const dryRun = process.argv.includes('--dry-run');
+const onlyArg = process.argv.find((arg) => arg.startsWith('--only='));
+const onlyId = onlyArg?.slice('--only='.length) || '';
 
 const homeAssets = [
-  ['home:hero', 'home-hero', 'public/images/shanghai-skyline.jpg', 'Shanghai skyline on the Huangpu River', 'Shanghai skyline', '16:9'],
+  ['home:hero', 'home-hero', 'public/images/curated/home-local-treasures.jpg', 'Night street storefront with Chinese calligraphy signs and warm lantern light', 'Local China night street storefront', '16:9'],
   ['home:places', 'home-places', 'public/images/great-wall.jpg', 'Great Wall landscape in northern China', 'Great Wall', '3:2'],
   ['home:eating', 'home-eating', 'public/images/china-street-food.jpg', 'Street food stall in China', 'China street food', '3:2'],
   ['home:traveling', 'home-traveling', 'public/images/china-high-speed-train.jpg', 'High-speed train at a China rail platform', 'China high-speed rail', '3:2'],
@@ -19,6 +21,7 @@ const homeAssets = [
 
 const guideAssets = [
   ['guide:7-day-china-itinerary', 'great-wall-route', 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Forbidden_City_Beijing_China_(164849005).jpeg', 'Forbidden City palace roofs for a first China itinerary', 'Forbidden City Beijing China'],
+  ['guide:china-attraction-tickets-reservations', 'great-wall-route', 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Forbidden_City_Beijing_China_(164849005).jpeg', 'Palace Museum courtyards in Beijing for attraction ticket and entrance planning', 'Forbidden City Beijing China'],
   ['guide:alipay-wechat-pay-foreign-cards', 'mobile-payment', 'public/images/china-mobile-payment-qr.jpg', 'Mobile payment QR codes in China', 'Mobile payment QR codes'],
   ['guide:china-high-speed-trains', 'high-speed-train', 'https://commons.wikimedia.org/wiki/Special:Redirect/file/China-Railway-Ticket-Paper-Normal.jpg', 'China railway ticket detail for train booking planning', 'China Railway Ticket'],
   ['guide:china-pre-departure-checklist', 'predeparture-checklist', 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Beijing_Capital_Departure_Hall.jpg', 'Airport departure hall in China for pre-flight planning', 'Beijing Capital Departure Hall'],
@@ -37,6 +40,20 @@ const guideAssets = [
 const aspectSizes = {
   '16:9': { width: 1376, height: 768 },
   '3:2': { width: 1264, height: 848 },
+};
+
+const manifestAliases = {
+  'home:hero': '/images/curated/home-local-treasures.jpg',
+  'guide:china-attraction-tickets-reservations': '/images/curated/great-wall-route.jpg',
+  'region:guangzhou': '/images/curated/region-guangdong.jpg',
+  'region:shenzhen': '/images/curated/internet-esim.jpg',
+  'region:xian': '/images/curated/region-shaanxi.jpg',
+  'region:chengdu': '/images/curated/region-sichuan.jpg',
+  'region:hangzhou': '/images/curated/region-zhejiang.jpg',
+};
+
+const manifestSourceAliases = {
+  'home:hero': 'User-provided WeChat photo: WechatIMG4641.jpg',
 };
 
 function assetFromTuple([id, slug, source, alt, title, aspect = '16:9']) {
@@ -109,7 +126,10 @@ async function renderAsset(asset) {
 }
 
 async function main() {
-  const assets = await loadAssets();
+  const allAssets = await loadAssets();
+  const assets = onlyId ? allAssets.filter((asset) => asset.id === onlyId) : allAssets;
+
+  if (onlyId && assets.length === 0) throw new Error(`Unknown image asset id: ${onlyId}`);
 
   if (dryRun) {
     console.log(JSON.stringify({
@@ -125,21 +145,26 @@ async function main() {
   }
 
   await fs.mkdir(outDir, { recursive: true });
+  const existingManifest = onlyId
+    ? JSON.parse(await fs.readFile(manifestPath, 'utf8'))
+    : null;
   const manifest = {
     prepared_at: new Date().toISOString(),
     generator: 'curated-authentic-photo',
     model: null,
     note: 'Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.',
-    assets: {},
+    assets: existingManifest?.assets ?? {},
   };
 
   for (const asset of assets) {
-    if (asset.source.startsWith('http')) await wait(800);
-    const src = await renderAsset(asset);
+    const src = manifestAliases[asset.id] ?? await (async () => {
+      if (asset.source.startsWith('http')) await wait(800);
+      return renderAsset(asset);
+    })();
     manifest.assets[asset.id] = {
       src,
       alt: asset.alt,
-      source: publicSource(asset.source),
+      source: manifestSourceAliases[asset.id] ?? publicSource(asset.source),
       title: asset.title,
     };
     console.log(`${asset.id} -> ${src}`);

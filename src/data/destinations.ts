@@ -689,6 +689,70 @@ const destinationRecords: Omit<Destination, 'image' | 'mapPin'>[] = [
     },
   },
   {
+    name: 'Dali',
+    slug: 'dali',
+    type: 'City',
+    summary: 'Cangshan weather, Erhai slow travel, Bai merchant towns, and an old city that needs context',
+    why: 'Dali becomes a coherent trip when Xiaguan, the old city, Cangshan, the west-shore corridor, and Xizhou are treated as different places with different transport and recovery plans—not as one scenic lake loop.',
+    featured: true,
+    guideIds: ['china-high-speed-trains', 'china-attraction-tickets-reservations', 'neighborhoods-beyond-landmarks', 'didi-metro-getting-around', 'food-ordering-dietary'],
+    mapQuery: '大理市 云南省',
+    editorial: {
+      dek: 'Dali occupies a narrow inhabited shelf between Cangshan and Erhai. The railway station and airport serve Xiaguan to the south; the old city sits below the mountain; Xizhou is farther up the west shore; and Shuanglang is across the lake. Four days let those distances become a journey instead of a rushed circuit.',
+      sections: [
+        {
+          title: 'Read Dali as a landscape with several centers',
+          body: '“Dali” can mean the prefecture, modern Xiaguan, Dali Old Town, or a much wider ring around Erhai. That ambiguity causes the first planning failure. Dali Railway Station is in Xiaguan, well south of the old city. Cangshan rises immediately west of the old city, while Xizhou continues north on the west shore and Shuanglang faces it from the east. Save the exact Chinese destination at every transfer; a generic Dali or Erhai pin is not an executable plan.',
+        },
+        {
+          title: 'Day one: enter the old city through evidence, not atmosphere',
+          body: 'Use the South Gate visitor center as the arrival anchor, then walk north on Fuxing Road to Dali City Museum, only about 200 meters inside the gate. The museum occupies the former Du Wenxiu Marshal Mansion and makes the city’s Nanzhao–Dali, imperial, Muslim-rebellion, and modern histories available before the lanes become shops and nightlife. It currently lists free admission Tuesday–Sunday, 09:00–17:00, last entry 16:30, a 1,000-person daily limit, and valid-ID collection of a same-day ticket; confirm the live notice.',
+        },
+        {
+          title: 'Day two: choose one Cangshan product and keep a recovery day',
+          body: 'Cangshan is not one cable car. Gantong, Zhonghe, and the Cangshan Grand Cableway use different lower stations and lead to different routes. This guide resolves the Grand Cableway lower station at Tianlongbabu Film City; its upper Ximatan landscape is close to 4,000 meters and can close for wind, ice, storms, maintenance, or fire control. Use only an officially open entrance, check the same-day notice, carry layers and water, descend if altitude symptoms build, and never replace a closure with an unregistered trail suggested by a clip.',
+        },
+        {
+          title: 'Read the Three Pagodas before the reconstructed temple',
+          body: 'Chongsheng Temple’s three brick pagodas are the surviving historic core and among southwest China’s most important Buddhist monuments. Much of the temple complex behind them is a modern reconstruction after the original buildings were lost. That distinction makes the visit better: begin with the pagoda ensemble, conservation displays, and Cangshan–Erhai alignment, then decide how much of the large reconstructed axis you want. The cultural-tourism area has its own entrance, ticket, and closing time; it is not a walk-through extension of the old city.',
+        },
+        {
+          title: 'Use Erhai as a protected corridor, not a race around water',
+          body: 'The west-shore ecological corridor is a lake-buffer and village landscape as much as a cycle path. Start at the named Longkan entrance and choose a return point that matches daylight, weather, and your bicycle. Current enforcement prohibits motor vehicles and electric vehicles from entering the corridor casually and targets unauthorized rentals, camping, cooking, fishing, and roadside obstruction. A 15-second lake-loop clip does not prove a legal or safe route; use compliant shared bicycles or official services and keep the road-based east-shore circuit as a separate transport decision.',
+        },
+        {
+          title: 'Give Xizhou a heritage half-day of its own',
+          body: 'Xizhou is not an old-town cafe annex. Its courtyard houses record Bai building craft, agriculture, education, and the merchant networks that connected western Yunnan to wider trade. Anchor the visit at Yan Family Courtyard Museum off Sifang Street, then walk slowly enough to notice thresholds, screen walls, painted beams, working courtyards, fields, and newer visitor businesses without confusing them. The city’s current protection plan explicitly frames the courtyard as a museum for Xizhou’s commercial tradition and Confucian merchant culture; check live opening and ticket information locally.',
+        },
+        {
+          title: 'Stay for the trip you are actually taking',
+          body: 'The old city is the easiest first base for walkable evenings, Cangshan, and Three Pagodas. Xiaguan is better for a late train, early flight, or modern-city errands. Xizhou rewards a quieter north-shore stay but adds transfers to the station and mountain entrances. Shuanglang is a separate east-shore base, not a convenient substitute for all three. Four days works well: old city and museum; Cangshan with weather recovery; Longkan corridor plus Three Pagodas; and Xizhou. Add an east-shore day instead of compressing it into the same loop.',
+        },
+      ],
+      quickFacts: [
+        { label: 'Useful minimum', value: 'Four days; keep one mountain day movable because Cangshan access is weather-dependent' },
+        { label: 'Best first base', value: 'Dali Old Town for walkable evenings and west-side sights; Xiaguan only when station or airport logistics dominate' },
+        { label: 'Arrival rule', value: '大理站 is in Xiaguan, not inside 大理古城—save the exact South Gate handoff before boarding' },
+        { label: 'Mountain rule', value: '甘通索道, 中和索道, and 苍山大索道 are different products; never follow a generic “Cangshan cable car” pin' },
+        { label: 'Lake rule', value: 'Choose a named ecological-corridor entrance and return point; do not turn one Erhai pin into an automatic motorized circuit' },
+        { label: 'Heritage rule', value: 'The ancient Three Pagodas and reconstructed Chongsheng Temple fabric require different historical readings' },
+      ],
+      checkedAt: '2026-07-13',
+      sources: [
+        { title: 'Dali City Museum: current opening hours, ID ticket, daily cap, address, and South Gate walking route', url: 'https://www.yndali.gov.cn/dlsrmzf/c106762/pc/content/2014593247609982976/content_2014593247609982976.html' },
+        { title: 'Dali Old Town: South Gate visitor-center arrival and station, airport, and Xiaguan connections', url: 'https://www.dali.gov.cn/dlzrmzf/c101724/pc/content/1968887474976559104/content_1968887474976559104.html' },
+        { title: 'Dali 2026 mountain-safety notice: 11 authorized Cangshan routes and separate cableway coordinates', url: 'https://www.dali.gov.cn/dlzrmzf/c101532/pc/content/2019595656597901312/content_2019595656597901312.html' },
+        { title: 'Dali government: Ximatan altitude and Cangshan landscape identity', url: 'https://www.dali.gov.cn/dlzrmzf/c101724/pc/content/1968887167324360704/content_1968887167324360704.html' },
+        { title: 'Dali government: Three Pagodas history, protected area, and reconstructed temple complex', url: 'https://www.dali.gov.cn/dlzrmzf/c101724/pc/content/1968887530844688384/content_1968887530844688384.html' },
+        { title: 'Dali 2025 heritage plan: Xizhou architecture and Yan Family Courtyard merchant-history museum', url: 'https://www.yndali.gov.cn/dlsrmzf/c106679/pc/content/1983711388713979904/content_1983711388713979904.html' },
+        { title: 'Dali west-shore corridor enforcement: Longkan entrance, vehicle access, rentals, camping, cooking, and fishing', url: 'https://www.yndali.gov.cn/dlsrmzf/c106724/pc/content/1983764619263578112/content_1983764619263578112.html' },
+        { title: 'Dali government: 129-kilometer ecological-corridor system as lake buffer and village landscape', url: 'https://www.dali.gov.cn/dlzrmzf/c101533/pc/content/2001909677783355392/content_2001909677783355392.html' },
+        { title: 'Dali 2026 e-bike safety initiative: illegal battery, motor, and speed modifications around Erhai', url: 'https://www.dali.gov.cn/dlzrmzf/c101532/pc/content/2031282521012998144/content_2031282521012998144.html' },
+        { title: 'Dali Railway Station: current new-building passenger guidance and 12306 checks', url: 'https://www.dali.gov.cn/dlzrmzf/c101532/pc/content/2015703305571897344/content_2015703305571897344.html' },
+      ],
+    },
+  },
+  {
     name: 'Anhui',
     slug: 'anhui',
     type: 'Province',
@@ -955,6 +1019,7 @@ const mapPins: Record<string, Destination['mapPin']> = {
   shenzhen: { x: 60, y: 81 },
   hangzhou: { x: 70, y: 65 },
   kunming: { x: 43, y: 76 },
+  dali: { x: 39, y: 75 },
   anhui: { x: 65, y: 59 },
   fujian: { x: 68, y: 75 },
   gansu: { x: 43, y: 43 },
