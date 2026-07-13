@@ -11,7 +11,7 @@ The atlas is a GitHub-style square grid that maps real coordinates into a projec
 - Ratio error: about `0.017`, stored in the generated atlas metadata.
 - Land mask: generated from Natural Earth `ne_110m_land.geojson`.
 - Region anchors: province/city coordinates in `src/data/destinationCoordinates.ts`.
-- Frequency: current vertical slice uses place count, guide count, and featured-region bonus.
+- Frequency: current prototype uses place count, guide count, and featured-region bonus.
 
 Each cell has a stable key: `column:row`. A coordinate maps to a cell with:
 
@@ -28,4 +28,4 @@ This keeps the atlas mathematically anchored while still feeling like a compact 
 
 ## Next Step
 
-The current vertical slice maps destinations to anchor cells. The next version should rasterize region polygons, so a province can own multiple cells and a user pin can light the exact region cell plus roll up into province/country totals.
+The current prototype maps destinations to anchor cells. The next version should rasterize region polygons, so a province can own multiple cells and a user pin can light the exact region cell plus roll up into province/country totals.

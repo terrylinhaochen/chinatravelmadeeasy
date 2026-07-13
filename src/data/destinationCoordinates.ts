@@ -10,6 +10,7 @@ export const destinationCoordinates: Record<string, DestinationCoordinate> = {
   beijing: { lon: 116.4074, lat: 39.9042 },
   tianjin: { lon: 117.3616, lat: 39.3434 },
   chongqing: { lon: 106.5516, lat: 29.563 },
+  chengdu: { lon: 104.0665, lat: 30.5728 },
   anhui: { lon: 117.283, lat: 31.8612 },
   fujian: { lon: 117.9849, lat: 26.0745 },
   gansu: { lon: 103.8263, lat: 36.0594 },

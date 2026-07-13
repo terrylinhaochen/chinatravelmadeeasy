@@ -4,7 +4,7 @@ import PinDensityPanel from '../../components/PinDensityPanel.astro';
 import { getGeneratedImage } from '../../data/generatedImages';
 
 const description =
-  'Start a China trip map from province-level pin density, traveler notes, collectable places, and Apple or Google Maps export links.';
+  'Start a China trip map from traveler notes and bilingual place identities, then open reviewed pins in AMap or Apple Maps.';
 const heroImage = getGeneratedImage('home:places') ?? {
   src: '/images/curated/home-places.jpg',
   alt: 'Great Wall landscape in northern China',
@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: 'Can I export places to my own map?',
-    a: 'Yes. Each place opens in Apple Maps or Google Maps, and selected regional lists can be copied or exported as a Google route.',
+    a: 'You can copy the reviewed list and open each bilingual pin in AMap or Apple Maps. The site does not claim to write into private favorites inside either provider.',
   },
   {
     q: 'Where do traveler notes come in?',
@@ -58,7 +58,7 @@ const jsonLd = [
       </div>
       <p class="text-lg leading-relaxed text-soft">
         Start with regional density, open the places under each province, collect what feels useful,
-        then export pins to Apple Maps or Google Maps.
+        then hand reviewed bilingual pins to AMap or Apple Maps.
         Use the activity map as a sorting layer before reading details: regions show demand first,
         then individual guide pages explain transport, food, hotels, and entry logistics.
         It keeps early trip planning visual, lightweight, and easy to revise.

@@ -2,8 +2,12 @@
 import Base from '../../layouts/Base.astro';
 import GuideCard from '../../components/GuideCard.astro';
 import Icon from '../../components/Icon.astro';
+import CommunityVideoRail from '../../components/CommunityVideoRail.astro';
+import DestinationFeedback from '../../components/DestinationFeedback.astro';
 import { getCollection } from 'astro:content';
 import { destinations } from '../../data/destinations';
+import { communityVideos } from '../../data/communityVideos';
+import { auditDestination } from '../../utils/destinationQuality.js';
 
 export function getStaticPaths() {
   return destinations.map((destination) => ({
@@ -19,8 +23,17 @@ const matchedGuides = destination.guideIds
   .map((id) => guidesById[id])
   .filter(Boolean)
   .slice(0, 6);
-const featuredPlaces = destination.places.slice(0, 3);
+const featuredPlaces = destination.places.slice(0, destination.editorial ? 6 : 3);
+const destinationVideos = communityVideos.filter((video) => video.destinationSlug === destination.slug);
+const destinationAudit = auditDestination(destination, destinationVideos);
+const isFullDigest = destinationAudit.tier === 'full';
 const appleMapsUrl = (query: string) => `https://maps.apple.com/?q=${encodeURIComponent(query)}`;
+const amapUrl = (query: string) => `https://uri.amap.com/search?keyword=${encodeURIComponent(query)}&view=map&src=chinatravelmadeeasy&callnative=1`;
+const mainlandMapDefault = !['hong-kong', 'macau', 'taiwan'].includes(destination.slug);
+const mapHandoffText = featuredPlaces
+  .map((place, index) => `${index + 1}. ${place.name}${place.localName ? ` / ${place.localName}` : ''} — ${destination.name} — ${place.why}`)
+  .join('\n');
+const mapHandoffHref = `/map-import/?title=${encodeURIComponent(`${destination.name} field-guide places`)}&text=${encodeURIComponent(mapHandoffText)}`;
 const faqItems = [
   {
     q: `What is ${destination.name} best for on a China trip?`,
@@ -42,12 +55,12 @@ const faqItems = [
       ? `Start with ${matchedGuides
           .slice(0, 3)
           .map((guide) => guide.data.title)
-          .join(', ')}. These guides cover the practical setup and decisions most relevant to this region.`
+          .join(', ')}. These guides cover the practical setup and decisions most relevant to this destination.`
       : `Start with the pre-departure, payment, internet, transport, and hotel guides before planning ${destination.name}.`,
   },
   {
     q: `Can I save ${destination.name} recommendations from posts or screenshots?`,
-    a: `Yes. Use Save Places to paste a link, note, or screenshot text, then turn the extracted places into a map-ready list.`,
+    a: `Yes. Use Save Places to paste the caption, OCR text, note, or place list, then review the bilingual identities before creating AMap or Apple Maps handoffs. A bare social URL is not fetched by the static prototype.`,
   },
 ];
 
@@ -95,7 +108,14 @@ const jsonLd = [
 ];
 ---
 
-<Base title={`${destination.name} travel guides`} description={description} image={destination.image.src} jsonLd={jsonLd}>
+<Base
+  title={`${destination.name} travel guides`}
+  description={description}
+  image={destinationVideos[0]?.poster ?? destination.image.src}
+  imageAlt={destinationVideos[0] ? `${destinationVideos[0].title} by ${destinationVideos[0].creator}` : destination.image.alt}
+  jsonLd={jsonLd}
+  robots={isFullDigest ? undefined : 'noindex, follow'}
+>
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
     <a href="/regions/" class="inline-flex min-h-8 items-center gap-2 text-sm font-semibold text-soft hover:text-accent">
       <Icon name="arrow" class="h-3.5 w-3.5 rotate-180" />
@@ -112,61 +132,127 @@ const jsonLd = [
       </div>
     </div>
 
-    <figure class="ds-photo mt-8">
-      <img src={destination.image.src} alt={destination.image.alt} class="h-[280px] w-full object-cover sm:h-[420px]" fetchpriority="high" />
-      <figcaption class="border-t border-line px-4 py-2 text-xs text-faint">
-        Cover source: <a href={destination.image.source} class="inline-flex min-h-8 items-center hover:text-accent" rel="noopener">{destination.image.title}</a>
-      </figcaption>
-    </figure>
+    {destinationVideos.length > 0 ? (
+      <div class="mt-8">
+        <CommunityVideoRail limit={1} destinationSlug={destination.slug} showHeader={false} />
+      </div>
+    ) : (
+      <figure class="ds-photo mt-8">
+        <img src={destination.image.src} alt={destination.image.alt} class="h-[280px] w-full object-cover sm:h-[420px]" fetchpriority="high" />
+        <figcaption class="border-t border-line px-4 py-2 text-xs text-faint">
+          Cover source: <a href={destination.image.source} class="inline-flex min-h-8 items-center hover:text-accent" rel="noopener">{destination.image.title}</a>
+        </figcaption>
+      </figure>
+    )}
+  </section>
 
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a href={appleMapsUrl(destination.mapQuery)} class="ds-button ds-button-primary">
-        Open in Apple Maps
-      </a>
-      <a href="/map-import/" class="ds-button ds-button-secondary">
-        Save places
-      </a>
+  <section id="places" class="mx-auto max-w-6xl scroll-mt-24 px-4 pb-12 sm:px-6 sm:pb-16" aria-labelledby="destination-digest-heading">
+    <div class="border-y border-line py-8 sm:py-10">
+      <div class="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+        <div>
+          <p class="ds-eyebrow">{isFullDigest ? 'Destination digest' : 'Starter brief'}</p>
+          <h2 id="destination-digest-heading" class="mt-2 text-3xl leading-tight sm:text-4xl">
+            {isFullDigest ? `${destination.name}, beyond the checklist` : `Three starting points for ${destination.name}`}
+          </h2>
+          <p class="mt-4 text-base leading-relaxed text-soft">
+            {destination.editorial?.dek ?? `${destination.why} This page remains a starter brief until its routes, local place names, recovery advice, and dated sources meet the full destination standard.`}
+          </p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a href={mainlandMapDefault ? amapUrl(destination.mapQuery) : appleMapsUrl(destination.mapQuery)} class="ds-button ds-button-secondary">Open {destination.name} in {mainlandMapDefault ? 'AMap' : 'Apple Maps'}</a>
+            <a href={mapHandoffHref} class="ds-button ds-button-dark">Review these {featuredPlaces.length} places</a>
+          </div>
+          {destination.editorial && (
+            <dl class="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+              {destination.editorial.quickFacts.map((fact) => (
+                <div class="ds-card p-4">
+                  <dt class="ds-tag">{fact.label}</dt>
+                  <dd class="mt-2 text-sm leading-relaxed text-ink">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+
+        <div>
+          {destination.editorial ? (
+            <div class="grid gap-8 sm:grid-cols-2">
+              {destination.editorial.sections.map((section) => (
+                <article>
+                  <h3 class="text-2xl leading-tight">{section.title}</h3>
+                  <p class="mt-3 leading-7 text-soft">{section.body}</p>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div class="rounded-lg border border-dashed border-line bg-paper p-6">
+              <h3 class="text-2xl">What still needs reporting</h3>
+              <p class="mt-3 leading-relaxed text-soft">A publishable digest needs a point of view, a realistic day structure, where-to-stay judgment, execution and recovery advice, bilingual place identities, and dated sources. We keep this page modest until that reporting exists.</p>
+            </div>
+          )}
+
+          {destinationVideos.length > 1 && (
+            <div class="mt-10 border-t border-line pt-8">
+              <CommunityVideoRail
+                limit={5}
+                offset={1}
+                destinationSlug={destination.slug}
+                heading="More stories from the trip"
+                intro="Each story adds a different pace, meal, route, or point of view to the destination."
+              />
+            </div>
+          )}
+        </div>
+      </div>
+
+      {featuredPlaces.length > 0 && (
+        <div class="mt-12 border-t border-line pt-8">
+          <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+            <div>
+              <p class="ds-eyebrow">Places worth building around</p>
+              <h2 class="mt-2 text-3xl">The anchors in this digest</h2>
+            </div>
+            <p class="leading-relaxed text-soft">Each place keeps the reason it belongs in the day. Full digests also preserve the local name, exact branch or entrance, and a checked execution query.</p>
+          </div>
+          <div class="mt-8 grid gap-4 lg:grid-cols-3">
+            {featuredPlaces.map((place, index) => (
+              <article class="ds-card flex h-full flex-col p-5">
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <p class="ds-tag">{place.area}</p>
+                    <h3 class="mt-2 text-2xl">{place.name}</h3>
+                    {place.localName && <p class="mt-1 text-base font-medium text-soft">{place.localName}</p>}
+                  </div>
+                  <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-surface-strong text-sm font-semibold text-soft">{String(index + 1).padStart(2, '0')}</span>
+                </div>
+                <p class="mt-4 text-sm leading-relaxed text-soft">{place.why}</p>
+                <p class="mt-4 border-t border-line pt-4 text-sm leading-relaxed text-ink">{place.budgetTip}</p>
+                {place.address && <p class="mt-4 text-xs leading-relaxed text-faint">{place.address}</p>}
+                <div class="mt-5 flex flex-wrap gap-3">
+                  <a href={amapUrl(place.mapQuery)} target="_blank" rel="noopener" class="text-sm font-semibold text-accent hover:underline">AMap</a>
+                  <a href={appleMapsUrl(place.mapQuery)} target="_blank" rel="noopener" class="text-sm font-semibold text-accent hover:underline">Apple Maps</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {destination.editorial && (
+        <div class="mt-8 border-t border-line pt-5 text-xs leading-relaxed text-faint">
+          <span class="font-semibold text-soft">Planning sources{destination.editorial.checkedAt ? ` checked ${destination.editorial.checkedAt}` : ''}: </span>
+          {destination.editorial.sources.map((source, index) => (
+            <>{index > 0 && <span> · </span>}<a href={source.url} target="_blank" rel="noopener" class="hover:text-accent hover:underline">{source.title}</a></>
+          ))}
+        </div>
+      )}
+
+      <div class="mt-8">
+        <DestinationFeedback destinationName={destination.name} destinationSlug={destination.slug} />
+      </div>
     </div>
   </section>
 
-  {featuredPlaces.length > 0 && (
-    <section class="mx-auto max-w-6xl px-4 sm:px-6">
-      <div class="ds-panel p-5 sm:p-8">
-        <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
-          <div>
-            <p class="ds-eyebrow">Places</p>
-            <h2 class="mt-2 text-3xl">Start with these pins</h2>
-          </div>
-          <p class="leading-relaxed text-soft">
-            Open a few useful starter pins, then add nearby food, transit, and stay ideas as the route takes shape.
-          </p>
-        </div>
-        <div class="mt-8 grid gap-4 lg:grid-cols-3">
-          {featuredPlaces.map((place, index) => (
-            <article class="ds-card flex h-full flex-col p-5">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <p class="ds-tag">{place.area}</p>
-                  <h3 class="mt-2 text-2xl">{place.name}</h3>
-                </div>
-                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line bg-surface-strong text-sm font-semibold text-soft">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-              </div>
-              <p class="mt-4 text-sm leading-relaxed text-soft">{place.why}</p>
-              <p class="mt-4 border-t border-line pt-4 text-sm leading-relaxed text-ink">{place.budgetTip}</p>
-              <a href={appleMapsUrl(place.mapQuery)} class="mt-5 inline-flex min-h-8 items-center gap-2 text-sm font-semibold text-accent hover:underline">
-                Open in Apple Maps
-                <Icon name="arrow" class="h-3.5 w-3.5" />
-              </a>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
-
-  <section class="mx-auto max-w-6xl px-4 sm:px-6">
+  <section class="mx-auto mt-10 max-w-6xl px-4 sm:mt-12 sm:px-6">
     <div class="ds-card p-5 sm:p-8">
       <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
         <div>
@@ -188,14 +274,20 @@ const jsonLd = [
     <div class="ds-panel p-5 sm:p-8">
       <p class="ds-eyebrow">Destination QA</p>
       <h2 class="mt-2 text-3xl">Answers for planning {destination.name}</h2>
-      <dl class="ds-card mt-5 divide-y divide-line">
+      <div class="mt-5 grid gap-3">
         {faqItems.map((item) => (
-          <div class="grid gap-2 p-4 sm:grid-cols-[0.85fr_1.15fr] sm:p-5">
-            <dt class="text-xl font-semibold">{item.q}</dt>
-            <dd class="text-sm leading-relaxed text-soft">{item.a}</dd>
-          </div>
+          <details class="group ds-card p-0">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4">
+              <h3 class="text-xl font-semibold leading-snug">{item.q}</h3>
+              <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-sm font-bold text-soft group-open:border-accent group-open:text-accent">
+                <span class="group-open:hidden">+</span>
+                <span class="hidden group-open:inline">-</span>
+              </span>
+            </summary>
+            <p class="px-5 pb-5 leading-relaxed text-soft">{item.a}</p>
+          </details>
         ))}
-      </dl>
+      </div>
     </div>
   </section>
 </Base>

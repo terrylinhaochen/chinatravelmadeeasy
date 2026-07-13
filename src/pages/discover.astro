@@ -1,0 +1,281 @@
+---
+import Base from '../layouts/Base.astro';
+import GuideCard from '../components/GuideCard.astro';
+import Icon from '../components/Icon.astro';
+import { getCollection } from 'astro:content';
+import { destinations } from '../data/destinations';
+import { getGeneratedImage } from '../data/generatedImages';
+import { communityVideos } from '../data/communityVideos';
+import { auditDestination } from '../utils/destinationQuality.js';
+
+const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
+
+const intents = [
+  {
+    id: 'places',
+    label: 'Places',
+    icon: 'map',
+    body: 'Find entry regions and starter pins before you build the route.',
+    image: getGeneratedImage('home:places')?.src ?? '/images/curated/home-places.jpg',
+    alt: getGeneratedImage('home:places')?.alt ?? 'Great Wall landscape in northern China',
+    guideIds: ['7-day-china-itinerary', 'neighborhoods-beyond-landmarks', 'festivals-and-local-experiences'],
+  },
+  {
+    id: 'eating',
+    label: 'Eating',
+    icon: 'bowl',
+    body: 'Save food streets, tea houses, and local meals worth detouring for.',
+    image: getGeneratedImage('home:eating')?.src ?? '/images/curated/home-eating.jpg',
+    alt: getGeneratedImage('home:eating')?.alt ?? 'Street food stall in China',
+    guideIds: ['street-food-night-markets', 'food-ordering-dietary', 'tea-houses-and-rituals'],
+  },
+  {
+    id: 'traveling',
+    label: 'Traveling',
+    icon: 'train',
+    body: 'Keep trains, metros, and hard-to-find addresses tied to the same plan.',
+    image: getGeneratedImage('home:traveling')?.src ?? '/images/curated/home-traveling.jpg',
+    alt: getGeneratedImage('home:traveling')?.alt ?? 'High-speed train at a China rail platform',
+    guideIds: ['china-attraction-tickets-reservations', 'china-high-speed-trains', 'didi-metro-getting-around', 'internet-esim-vpn-blocked-apps', '7-day-china-itinerary'],
+  },
+  {
+    id: 'hospitality',
+    label: 'Hospitality',
+    icon: 'passport',
+    body: 'Choose neighborhoods and hotels that actually work for foreign passports.',
+    image: getGeneratedImage('home:hospitality')?.src ?? '/images/curated/home-hospitality.jpg',
+    alt: getGeneratedImage('home:hospitality')?.alt ?? 'Hotel lobby in China',
+    guideIds: ['hotels-foreigners-china', 'neighborhoods-beyond-landmarks', 'translation-language-survival', 'china-pre-departure-checklist'],
+  },
+] as const;
+
+const intentForGuide = (guideId: string) =>
+  intents.filter((intent) => intent.guideIds.includes(guideId as never)).map((intent) => intent.id);
+const intentForDestination = (guideIds: string[]) => {
+  const matched = intents
+    .filter((intent) => intent.guideIds.some((guideId) => guideIds.includes(guideId)))
+    .map((intent) => intent.id);
+  return [...new Set(['places', ...matched])];
+};
+const description =
+  'Discover China travel tips by intent, then turn destination pins and guide recommendations into bilingual, reviewable map queries.';
+const videosForDestination = (slug: string) => communityVideos.filter((video) => video.destinationSlug === slug);
+const videoSearchText = (slug: string) => videosForDestination(slug)
+  .flatMap((video) => [
+    video.title,
+    video.creator,
+    video.summary,
+    video.guideTitle ?? '',
+    video.guideBody ?? '',
+    ...video.places.flatMap((place) => [place.name, place.localName, place.address, place.evidence]),
+  ])
+  .join(' ');
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Map-ready China travel discovery',
+    url: 'https://chinatravelmadeeasy.com/discover/',
+    description,
+    isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'China destinations and map-ready travel guides',
+    numberOfItems: destinations.length + guides.length,
+    itemListElement: [
+      ...destinations.map((destination, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: destination.name,
+        url: `https://chinatravelmadeeasy.com/regions/${destination.slug}/`,
+      })),
+      ...guides.map((guide, index) => ({
+        '@type': 'ListItem',
+        position: destinations.length + index + 1,
+        name: guide.data.title,
+        url: `https://chinatravelmadeeasy.com/guides/${guide.id}/`,
+      })),
+    ],
+  },
+];
+---
+
+<Base title="Map-ready China travel discovery" description={description} jsonLd={jsonLd}>
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+    <div class="grid gap-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
+      <div>
+        <p class="ds-eyebrow">Save places</p>
+        <h1 class="mt-2 text-4xl leading-tight sm:text-5xl">Make China travel tips map-ready.</h1>
+      </div>
+      <p class="text-lg leading-relaxed text-soft">
+        Start with the kind of trip you are building. Then review destinations, guides, and bilingual place matches without losing the source context.
+      </p>
+    </div>
+
+    <div class="ds-context-grid mt-8" role="group" aria-label="Filter discovery by travel need">
+      {intents.map((intent) => (
+        <button type="button" class="ds-context-card group text-left" data-discover-filter={intent.id} aria-pressed="false">
+          <div class="ds-context-thumb">
+            <img src={intent.image} alt={intent.alt} loading="lazy" />
+          </div>
+          <div class="p-4">
+            <span class="ds-icon-tile">
+              <Icon name={intent.icon} class="h-5 w-5" />
+            </span>
+            <h2 class="mt-4 text-2xl leading-tight group-hover:text-accent">{intent.label}</h2>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{intent.body}</p>
+          </div>
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-6 flex justify-end">
+      <label class="w-full sm:w-96">
+        <span class="sr-only">Search destinations, places, and guides</span>
+        <input id="discoverSearch" class="ds-input w-full" type="search" placeholder="Search a city, place, or problem" />
+      </label>
+    </div>
+
+    <section class="mt-12" aria-labelledby="map-ready-heading">
+      <p class="ds-eyebrow">Places to go</p>
+      <h2 id="map-ready-heading" class="mt-2 text-3xl leading-tight">Choose the story you want the trip to tell</h2>
+      <p class="mt-3 max-w-3xl leading-relaxed text-soft">
+        Full destination digests combine editorial judgment, grounded traveler media, and bilingual places. Starter briefs remain clearly marked until they meet the same standard.
+      </p>
+      <div id="discoverDestinations" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {destinations.map((destination) => {
+          const videos = videosForDestination(destination.slug);
+          const quality = auditDestination(destination, videos);
+          const leadVideo = videos[0];
+          const resolvedCount = new Set(videos.flatMap((video) => video.places.filter((place) => place.resolution === 'resolved').map((place) => place.id))).size;
+          return (
+            <article
+              class="ds-card group flex h-full flex-col overflow-hidden"
+              data-discover-item
+              data-intents={intentForDestination(destination.guideIds).join(' ')}
+              data-search={`${destination.name} ${destination.summary} ${destination.places.map((place) => `${place.name} ${place.area} ${place.mapQuery}`).join(' ')} ${videoSearchText(destination.slug)}`.toLowerCase()}
+            >
+              <a href={`/regions/${destination.slug}/`} class="relative block aspect-[16/9] overflow-hidden bg-surface-strong">
+                <img src={leadVideo?.poster ?? destination.image.src} alt={leadVideo?.title ?? destination.image.alt} class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" referrerpolicy={leadVideo ? 'no-referrer' : undefined} />
+                {leadVideo && <span class="absolute bottom-3 left-3 rounded-full bg-ink/85 px-3 py-1 text-xs font-semibold text-white">▶ {leadVideo.creator}</span>}
+              </a>
+              <div class="flex flex-1 flex-col p-5">
+                <p class="ds-tag">{quality.tier === 'full' ? 'Destination digest' : 'Starter brief'} · {destination.type}</p>
+                <h3 class="mt-2 text-2xl leading-tight">
+                  <a href={`/regions/${destination.slug}/`} class="hover:text-accent">{destination.name}</a>
+                </h3>
+                <p class="mt-2 text-sm leading-relaxed text-soft">{destination.summary}</p>
+                <div class="mt-3 flex flex-wrap gap-1.5">
+                  {destination.places.slice(0, 3).map((place) => (
+                    <span class="rounded-full border border-line bg-white px-2.5 py-1 text-xs text-soft">{place.name}</span>
+                  ))}
+                </div>
+                {videos.length > 0 && (
+                  <a href={`/regions/${destination.slug}/#field-notes`} class="mt-5 flex items-center gap-3 border-t border-line pt-4 text-accent hover:text-ink">
+                    <span class="flex shrink-0 -space-x-2" aria-hidden="true">
+                      {videos.slice(0, 3).map((video) => (
+                        <img src={video.poster} alt="" class="h-10 w-8 rounded border-2 border-white object-cover" loading="lazy" referrerpolicy="no-referrer" />
+                      ))}
+                    </span>
+                    <span class="min-w-0 text-xs font-semibold leading-relaxed">
+                      {videos.length} traveler {videos.length === 1 ? 'story' : 'stories'} · {resolvedCount} identified {resolvedCount === 1 ? 'place' : 'places'}
+                    </span>
+                    <Icon name="arrow" class="ml-auto h-3.5 w-3.5 shrink-0" />
+                  </a>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="mt-14 border-t border-line pt-10" aria-labelledby="guide-heading">
+      <p class="ds-eyebrow">Read before you save</p>
+      <h2 id="guide-heading" class="mt-2 text-3xl leading-tight">Guides that prevent a bad pin from becoming a bad plan</h2>
+      <div id="discoverGuides" class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {guides.map((guide) => (
+          <div
+            data-discover-item
+            data-intents={intentForGuide(guide.id).join(' ')}
+            data-search={`${guide.data.title} ${guide.data.description} ${guide.data.category} ${guide.data.mapPlaces.map((place) => `${place.name} ${place.localName ?? ''} ${place.city}`).join(' ')}`.toLowerCase()}
+          >
+            <GuideCard guide={guide} />
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <p id="discoverEmpty" class="ds-panel mt-8 hidden p-6 text-center text-soft">
+      No grounded match yet. Try a city or problem, or paste the original tip into <a href="/map-import/" class="font-semibold text-accent hover:underline">Save Places</a> for review.
+    </p>
+
+    <section class="mt-14 border-t border-line pt-10" aria-labelledby="handoff-heading">
+      <p class="ds-eyebrow">The China-specific layer</p>
+      <h2 id="handoff-heading" class="mt-2 text-3xl leading-tight">How a travel tip becomes usable</h2>
+      <ol class="mt-6 grid gap-4 md:grid-cols-4">
+        {[
+          ['1', 'Capture', 'Paste the caption, OCR text, guide places, or friend list.'],
+          ['2', 'Resolve', 'Match the English mention to a Chinese name, city, and branch.'],
+          ['3', 'Review', 'Keep the evidence; mark weak matches before they become pins.'],
+          ['4', 'Handoff', 'Open a map query, share the city set, or contribute it with consent.'],
+        ].map(([step, title, body]) => (
+          <li class="ds-card p-5">
+            <span class="ds-tag">Step {step}</span>
+            <h3 class="mt-3 text-xl">{title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{body}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </section>
+
+  <script define:vars={{ intents }}>
+    const filterButtons = [...document.querySelectorAll('[data-discover-filter]')];
+    const items = [...document.querySelectorAll('[data-discover-item]')];
+    const search = document.querySelector('#discoverSearch');
+    const empty = document.querySelector('#discoverEmpty');
+    const validIntents = intents.map((intent) => intent.id);
+    const requestedIntent = new URLSearchParams(window.location.search).get('intent');
+    let activeIntent = validIntents.includes(requestedIntent) ? requestedIntent : 'places';
+
+    const applyFilters = () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      items.forEach((item) => {
+        const intentMatch = (item.dataset.intents || '').split(' ').includes(activeIntent);
+        const searchMatch = !query || (item.dataset.search || '').includes(query);
+        const show = intentMatch && searchMatch;
+        item.classList.toggle('hidden', !show);
+        if (show) visible += 1;
+      });
+      filterButtons.forEach((button) => {
+        const selected = button.dataset.discoverFilter === activeIntent;
+        button.setAttribute('aria-pressed', String(selected));
+        button.classList.toggle('discover-intent-active', selected);
+      });
+      empty.classList.toggle('hidden', visible > 0);
+    };
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeIntent = button.dataset.discoverFilter;
+        const url = new URL(window.location.href);
+        url.searchParams.set('intent', activeIntent);
+        window.history.replaceState({}, '', url);
+        applyFilters();
+      });
+    });
+    search.addEventListener('input', applyFilters);
+    applyFilters();
+  </script>
+
+  <style>
+    .discover-intent-active {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent);
+    }
+  </style>
+</Base>

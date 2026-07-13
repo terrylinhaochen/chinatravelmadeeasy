@@ -3,15 +3,23 @@ title: "China Visa-Free Entry & 240-Hour Transit in 2026: Who Qualifies"
 description: "Which passports can enter China without a visa in 2026, how the 240-hour (10-day) visa-free transit works for Americans, Brits, and Canadians, and the rules that trip people up."
 seoTitle: "China Visa-Free Entry and Transit Rules"
 seoDescription: "Check China visa-free entry, 240-hour transit rules, eligible passports, onward-ticket requirements, and routing traps."
-updated: 2026-06-08
+updated: 2026-07-12
 order: 4
 category: "Visas & Entry"
 icon: "passport"
+decision:
+  bestFor: "Travelers deciding whether a normal visa-free entry, 240-hour transit, or an L visa fits their exact passport and route."
+  doThis: "Write your trip as A → mainland China → C. If using transit, confirm A and C are different countries or regions and keep the onward ticket handy."
+  watchFor: "Passport lists, eligible ports, and trial end dates change. Re-check the official NIA page the week you book and again before departure."
+sources:
+  - title: "National Immigration Administration: Visa-Free Transit Policies"
+    url: "https://en.nia.gov.cn/n147418/n147463/c183412/content.html"
+    checked: 2026-07-12
 faqs:
   - q: "Do US citizens need a visa to visit China in 2026?"
     a: "For a normal vacation, usually not — US passport holders qualify for the 240-hour (10-day) visa-free transit if they arrive from one country and depart to a different country or region (Hong Kong, Macau, and Taiwan count). For stays over 10 days or simple round trips from/to the US only, a tourist (L) visa is required."
   - q: "Which countries can enter China visa-free for 30 days?"
-    a: "As of mid-2026 the unilateral visa-free list covers roughly 45+ countries: most of the EU/Schengen area, Australia, New Zealand, Japan, and South Korea, plus several Latin American and Gulf states. The US, UK, Canada, and India are notably absent and use the transit policy instead. The list keeps growing and most entries run through at least December 31, 2026 — verify your passport on the National Immigration Administration or your local Chinese embassy site before booking."
+    a: "The unilateral and mutual visa-free lists change often and have different end dates. Many European and Asia-Pacific passports qualify, while the US and Canada generally rely on the transit policy. Use the National Immigration Administration or your local Chinese embassy's current passport list rather than a copied blog list."
   - q: "How does the 240-hour visa-free transit actually work?"
     a: "You must arrive from country/region A and hold a confirmed onward ticket departing within 240 hours to country/region C, where C is different from A. At immigration you use the dedicated TWOV counter, show the onward ticket, and receive a temporary entry permit. You can move between the 24 covered provinces during your stay."
   - q: "Does Hong Kong count as a different destination for visa-free transit?"
@@ -36,7 +44,7 @@ Rules of thumb for Track 1: 30 days per entry, no advance registration, standard
 
 ## Track 2: 240-hour (10-day) visa-free transit
 
-Effective December 17, 2024, China extended its old 72/144-hour transit policy to **240 hours** and unified it across **60 ports of entry in 24 provinces**. It covers ~54 countries, including the US, UK, Canada, and most of Europe.
+Effective December 17, 2024, China extended its old 72/144-hour transit policy to **240 hours**. The National Immigration Administration's current policy page, updated July 4, 2025, lists **65 ports in 24 provincial-level regions and 55 eligible countries**, including the US, UK, Canada, and most of Europe. Those counts supersede older pages that still say 60 ports and 54 countries.
 
 The non-negotiable mechanics:
 
@@ -57,13 +65,13 @@ Staying longer than your visa-free window, or flying a simple round trip from a 
 ## Things that trip people up
 
 - **Visa-free ≠ unlimited activities.** Tourism, business meetings, family visits: fine. Working or studying: not fine.
-- **Hotel registration still applies** — your hotel registers you with police automatically; if you stay with friends, you must register at a police station within 24 hours. See the [hotels guide](/guides/hotels-foreigners-china/).
+- **Accommodation registration still applies** — hotels register you automatically. If you stay in a private home, register within 24 hours; a March 2026 online pilot now covers seven provincial-level regions, while other locations still use local public-security channels. See the [hotels guide](/guides/hotels-foreigners-china/).
 - **Regional add-ons exist**: Hainan island has its own 30-day visa-free scheme covering more nationalities, and there are special policies for ASEAN tour groups into Guilin, cruise arrivals, and Greater Bay Area tour groups. Niche, but useful if you fit one.
 - **Airlines are the first checkpoint.** Check-in agents sometimes know the transit rules imperfectly; carry a printout of your onward ticket and, if helpful, the NIA's English announcement of the 240-hour policy.
 
 ## Where to verify (do this before booking)
 
-- **National Immigration Administration (NIA)** — en.nia.gov.cn — official announcements of visa-free lists and transit rules.
+- **National Immigration Administration (NIA)** — use the linked policy in “Sources checked” below for the current eligible countries, ports, and permitted areas.
 - **Your nearest Chinese embassy/consulate website** — the country lists are mirrored there in English.
 - Trip.com and airline check-in pages increasingly flag transit eligibility, but treat them as a convenience, not the authority.
 

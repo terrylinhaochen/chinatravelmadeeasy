@@ -52,6 +52,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/China-Railway-Ticket-Paper-Normal.jpg",
       "title": "China Railway Ticket"
     },
+    "guide:china-attraction-tickets-reservations": {
+      "src": "/images/curated/great-wall-route.jpg",
+      "alt": "Palace Museum courtyards in Beijing for attraction ticket and entrance planning",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Forbidden_City_Beijing_China_(164849005).jpeg",
+      "title": "Forbidden City Beijing China"
+    },
     "guide:china-pre-departure-checklist": {
       "src": "/images/curated/predeparture-checklist.jpg",
       "alt": "Airport departure hall in China for pre-flight planning",
@@ -267,6 +273,12 @@
       "alt": "Pingyao old city in Shanxi",
       "source": "https://upload.wikimedia.org/wikipedia/commons/7/74/Pingyao-oldtown.jpg",
       "title": "Pingyao"
+    },
+    "region:chengdu": {
+      "src": "/images/curated/region-sichuan.jpg",
+      "alt": "Giant panda at Chengdu Research Base",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Chengdu_Research_Base_Eingang.jpg",
+      "title": "Chengdu Research Base of Giant Panda Breeding"
     },
     "region:sichuan": {
       "src": "/images/curated/region-sichuan.jpg",

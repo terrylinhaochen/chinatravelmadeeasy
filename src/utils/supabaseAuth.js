@@ -32,7 +32,7 @@ export async function sendSupabaseEmailLink(email, nextPath = '/profile/') {
   if (!supabase) return { data: null, error: null, configured: false };
 
   const redirect = new URL('/auth/confirm/', window.location.origin);
-  redirect.searchParams.set('next', nextPath);
+  redirect.searchParams.set('next', normalizeNextPath(nextPath));
 
   const { data, error } = await supabase.auth.signInWithOtp({
     email,
@@ -58,7 +58,7 @@ export async function completeSupabaseEmailLink() {
   const url = new URL(window.location.href);
   const hash = new URLSearchParams(url.hash.replace(/^#/, ''));
   const search = url.searchParams;
-  const next = search.get('next') || '/profile/';
+  const next = normalizeNextPath(search.get('next'));
   const errorDescription =
     search.get('error_description') ||
     hash.get('error_description') ||
@@ -117,6 +117,11 @@ export async function completeSupabaseEmailLink() {
     authProvider: 'supabase',
   });
   return { ok: true, configured: true, error: null, next, user };
+}
+
+export function normalizeNextPath(value) {
+  const next = String(value || '/profile/');
+  return next.startsWith('/') && !next.startsWith('//') ? next : '/profile/';
 }
 
 async function loadCreateClient() {

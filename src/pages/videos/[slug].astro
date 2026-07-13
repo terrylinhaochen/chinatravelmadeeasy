@@ -1,0 +1,20 @@
+---
+import Base from '../../layouts/Base.astro';
+import { communityVideos } from '../../data/communityVideos';
+import { destinationFieldNoteHref } from '../../utils/videoEmbed.js';
+export function getStaticPaths() {
+  return communityVideos.map((video) => ({ params: { slug: video.slug }, props: { video } }));
+}
+const { video } = Astro.props;
+const destination = destinationFieldNoteHref(video);
+---
+<Base title={`${video.title} · destination context`} description={video.summary} image={video.poster} robots="noindex, follow">
+  <meta http-equiv="refresh" content={`0;url=${destination}`} slot="head" />
+  <section class="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
+    <p class="ds-eyebrow">Video moved into its destination</p>
+    <h1 class="mt-3 text-4xl">{video.title}</h1>
+    <p class="mt-4 leading-relaxed text-soft">Open the exact destination story to watch the clip, read its editorial context, and continue to its place collection.</p>
+    <a href={destination} class="ds-button ds-button-primary mt-7">Open destination story</a>
+  </section>
+  <script define:vars={{ destination }}>window.location.replace(destination);</script>
+</Base>

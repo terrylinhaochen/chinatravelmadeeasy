@@ -2,21 +2,34 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import PinDensityPanel from '../components/PinDensityPanel.astro';
+import CommunityVideoRail from '../components/CommunityVideoRail.astro';
 import { destinations } from '../data/destinations';
 import { getGeneratedImage } from '../data/generatedImages';
+import { communityVideos } from '../data/communityVideos';
+import { destinationFieldNoteHref, videoCuratedCollectionHref } from '../utils/videoEmbed.js';
 
 const heroImage = getGeneratedImage('home:hero') ?? {
   src: '/images/curated/home-local-treasures.jpg',
   alt: 'Night street storefront with Chinese calligraphy signs and warm lantern light',
 };
 const homepageDestinations = destinations.slice(0, 6);
+const homeVideoCache = communityVideos.map((video) => ({
+  platform: video.platform,
+  externalId: video.externalId,
+  title: video.title,
+  creator: video.creator,
+  city: video.city,
+  resolvedCount: video.places.filter((place) => place.resolution === 'resolved').length,
+  fieldNoteHref: destinationFieldNoteHref(video),
+  collectionHref: videoCuratedCollectionHref(video),
+}));
 
 const travelModes = [
   {
     title: 'Places',
     icon: 'map',
     body: 'Find entry regions and starter pins before you build the route.',
-    href: '/regions/',
+    href: '/discover/?intent=places',
     image: getGeneratedImage('home:places')?.src ?? '/images/curated/home-places.jpg',
     alt: getGeneratedImage('home:places')?.alt ?? 'Great Wall landscape in northern China',
   },
@@ -24,7 +37,7 @@ const travelModes = [
     title: 'Eating',
     icon: 'bowl',
     body: 'Save food streets, tea houses, and local meals worth detouring for.',
-    href: '/guides/street-food-night-markets/',
+    href: '/discover/?intent=eating',
     image: getGeneratedImage('home:eating')?.src ?? '/images/curated/home-eating.jpg',
     alt: getGeneratedImage('home:eating')?.alt ?? 'Street food stall in China',
   },
@@ -32,7 +45,7 @@ const travelModes = [
     title: 'Traveling',
     icon: 'train',
     body: 'Keep trains, metros, and hard-to-find addresses tied to the same plan.',
-    href: '/guides/china-high-speed-trains/',
+    href: '/discover/?intent=traveling',
     image: getGeneratedImage('home:traveling')?.src ?? '/images/curated/home-traveling.jpg',
     alt: getGeneratedImage('home:traveling')?.alt ?? 'High-speed train at a China rail platform',
   },
@@ -40,7 +53,7 @@ const travelModes = [
     title: 'Hospitality',
     icon: 'passport',
     body: 'Choose neighborhoods and hotels that actually work for foreign passports.',
-    href: '/guides/hotels-foreigners-china/',
+    href: '/discover/?intent=hospitality',
     image: getGeneratedImage('home:hospitality')?.src ?? '/images/curated/home-hospitality.jpg',
     alt: getGeneratedImage('home:hospitality')?.alt ?? 'Hotel lobby in China',
   },
@@ -66,7 +79,7 @@ const essentialCards = [
   {
     label: 'Internet',
     title: 'Pick your phone setup',
-    body: 'A travel eSIM is usually easier than relying on hotel Wi-Fi or downloading a VPN after you land.',
+    body: 'Verify the exact plan’s mainland routing, activation, hotspot, and app access—then keep a separate arrival fallback.',
     href: '/guides/internet-esim-vpn-blocked-apps/',
     image: getGeneratedImage('guide:internet-esim-vpn-blocked-apps')?.src ?? '/images/curated/internet-esim.jpg',
     alt: getGeneratedImage('guide:internet-esim-vpn-blocked-apps')?.alt ?? 'Smartphone store in Shenzhen for China mobile setup planning',
@@ -82,7 +95,7 @@ const essentialCards = [
   {
     label: 'Food',
     title: 'Eat well without Chinese',
-    body: 'Learn QR menus, pointing, basic dietary phrases, and how to avoid paying tourist prices at famous food streets.',
+    body: 'Resolve the right food street or stall, complete the order, and know when translation or popularity is not enough.',
     href: '/guides/street-food-night-markets/',
     image: getGeneratedImage('guide:street-food-night-markets')?.src ?? '/images/curated/street-food.jpg',
     alt: getGeneratedImage('guide:street-food-night-markets')?.alt ?? "Xi'an Muslim food street market at night",
@@ -103,7 +116,7 @@ const homeFaqs = [
   {
     question: 'What can I save?',
     answer:
-      'Paste a caption, a note, a friend list, or a screenshot filename with place names. The tool extracts likely places and turns them into a cleaner map list.',
+      'Paste a caption, OCR text, a note, or a friend list with place names. The prototype extracts candidates for you to review; it does not fetch a social post or read pixels from an image.',
   },
   {
     question: 'Who is this for?',
@@ -123,7 +136,7 @@ const homeFaqs = [
 ];
 
 const description =
-  'Local treasures, saved to your map. Drop links, screenshots, captions, or shared lists and turn them into clean map-ready pins.';
+  'Turn scattered China travel tips into reviewed, map-ready places that keep local names when available.';
 
 const jsonLd = [
   {
@@ -155,25 +168,25 @@ const jsonLd = [
 ];
 ---
 
-<Base title="Local treasures, saved to your map" description={description} image={heroImage.src} imageAlt={heroImage.alt} jsonLd={jsonLd}>
+<Base title="Make China travel tips map-ready" description={description} image={heroImage.src} imageAlt={heroImage.alt} jsonLd={jsonLd}>
   <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
     <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-      <div class="max-w-xl">
+      <div class="min-w-0 max-w-xl">
         <p class="ds-eyebrow">
           Save places
         </p>
         <h1 class="mt-4 text-4xl leading-[1.02] sm:text-6xl lg:text-7xl">
-          Local treasures, saved to your map.
+          Make China travel tips map-ready.
         </h1>
         <p class="mt-5 text-lg leading-relaxed text-soft">
-          Drop a link or screenshot. Get clean pins to save, remix, or share.
+          Paste the caption or place list. Review the matches, keep the source context, and hand off map-ready places with the Chinese name when we can resolve it.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="#save-places" class="ds-button ds-button-primary">
             Add places
           </a>
-          <a href="#places" class="ds-button ds-button-secondary">
-            Browse regions
+          <a href="/discover/?intent=places" class="ds-button ds-button-secondary">
+            Explore map-ready tips
           </a>
         </div>
       </div>
@@ -193,7 +206,7 @@ const jsonLd = [
               <p class="mt-2 text-sm leading-relaxed text-soft">
                 Saved from WechatIMG4641.jpg at 29.56086 N, 106.57751 E.
               </p>
-              <button id="heroSavePlace" type="button" class="ds-button ds-button-dark mt-5">Save to maps</button>
+              <button id="heroSavePlace" type="button" class="ds-button ds-button-dark mt-5">Review this pin</button>
             </div>
           </div>
         </div>
@@ -225,27 +238,51 @@ const jsonLd = [
       <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
         <div>
           <p class="ds-eyebrow">Add places</p>
-          <h2 class="mt-2 text-3xl leading-tight sm:text-4xl">Drop a link or upload</h2>
+          <h2 class="mt-2 text-3xl leading-tight sm:text-4xl">Paste a caption or list</h2>
         </div>
 
         <div class="grid gap-4">
+          <details class="group ds-card p-0">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4">
+              <div>
+                <span class="ds-eyebrow">TikTok or Instagram</span>
+                <span class="mt-1 block text-xl font-semibold">Add a short video link</span>
+              </div>
+              <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-sm font-bold text-soft group-open:border-accent group-open:text-accent" aria-hidden="true">
+                <span class="group-open:hidden">+</span><span class="hidden group-open:inline">−</span>
+              </span>
+            </summary>
+            <div class="border-t border-line px-5 py-4">
+              <p class="text-sm leading-relaxed text-soft">Processed links open the original story, its editorial context, and the places it identifies. For an unseen link, use the caption fallback below until live ingestion is connected.</p>
+              <div class="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
+                <input id="homeVideoUrl" type="url" class="ds-input text-sm" placeholder="https://www.tiktok.com/@creator/video/..." />
+                <button id="homeVideoFind" type="button" class="ds-button ds-button-dark">Find places</button>
+              </div>
+              <p id="homeVideoStatus" class="mt-3 hidden rounded-md border border-line bg-paper p-3 text-sm leading-relaxed text-soft"></p>
+              <div id="homeVideoActions" class="mt-3 hidden flex flex-wrap gap-2">
+                <a id="homeVideoFieldNote" href="#" class="ds-button ds-button-primary">Open story</a>
+                <a id="homeVideoCollection" href="#" class="ds-button ds-button-secondary">Open city collection</a>
+              </div>
+            </div>
+          </details>
+
           <label
             id="homeMapDropZone"
             for="homeMapFile"
             class="block cursor-pointer rounded-md border-2 border-dashed border-line bg-white/70 p-5 transition-colors hover:border-accent/50 sm:p-6"
           >
-            <input id="homeMapFile" type="file" accept="image/*,.txt,.md" class="hidden" />
+            <input id="homeMapFile" type="file" accept=".txt,.md,.json,text/plain,application/json" class="hidden" />
             <span class="ds-eyebrow">Upload</span>
-            <span class="mt-2 block text-xl">Screenshot or saved list</span>
+            <span class="mt-2 block text-xl">Text export or saved list</span>
             <span id="homeMapFileName" class="mt-2 block text-sm text-soft">
-              Or paste a link below.
+              For screenshots, paste OCR text below. Images are not read in this static prototype.
             </span>
           </label>
 
           <textarea
             id="homeMapText"
             class="ds-input min-h-20 resize-y text-sm"
-            placeholder="Paste a link or place list..."
+            placeholder="Paste a caption, OCR text, or one-place-per-line list..."
           ></textarea>
 
           <div class="flex flex-wrap justify-end gap-2">
@@ -253,6 +290,7 @@ const jsonLd = [
           </div>
 
           <p id="homeMapStatus" class="hidden rounded-md border border-line bg-white p-3 text-sm leading-relaxed text-soft"></p>
+          <a id="homeMapOpenSaved" href="#" target="_blank" rel="noopener" class="ds-button ds-button-primary hidden justify-self-start">Open in AMap</a>
           <div id="homeMapResults" class="hidden grid gap-3"></div>
 
           <div id="homeMapMapChoice" class="hidden rounded-md border border-line bg-white p-4">
@@ -261,19 +299,8 @@ const jsonLd = [
               Pick where this place should open after sign-in.
             </p>
             <div class="mt-3 flex flex-wrap gap-2">
-              <button type="button" data-map-provider="apple" class="homeMapProvider ds-button ds-button-dark">Apple Maps</button>
-              <button type="button" data-map-provider="amap" class="homeMapProvider ds-button ds-button-secondary">AMap</button>
-            </div>
-          </div>
-
-          <div id="homeMapSignIn" class="hidden rounded-md border border-line bg-white p-4">
-            <p class="ds-eyebrow">Sign in to save</p>
-            <p class="mt-1 text-sm leading-relaxed text-soft">
-              Enter an email to save this place and open it in your selected map.
-            </p>
-            <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_auto]">
-              <input id="homeMapEmail" type="email" class="ds-input text-sm" placeholder="you@example.com" />
-              <button id="homeMapContinue" type="button" class="ds-button ds-button-dark">Continue</button>
+              <button type="button" data-map-provider="amap" class="homeMapProvider ds-button ds-button-dark">AMap</button>
+              <button type="button" data-map-provider="apple" class="homeMapProvider ds-button ds-button-secondary">Apple Maps</button>
             </div>
           </div>
 
@@ -298,6 +325,13 @@ const jsonLd = [
         </div>
       </div>
     </div>
+    <div class="mt-10 border-t border-line pt-10 sm:mt-12 sm:pt-12">
+      <CommunityVideoRail
+        heading="What travelers actually did"
+        intro="A harbour race, a skyline at blue hour, or a street twenty floors above another: watch the story first, then keep the places it genuinely identifies."
+      />
+    </div>
+    <script id="homeVideoCache" type="application/json" is:inline set:html={JSON.stringify(homeVideoCache).replace(/</g, '\\u003c')}></script>
   </section>
 
   <section id="places" class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
@@ -415,28 +449,6 @@ const jsonLd = [
     </div>
   </section>
 
-  <div id="heroSignupModal" class="hero-signup-modal hidden" role="dialog" aria-modal="true" aria-labelledby="heroSignupTitle">
-    <div class="hero-signup-backdrop" data-hero-modal-close></div>
-    <div class="hero-signup-dialog">
-      <button id="heroSignupClose" type="button" class="hero-signup-close" aria-label="Close sign in modal">×</button>
-      <p class="ds-eyebrow">Sign in to save</p>
-      <h2 id="heroSignupTitle" class="mt-2 text-3xl leading-tight">Sign in to save</h2>
-      <p class="mt-2 text-sm leading-relaxed text-soft">
-        Enter an email to save this place and open it in your selected map.
-      </p>
-      <div class="mt-5 rounded-md border border-line bg-paper p-4">
-        <h3 class="text-xl font-bold">Chongqing night street storefront</h3>
-        <p class="mt-2 text-sm leading-relaxed text-soft">
-          Saved from WechatIMG4641.jpg at 29.56086 N, 106.57751 E.
-        </p>
-      </div>
-      <div class="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
-        <input id="heroSignupEmail" type="email" class="ds-input text-sm" placeholder="you@example.com" />
-        <button id="heroSignupContinue" type="button" class="ds-button ds-button-dark">Continue</button>
-      </div>
-      <p id="heroSignupStatus" class="mt-3 hidden text-sm leading-relaxed text-soft"></p>
-    </div>
-  </div>
 </Base>
 
 <style>
@@ -534,52 +546,6 @@ const jsonLd = [
     padding: 1rem 0.25rem 0.25rem;
   }
 
-  .hero-signup-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 60;
-    display: grid;
-    place-items: center;
-    padding: 1rem;
-  }
-
-  .hero-signup-modal.hidden {
-    display: none;
-  }
-
-  .hero-signup-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgb(12 10 9 / 0.36);
-    backdrop-filter: blur(6px);
-  }
-
-  .hero-signup-dialog {
-    position: relative;
-    width: min(100%, 32rem);
-    border: 1px solid var(--color-line);
-    border-radius: 24px;
-    background: var(--color-card);
-    padding: 1.25rem;
-    box-shadow: 0 24px 80px rgb(12 10 9 / 0.2);
-  }
-
-  .hero-signup-close {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.75rem;
-    display: grid;
-    width: 2.25rem;
-    height: 2.25rem;
-    place-items: center;
-    border: 1px solid var(--color-line);
-    border-radius: 9999px;
-    background: var(--color-paper);
-    color: var(--color-ink);
-    font-size: 1.25rem;
-    line-height: 1;
-  }
-
   .home-destination-grid {
     display: grid;
     gap: 1rem;
@@ -649,30 +615,32 @@ const jsonLd = [
 </style>
 
 <script>
-  import { amapUrl, appleMapsUrl, displayName, extractTripPlaces, normalizeSource } from '../utils/placeExtraction.js';
+  import { DEFAULT_MAINLAND_MAP_PROVIDER, displayName, extractTripPlaces, mapProviderUrl, normalizeSource } from '../utils/placeExtraction.js';
+  import { getSavedPinLists, getUser, savePinList } from '../utils/localPrototypeState.js';
+  import { parseShortFormVideoUrl } from '../utils/videoEmbed.js';
 
+  const homeVideoUrl = document.querySelector('#homeVideoUrl');
+  const homeVideoFind = document.querySelector('#homeVideoFind');
+  const homeVideoStatus = document.querySelector('#homeVideoStatus');
+  const homeVideoActions = document.querySelector('#homeVideoActions');
+  const homeVideoFieldNote = document.querySelector('#homeVideoFieldNote');
+  const homeVideoCollection = document.querySelector('#homeVideoCollection');
+  const homeVideoCache = JSON.parse(document.querySelector('#homeVideoCache')?.textContent || '[]');
   const homeMapDropZone = document.querySelector('#homeMapDropZone');
   const homeMapFile = document.querySelector('#homeMapFile');
   const homeMapFileName = document.querySelector('#homeMapFileName');
   const homeMapText = document.querySelector('#homeMapText');
   const homeMapAnalyze = document.querySelector('#homeMapAnalyze');
   const homeMapStatus = document.querySelector('#homeMapStatus');
+  const homeMapOpenSaved = document.querySelector('#homeMapOpenSaved');
   const homeMapResults = document.querySelector('#homeMapResults');
   const homeMapMapChoice = document.querySelector('#homeMapMapChoice');
-  const homeMapSignIn = document.querySelector('#homeMapSignIn');
-  const homeMapEmail = document.querySelector('#homeMapEmail');
-  const homeMapContinue = document.querySelector('#homeMapContinue');
   const homeMapSearch = document.querySelector('#homeMapSearch');
   const homeMapSavedWorkspace = document.querySelector('#homeMapSavedWorkspace');
   const homeMapSavedLists = document.querySelector('#homeMapSavedLists');
   const homeMapProviderButtons = document.querySelectorAll('.homeMapProvider');
   const heroFlipCard = document.querySelector('#heroFlipCard');
   const heroSavePlace = document.querySelector('#heroSavePlace');
-  const heroSignupModal = document.querySelector('#heroSignupModal');
-  const heroSignupClose = document.querySelector('#heroSignupClose');
-  const heroSignupEmail = document.querySelector('#heroSignupEmail');
-  const heroSignupContinue = document.querySelector('#heroSignupContinue');
-  const heroSignupStatus = document.querySelector('#heroSignupStatus');
   const essentialMore = document.querySelector('#essentialMore');
   const essentialToggle = document.querySelector('#essentialToggle');
   const heroPhotoPlace = {
@@ -684,13 +652,17 @@ const jsonLd = [
     longitude: 106.57751,
     note: 'Saved from WechatIMG4641.jpg at 29.56086 N, 106.57751 E.',
   };
-  const homeMapUserKey = 'ctme-map-user';
-  const homeMapSavedKey = 'ctme-map-saved-places';
-  let homeMapProvider = 'apple';
+  const homeMapPendingKey = 'ctme-pending-home-map-save';
+  let homeMapProvider = DEFAULT_MAINLAND_MAP_PROVIDER;
   let homeMapFileText = '';
   let homeMapPlaces = [];
   let homeMapPendingPlace = null;
   let homeMapDisplayedSaved = [];
+
+  homeVideoFind.addEventListener('click', findHomeVideo);
+  homeVideoUrl.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') findHomeVideo();
+  });
 
   essentialToggle?.addEventListener('click', () => {
     const expanded = essentialToggle.getAttribute('aria-expanded') === 'true';
@@ -702,11 +674,7 @@ const jsonLd = [
   homeMapProviderButtons.forEach((button) => {
     button.addEventListener('click', () => {
       homeMapProvider = button.dataset.mapProvider;
-      homeMapProviderButtons.forEach((item) => {
-        const active = item.dataset.mapProvider === homeMapProvider;
-        item.classList.toggle('ds-button-dark', active);
-        item.classList.toggle('ds-button-secondary', !active);
-      });
+      syncHomeMapProviderButtons();
       if (homeMapPendingPlace) requestHomeMapSignIn(homeMapPendingPlace);
     });
   });
@@ -716,26 +684,8 @@ const jsonLd = [
     heroFlipCard.classList.toggle('is-flipped');
   });
   heroSavePlace.addEventListener('click', () => {
-    homeMapPendingPlace = heroPhotoPlace;
-    openHeroSignupModal();
-  });
-  heroSignupClose.addEventListener('click', closeHeroSignupModal);
-  heroSignupModal.addEventListener('click', (event) => {
-    if (event.target.matches('[data-hero-modal-close]')) closeHeroSignupModal();
-  });
-  heroSignupContinue.addEventListener('click', () => {
-    const email = heroSignupEmail.value.trim();
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      showHeroSignupStatus('Enter an email to save this place.', true);
-      return;
-    }
-    localStorage.setItem(homeMapUserKey, JSON.stringify({ email, createdAt: new Date().toISOString() }));
-    saveHeroPhotoPlace(email);
-    showHeroSignupStatus('Saved. Opening Apple Maps.', false);
-    setTimeout(closeHeroSignupModal, 450);
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !heroSignupModal.classList.contains('hidden')) closeHeroSignupModal();
+    showHomeMapMapChoice(heroPhotoPlace);
+    document.querySelector('#save-places')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   homeMapFile.addEventListener('change', () => readHomeMapFile(homeMapFile.files?.[0]));
@@ -755,17 +705,9 @@ const jsonLd = [
 
   homeMapAnalyze.addEventListener('click', analyzeHomeMapInput);
   homeMapSearch.addEventListener('input', () => renderHomeMapSavedLists(homeMapSearch.value));
-  homeMapContinue.addEventListener('click', () => {
-    const email = homeMapEmail.value.trim();
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      showHomeMapStatus('Enter an email to save this place.', true);
-      return;
-    }
-    localStorage.setItem(homeMapUserKey, JSON.stringify({ email, createdAt: new Date().toISOString() }));
-    homeMapSignIn.classList.add('hidden');
-    if (homeMapPendingPlace) saveHomeMapPlace(homeMapPendingPlace, true);
-  });
+  syncHomeMapProviderButtons();
   renderHomeMapSavedLists();
+  resumePendingHomeMapSave();
 
   function readHomeMapFile(file) {
     if (!file) return;
@@ -778,9 +720,49 @@ const jsonLd = [
         showHomeMapStatus('File loaded. Click Save to maps when ready.', false);
       });
       reader.readAsText(file);
-    } else {
-      showHomeMapStatus('Image added. Paste the caption too if the filename does not include the place name.', false);
     }
+  }
+
+  function findHomeVideo() {
+    homeVideoActions.classList.add('hidden');
+    homeVideoCollection.classList.add('hidden');
+    let parsed;
+    try {
+      parsed = parseShortFormVideoUrl(homeVideoUrl.value);
+    } catch (error) {
+      const code = error instanceof Error ? error.message : 'invalid_video_url';
+      const message = code === 'use_full_tiktok_url'
+        ? 'Use the full TikTok post URL. Short redirect links cannot be matched inside this static build.'
+        : code === 'use_instagram_reel_url'
+          ? 'Use a full Instagram Reel or post URL.'
+          : code === 'unsupported_video_platform'
+            ? 'Use a TikTok or Instagram Reel link. YouTube is intentionally not supported.'
+            : 'Enter a complete TikTok or Instagram Reel URL.';
+      showHomeVideoStatus(message, true);
+      return;
+    }
+    const match = homeVideoCache.find((video) => video.platform === parsed.platform && video.externalId === parsed.externalId);
+    if (!match) {
+      showHomeVideoStatus('This link format is supported, but it is not in the processed cache and live ingestion is not connected in this build. Paste the caption, OCR text, or named places below to review them now.', false);
+      homeMapText.focus();
+      return;
+    }
+    const placeCopy = match.resolvedCount
+      ? match.resolvedCount + ' identified ' + (match.resolvedCount === 1 ? 'place' : 'places')
+      : 'a useful travel idea, but no identified venue yet';
+    showHomeVideoStatus('Already processed: ' + match.title + ' by ' + match.creator + ' · ' + placeCopy + '.', false);
+    homeVideoFieldNote.href = match.fieldNoteHref;
+    homeVideoActions.classList.remove('hidden');
+    if (match.collectionHref) {
+      homeVideoCollection.href = match.collectionHref;
+      homeVideoCollection.classList.remove('hidden');
+    }
+  }
+
+  function showHomeVideoStatus(message, isError) {
+    homeVideoStatus.textContent = message;
+    homeVideoStatus.classList.remove('hidden');
+    homeVideoStatus.classList.toggle('border-accent', Boolean(isError));
   }
 
   function analyzeHomeMapInput() {
@@ -792,8 +774,8 @@ const jsonLd = [
     const result = extractTripPlaces(normalizeSource({ text }));
     homeMapPlaces = result.places;
     homeMapPendingPlace = null;
-    homeMapSignIn.classList.add('hidden');
     homeMapMapChoice.classList.add('hidden');
+    homeMapOpenSaved.classList.add('hidden');
     if (!homeMapPlaces.length) {
       homeMapResults.classList.add('hidden');
       showHomeMapStatus('No clear place found yet. Add a city and place name, then try again.', true);
@@ -823,40 +805,54 @@ const jsonLd = [
   function showHomeMapMapChoice(item) {
     homeMapPendingPlace = item;
     homeMapMapChoice.classList.remove('hidden');
-    homeMapSignIn.classList.add('hidden');
-    showHomeMapStatus('Choose where to save ' + displaySaveName(item) + '.', false);
+    homeMapOpenSaved.classList.add('hidden');
+    showHomeMapStatus('Choose a map for ' + displaySaveName(item) + '. AMap is the mainland default; Apple Maps remains available as a second check.', false);
   }
 
-  function requestHomeMapSignIn(item) {
+  async function requestHomeMapSignIn(item) {
     homeMapPendingPlace = item;
-    homeMapSignIn.classList.remove('hidden');
-    homeMapEmail.focus();
-    showHomeMapStatus('Sign in to save ' + displaySaveName(item) + ' to ' + mapProviderName() + '.', false);
+    const pending = { clientRequestId: crypto.randomUUID(), saveItem: item, mapProvider: homeMapProvider };
+    localStorage.setItem(homeMapPendingKey, JSON.stringify(pending));
+    const user = await window.ctmeRequireUser('save this reviewed place and return to its map handoff');
+    if (!user) {
+      showHomeMapStatus('The place is staged. Complete the email link to save it, or close sign-in to keep reviewing.', false);
+      return;
+    }
+    saveHomeMapPlace(item, true, pending.clientRequestId, pending.mapProvider);
+    localStorage.removeItem(homeMapPendingKey);
   }
 
-  function saveHomeMapPlace(saveItem, openAfterSave) {
+  function saveHomeMapPlace(saveItem, openAfterSave, clientRequestId = crypto.randomUUID(), provider = homeMapProvider) {
     const user = getHomeMapUser();
     if (!user) {
       requestHomeMapSignIn(saveItem);
       return;
     }
-    const saved = getHomeMapSaved();
     const places = placesForSave(saveItem);
     const firstPlace = places[0];
     const savedItem = {
-      id: Date.now(),
+      id: clientRequestId,
+      clientRequestId,
       name: displaySaveName(saveItem),
       platform: 'Homepage upload',
       savedAt: new Date().toISOString(),
       savedBy: user.email,
-      mapProvider: homeMapProvider,
+      mapProvider: provider,
       places,
     };
-    localStorage.setItem(homeMapSavedKey, JSON.stringify([savedItem, ...saved].slice(0, 24)));
-    showHomeMapStatus('Saved to your trip list. Opening ' + mapProviderName() + '.', false);
+    savePinList(savedItem);
+    showHomeMapStatus('Saved to your trip list' + (openAfterSave ? '. Opening ' + mapProviderName(provider) + '.' : '. Continue with the map handoff below.'), false);
     homeMapPendingPlace = null;
     renderHomeMapSavedLists(homeMapSearch.value);
-    if (openAfterSave && firstPlace) window.open(homeMapProvider === 'amap' ? amapUrl(firstPlace) : appleMapsUrl(firstPlace), '_blank', 'noopener');
+    if (!firstPlace) return;
+    const handoffUrl = mapProviderUrl(provider, firstPlace);
+    if (openAfterSave) {
+      window.open(handoffUrl, '_blank', 'noopener');
+      return;
+    }
+    homeMapOpenSaved.href = handoffUrl;
+    homeMapOpenSaved.textContent = 'Open in ' + mapProviderName(provider);
+    homeMapOpenSaved.classList.remove('hidden');
   }
 
   function showHomeMapStatus(message, isError) {
@@ -864,40 +860,29 @@ const jsonLd = [
     homeMapStatus.classList.remove('hidden');
     homeMapStatus.classList.toggle('border-accent', Boolean(isError));
   }
-  function openHeroSignupModal() {
-    heroSignupModal.classList.remove('hidden');
-    heroSignupStatus.classList.add('hidden');
-    heroSignupStatus.textContent = '';
-    heroSignupEmail.focus();
+  function syncHomeMapProviderButtons() {
+    homeMapProviderButtons.forEach((item) => {
+      const active = item.dataset.mapProvider === homeMapProvider;
+      item.classList.toggle('ds-button-dark', active);
+      item.classList.toggle('ds-button-secondary', !active);
+    });
   }
-  function closeHeroSignupModal() {
-    heroSignupModal.classList.add('hidden');
+  function resumePendingHomeMapSave() {
+    const user = getHomeMapUser();
+    if (!user) return;
+    let pending = null;
+    try { pending = JSON.parse(localStorage.getItem(homeMapPendingKey) || 'null'); } catch { pending = null; }
+    if (!pending?.saveItem || !pending?.clientRequestId) return;
+    homeMapProvider = pending.mapProvider === 'apple' ? 'apple' : DEFAULT_MAINLAND_MAP_PROVIDER;
+    syncHomeMapProviderButtons();
+    saveHomeMapPlace(pending.saveItem, false, pending.clientRequestId, homeMapProvider);
+    localStorage.removeItem(homeMapPendingKey);
   }
-  function showHeroSignupStatus(message, isError) {
-    heroSignupStatus.textContent = message;
-    heroSignupStatus.classList.remove('hidden');
-    heroSignupStatus.classList.toggle('text-error', Boolean(isError));
-  }
-  function saveHeroPhotoPlace(email) {
-    const saved = getHomeMapSaved();
-    const savedItem = {
-      id: Date.now(),
-      name: displayName(heroPhotoPlace),
-      platform: 'Homepage photo',
-      savedAt: new Date().toISOString(),
-      savedBy: email,
-      mapProvider: 'apple',
-      places: [heroPhotoPlace],
-    };
-    localStorage.setItem(homeMapSavedKey, JSON.stringify([savedItem, ...saved].slice(0, 24)));
-    renderHomeMapSavedLists(homeMapSearch.value);
-    window.open(appleMapsUrl(heroPhotoPlace), '_blank', 'noopener');
-  }
-  function mapProviderName() { return homeMapProvider === 'amap' ? 'AMap' : 'Apple Maps'; }
+  function mapProviderName(provider = homeMapProvider) { return provider === 'amap' ? 'AMap' : 'Apple Maps'; }
   function placesForSave(item) { return Array.isArray(item?.places) ? item.places : [item].filter(Boolean); }
   function displaySaveName(item) { return item?.places ? item.name : displayName(item); }
-  function getHomeMapUser() { try { return JSON.parse(localStorage.getItem(homeMapUserKey) || 'null'); } catch { return null; } }
-  function getHomeMapSaved() { try { return JSON.parse(localStorage.getItem(homeMapSavedKey) || '[]'); } catch { return []; } }
+  function getHomeMapUser() { return getUser(); }
+  function getHomeMapSaved() { return getSavedPinLists(); }
   function renderHomeMapSavedLists(query) {
     const saved = getHomeMapSaved();
     homeMapDisplayedSaved = filterHomeMapSaved(saved, query);

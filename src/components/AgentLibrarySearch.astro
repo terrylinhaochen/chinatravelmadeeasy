@@ -1,0 +1,127 @@
+---
+interface SearchItem {
+  id: string;
+  title: string;
+  summary: string;
+  href: string;
+  label: string;
+  searchText: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  copy: string;
+  placeholder: string;
+  actionLabel: string;
+  items: SearchItem[];
+  suggestions: string[];
+}
+
+const { eyebrow, title, copy, placeholder, actionLabel, items, suggestions } = Astro.props;
+---
+
+<section class="library-agent ds-panel mt-8 p-5 sm:p-6" data-library-agent>
+  <div class="grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+    <div>
+      <p class="ds-eyebrow">{eyebrow}</p>
+      <h2 class="mt-2 text-3xl leading-tight">{title}</h2>
+      <p class="mt-3 text-sm leading-relaxed text-soft">{copy}</p>
+    </div>
+    <div>
+      <form class="grid gap-3 sm:grid-cols-[1fr_auto]" data-library-form>
+        <label class="sr-only" for="libraryAgentQuery">{title}</label>
+        <input id="libraryAgentQuery" data-library-query class="ds-input text-sm" type="search" placeholder={placeholder} autocomplete="off" />
+        <button class="ds-button ds-button-dark" type="submit">{actionLabel}</button>
+      </form>
+      <div class="mt-3 flex flex-wrap gap-2" aria-label="Suggested questions">
+        {suggestions.map((suggestion) => (
+          <button type="button" class="ds-chip library-suggestion hover:border-accent/50 hover:text-accent" data-library-suggestion={suggestion}>{suggestion}</button>
+        ))}
+      </div>
+      <div class="library-agent-result mt-4 hidden rounded-md border border-line bg-white p-4" data-library-result>
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p class="ds-tag" data-library-result-label></p>
+            <h3 class="mt-2 text-2xl leading-tight" data-library-result-title></h3>
+          </div>
+          <a class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm" data-library-result-link>Open match</a>
+        </div>
+        <p class="mt-3 text-sm leading-relaxed text-soft" data-library-result-summary></p>
+        <p class="mt-3 text-xs leading-relaxed text-faint" data-library-result-note></p>
+      </div>
+      <p class="mt-3 text-sm text-faint" data-library-count>{items.length} grounded matches available</p>
+    </div>
+  </div>
+</section>
+
+<script type="application/json" id="libraryAgentPayload" set:html={JSON.stringify(items)} />
+
+<script>
+  import { libraryTerms, rankLibraryItems } from '../utils/librarySearch.js';
+
+  const root = document.querySelector('[data-library-agent]');
+  const items = JSON.parse(document.querySelector('#libraryAgentPayload').textContent);
+  const queryInput = root.querySelector('[data-library-query]');
+  const form = root.querySelector('[data-library-form]');
+  const result = root.querySelector('[data-library-result]');
+  const resultLabel = root.querySelector('[data-library-result-label]');
+  const resultTitle = root.querySelector('[data-library-result-title]');
+  const resultSummary = root.querySelector('[data-library-result-summary]');
+  const resultLink = root.querySelector('[data-library-result-link]');
+  const resultNote = root.querySelector('[data-library-result-note]');
+  const count = root.querySelector('[data-library-count]');
+  const cards = Array.from(document.querySelectorAll('[data-library-item]'));
+
+  queryInput.addEventListener('input', () => filter(queryInput.value));
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    answer(queryInput.value);
+  });
+  root.querySelectorAll('[data-library-suggestion]').forEach((button) => {
+    button.addEventListener('click', () => {
+      queryInput.value = button.dataset.librarySuggestion;
+      answer(queryInput.value);
+    });
+  });
+
+  function rank(query) {
+    return rankLibraryItems(items, query);
+  }
+
+  function filter(query) {
+    const terms = libraryTerms(query);
+    const visibleIds = new Set(terms.length ? rank(query).slice(0, 6).map((entry) => entry.item.id) : items.map((item) => item.id));
+    let visible = 0;
+    cards.forEach((card) => {
+      card.hidden = !visibleIds.has(card.dataset.libraryItem);
+      if (!card.hidden) visible += 1;
+    });
+    count.textContent = visible + ' grounded match' + (visible === 1 ? '' : 'es') + ' shown on this page';
+  }
+
+  function answer(query) {
+    filter(query);
+    const ranked = rank(query);
+    result.classList.remove('hidden');
+    if (!ranked.length) {
+      resultLabel.textContent = 'No grounded match';
+      resultTitle.textContent = 'Try a concrete travel problem';
+      resultSummary.textContent = 'Ask about visas, payment, internet, hotels, trains, food, language, neighborhoods, or a first route. The static site only answers from published material.';
+      resultNote.textContent = 'The China Travel Companion skill can research a new question when the current library does not cover it.';
+      resultLink.classList.add('hidden');
+      return;
+    }
+    const best = ranked[0].item;
+    resultLabel.textContent = best.label;
+    resultTitle.textContent = best.title;
+    resultSummary.textContent = best.summary;
+    resultNote.textContent = ranked.length > 1 ? (ranked.length - 1) + ' related grounded match' + (ranked.length === 2 ? '' : 'es') + ' also found.' : 'Best grounded match in the current library.';
+    resultLink.href = best.href;
+    resultLink.classList.remove('hidden');
+  }
+</script>
+
+<style>
+  .library-agent :global(.ds-input) { width: 100%; border: 1px solid var(--color-line); border-radius: 12px; background: white; padding: 0.85rem 1rem; color: var(--color-ink); }
+</style>

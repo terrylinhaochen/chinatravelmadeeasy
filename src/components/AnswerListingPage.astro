@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import Pagination from './Pagination.astro';
+import AgentLibrarySearch from './AgentLibrarySearch.astro';
 import { getGeneratedImage } from '../data/generatedImages';
 import { questionAlternates } from '../data/localizedQuestions';
 
@@ -23,11 +24,20 @@ interface PageData {
 interface Props {
   page: PageData;
   items: QuestionItem[];
+  searchItems?: QuestionItem[];
   currentPage: number;
   totalPages: number;
 }
 
-const { page, items, currentPage, totalPages } = Astro.props;
+const { page, items, searchItems = items, currentPage, totalPages } = Astro.props;
+const libraryItems = searchItems.map((item) => ({
+  id: item.href,
+  title: item.q,
+  summary: item.answer,
+  href: item.href,
+  label: item.guide,
+  searchText: `${item.q} ${item.answer} ${item.guide}`,
+}));
 
 function imageForHref(href: string) {
   const slug = href.match(/^\/guides\/([^/]+)\/?$/)?.[1];
@@ -58,11 +68,23 @@ function imageForHref(href: string) {
     <p class="text-lg leading-relaxed text-soft">{page.intro}</p>
   </div>
 
+  {page.lang === 'en' && (
+    <AgentLibrarySearch
+      eyebrow="Ask the skill"
+      title="Ask a China travel question"
+      copy="This works like the China Travel Companion skill in retrieval mode: it searches published answers, shows the strongest grounded match, and sends you to the underlying guide."
+      placeholder="Will my foreign card work in Alipay?"
+      actionLabel="Find answer"
+      items={libraryItems}
+      suggestions={['Do I need a visa?', 'Will my phone work?', 'Where should I stay?']}
+    />
+  )}
+
   <div class="ds-listing-grid mt-8">
     {items.map((item) => {
       const image = imageForHref(item.href);
       return (
-        <a href={item.href} class="ds-listing-card group">
+        <a href={item.href} class="ds-listing-card group" data-library-item={item.href} data-library-search={`${item.q} ${item.answer} ${item.guide}`.toLowerCase()}>
           {image && (
             <div class="ds-listing-thumb">
               <img

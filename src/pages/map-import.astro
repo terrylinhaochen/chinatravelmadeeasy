@@ -2,26 +2,26 @@
 import Base from '../layouts/Base.astro';
 
 const description =
-  'Local treasures, saved to your map. Drop a link, screenshot note, caption, or shared list and turn it into clean China trip pins.';
+  'Turn captions, screenshot text, and shared place lists into a reviewable China place task with bilingual identity, group decisions, and map handoffs.';
 const mapFaqs = [
   {
     q: 'What can I drop into the map tool?',
-    a: 'Paste a social link, caption, screenshot note, friend list, or saved itinerary text. The tool looks for China place names and turns them into a cleaner pin list.',
+    a: 'Paste the text from a caption, screenshot, friend list, or itinerary. A bare social URL is not fetched by this static prototype; include the caption or place names so the tool has evidence to review.',
   },
   {
     q: 'When do I choose Apple Maps or AMap?',
-    a: 'Map choices appear after extraction, when you decide to save a place or collection. The first step stays focused on cleaning the raw list.',
+    a: 'Map choices appear after extraction. AMap is the mainland-China execution default because it preserves local POI coverage; Apple Maps remains available as a second provider check. The first step stays focused on cleaning the raw list.',
   },
   {
     q: 'Can I share or remix saved pins?',
-    a: 'Yes. Saved collections stay as editable lists in this browser prototype, so a traveler can reuse a friend list, remove weak pins, and open the final places in a map app.',
+    a: 'Yes. Mark each candidate Keep, Maybe, or Drop, add the hard constraints, then copy a handoff link. The recipient reopens the evidence, decisions, reasons, and constraints as their own editable version.',
   },
 ];
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'Local treasures, saved to your map',
+    name: 'Make China travel tips map-ready together',
     description,
     url: 'https://chinatravelmadeeasy.com/map-import/',
   },
@@ -54,12 +54,12 @@ const jsonLd = [
 ];
 ---
 
-<Base title="Local treasures, saved to your map" description={description} jsonLd={jsonLd}>
+<Base title="Make China travel tips map-ready together" description={description} jsonLd={jsonLd}>
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-    <p class="ds-eyebrow">Save to maps</p>
-    <h1 class="mt-3 max-w-3xl text-4xl font-bold leading-tight sm:text-5xl">Local treasures, saved to your map.</h1>
+    <p class="ds-eyebrow">Shared place task</p>
+    <h1 class="mt-3 max-w-4xl text-4xl font-bold leading-tight sm:text-5xl">Make China travel tips map-ready—together.</h1>
     <p class="mt-4 max-w-2xl text-lg leading-relaxed text-soft">
-      Drop a link, screenshot note, caption, or shared list. Review the places first, then save the useful pins to your own map.
+      Paste the recommendation itself, keep its evidence attached, decide together, then open only the reviewed places in AMap or Apple Maps.
     </p>
   </section>
 
@@ -67,21 +67,22 @@ const jsonLd = [
     <div class="ds-card p-5 sm:p-6">
       <div class="mb-5 flex flex-wrap gap-2 text-xs font-semibold text-soft">
         <span class="ds-chip border-accent/50 text-accent">1. Import</span>
-        <span class="ds-chip">2. Extract</span>
-        <span class="ds-chip">3. Save</span>
+        <span class="ds-chip">2. Resolve</span>
+        <span class="ds-chip">3. Decide</span>
+        <span class="ds-chip">4. Handoff</span>
       </div>
       <div class="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <label for="linkInput" class="inline-flex min-h-8 items-center text-2xl font-bold">Drop a link or list</label>
-          <p class="mt-1 text-sm leading-relaxed text-soft">Paste a social link, caption, screenshot note, or friend list. Or run a sample.</p>
+          <label for="linkInput" class="inline-flex min-h-8 items-center text-2xl font-bold">Paste the recommendation itself</label>
+          <p class="mt-1 max-w-2xl text-sm leading-relaxed text-soft">Captions, OCR text, and one-place-per-line lists work. A bare TikTok or Instagram URL does not: this static page cannot fetch the post behind it.</p>
         </div>
         <div class="flex flex-wrap gap-2">
           <button type="button" data-sample="tiktok-shanghai" class="sampleBtn ds-button ds-button-secondary min-h-0 px-3 py-2">Run TikTok sample</button>
           <button type="button" data-sample="instagram-chengdu" class="sampleBtn ds-button ds-button-secondary min-h-0 px-3 py-2">Run Instagram sample</button>
         </div>
       </div>
-      <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_auto]">
-        <input id="linkInput" type="url" inputmode="url" class="ds-input text-sm" placeholder="https://..." />
+      <div class="mt-3 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end">
+        <textarea id="linkInput" class="ds-input min-h-28 resize-y text-sm" placeholder="Paste a caption, screenshot text, or a numbered place list. Include the city when you can."></textarea>
         <button id="extractBtn" type="button" class="ds-button ds-button-primary">Preview pins</button>
       </div>
       <p id="sourceText" class="ds-tag mt-3 hidden"></p>
@@ -90,7 +91,8 @@ const jsonLd = [
   </section>
 
   <section id="resultSection" class="mx-auto hidden max-w-6xl px-4 pb-8 sm:px-6">
-    <div class="ds-card p-5 sm:p-6">
+    <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-start">
+      <div class="ds-card min-w-0 p-5 sm:p-6">
       <div class="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p class="ds-eyebrow">Extracted collection</p>
@@ -98,25 +100,49 @@ const jsonLd = [
         </div>
         <div class="flex flex-wrap gap-2">
           <button id="changeLinkBtn" type="button" class="ds-button ds-button-secondary">Change link</button>
-          <button id="saveCollectionBtn" type="button" class="ds-button ds-button-dark">
-            Save to maps
-          </button>
         </div>
       </div>
+      <p class="mt-3 max-w-2xl text-sm leading-relaxed text-soft">Check the identity and source line, then give every place a decision. “Maybe” is deliberately unresolved; nothing enters the route until someone marks it Keep.</p>
+      <p id="resultStatusText" class="ds-card mt-4 hidden p-3 text-sm leading-relaxed text-soft" aria-live="polite"></p>
       <div id="placeResult" class="mt-4 grid gap-3"></div>
-    </div>
-  </section>
-
-  <section id="loginSection" class="mx-auto hidden max-w-6xl px-4 pb-8 sm:px-6">
-    <div class="ds-panel p-5 sm:p-6">
-      <p class="ds-eyebrow">Sign in to save</p>
-      <h2 class="mt-2 text-2xl font-bold">Save this pin list to your trip.</h2>
-      <p class="mt-2 text-sm leading-relaxed text-soft">For this local prototype, sign-in is stored in this browser. A production version would sync saved lists across devices and map apps.</p>
-      <div class="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
-        <input id="emailInput" type="email" class="ds-input text-sm" placeholder="you@example.com" />
-        <button id="loginBtn" type="button" class="ds-button ds-button-dark">Continue</button>
       </div>
-      <button id="backToResultsBtn" type="button" class="ds-button ds-button-secondary mt-3">Back to extracted places</button>
+
+      <aside class="ds-card p-5 lg:sticky lg:top-24" aria-labelledby="workspaceHeading">
+        <p class="ds-eyebrow">Decision workspace</p>
+        <h2 id="workspaceHeading" class="mt-1 text-2xl font-bold">Make the list usable</h2>
+        <div id="decisionSummary" class="mt-4 grid grid-cols-3 gap-2 text-center"></div>
+
+        <details class="mt-5 border-t border-line pt-4" open>
+          <summary class="cursor-pointer font-semibold text-ink">Trip constraints</summary>
+          <div class="mt-3 grid gap-3">
+            <label class="text-xs font-semibold text-faint">Start or hotel base<input id="constraintBase" class="ds-input mt-1 text-sm" placeholder="e.g. Jing'an, Shanghai"></label>
+            <label class="text-xs font-semibold text-faint">Time available<input id="constraintTime" class="ds-input mt-1 text-sm" placeholder="e.g. Tue 10:00–18:00"></label>
+            <label class="text-xs font-semibold text-faint">Pace<select id="constraintPace" class="ds-input mt-1 text-sm"><option value="relaxed">Relaxed</option><option value="balanced" selected>Balanced</option><option value="full">Full day</option></select></label>
+            <label class="text-xs font-semibold text-faint">Must-do<input id="constraintMustDo" class="ds-input mt-1 text-sm" placeholder="One non-negotiable"></label>
+            <label class="text-xs font-semibold text-faint">Access, diet, budget, or booking needs<textarea id="constraintNeeds" class="ds-input mt-1 min-h-20 resize-y text-sm" maxlength="280" placeholder="Only constraints that change the choice"></textarea></label>
+          </div>
+        </details>
+
+        <div class="mt-5 border-t border-line pt-4">
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="font-semibold text-ink">Conflicts to resolve</h3>
+            <span id="conflictCount" class="ds-tag">0</span>
+          </div>
+          <div id="conflictList" class="mt-3 grid gap-2 text-sm text-soft"></div>
+        </div>
+
+        <div class="mt-5 border-t border-line pt-4">
+          <h3 class="font-semibold text-ink">Smallest coherent route</h3>
+          <div id="routePreview" class="mt-3 grid gap-3 text-sm text-soft"></div>
+        </div>
+
+        <div class="mt-5 grid gap-2">
+          <button id="sharePlanBtn" type="button" class="ds-button ds-button-primary">Copy editable task link</button>
+          <button id="copyHandoffBtn" type="button" class="ds-button ds-button-secondary">Copy map handoff</button>
+          <button id="saveCollectionBtn" type="button" class="ds-button ds-button-dark">Save kept places</button>
+          <p class="text-xs leading-relaxed text-faint">The link is a reopenable snapshot, not live multi-user sync. AMap and Apple links still require you to confirm the provider result.</p>
+        </div>
+      </aside>
     </div>
   </section>
 
@@ -143,8 +169,8 @@ const jsonLd = [
         <p class="ds-eyebrow">How it works</p>
         <h2 class="mt-2 text-2xl font-bold">What happens after I paste a list?</h2>
         <p class="mt-3 text-sm leading-relaxed text-soft">
-          The tool keeps the flow staged: clean the raw source first, preview likely places,
-          then choose where to save. That keeps the page simple until a pin list is worth keeping.
+          The tool keeps the source evidence attached, marks heuristic matches, carries group decisions into the shared link, and sequences only kept places.
+          It does not pretend a text guess is a verified point of interest or that a snapshot link is live collaboration.
         </p>
       </div>
       <dl class="grid gap-3">
@@ -160,25 +186,34 @@ const jsonLd = [
 
   <script>
     import { amapUrl, appleMapsUrl, displayName, extractTripPlaces, normalizeSource, sourceFromShareOrLink } from '../utils/placeExtraction.js';
-    import { getSavedPinLists, getUser, savePinList, setUser } from '../utils/localPrototypeState.js';
+    import { getSavedPinLists, getUser, savePinList } from '../utils/localPrototypeState.js';
+    import { createSharedWorkspace, decisionCounts, decodeSharedWorkspace, encodeSharedWorkspace, findWorkspaceConflicts, sequenceKeptPlaces } from '../utils/sharedLocationTask.js';
 
     const linkInput = document.querySelector('#linkInput');
     const extractBtn = document.querySelector('#extractBtn');
     const sourceText = document.querySelector('#sourceText');
     const statusText = document.querySelector('#statusText');
+    const resultStatusText = document.querySelector('#resultStatusText');
     const importSection = document.querySelector('#importSection');
     const resultSection = document.querySelector('#resultSection');
     const placeResult = document.querySelector('#placeResult');
     const collectionTitle = document.querySelector('#collectionTitle');
     const saveCollectionBtn = document.querySelector('#saveCollectionBtn');
+    const sharePlanBtn = document.querySelector('#sharePlanBtn');
+    const copyHandoffBtn = document.querySelector('#copyHandoffBtn');
     const changeLinkBtn = document.querySelector('#changeLinkBtn');
-    const loginSection = document.querySelector('#loginSection');
-    const emailInput = document.querySelector('#emailInput');
-    const loginBtn = document.querySelector('#loginBtn');
-    const backToResultsBtn = document.querySelector('#backToResultsBtn');
     const savedSection = document.querySelector('#savedSection');
     const savedList = document.querySelector('#savedList');
     const userBadge = document.querySelector('#userBadge');
+    const decisionSummary = document.querySelector('#decisionSummary');
+    const conflictCount = document.querySelector('#conflictCount');
+    const conflictList = document.querySelector('#conflictList');
+    const routePreview = document.querySelector('#routePreview');
+    const constraintBase = document.querySelector('#constraintBase');
+    const constraintTime = document.querySelector('#constraintTime');
+    const constraintPace = document.querySelector('#constraintPace');
+    const constraintMustDo = document.querySelector('#constraintMustDo');
+    const constraintNeeds = document.querySelector('#constraintNeeds');
     const sampleSources = {
       'tiktok-shanghai': {
         collectionName: 'TikTok Shanghai food crawl',
@@ -196,44 +231,58 @@ const jsonLd = [
     let selectedPlaces = [];
     let selectedSource = null;
     let selectedCollectionName = 'China inspiration collection';
-    let pendingSave = null;
+    const pendingAuthSaveKey = 'ctme-pending-map-save';
 
+    const query = new URLSearchParams(window.location.search);
+    const sharedWorkspace = decodeSharedWorkspace(query.get('task'));
     const sharedSource = sourceFromShareOrLink(window.location.search, '');
-    if (sharedSource.url) linkInput.value = sharedSource.url;
+    if (sharedWorkspace) {
+      loadWorkspace(sharedWorkspace);
+    } else if (sharedSource.text) {
+      linkInput.value = sharedSource.text;
+    }
     renderSaved();
-    showStage('import');
+    if (sharedWorkspace) {
+      showStatus('Reopened an editable task with its evidence, decisions, and trip constraints.', false);
+      renderPlaces(selectedPlaces);
+      showStage('result');
+    } else if (query.get('text')) {
+      runExtraction({
+        collectionName: query.get('title') || 'Shared China places',
+        title: query.get('title') || '',
+        text: query.get('text') || '',
+        url: query.get('url') || '',
+      });
+    } else {
+      showStage('import');
+    }
 
     extractBtn.addEventListener('click', () => runExtraction(linkInput.value));
     document.querySelectorAll('.sampleBtn').forEach((button) => {
       button.addEventListener('click', () => runExtraction(sampleSources[button.dataset.sample], { fromSample: true }));
     });
-    saveCollectionBtn.addEventListener('click', () => saveCollection(selectedPlaces, true));
+    saveCollectionBtn.addEventListener('click', () => saveCollection(keptPlaces(), true));
+    sharePlanBtn.addEventListener('click', shareReviewedPlan);
+    copyHandoffBtn.addEventListener('click', copyMapHandoff);
     changeLinkBtn.addEventListener('click', () => showStage('import'));
-    backToResultsBtn.addEventListener('click', () => showStage('result'));
-    loginBtn.addEventListener('click', () => {
-      const email = emailInput.value.trim();
-      if (!/^\S+@\S+\.\S+$/.test(email)) {
-        alert('Enter an email to save places.');
-        return;
-      }
-      setUser(email);
-      loginSection.classList.add('hidden');
-      renderSaved();
-      if (pendingSave) saveCollection(pendingSave.places, pendingSave.openMap);
+    [constraintBase, constraintTime, constraintPace, constraintMustDo, constraintNeeds].forEach((input) => {
+      input.addEventListener('input', updateWorkspaceOverview);
+      input.addEventListener('change', updateWorkspaceOverview);
     });
+    resumePendingAuthSave();
 
     function runExtraction(input, options = {}) {
       const normalized = typeof input === 'object'
         ? normalizeSource(input)
-        : sourceFromShareOrLink(window.location.search, input);
+        : /^https?:\/\//i.test(String(input || '').trim())
+          ? sourceFromShareOrLink(window.location.search, input)
+          : normalizeSource({ text: input });
       const result = extractTripPlaces(normalized);
       selectedSource = result.source;
-      selectedPlaces = result.places;
+      selectedPlaces = result.places.map((place) => ({ ...place, decision: 'maybe', decisionReason: '' }));
       selectedCollectionName = typeof input === 'object' && input.collectionName
         ? input.collectionName
         : result.source.platform + ' China places';
-      pendingSave = null;
-      loginSection.classList.add('hidden');
       if (typeof input === 'object') {
         linkInput.value = input.url || '';
       }
@@ -249,7 +298,8 @@ const jsonLd = [
         showStage('import');
         return;
       }
-      showStatus('Previewed ' + selectedPlaces.length + ' place' + (selectedPlaces.length === 1 ? '' : 's') + ' from ' + result.source.platform + '. Save the list when it looks useful.', false);
+      setConstraints({ pace: 'balanced' });
+      showStatus('Previewed ' + selectedPlaces.length + ' place' + (selectedPlaces.length === 1 ? '' : 's') + ' from ' + result.source.platform + '. Verify each identity, then choose Keep, Maybe, or Drop.', false);
       renderPlaces(selectedPlaces);
       showStage('result');
     }
@@ -257,49 +307,214 @@ const jsonLd = [
     function renderPlaces(places) {
       collectionTitle.textContent = selectedCollectionName;
       placeResult.innerHTML = places.map((place, index) => '<article class="ds-card p-4" data-place-card>' +
-        '<p class="ds-tag">' + escapeHtml(place.category || 'Place') + '</p>' +
-        '<h3 class="mt-1 text-2xl font-bold">' + escapeHtml(displayName(place)) + '</h3>' +
-        '<p class="mt-2 text-sm leading-relaxed text-soft">' + escapeHtml(place.note || 'Found in the shared link.') + '</p>' +
+        '<div class="flex flex-wrap items-center justify-between gap-2"><p class="ds-tag">' + escapeHtml(place.category || 'Place') + '</p>' +
+        '<span class="text-xs font-semibold text-faint">' + escapeHtml(place.confidence === 'known place' ? 'Known place match' : 'Needs your review') + '</span></div>' +
+        '<div class="mt-3 grid gap-3 sm:grid-cols-2">' +
+          '<label class="text-xs font-semibold text-faint">Place name<input data-edit-name="' + index + '" class="ds-input mt-1 text-sm" value="' + escapeHtml(place.name) + '"></label>' +
+          '<label class="text-xs font-semibold text-faint">Chinese or local name<input data-edit-local-name="' + index + '" class="ds-input mt-1 text-sm" value="' + escapeHtml(place.localName || '') + '" placeholder="Verify before mainland handoff"></label>' +
+          '<label class="text-xs font-semibold text-faint">City<input data-edit-city="' + index + '" class="ds-input mt-1 text-sm" value="' + escapeHtml(place.city || '') + '" placeholder="Add city"></label>' +
+          '<div class="text-xs font-semibold text-faint"><span>Decision</span><div class="mt-1 grid grid-cols-3 gap-1" role="group" aria-label="Decision for ' + escapeHtml(place.name) + '">' +
+            decisionButton(index, 'keep', 'Keep', place.decision) +
+            decisionButton(index, 'maybe', 'Maybe', place.decision) +
+            decisionButton(index, 'drop', 'Drop', place.decision) +
+          '</div></div>' +
+        '</div>' +
+        '<p class="mt-3 text-sm leading-relaxed text-soft"><strong class="text-ink">Source evidence:</strong> ' + escapeHtml(place.note || 'No supporting line was captured.') + '</p>' +
+        '<label class="mt-3 block text-xs font-semibold text-faint">Why this decision? <span class="font-normal">Optional, shared with the task.</span><input data-edit-reason="' + index + '" class="ds-input mt-1 text-sm" maxlength="280" value="' + escapeHtml(place.decisionReason || '') + '" placeholder="e.g. Must-do, too far, branch still unclear"></label>' +
         '<div class="mt-4 flex flex-wrap gap-2">' +
-          '<button data-save-index="' + index + '" type="button" class="savePlaceBtn ds-button ds-button-dark">Save place</button>' +
-          '<a target="_blank" rel="noopener" href="' + appleMapsUrl(place) + '" class="ds-button ds-button-secondary">Open Apple Maps</a>' +
-          '<details class="text-sm text-soft"><summary class="cursor-pointer rounded-md border border-line px-3 py-2 font-semibold text-ink">Other maps</summary>' +
-          '<a class="ds-button ds-button-secondary mt-2 min-h-0 px-3 py-2" target="_blank" rel="noopener" href="' + amapUrl(place) + '">高德地图</a></details>' +
+          '<a target="_blank" rel="noopener" href="' + amapUrl(place) + '" class="ds-button ds-button-primary">Check in AMap</a>' +
+          '<a target="_blank" rel="noopener" href="' + appleMapsUrl(place) + '" class="ds-button ds-button-secondary">Check in Apple Maps</a>' +
         '</div></article>').join('');
-      document.querySelectorAll('.savePlaceBtn').forEach((button) => {
-        button.addEventListener('click', () => saveCollection([places[Number(button.dataset.saveIndex)]], true));
+      document.querySelectorAll('[data-edit-name]').forEach((input) => {
+        input.addEventListener('input', () => { selectedPlaces[Number(input.dataset.editName)].name = input.value.trim(); updateWorkspaceOverview(); });
+        input.addEventListener('change', () => renderPlaces(selectedPlaces));
       });
+      document.querySelectorAll('[data-edit-local-name]').forEach((input) => {
+        input.addEventListener('input', () => { selectedPlaces[Number(input.dataset.editLocalName)].localName = input.value.trim(); updateWorkspaceOverview(); });
+        input.addEventListener('change', () => renderPlaces(selectedPlaces));
+      });
+      document.querySelectorAll('[data-edit-city]').forEach((input) => {
+        input.addEventListener('input', () => { selectedPlaces[Number(input.dataset.editCity)].city = input.value.trim(); updateWorkspaceOverview(); });
+        input.addEventListener('change', () => renderPlaces(selectedPlaces));
+      });
+      document.querySelectorAll('[data-decision-index]').forEach((button) => {
+        button.addEventListener('click', () => {
+          selectedPlaces[Number(button.dataset.decisionIndex)].decision = button.dataset.decision;
+          renderPlaces(selectedPlaces);
+        });
+      });
+      document.querySelectorAll('[data-edit-reason]').forEach((input) => {
+        input.addEventListener('input', () => {
+          selectedPlaces[Number(input.dataset.editReason)].decisionReason = input.value.trim();
+          updateWorkspaceOverview();
+        });
+      });
+      updateWorkspaceOverview();
     }
 
-    function saveCollection(places, openMap) {
+    async function saveCollection(places, openMap) {
       const cleanPlaces = (places || []).filter(Boolean);
       if (!cleanPlaces.length) {
-        showStatus('Extract places before saving.', true);
+        showStatus('Mark at least one place Keep before saving.', true);
         return;
       }
-      const user = getUser();
+      const workspace = currentWorkspace();
+      let user = getUser();
       if (!user) {
-        pendingSave = { places: cleanPlaces, openMap };
-        showStage('login');
-        emailInput.focus();
-        return;
+        const pendingAction = {
+          places: cleanPlaces,
+          source: selectedSource,
+          collectionName: selectedCollectionName,
+          workspace,
+        };
+        localStorage.setItem(pendingAuthSaveKey, JSON.stringify(pendingAction));
+        user = window.ctmeRequireUser ? await window.ctmeRequireUser('save this reviewed list to your profile') : null;
+        if (!user) return;
       }
       const sourceUrl = selectedSource?.url || cleanPlaces[0]?.sourceUrl || '';
       const fingerprint = slugify(sourceUrl || selectedCollectionName || cleanPlaces.map((place) => displayName(place)).join('-'));
       const collection = {
         id: 'upload:' + fingerprint,
-        name: cleanPlaces.length === 1 ? displayName(cleanPlaces[0]) : selectedCollectionName,
+        name: selectedCollectionName,
         platform: selectedSource?.platform || cleanPlaces[0]?.sourcePlatform || 'Source',
         sourceUrl,
         savedAt: new Date().toISOString(),
         savedBy: user.email,
         places: cleanPlaces,
+        decisions: workspace.places.map(({ name, city, decision, decisionReason }) => ({ name, city, decision, decisionReason })),
+        constraints: workspace.constraints,
       };
       savePinList(collection);
       renderSaved();
       showStage('saved');
       if (openMap && cleanPlaces.length === 1) window.open(appleMapsUrl(cleanPlaces[0]), '_blank', 'noopener');
-      pendingSave = null;
+      localStorage.removeItem(pendingAuthSaveKey);
+    }
+
+    function resumePendingAuthSave() {
+      if (!getUser()) return;
+      let pending;
+      try { pending = JSON.parse(localStorage.getItem(pendingAuthSaveKey) || 'null'); } catch { pending = null; }
+      if (!pending?.places?.length) return;
+      selectedPlaces = pending.places;
+      selectedSource = pending.source || null;
+      selectedCollectionName = pending.collectionName || 'China inspiration collection';
+      if (pending.workspace) loadWorkspace(pending.workspace);
+      localStorage.removeItem(pendingAuthSaveKey);
+      saveCollection(pending.places, false);
+    }
+
+    async function shareReviewedPlan() {
+      const workspace = currentWorkspace();
+      if (!workspace.places.length) {
+        showStatus('Keep at least one candidate before sharing.', true);
+        return;
+      }
+      const url = new URL('/map-import/', window.location.origin);
+      url.searchParams.set('task', encodeSharedWorkspace(workspace));
+      try {
+        await navigator.clipboard.writeText(url.toString());
+        showStatus('Editable task link copied. It reopens the bilingual identities, evidence, decisions, reasons, and constraints as a snapshot.', false);
+      } catch {
+        window.prompt('Copy this editable task link:', url.toString());
+      }
+    }
+
+    async function copyMapHandoff() {
+      const groups = sequenceKeptPlaces(currentWorkspace());
+      if (!groups.length) {
+        showStatus('Mark at least one place Keep before copying a map handoff.', true);
+        return;
+      }
+      const constraints = getConstraints();
+      const lines = [selectedCollectionName];
+      if (constraints.base) lines.push('Start/base: ' + constraints.base);
+      if (constraints.time) lines.push('Time: ' + constraints.time);
+      lines.push('Pace: ' + constraints.pace);
+      if (constraints.mustDo) lines.push('Must-do: ' + constraints.mustDo);
+      if (constraints.needs) lines.push('Needs: ' + constraints.needs);
+      groups.forEach((group) => {
+        lines.push('', group.city);
+        group.places.forEach((place, index) => {
+          lines.push((index + 1) + '. ' + displayName(place));
+          lines.push('   AMap: ' + amapUrl(place));
+          lines.push('   Apple Maps: ' + appleMapsUrl(place));
+        });
+      });
+      lines.push('', 'Verify the provider result, branch, entrance, and current opening details before relying on this handoff.');
+      try {
+        await navigator.clipboard.writeText(lines.join('\n'));
+        showStatus('Map handoff copied for the kept places. It includes separate AMap and Apple queries, not a claim that favorites were written.', false);
+      } catch {
+        window.prompt('Copy this map handoff:', lines.join('\n'));
+      }
+    }
+
+    function currentWorkspace() {
+      return createSharedWorkspace({
+        title: selectedCollectionName,
+        source: selectedSource,
+        places: selectedPlaces,
+        constraints: getConstraints(),
+      });
+    }
+
+    function loadWorkspace(workspace) {
+      const clean = createSharedWorkspace(workspace);
+      selectedCollectionName = clean.title;
+      selectedSource = clean.source;
+      selectedPlaces = clean.places;
+      linkInput.value = clean.source.text || clean.source.url || '';
+      sourceText.textContent = 'Reopened source: ' + clean.source.platform;
+      sourceText.classList.remove('hidden');
+      setConstraints(clean.constraints);
+    }
+
+    function getConstraints() {
+      return {
+        base: constraintBase.value.trim(),
+        time: constraintTime.value.trim(),
+        pace: constraintPace.value,
+        mustDo: constraintMustDo.value.trim(),
+        needs: constraintNeeds.value.trim(),
+      };
+    }
+
+    function setConstraints(constraints = {}) {
+      constraintBase.value = constraints.base || '';
+      constraintTime.value = constraints.time || '';
+      constraintPace.value = constraints.pace || 'balanced';
+      constraintMustDo.value = constraints.mustDo || '';
+      constraintNeeds.value = constraints.needs || '';
+    }
+
+    function keptPlaces() {
+      return selectedPlaces.filter((place) => place.decision === 'keep' && place.name?.trim());
+    }
+
+    function decisionButton(index, decision, label, selectedDecision) {
+      const selected = decision === selectedDecision;
+      return '<button type="button" data-decision-index="' + index + '" data-decision="' + decision + '" aria-pressed="' + selected + '" class="ds-button min-h-0 px-2 py-2 text-xs ' + (selected ? 'ds-button-dark' : 'ds-button-secondary') + '">' + label + '</button>';
+    }
+
+    function updateWorkspaceOverview() {
+      const workspace = currentWorkspace();
+      const counts = decisionCounts(workspace);
+      decisionSummary.innerHTML = ['keep', 'maybe', 'drop'].map((decision) =>
+        '<div class="ds-card p-2"><strong class="block text-xl text-ink">' + counts[decision] + '</strong><span class="text-xs capitalize text-faint">' + decision + '</span></div>'
+      ).join('');
+
+      const conflicts = findWorkspaceConflicts(workspace);
+      conflictCount.textContent = String(conflicts.length);
+      conflictList.innerHTML = conflicts.length
+        ? conflicts.map((conflict) => '<p class="rounded-md border border-line p-2"><strong class="text-ink">' + (conflict.placeIndex === null ? 'Whole task' : 'Place ' + (conflict.placeIndex + 1)) + ':</strong> ' + escapeHtml(conflict.message) + '</p>').join('')
+        : '<p class="rounded-md border border-line p-2">No deterministic conflicts found. Still verify hours, closures, reservations, branch, and entrance in the provider.</p>';
+
+      const groups = sequenceKeptPlaces(workspace);
+      routePreview.innerHTML = groups.length
+        ? groups.map((group) => '<div><p class="font-semibold text-ink">' + escapeHtml(group.city) + '</p><ol class="mt-2 grid gap-2">' + group.places.map((place, index) => '<li class="grid grid-cols-[1.5rem_1fr] gap-2"><span class="grid h-6 w-6 place-items-center rounded-full border border-line text-xs">' + (index + 1) + '</span><span><strong class="block text-ink">' + escapeHtml(displayName(place)) + '</strong><span class="text-xs">Source order; confirm travel time in AMap.</span></span></li>').join('') + '</ol></div>').join('')
+        : '<p class="rounded-md border border-dashed border-line p-3">Mark a place Keep to build the handoff order.</p>';
+      saveCollectionBtn.textContent = counts.keep ? 'Save ' + counts.keep + ' kept place' + (counts.keep === 1 ? '' : 's') : 'Save kept places';
     }
 
     function renderSaved() {
@@ -326,13 +541,14 @@ const jsonLd = [
     function showStage(stage) {
       importSection.classList.toggle('hidden', stage !== 'import');
       resultSection.classList.toggle('hidden', stage !== 'result');
-      loginSection.classList.toggle('hidden', stage !== 'login');
       savedSection.classList.toggle('hidden', stage !== 'saved');
     }
     function showStatus(message, isError) {
-      statusText.textContent = message;
-      statusText.classList.remove('hidden');
-      statusText.classList.toggle('border-accent', Boolean(isError));
+      [statusText, resultStatusText].forEach((target) => {
+        target.textContent = message;
+        target.classList.remove('hidden');
+        target.classList.toggle('border-accent', Boolean(isError));
+      });
     }
     function keyFor(place) { return String(place.name || '').toLowerCase() + '|' + String(place.city || '').toLowerCase(); }
     function slugify(value) {

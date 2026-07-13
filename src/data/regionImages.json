@@ -149,6 +149,12 @@
     "source": "https://en.wikipedia.org/wiki/Pingyao",
     "title": "Pingyao"
   },
+  "chengdu": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Chengdu_Research_Base_Eingang.jpg",
+    "alt": "Giant panda at Chengdu Research Base",
+    "source": "https://en.wikipedia.org/wiki/Chengdu_Research_Base_of_Giant_Panda_Breeding",
+    "title": "Chengdu Research Base of Giant Panda Breeding"
+  },
   "sichuan": {
     "src": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Chengdu_Research_Base_Eingang.jpg",
     "alt": "Giant panda at Chengdu Research Base in Sichuan",

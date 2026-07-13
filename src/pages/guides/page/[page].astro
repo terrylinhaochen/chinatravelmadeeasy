@@ -23,6 +23,7 @@ export async function getStaticPaths() {
 }
 
 const { guides, currentPage, totalPages } = Astro.props;
+const allGuides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
 const description =
   `China Travel Made Easy guides, page ${currentPage}: payments, internet, visas, trains, city transport, language, hotels, food, and first-trip planning.`;
 
@@ -53,5 +54,5 @@ const jsonLd = [
 ---
 
 <Base title={`Guides page ${currentPage}`} description={description} jsonLd={jsonLd}>
-  <GuideListingPage guides={guides} currentPage={currentPage} totalPages={totalPages} />
+  <GuideListingPage guides={guides} searchGuides={allGuides} currentPage={currentPage} totalPages={totalPages} />
 </Base>

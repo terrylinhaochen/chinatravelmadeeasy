@@ -1,0 +1,106 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allCommunityPlaces, videosForPlace } from '../../data/communityVideos';
+import { amapLink, appleMapsLink } from '../../utils/communityMap.js';
+import { destinationFieldNoteHref } from '../../utils/videoEmbed.js';
+export function getStaticPaths() { return allCommunityPlaces.map((place) => ({ params: { slug: place.slug }, props: { place } })); }
+const { place } = Astro.props;
+const sources = videosForPlace(place.id);
+const destinationSlug = sources.find((video) => video.destinationSlug)?.destinationSlug;
+const description = `${place.name} (${place.localName}) in ${place.city}: bilingual identity, traveler-video evidence, and AMap/Apple Maps handoff.`;
+const schema = [{ '@context': 'https://schema.org', '@type': 'Place', name: place.name, alternateName: place.localName, address: place.address, geo: { '@type': 'GeoCoordinates', latitude: place.latitude, longitude: place.longitude }, subjectOf: sources.map((video) => ({ '@type': 'VideoObject', name: video.title, url: video.sourceUrl })) }];
+---
+<Base title={`${place.name} · ${place.localName}`} description={description} jsonLd={schema}>
+  <article class="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
+    <a href={destinationSlug ? `/regions/${destinationSlug}/` : '/discover/'} class="text-sm font-semibold text-accent">← {destinationSlug ? `${place.city} field guide` : 'Discover'}</a>
+    <div class="mt-6 grid gap-8 lg:grid-cols-[1fr_0.85fr]">
+      <div>
+        <div class="flex flex-wrap items-center gap-3"><p class="ds-eyebrow">{place.city} · {place.category}</p><span class={`resolution-badge resolution-${place.resolution}`}>{place.resolution}</span></div>
+        <h1 class="mt-3 text-5xl leading-tight">{place.name}</h1>
+        <p class="mt-2 text-3xl text-soft">{place.localName}</p>
+        <p class="mt-5 leading-relaxed">{place.address}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href={amapLink(place)} target="_blank" rel="noreferrer" class="ds-button ds-button-dark">Open in AMap</a>
+          <a href={appleMapsLink(place)} target="_blank" rel="noreferrer" class="ds-button ds-button-secondary">Apple Maps</a>
+          <button id="placeStage" class="ds-button ds-button-primary" disabled={place.resolution !== 'resolved'}>{place.resolution === 'resolved' ? 'Stage place' : 'Not safe to stage'}</button>
+          <a id="placeCorrectionLink" href="#place-correction" class="ds-button ds-button-secondary">Suggest correction</a>
+        </div>
+      </div>
+      <div class="video-map-canvas min-h-72"><div class="video-map-title"><span class="ds-eyebrow">Provider location</span><strong>{place.city}</strong></div><span class={`video-map-pin video-map-pin-${place.resolution}`} style="left:50%;top:48%">1</span><div class="video-map-credit">{place.latitude.toFixed(4)}, {place.longitude.toFixed(4)}</div></div>
+    </div>
+    <section class="mt-12 grid gap-6 lg:grid-cols-[1fr_0.8fr]">
+      <div>
+        <p class="ds-eyebrow">Provenance</p>
+        <h2 class="mt-2 text-3xl">Why this is the matched place</h2>
+        <blockquote class="mt-5 border-l-2 border-accent pl-4 text-lg leading-relaxed">{place.evidence}</blockquote>
+        <p class="mt-3 text-xs text-faint">{place.evidenceType} evidence · {Math.round(place.confidence * 100)}% resolution confidence · {place.sourceFreshness}</p>
+        <div class="mt-6 grid gap-3">{sources.map((video) => <a class="ds-panel flex gap-4 p-4" href={destinationFieldNoteHref(video)}><img src={video.poster} alt={`${video.title} video source thumbnail`} class="h-20 w-28 rounded-md object-cover" /><span><strong class="block">{video.title}</strong><span class="mt-1 block text-sm text-soft">{video.creator} · {video.platform === 'instagram' ? 'Instagram' : 'TikTok'} · Watch the source and read its context</span></span></a>)}</div>
+      </div>
+      <div>
+        <details id="place-correction" class="ds-panel scroll-mt-24 p-5" open={place.resolution !== 'resolved'}>
+          <summary class="cursor-pointer font-semibold text-ink">Suggest a place correction <span id="correctionCount" class="ml-2 text-xs font-normal text-faint"></span></summary>
+          <form id="correctionForm" class="mt-4 grid gap-3">
+            <label class="text-xs font-semibold text-faint">What is wrong?
+              <select name="type" class="ds-input mt-1 text-sm" required>
+                <option value="wrong_place">Wrong place match</option>
+                <option value="local_name">Chinese or local name</option>
+                <option value="address">Address or entrance</option>
+                <option value="closed">Closed or no longer exists</option>
+                <option value="duplicate">Duplicate place</option>
+              </select>
+            </label>
+            <label class="text-xs font-semibold text-faint">Proposed correction
+              <textarea name="proposedValue" maxlength="280" class="ds-input mt-1 min-h-24 text-sm" required placeholder="Give the corrected name, address, entrance, or evidence another reviewer can check."></textarea>
+            </label>
+            <button type="submit" class="ds-button ds-button-secondary">Submit correction</button>
+            <p id="correctionStatus" class="hidden text-sm"></p>
+            <div id="correctionList" class="grid gap-2"></div>
+          </form>
+        </details>
+      </div>
+    </section>
+  </article>
+  <script id="placeData" type="application/json" is:inline set:html={JSON.stringify(place).replace(/</g, '\\u003c')}></script>
+  <script>
+    import { saveCorrection } from '../../utils/communityApi.js';
+    import { getUser } from '../../utils/localPrototypeState.js';
+    import { getPlaceCorrections, savePlaceCorrection, stagePlaces } from '../../utils/communityMap.js';
+    const place = JSON.parse(document.querySelector('#placeData')?.textContent || '{}');
+    const storagePlaceId = place.backendId || place.id;
+    const correctionPendingKey = `ctme-pending-correction:${place.id}`;
+    const correctionForm = document.querySelector('#correctionForm');
+    const correctionPanel = document.querySelector('#place-correction');
+    const stage = document.querySelector('#placeStage');
+
+    stage?.addEventListener('click', () => { stagePlaces([place]); stage.textContent = 'Staged'; });
+    document.querySelector('#placeCorrectionLink')?.addEventListener('click', () => { correctionPanel.open = true; });
+    correctionForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const form = new FormData(event.currentTarget);
+      const payload = { clientRequestId: crypto.randomUUID(), placeId: storagePlaceId, type: form.get('type'), proposedValue: String(form.get('proposedValue') || '').trim() };
+      localStorage.setItem(correctionPendingKey, JSON.stringify(payload));
+      const user = await window.ctmeRequireUser('submit a place correction');
+      if (user) persistCorrection(payload);
+    });
+
+    async function persistCorrection(payload) {
+      savePlaceCorrection(payload);
+      renderCorrections();
+      const backendReady = /^[0-9a-f-]{36}$/i.test(payload.placeId);
+      const result = backendReady ? await saveCorrection(payload) : { configured: false };
+      if (!result.error) localStorage.removeItem(correctionPendingKey);
+      showResult('#correctionStatus', result.error ? 'Saved on this device; server sync needs a retry.' : result.configured === false ? 'Saved on this device for review. This seeded place is not connected to the community backend yet.' : 'Correction submitted for review.');
+      correctionForm.reset();
+    }
+    function renderCorrections() {
+      const items = getPlaceCorrections(storagePlaceId);
+      document.querySelector('#correctionCount').textContent = items.length ? `· ${items.length} submitted` : '';
+      document.querySelector('#correctionList').innerHTML = items.length ? '<p class="ds-tag">Your submitted corrections</p>' + items.map((item) => '<article class="rounded-md border border-line bg-paper p-3 text-sm"><strong class="capitalize text-ink">' + escapeHtml(String(item.type || '').replaceAll('_', ' ')) + '</strong><p class="mt-1 leading-relaxed text-soft">' + escapeHtml(item.proposedValue) + '</p></article>').join('') : '';
+    }
+    function showResult(selector, message) { const target = document.querySelector(selector); target.textContent = message; target.className = 'text-sm text-soft'; }
+    function escapeHtml(value) { return String(value || '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char])); }
+
+    renderCorrections();
+    if (getUser() && localStorage.getItem(correctionPendingKey)) persistCorrection(JSON.parse(localStorage.getItem(correctionPendingKey)));
+  </script>
+</Base>

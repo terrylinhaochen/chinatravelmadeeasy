@@ -1,15 +1,26 @@
 ---
 import GuideCard from './GuideCard.astro';
 import Pagination from './Pagination.astro';
+import AgentLibrarySearch from './AgentLibrarySearch.astro';
 import type { CollectionEntry } from 'astro:content';
+import { guideSearchText } from '../utils/guideSearchText.js';
 
 interface Props {
   guides: CollectionEntry<'guides'>[];
+  searchGuides?: CollectionEntry<'guides'>[];
   currentPage: number;
   totalPages: number;
 }
 
-const { guides, currentPage, totalPages } = Astro.props;
+const { guides, searchGuides = guides, currentPage, totalPages } = Astro.props;
+const libraryItems = searchGuides.map((guide) => ({
+  id: guide.id,
+  title: guide.data.title,
+  summary: guide.data.description,
+  href: `/guides/${guide.id}/`,
+  label: guide.data.category,
+  searchText: guideSearchText(guide),
+}));
 ---
 
 <section class="ds-section">
@@ -24,8 +35,24 @@ const { guides, currentPage, totalPages } = Astro.props;
     </p>
   </div>
 
+  <AgentLibrarySearch
+    eyebrow="Ask the skill"
+    title="Describe the problem in front of you"
+    copy="Search by situation instead of guessing a category. The finder ranks current guides and their published FAQs, then opens the strongest grounded match."
+    placeholder="I land tomorrow and my Alipay card keeps failing"
+    actionLabel="Find guide"
+    items={libraryItems}
+    suggestions={['Set up my first trip', 'Fix a payment problem', 'Book a train']}
+  />
+
   <div class="ds-listing-grid mt-8">
-    {guides.map((guide) => <GuideCard guide={guide} />)}
+    {guides.map((guide) => (
+      <GuideCard
+        guide={guide}
+        searchId={guide.id}
+        searchText={guideSearchText(guide).toLowerCase()}
+      />
+    ))}
   </div>
 
   <section class="ds-panel mt-10 p-5 sm:p-6" aria-labelledby="guide-use-heading">

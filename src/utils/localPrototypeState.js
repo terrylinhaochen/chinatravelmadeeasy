@@ -32,18 +32,43 @@ export function getSavedPinLists() {
 
 export function savePinList(collection) {
   const current = getSavedPinLists();
-  const cleanCollection = {
-    ...collection,
-    id: collection.id || `uploaded:${Date.now()}`,
-    type: 'uploaded',
-    savedAt: collection.savedAt || new Date().toISOString(),
-  };
-  writeJson(
-    CTME_SAVED_PIN_LISTS_KEY,
-    [cleanCollection, ...current.filter((item) => item.id !== cleanCollection.id)].slice(0, 32)
-  );
+  const cleanCollections = splitPinListByCity(collection);
+  writeJson(CTME_SAVED_PIN_LISTS_KEY, mergeSavedPinLists(current, cleanCollections));
   emitStateUpdate();
-  return cleanCollection;
+  return cleanCollections.length === 1 ? cleanCollections[0] : cleanCollections;
+}
+
+export function mergeSavedPinLists(current, cleanCollections, limit = 32) {
+  const incomingIds = new Set(cleanCollections.map((item) => item.id));
+  const sourceIds = new Set(cleanCollections.map((item) => item.sourceCollectionId).filter(Boolean));
+  return [
+    ...cleanCollections,
+    ...current.filter((item) => !incomingIds.has(item.id) && !sourceIds.has(item.sourceCollectionId || item.id)),
+  ].slice(0, limit);
+}
+
+export function splitPinListByCity(collection) {
+  const places = Array.isArray(collection?.places) ? collection.places.filter(Boolean) : [];
+  const baseId = collection.id || `uploaded:${Date.now()}`;
+  const savedAt = collection.savedAt || new Date().toISOString();
+  const groups = new Map();
+  places.forEach((place) => {
+    const city = String(place.city || '').trim() || 'Needs city review';
+    if (!groups.has(city)) groups.set(city, []);
+    groups.get(city).push(place);
+  });
+  if (!groups.size) groups.set('Needs city review', []);
+  const split = groups.size > 1;
+  return Array.from(groups.entries()).map(([city, cityPlaces]) => ({
+    ...collection,
+    id: split ? `${baseId}:${slugStateValue(city)}` : baseId,
+    sourceCollectionId: baseId,
+    name: split ? `${collection.name || 'Saved places'} · ${city}` : (collection.name || 'Saved places'),
+    city,
+    places: cityPlaces,
+    type: 'uploaded',
+    savedAt,
+  }));
 }
 
 export function getCollectedCollections() {
@@ -96,4 +121,11 @@ function readJson(key, fallback) {
 
 function writeJson(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
+}
+
+function slugStateValue(value) {
+  return String(value || 'city')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '') || 'city';
 }

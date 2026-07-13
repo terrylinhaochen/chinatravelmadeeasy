@@ -11,15 +11,16 @@ export function getStaticPaths() {
   return curatedCollections.map((item) => ({
     params: {
       owner: item.owner.slug,
-      collection: item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+      collection: item.pathSlug ?? item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
     },
     props: { item },
   }));
 }
 
 const { item } = Astro.props;
-const noteCount = item.places.filter((place) => place.note).length;
 const displayTitle = item.title.replace(/\b\w/g, (letter) => letter.toUpperCase());
+const collectionSlug = item.pathSlug ?? item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const noteCount = item.places.filter((place) => place.note).length;
 const cityEditions = Object.entries(item.regionBuckets)
   .map(([region, count]) => {
     const city = region as CuratedCollectionRegionBucket;
@@ -30,316 +31,107 @@ const cityEditions = Object.entries(item.regionBuckets)
       places,
       meta: curatedRegionMeta[city],
       noteCount: places.filter((place) => place.note).length,
+      href: `/curated/${item.owner.slug}/${collectionSlug}/${city}/`,
     };
   })
   .sort((a, b) => (b.count ?? 0) - (a.count ?? 0));
-const primaryCity = cityEditions[0]?.city ?? 'all';
-const description = `${item.owner.name}'s ${item.title} list with ${item.placeCount} saved restaurant pins to scan, keep, and open in maps.`;
-const collectionPayload = {
-  id: item.slug,
-  title: item.title,
-  displayTitle,
-  owner: item.owner.name,
-  sourceUrl: item.canonicalUrl || item.sourceUrl,
-  primaryCity,
-  regionMeta: curatedRegionMeta,
-  places: item.places.map(({ sourceProvider: _sourceProvider, ...place }) => place),
-};
+
+const description = `${item.owner.name}'s uploaded ${displayTitle} collection, split into ${cityEditions.length} city-level map lists.`;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: `${item.title} by ${item.owner.name}`,
+    name: `${displayTitle} by ${item.owner.name}`,
     description,
-    url: `https://chinatravelmadeeasy.com/curated/${item.owner.slug}/${Astro.params.collection}/`,
+    url: `https://chinatravelmadeeasy.com/curated/${item.owner.slug}/${collectionSlug}/`,
     isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
   },
   {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: `${item.title} pins`,
-    numberOfItems: item.places.length,
-    itemListElement: item.places.map((place, index) => ({
+    name: `${displayTitle} city editions`,
+    numberOfItems: cityEditions.length,
+    itemListElement: cityEditions.map((edition, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      name: place.name,
-      description: place.note || place.address,
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: place.latitude,
-        longitude: place.longitude,
-      },
+      name: `${edition.meta.edition} by ${item.owner.name}`,
+      url: `https://chinatravelmadeeasy.com${edition.href}`,
+      numberOfItems: edition.count,
     })),
   },
 ];
 ---
 
 <Base title={`${displayTitle} by ${item.owner.name}`} description={description} jsonLd={jsonLd}>
-  <section class="ds-section curated-detail" data-curated-root>
-    <div class="flex flex-wrap items-center gap-2 text-sm text-faint">
+  <section class="ds-section curated-overview">
+    <nav class="flex flex-wrap items-center gap-2 text-sm text-faint" aria-label="Breadcrumb">
       <a href="/curated/" class="hover:text-accent">Curated</a>
       <span>/</span>
       <span>{item.owner.name}</span>
-    </div>
+    </nav>
 
-    <div class="mt-6 grid gap-8 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
-      <div>
-        <p class="ds-eyebrow">Curated list</p>
+    <div class="curated-overview-hero mt-6 grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch">
+      <div class="curated-overview-summary ds-card flex h-full flex-col p-5 sm:p-7">
+        <p class="ds-eyebrow">Uploaded collection</p>
         <h1 class="mt-3 text-5xl leading-tight sm:text-6xl">{displayTitle}</h1>
         <div class="mt-5 flex items-center gap-3">
           <span class="curated-owner-mark" aria-hidden="true">{item.owner.name.slice(0, 1)}</span>
           <div>
             <p class="font-semibold">{item.owner.name}</p>
-            <p class="text-sm text-soft">Saved places split into city editions.</p>
+            <p class="text-sm leading-relaxed text-soft">One source, automatically separated into city lists.</p>
           </div>
         </div>
 
         <div class="mt-6 grid grid-cols-3 gap-2">
-          <div class="rounded-md border border-line bg-white p-3">
-            <p class="ds-tag">Pins</p>
-            <p class="mt-2 text-3xl leading-none" data-curated-active-count>{item.placeCount}</p>
-          </div>
-          <div class="rounded-md border border-line bg-white p-3">
-            <p class="ds-tag">Cities</p>
-            <p class="mt-2 text-3xl leading-none">{Object.keys(item.regionBuckets).length}</p>
-          </div>
-          <div class="rounded-md border border-line bg-white p-3">
-            <p class="ds-tag">Notes</p>
-            <p class="mt-2 text-3xl leading-none">{noteCount}</p>
-          </div>
+          <div class="curated-stat"><p class="ds-tag">Pins</p><p class="mt-2 text-3xl leading-none">{item.placeCount}</p></div>
+          <div class="curated-stat"><p class="ds-tag">Cities</p><p class="mt-2 text-3xl leading-none">{cityEditions.length}</p></div>
+          <div class="curated-stat"><p class="ds-tag">Notes</p><p class="mt-2 text-3xl leading-none">{noteCount}</p></div>
         </div>
 
-        <div class="mt-5 flex flex-wrap gap-2">
-          <button
-            type="button"
-            class="ds-button ds-button-dark"
-            data-curated-detail-collect
-          >
-            Collect
-          </button>
+        <p class="mt-6 text-sm leading-relaxed text-soft">
+          This page preserves the upload provenance. Collecting and remixing happen inside one city edition at a time, so a New York list never silently carries Milan, Rome, or Switzerland pins with it.
+        </p>
+
+        <div class="mt-auto flex flex-wrap gap-2 pt-6">
+          <a href={cityEditions[0]?.href ?? '/curated/'} class="ds-button ds-button-dark">Open first city</a>
           <a href={item.canonicalUrl || item.sourceUrl} class="ds-button ds-button-secondary" target="_blank" rel="noopener">Open source</a>
         </div>
-        <p class="mt-3 hidden text-sm leading-relaxed text-soft" data-curated-status></p>
       </div>
 
-      <div>
+      <div class="curated-overview-map h-full">
         <CuratedCollectionMap collection={item} />
       </div>
     </div>
 
-    <section class="mt-8" aria-label="City editions">
-      <div class="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p class="ds-eyebrow">City editions</p>
-          <h2 class="mt-2 text-3xl leading-tight">Open the city you actually need</h2>
-        </div>
-        <button type="button" class="ds-button ds-button-secondary curated-filter" data-curated-filter="all">All cities</button>
+    <section class="mt-10" aria-labelledby="city-editions-heading">
+      <p class="ds-eyebrow">City editions</p>
+      <div class="mt-2 grid gap-4 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+        <h2 id="city-editions-heading" class="text-3xl leading-tight">Choose the city you actually need</h2>
+        <p class="leading-relaxed text-soft">Each edition has its own map, search, saved state, and Collect action.</p>
       </div>
 
-      <div class="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
         {cityEditions.map((edition) => (
-          <button type="button" class="curated-city-card curated-filter" data-curated-filter={edition.city}>
-            <span class="ds-tag">{edition.meta.annotation}</span>
-            <span class="mt-3 block text-3xl leading-tight">{edition.meta.label}</span>
-            <span class="mt-3 block text-sm leading-relaxed text-soft">{edition.meta.focus}</span>
-            <span class="mt-4 flex flex-wrap gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-faint">
-              <span>{edition.count} pins</span>
-              <span>{edition.noteCount} notes</span>
-            </span>
-          </button>
+          <a href={edition.href} class="curated-city-edition ds-card-link grid gap-4 overflow-hidden p-4 sm:grid-cols-[0.72fr_1.28fr]">
+            <div class="overflow-hidden rounded-md bg-surface-strong">
+              <img src={edition.meta.cover.src} alt={edition.meta.cover.alt} class="h-full min-h-48 w-full object-cover" loading="lazy" />
+            </div>
+            <div class="flex min-w-0 flex-col p-1">
+              <p class="ds-tag">{edition.meta.annotation}</p>
+              <h3 class="mt-3 text-3xl leading-tight">{edition.meta.edition}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-soft">{edition.meta.focus}</p>
+              <div class="mt-auto flex flex-wrap gap-2 pt-5 text-xs font-semibold uppercase tracking-[0.12em] text-faint">
+                <span>{edition.count} pins</span><span>{edition.noteCount} notes</span>
+              </div>
+            </div>
+          </a>
         ))}
       </div>
     </section>
-
-    <section class="mt-8" aria-label="Collection pins">
-      <div class="grid gap-3 md:grid-cols-[1fr_minmax(14rem,0.45fr)] md:items-end">
-        <div>
-          <p class="ds-eyebrow">Pins</p>
-          <h2 class="mt-2 text-3xl leading-tight" data-curated-list-title>Places in this collection</h2>
-        </div>
-        <input data-curated-search class="ds-input text-sm" type="search" placeholder="Search places" />
-      </div>
-      <div class="mt-5 grid gap-3 md:grid-cols-2" data-curated-list></div>
-      <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
-        <p class="text-sm text-soft" data-curated-count-label></p>
-        <button type="button" class="ds-button ds-button-secondary" data-curated-show-more>Show more</button>
-      </div>
-    </section>
   </section>
-
-  <script type="application/json" id="curatedCollectionPayload" set:html={JSON.stringify(collectionPayload)} />
-
-  <script>
-    import { collectCuratedCollection, getCollectedCollections } from '../../../utils/localPrototypeState.js';
-
-    const payload = JSON.parse(document.querySelector('#curatedCollectionPayload').textContent);
-    const storageKey = 'ctme-curated-remix:' + payload.id;
-    const list = document.querySelector('[data-curated-list]');
-    const search = document.querySelector('[data-curated-search]');
-    const status = document.querySelector('[data-curated-status]');
-    const activeCount = document.querySelector('[data-curated-active-count]');
-    const filters = document.querySelectorAll('[data-curated-filter]');
-    const collectList = document.querySelector('[data-curated-detail-collect]');
-    const showMore = document.querySelector('[data-curated-show-more]');
-    const countLabel = document.querySelector('[data-curated-count-label]');
-    const listTitle = document.querySelector('[data-curated-list-title]');
-    const regionLabels = Object.fromEntries(Object.entries(payload.regionMeta).map(([key, value]) => [key, value.label]));
-    const visibleStep = 12;
-    const requestedCity = new URLSearchParams(location.search).get('city');
-    const validCities = new Set(payload.places.map((place) => place.regionBucket));
-    let activeFilter = requestedCity && validCities.has(requestedCity) ? requestedCity : payload.primaryCity;
-    let visibleLimit = visibleStep;
-    let keptIds = loadKeptIds();
-    let places = payload.places;
-
-    if (getCollectedCollections().some((entry) => entry.id === payload.id)) {
-      markCollected();
-    }
-    render();
-
-    search.addEventListener('input', render);
-    showMore.addEventListener('click', () => {
-      visibleLimit += visibleStep;
-      render();
-    });
-    collectList.addEventListener('click', async () => {
-      const user = window.ctmeRequireUser
-        ? await window.ctmeRequireUser('collect this map to your profile')
-        : null;
-      if (!user) return;
-      const item = {
-        id: payload.id,
-        title: payload.title,
-        owner: payload.owner,
-        href: location.pathname,
-        placeCount: payload.places.length,
-        source: 'Curated',
-        savedAt: new Date().toISOString(),
-      };
-      collectCuratedCollection(item);
-      markCollected();
-      showStatus('Collected to Profile.');
-    });
-    filters.forEach((button) => {
-      button.addEventListener('click', () => {
-        activeFilter = button.dataset.curatedFilter;
-        visibleLimit = visibleStep;
-        render();
-      });
-    });
-
-    function loadKeptIds() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
-        if (Array.isArray(saved)) return new Set(saved);
-      } catch {}
-      return new Set(payload.places.map((place) => place.id));
-    }
-
-    function persist() {
-      localStorage.setItem(storageKey, JSON.stringify(Array.from(keptIds)));
-    }
-
-    function markCollected() {
-      collectList.textContent = 'Collected';
-      collectList.classList.remove('ds-button-dark');
-      collectList.classList.add('ds-button-secondary');
-    }
-
-    function render() {
-      const query = search.value.trim().toLowerCase();
-      const visible = places.filter((place) => {
-        if (activeFilter !== 'all' && place.regionBucket !== activeFilter) return false;
-        if (!query) return true;
-        return [place.name, place.address, place.note, regionLabels[place.regionBucket]]
-          .filter(Boolean)
-          .some((value) => String(value).toLowerCase().includes(query));
-      });
-      const rendered = visible.slice(0, visibleLimit);
-      const activeLabel = activeFilter === 'all' ? 'All cities' : (regionLabels[activeFilter] || 'City');
-      activeCount.textContent = String(keptIds.size);
-      listTitle.textContent = activeFilter === 'all' ? 'Places in this collection' : activeLabel + ' pins';
-      list.innerHTML = rendered.map(placeCard).join('');
-      countLabel.textContent = 'Showing ' + Math.min(visibleLimit, visible.length) + ' of ' + visible.length + ' ' + (activeFilter === 'all' ? 'pins' : activeLabel + ' pins');
-      showMore.hidden = visibleLimit >= visible.length;
-      filters.forEach((item) => {
-        const isActive = item.dataset.curatedFilter === activeFilter;
-        item.classList.toggle('!border-accent', isActive);
-        item.classList.toggle('is-active', isActive);
-      });
-      list.querySelectorAll('[data-curated-toggle]').forEach((button) => {
-        button.addEventListener('click', () => {
-          const id = button.dataset.curatedToggle;
-          if (keptIds.has(id)) {
-            keptIds.delete(id);
-          } else {
-            keptIds.add(id);
-          }
-          persist();
-          render();
-        });
-      });
-    }
-
-    function icon(name) {
-      if (name === 'map') {
-        return '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3z"></path><path d="M9 3v15"></path><path d="M15 6v15"></path></svg>';
-      }
-      if (name === 'plus') {
-        return '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>';
-      }
-      return '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"></path></svg>';
-    }
-
-    function placeCard(place) {
-      const apple = 'https://maps.apple.com/?ll=' + place.latitude + ',' + place.longitude + '&q=' + encodeURIComponent(place.name);
-      const kept = keptIds.has(place.id);
-      const toggleLabel = kept ? 'Remove from kept pins' : 'Keep pin';
-      return (
-        '<article class="curated-place-card ' + (kept ? '' : 'is-muted') + '">' +
-          '<div class="curated-place-card-head">' +
-            '<span class="ds-tag">' + escapeHtml(regionLabels[place.regionBucket] || 'Place') + '</span>' +
-            '<div class="curated-place-actions">' +
-              '<button type="button" class="curated-icon-button ' + (kept ? 'is-active' : '') + '" data-curated-toggle="' + escapeHtml(place.id) + '" aria-label="' + toggleLabel + '" title="' + toggleLabel + '">' + icon(kept ? 'check' : 'plus') + '</button>' +
-              '<a class="curated-icon-button" href="' + apple + '" target="_blank" rel="noopener" aria-label="Open in maps" title="Open in maps">' + icon('map') + '</a>' +
-            '</div>' +
-          '</div>' +
-          '<div class="curated-place-card-copy">' +
-            '<h3 class="mt-1 text-2xl leading-tight">' + escapeHtml(place.name) + '</h3>' +
-            '<p class="mt-2 text-sm leading-relaxed text-soft">' + escapeHtml(place.address) + '</p>' +
-            (place.note ? '<p class="mt-2 text-sm leading-relaxed text-soft">Note: ' + escapeHtml(place.note) + '</p>' : '') +
-          '</div>' +
-        '</article>'
-      );
-    }
-
-    function showStatus(message) {
-      status.textContent = message;
-      status.classList.remove('hidden');
-    }
-
-    function escapeHtml(value) {
-      return String(value || '').replace(/[&<>"']/g, (char) => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;',
-      })[char]);
-    }
-  </script>
 </Base>
 
 <style>
-  .curated-detail :global(.ds-input) {
-    width: 100%;
-    border: 1px solid var(--color-line);
-    border-radius: 12px;
-    background: white;
-    padding: 0.85rem 1rem;
-    color: var(--color-ink);
-  }
-
   .curated-owner-mark {
     display: inline-flex;
     width: 3rem;
@@ -347,122 +139,34 @@ const jsonLd = [
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--color-line);
     border-radius: 10px;
     background: var(--color-accent);
     color: white;
     font-size: 1.15rem;
     font-weight: 700;
-    line-height: 1;
   }
 
-  .curated-city-card {
-    display: block;
-    min-height: 12.5rem;
+  .curated-stat {
     border: 1px solid var(--color-line);
-    border-radius: 12px;
-    background:
-      radial-gradient(circle at 88% 12%, rgb(140 47 34 / 0.08), transparent 24%),
-      white;
-    padding: 1rem;
-    text-align: left;
-    transition:
-      border-color 160ms ease,
-      box-shadow 160ms ease,
-      transform 160ms ease;
-  }
-
-  .curated-city-card:hover,
-  .curated-city-card:focus-visible {
-    border-color: rgb(140 47 34 / 0.45);
-    box-shadow:
-      rgba(0, 0, 0, 0.02) 0 0 0 1px,
-      rgba(0, 0, 0, 0.06) 0 5px 18px;
-  }
-
-  .curated-city-card.is-active {
-    border-color: var(--color-accent);
-    box-shadow: inset 0 0 0 1px rgb(140 47 34 / 0.32);
-  }
-
-  :global(.curated-place-card) {
-    display: grid;
-    min-height: 11.5rem;
-    align-content: start;
-    gap: 0.85rem;
-    border: 1px solid var(--color-line);
-    border-radius: 12px;
-    background: white;
-    padding: 1rem;
-    box-shadow: 0 1px 2px rgb(12 10 9 / 0.04);
-    transition:
-      border-color 160ms ease,
-      box-shadow 160ms ease,
-      opacity 160ms ease;
-  }
-
-  :global(.curated-place-card.is-muted) {
-    opacity: 0.58;
-  }
-
-  :global(.curated-place-card:hover) {
-    border-color: #d6d3d1;
-    box-shadow:
-      rgba(0, 0, 0, 0.02) 0 0 0 1px,
-      rgba(0, 0, 0, 0.06) 0 5px 18px;
-  }
-
-  :global(.curated-place-card-head) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-  }
-
-  :global(.curated-place-card-copy) {
-    min-width: 0;
-  }
-
-  :global(.curated-place-actions) {
-    display: inline-flex;
-    flex: 0 0 auto;
-    gap: 0.35rem;
-  }
-
-  :global(.curated-icon-button) {
-    display: inline-grid;
-    width: 2.35rem;
-    height: 2.35rem;
-    place-items: center;
-    border: 1px solid var(--color-line);
-    border-radius: 999px;
+    border-radius: 10px;
     background: var(--color-paper);
-    color: var(--color-soft);
-    transition:
-      border-color 160ms ease,
-      background-color 160ms ease,
-      color 160ms ease;
+    padding: 0.85rem;
   }
 
-  :global(.curated-icon-button:hover),
-  :global(.curated-icon-button:focus-visible) {
-    border-color: rgb(140 47 34 / 0.45);
-    color: var(--color-accent);
+  .curated-overview-map :global(.curated-map) {
+    height: 100%;
+    min-height: 100%;
+    align-self: stretch;
   }
 
-  :global(.curated-icon-button.is-active) {
-    border-color: var(--color-accent);
-    background: var(--color-accent);
-    color: white;
+  .curated-overview-map :global(.curated-map-grid) {
+    align-content: center;
+    min-height: 100%;
   }
 
-  :global(.curated-icon-button svg) {
-    width: 1.05rem;
-    height: 1.05rem;
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 2;
+  @media (min-width: 1024px) {
+    .curated-overview-hero {
+      min-height: 36rem;
+    }
   }
 </style>

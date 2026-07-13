@@ -6,22 +6,32 @@
 
 - [Pre-departure checklist](https://chinatravelmadeeasy.com/guides/china-pre-departure-checklist/): What to set up before flying to China — apps, verification, bookings, in order.
 - [Alipay & WeChat Pay with foreign cards](https://chinatravelmadeeasy.com/guides/alipay-wechat-pay-foreign-cards/): Setup steps, fees (~3% above ¥200), limits (~$5,000/transaction), what foreign cards can't do, where cash matters.
-- [Internet, eSIMs, VPNs and blocked apps](https://chinatravelmadeeasy.com/guides/internet-esim-vpn-blocked-apps/): Why roaming eSIMs bypass the Great Firewall, VPN reliability reality, which apps work in China.
+- [Internet, eSIMs, roaming and blocked apps](https://chinatravelmadeeasy.com/guides/internet-esim-vpn-blocked-apps/): Verify a plan's mainland routing, device support, app access, activation, hotspot rules, and independent fallback.
 - [China visa-free entry & 240-hour transit 2026](https://chinatravelmadeeasy.com/guides/china-visa-free-2026/): 30-day visa-free country list, 240-hour transit mechanics for US/UK/Canadian passports.
 - [High-speed trains: 12306 and Trip.com](https://chinatravelmadeeasy.com/guides/china-high-speed-trains/): Booking with a foreign passport, seat classes, passport gates, 15-day presale window.
 - [Didi, metro QR codes, getting around](https://chinatravelmadeeasy.com/guides/didi-metro-getting-around/): Didi without a Chinese number, Alipay transit QR, navigation apps that work.
-- [Translation & language survival](https://chinatravelmadeeasy.com/guides/translation-language-survival/): Offline packs, camera translation for menus, WeChat translate, key phrases.
+- [Translation & language survival](https://chinatravelmadeeasy.com/guides/translation-language-survival/): Offline iPhone and Android setup, QR-menu screenshots, typed exchanges, bilingual place cards, and high-stakes escalation.
 - [Hotels that accept foreigners](https://chinatravelmadeeasy.com/guides/hotels-foreigners-china/): Police registration, which properties refuse foreign guests, booking platforms.
-- [Food: QR menus and dietary needs](https://chinatravelmadeeasy.com/guides/food-ordering-dietary/): Scan-to-order workflow, allergy cards in Chinese, delivery apps honestly assessed.
+- [Food: QR menus, dietary cards and delivery recovery](https://chinatravelmadeeasy.com/guides/food-ordering-dietary/): Resolve the correct restaurant branch, complete QR-menu orders, separate preferences from medical risk, and recover from payment or delivery failure.
+- [Street food and night markets](https://chinatravelmadeeasy.com/guides/street-food-night-markets/): Separate dish ideas, city food routes, and resolved stalls; preserve bilingual identity and source evidence; order and pay with safer fallbacks.
+- [Tea houses, tea-country routes and buying](https://chinatravelmadeeasy.com/guides/tea-houses-and-rituals/): Distinguish a named venue, village route, museum campus, hosted tasting, and shopping district; confirm charges, product units, invitation risk, and return-border rules.
+- [Neighborhood walks](https://chinatravelmadeeasy.com/guides/neighborhoods-beyond-landmarks/): Convert hutong, longtang, park, and community videos into bounded public routes with bilingual anchors, mobility checks, residential boundaries, and reliable exits.
+- [Curated city collections](https://chinatravelmadeeasy.com/curated/): Creator-attributed TikTok and Instagram field notes with resolved bilingual China places, followed by clearly labeled imported archive maps split to city level.
+- [Festivals and local nightlife](https://chinatravelmadeeasy.com/guides/festivals-and-local-experiences/): Separate public holidays, travel-rush periods, named events, permanent venues, ticket zones, entrances, closures, last transport, and consent or price boundaries before rerouting for a festival or nightlife clip.
 - [7-day first-timer itinerary](https://chinatravelmadeeasy.com/guides/7-day-china-itinerary/): Beijing, Xi'an, Shanghai by high-speed rail with booking timeline.
 
 ## AI-search and QA surfaces
 
+- [Map-ready discovery](https://chinatravelmadeeasy.com/discover/): Filter and search destination pins, creator-attributed short-form field notes, city collections, and practical guides by Places, Eating, Traveling, or Hospitality before reviewing them for a map handoff.
+- [Add places](https://chinatravelmadeeasy.com/#save-places): Paste captions, OCR text, or lists; previously processed TikTok and Instagram URLs reopen their cited destination field note and Curated city collection, while unseen links receive an explicit text fallback rather than fabricated pins.
+- [Hong Kong field guide](https://chinatravelmadeeasy.com/regions/hong-kong/): A city-first editorial slice with neighborhood judgment, map-ready anchors, and expandable TikTok or Instagram-capable field notes that separate a useful experience from a verifiable place.
+- [Chongqing field guide](https://chinatravelmadeeasy.com/regions/chongqing/): A vertical-city edition that preserves level, entrance, branch, and Wulong transfer context across six bilingual map anchors and six expandable short-form field notes.
+- [Chengdu field guide](https://chinatravelmadeeasy.com/regions/chengdu/): A city-first edition that separates two airports, the chosen Panda Base gate, nested park and teahouse identities, a bounded Yulin walk, and Chengdu itself from wider Sichuan excursions across six bilingual map anchors.
 - [Traveler answers](https://chinatravelmadeeasy.com/answers/): Retrieval-friendly QA page matching common China travel questions to guide answers.
 - [Korean traveler answers](https://chinatravelmadeeasy.com/ko/answers/): Korean-language QA page for China travel planning intents.
 - [Japanese traveler answers](https://chinatravelmadeeasy.com/ja/answers/): Japanese-language QA page for China travel planning intents.
 - [Guides](https://chinatravelmadeeasy.com/guides/): Paginated guide library for places, payments, apps, transport, hotels, food, language, authentic experiences, and map saving.
-- [Destination regions](https://chinatravelmadeeasy.com/regions/): Province-level China destination index with region-specific guide matches and QA.
-- [Save Places](https://chinatravelmadeeasy.com/map-import/): Paste TikTok or Instagram travel links, extract China places, and save them to Apple Maps-ready trip collections.
+- [Cities and regions](https://chinatravelmadeeasy.com/regions/): City editions appear before wider province and region routes, with bilingual starter places, guide matches, and destination QA.
+- [Save Places](https://chinatravelmadeeasy.com/map-import/): Paste caption text, OCR text, or a place list, review extracted candidates together, and create separate AMap and Apple Maps handoffs. A bare social URL is not fetched by the static prototype.
 - [Content seeds](https://chinatravelmadeeasy.com/content-seeds/): CrowdListen-informed question, concern, and recommendation seeds for future guide updates.
 - [Content seeds JSON](https://chinatravelmadeeasy.com/content-seeds.json): Machine-readable seed data for editorial and agent workflows.

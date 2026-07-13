@@ -5,20 +5,25 @@ import { getGuideImage } from '../data/guideImages';
 
 interface Props {
   guide: CollectionEntry<'guides'>;
+  searchId?: string;
+  searchText?: string;
 }
 
-const { guide } = Astro.props;
+const { guide, searchId, searchText } = Astro.props;
 const { title, description, category, icon, updated } = guide.data;
 const image = getGuideImage(guide.id);
 const fmt = updated.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
+  timeZone: 'UTC',
 });
 ---
 
 <a
   href={`/guides/${guide.id}/`}
   class="ds-listing-card group"
+  data-library-item={searchId}
+  data-library-search={searchText}
 >
   <div class="ds-listing-thumb">
     <img src={image.src} alt={image.alt} loading="lazy" />

@@ -4,10 +4,9 @@ import GuideListingPage from '../../components/GuideListingPage.astro';
 import { getCollection } from 'astro:content';
 
 const guides = (await getCollection('guides')).sort((a, b) => a.data.order - b.data.order);
-const perPage = 12;
 const currentPage = 1;
-const totalPages = Math.ceil(guides.length / perPage);
-const pagedGuides = guides.slice(0, perPage);
+const totalPages = 1;
+const pagedGuides = guides;
 
 const description =
   'China Travel Made Easy guides for payments, internet, visas, trains, city transport, language, hotels, food, and first-trip planning.';
@@ -39,5 +38,5 @@ const jsonLd = [
 ---
 
 <Base title="Guides" description={description} jsonLd={jsonLd}>
-  <GuideListingPage guides={pagedGuides} currentPage={currentPage} totalPages={totalPages} />
+  <GuideListingPage guides={pagedGuides} searchGuides={guides} currentPage={currentPage} totalPages={totalPages} />
 </Base>

@@ -8,12 +8,12 @@ import {
 } from '../../data/curatedCollections';
 
 const description =
-  'Curated map collections from real people, split by city so travelers can collect, scan, and remix useful pins.';
+  'China travel videos and imported place lists resolved into city-level map collections with creator evidence and bilingual identities.';
 
 function collectionHref(collection: (typeof curatedCollections)[number], city?: CuratedCollectionRegionBucket) {
   const owner = collection.owner.slug;
   const list = collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  return `/curated/${owner}/${list}/${city ? `?city=${city}` : ''}`;
+  return city ? `/curated/${owner}/${list}/${city}/` : `/curated/${owner}/${list}/`;
 }
 
 const cityEditions = curatedCollections
@@ -29,13 +29,21 @@ const cityEditions = curatedCollections
         places,
         meta: curatedRegionMeta[city],
         guide: curatedRegionMeta[city].guide,
+        scope: curatedRegionMeta[city].scope,
         noteCount: places.filter((place) => place.note).length,
         href: collectionHref(collection, city),
       };
     })
   )
-  .sort((a, b) => (b.count ?? 0) - (a.count ?? 0));
+  .sort((a, b) => {
+    if (a.scope !== b.scope) return a.scope === 'China' ? -1 : 1;
+    const cityPriority: Partial<Record<CuratedCollectionRegionBucket, number>> = { 'hong-kong': 0, shanghai: 1, beijing: 2, chongqing: 3 };
+    const priorityDifference = (cityPriority[a.city] ?? 99) - (cityPriority[b.city] ?? 99);
+    if (priorityDifference) return priorityDifference;
+    return (b.count ?? 0) - (a.count ?? 0);
+  });
 const guideFilters = ['All', ...Array.from(new Set(cityEditions.map((edition) => edition.guide)))];
+const firstImportedIndex = cityEditions.findIndex((edition) => edition.scope !== 'China');
 
 const jsonLd = [
   {
@@ -70,7 +78,7 @@ const jsonLd = [
         <h1 class="ds-section-title">City maps worth remixing</h1>
       </div>
       <p class="text-lg leading-relaxed text-soft">
-        Ingest a real map, cluster the pins, add travel context, and collect the useful set.
+        Start with traveler video evidence resolved into exact China places. Imported maps remain below as provenance examples, split into one city at a time.
       </p>
     </div>
 
@@ -87,11 +95,26 @@ const jsonLd = [
     </div>
 
     <div class="mt-5 grid gap-5">
-      {cityEditions.map((edition) => (
+      {cityEditions.map((edition, index) => (
+        <>
+        {index === 0 && (
+          <div class="border-b border-line pb-3" data-curated-section-heading="China">
+            <p class="ds-eyebrow">China traveler stories</p>
+            <h2 class="mt-2 text-3xl leading-tight">Creator evidence that survives the map handoff</h2>
+          </div>
+        )}
+        {index === firstImportedIndex && (
+          <div class="mt-5 border-b border-line pb-3" data-curated-section-heading="Imported archive">
+            <p class="ds-eyebrow">Imported archive</p>
+            <h2 class="mt-2 text-3xl leading-tight">Original uploads, preserved and split by city</h2>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-soft">These prove that a multi-city source remains traceable while each collected edition stays city-specific. They are not China recommendations.</p>
+          </div>
+        )}
         <article
           class="curated-card ds-card grid gap-5 p-4 sm:p-5 xl:grid-cols-[0.72fr_1.28fr] xl:items-stretch"
           data-curated-card={edition.id}
           data-curated-guide={edition.guide}
+          data-curated-scope={edition.scope}
         >
           <a class="curated-cover" href={edition.href} aria-label={`Open ${edition.meta.edition} by ${edition.collection.owner.name}`}>
             <img class="curated-cover-image" src={edition.meta.cover.src} alt={edition.meta.cover.alt} loading="lazy" />
@@ -134,7 +157,7 @@ const jsonLd = [
             <div class="mt-5 rounded-md border border-line bg-paper p-3">
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <p class="ds-tag">Why collect</p>
-                <p class="text-xs font-semibold uppercase tracking-[0.12em] text-faint">Pipeline output</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.12em] text-faint">{edition.scope === 'China' ? `${edition.collection.provider} evidence` : 'Imported source'}</p>
               </div>
               <a class="curated-preview-copy mt-3" href={edition.href}>
                 {edition.meta.hook}
@@ -158,46 +181,37 @@ const jsonLd = [
             <p class="mt-3 hidden text-sm leading-relaxed text-soft" data-curated-collect-status={edition.id}></p>
           </div>
         </article>
+        </>
       ))}
     </div>
   </section>
 </Base>
 
 <script>
-  import { collectCuratedCollection, getCollectedCollections } from '../../utils/localPrototypeState.js';
+  import { collectCuratedCollection, getCollectedCollections, getUser } from '../../utils/localPrototypeState.js';
 
   const collectButtons = document.querySelectorAll('[data-curated-collect]');
   const guideButtons = document.querySelectorAll('[data-curated-guide-filter]');
   const curatedCards = document.querySelectorAll('[data-curated-card]');
+  const sectionHeadings = document.querySelectorAll('[data-curated-section-heading]');
+  const pendingCollectKey = 'ctme-pending-curated-collect';
 
   collectButtons.forEach((button) => {
     const existing = getCollectedCollections().find((entry) => entry.id === button.dataset.curatedCollect);
     if (existing) markCollected(button);
 
     button.addEventListener('click', async () => {
+      const item = payloadForButton(button);
+      localStorage.setItem(pendingCollectKey, JSON.stringify(item));
       const user = window.ctmeRequireUser
         ? await window.ctmeRequireUser('collect this city map to your profile')
         : null;
       if (!user) return;
-      const id = button.dataset.curatedCollect;
-      const item = {
-        id,
-        title: button.dataset.curatedTitle,
-        owner: button.dataset.curatedOwner,
-        href: button.dataset.curatedHref,
-        placeCount: Number(button.dataset.curatedCount || 0),
-        source: 'Curated',
-        savedAt: new Date().toISOString(),
-      };
-      collectCuratedCollection(item);
-      markCollected(button);
-      const status = document.querySelector(`[data-curated-collect-status="${id}"]`);
-      if (status) {
-        status.innerHTML = 'Saved to Profile. <a class="font-semibold text-ink hover:text-accent" href="/profile/">Open Profile</a>';
-        status.classList.remove('hidden');
-      }
+      completeCollect(item, button);
     });
   });
+
+  resumePendingCollect();
 
   guideButtons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -206,6 +220,9 @@ const jsonLd = [
       curatedCards.forEach((card) => {
         card.hidden = guide !== 'All' && card.dataset.curatedGuide !== guide;
       });
+      sectionHeadings.forEach((heading) => {
+        heading.hidden = !Array.from(curatedCards).some((card) => !card.hidden && card.dataset.curatedScope === heading.dataset.curatedSectionHeading);
+      });
     });
   });
 
@@ -213,6 +230,38 @@ const jsonLd = [
     button.textContent = 'Collected';
     button.classList.remove('ds-button-dark');
     button.classList.add('ds-button-secondary');
+  }
+
+  function payloadForButton(button) {
+    return {
+      id: button.dataset.curatedCollect,
+      title: button.dataset.curatedTitle,
+      owner: button.dataset.curatedOwner,
+      href: button.dataset.curatedHref,
+      placeCount: Number(button.dataset.curatedCount || 0),
+      source: 'Curated',
+      savedAt: new Date().toISOString(),
+    };
+  }
+
+  function completeCollect(item, button) {
+    collectCuratedCollection(item);
+    localStorage.removeItem(pendingCollectKey);
+    markCollected(button);
+    const status = document.querySelector(`[data-curated-collect-status="${item.id}"]`);
+    if (status) {
+      status.innerHTML = 'Saved to Profile. <a class="font-semibold text-ink hover:text-accent" href="/profile/">Open Profile</a>';
+      status.classList.remove('hidden');
+    }
+  }
+
+  function resumePendingCollect() {
+    if (!getUser()) return;
+    let pending;
+    try { pending = JSON.parse(localStorage.getItem(pendingCollectKey) || 'null'); } catch { pending = null; }
+    if (!pending?.id) return;
+    const button = Array.from(collectButtons).find((item) => item.dataset.curatedCollect === pending.id);
+    if (button) completeCollect(pending, button);
   }
 </script>
 

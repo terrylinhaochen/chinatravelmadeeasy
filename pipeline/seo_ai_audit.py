@@ -30,6 +30,9 @@ MIN_WORDS = {
     "region": 450,
     "tool": 250,
     "utility": 80,
+    "profile": 80,
+    "video_detail": 100,
+    "place_detail": 100,
 }
 QUESTION_RE = re.compile(r"\b(who|what|when|where|why|how|can|do|does|should|is|are|will)\b|[?]", re.I)
 
@@ -137,10 +140,16 @@ def route_for_file(path: Path, dist: Path) -> str:
 def page_kind(route: str) -> str:
     if route == "/":
         return "home"
+    if route == "/profile/":
+        return "profile"
     if route.startswith("/guides/") and route != "/guides/" and "/page/" not in route:
         return "guide"
     if route.startswith("/regions/") and route != "/regions/":
         return "region"
+    if route.startswith("/videos/") and route != "/videos/":
+        return "video_detail"
+    if route.startswith("/places/"):
+        return "place_detail"
     if route == "/curated/" or route.startswith("/curated/"):
         return "curated_tool"
     if route in {"/map-import/", "/content-seeds/", "/pulse/"}:
@@ -207,6 +216,7 @@ def audit_page(path: Path, dist: Path) -> dict:
     word_count = len(latin_words) + (len(cjk_chars) // 2)
     issues: list[str] = []
     warnings: list[str] = []
+    is_noindex = "noindex" in data.meta_robots.lower()
 
     if path.name in SKIP_FILES:
         return {"route": route, "kind": "skip", "issues": [], "warnings": [], "word_count": word_count}
@@ -249,7 +259,7 @@ def audit_page(path: Path, dist: Path) -> dict:
 
     if schema_errors:
         issues.append(f"Invalid JSON-LD: {'; '.join(schema_errors[:2])}")
-    if not schemas:
+    if not is_noindex and not schemas:
         issues.append("Missing JSON-LD structured data.")
     if "Dataset" in types:
         warnings.append("Dataset schema detected; use ItemList/DataCatalog-style schema for AI-search support instead of retired rich-result type.")
@@ -261,19 +271,22 @@ def audit_page(path: Path, dist: Path) -> dict:
         "listing": {"CollectionPage", "WebPage", "FAQPage"},
         "curated_tool": {"CollectionPage", "ItemList"},
         "tool": {"WebPage", "FAQPage", "ItemList"},
+        "profile": {"ProfilePage"},
+        "video_detail": {"VideoObject"},
+        "place_detail": {"Place"},
     }.get(kind, set())
-    if required_schema and not (types & required_schema):
+    if not is_noindex and required_schema and not (types & required_schema):
         issues.append(f"Missing expected schema type for {kind}: one of {sorted(required_schema)}.")
 
     min_word_key = "answer_listing" if re.fullmatch(r"/(answers|ko/answers|ja/answers)(/page/\d+)?/", route) else kind
     min_words = MIN_WORDS[min_word_key]
-    if word_count < min_words:
+    if not is_noindex and word_count < min_words:
         issues.append(f"Thin content for {kind}: {word_count} words < {min_words}.")
 
     for img in data.images:
         if img["src"] and not img["alt"].strip():
             issues.append(f"Image missing alt text: {img['src']}")
-    if kind in {"listing", "guide", "region", "home"} and not data.images:
+    if not is_noindex and kind in {"listing", "guide", "region", "home"} and not data.images:
         warnings.append("No image detected on content page.")
 
     internal_links = [link for link in data.links if link["href"].startswith("/") or "chinatravelmadeeasy.com" in link["href"]]
@@ -282,7 +295,7 @@ def audit_page(path: Path, dist: Path) -> dict:
 
     question_headings = [h for level in ("h1", "h2", "h3") for h in data.headings[level] if QUESTION_RE.search(h)]
     has_faq = "FAQPage" in types
-    if kind in {"guide", "region", "listing", "tool"} and not (question_headings or has_faq):
+    if not is_noindex and kind in {"guide", "region", "listing", "tool"} and not (question_headings or has_faq):
         warnings.append("No question-style heading or FAQ schema found for AI-search citability.")
 
     if route in {"/ko/answers/", "/ja/answers/", "/answers/"}:

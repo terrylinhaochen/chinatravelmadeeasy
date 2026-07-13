@@ -1,0 +1,4 @@
+interface:
+  display_name: "China Travel Companion"
+  short_description: "Turn China travel inputs into verified plans"
+  default_prompt: "Use $china-travel-companion to turn my China travel questions and saved places into a verified, map-ready plan."

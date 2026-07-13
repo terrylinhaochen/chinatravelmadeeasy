@@ -3,15 +3,23 @@ title: "Hotels in China for Foreigners: Who Accepts You, Registration & Booking"
 description: "Why some Chinese hotels turn away foreign guests, how police registration works, which booking platforms to trust, and how to avoid the midnight 'we can't host foreigners' surprise."
 seoTitle: "China Hotels That Accept Foreigners"
 seoDescription: "Book China hotels that accept foreign passports, understand police registration, avoid refusal risks, and choose reliable platforms."
-updated: 2026-06-03
+updated: 2026-07-12
 order: 8
 category: "Accommodation"
 icon: "bed"
+decision:
+  bestFor: "Independent travelers who want to eliminate foreign-passport check-in surprises, especially outside major cities or when staying with friends."
+  doThis: "Book a property with recent foreign-guest reviews, message it to confirm passport registration, and carry the physical passport plus the Chinese address."
+  watchFor: "Private-home registration is due within 24 hours. Online registration is only a pilot in seven regions as of July 2026, not a nationwide replacement yet."
+sources:
+  - title: "State Council and NIA: Online accommodation registration policy for foreigners"
+    url: "https://english.www.gov.cn/services/visitchina/202603/21/content_WS69ce124cc6d00ca5f9a0a368.html"
+    checked: 2026-07-12
 faqs:
   - q: "Can any hotel in China accept foreign guests?"
     a: "Officially the rules were relaxed — authorities have repeatedly instructed hotels not to refuse foreigners, and most city hotels now comply. In practice, some budget chains and small-town guesthouses still turn away foreign passports because staff aren't trained on the registration system. Booking via Trip.com and messaging the hotel to confirm avoids the problem."
   - q: "What is hotel registration in China?"
-    a: "Every guest's stay must be registered with the local police. Hotels do it automatically at check-in by scanning your passport — it takes a minute and is completely routine. If you stay in a private home instead, you are responsible for registering at the local police station within 24 hours of arrival."
+    a: "Every guest's stay must be registered. Hotels submit it automatically at check-in. If you stay in a private home, you or your host must register within 24 hours. Since March 20, 2026, an official online pilot is available in Hebei, Liaoning, Zhejiang, Hubei, Guangxi, Chongqing, and Sichuan; elsewhere, use the local public-security channel."
   - q: "Which booking site is best for China hotels?"
     a: "Trip.com is the most reliable for foreigners: biggest mainland inventory, English customer service, listings flag foreigner acceptance, and hotels respond to its messaging system. Booking.com and Agoda also work, with thinner coverage outside major cities."
   - q: "Is Airbnb available in China?"
@@ -47,11 +55,11 @@ Booking.com and Agoda work fine too (Agoda often has good prices in Asia); their
 
 ## Staying with friends or in private homes
 
-If you skip hotels, the registration duty transfers to **you**: report to the neighborhood police station within **24 hours** of arrival (longer windows apply in some rural areas) with your passport and your host. It's a form, not an ordeal — but skipping it can surface as a fine or a stern lecture at your next hotel or at exit. Hosts in big cities know the drill; if yours doesn't, the local police station handles it in 20 minutes.
+If you skip hotels, the registration duty transfers to **you or your host** and is due within **24 hours**. Since March 20, 2026, the NIA has piloted online registration through its government-service website, NIA 12367 app, WeChat mini program, and Alipay mini program in **Hebei, Liaoning, Zhejiang, Hubei, Guangxi, Chongqing, and Sichuan**. Online registration has the same legal effect as an in-person filing. Outside those pilot regions, use the local public-security office or the channel it specifies. Keep the confirmation record.
 
 ## Practical room notes nobody tells you
 
-- **Hotel Wi-Fi sits behind the firewall** — your Google/WhatsApp won't work on it without a VPN. Use your roaming eSIM or hotspot instead ([internet guide](/guides/internet-esim-vpn-blocked-apps/)).
+- **Hotel Wi-Fi is a local-network connection** — do not assume it reaches every international service or can replace a failed mobile plan. Use a provider-verified travel-data or employer-approved connection, and keep offline hotel and route details ([internet guide](/guides/internet-esim-vpn-blocked-apps/)).
 - Rooms run smaller than US equivalents; "twin" usually means two genuinely separate beds, common for friends traveling together.
 - Air conditioning may be centrally season-controlled in older properties (no cooling in April, no heating in October in the south).
 - Most hotels stopped stocking disposable toiletries' full sets by regulation in some cities — toothbrush/comb may be on request.

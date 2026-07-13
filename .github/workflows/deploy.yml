@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
 
 permissions:
   contents: read
@@ -21,6 +23,8 @@ jobs:
       PUBLIC_GA_MEASUREMENT_ID: G-X2F8XWJWY6
       PUBLIC_GA_MEASUREMENT_IDS: ${{ vars.CHINATRAVELMADEEASY_GA_MEASUREMENT_IDS }}
       PUBLIC_GOOGLE_SITE_VERIFICATION: ou8Q0OHDojgqqfKyVjNE7WcdOqP8sWfdEMA-ycfTG5o
+      PUBLIC_SUPABASE_URL: ${{ vars.CTME_SUPABASE_URL }}
+      PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.CTME_SUPABASE_PUBLISHABLE_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

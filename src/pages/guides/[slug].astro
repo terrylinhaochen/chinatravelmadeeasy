@@ -19,7 +19,7 @@ interface Props {
 
 const { guide } = Astro.props;
 const { Content } = await render(guide);
-const { title, description, seoTitle, seoDescription, updated, category, icon, faqs } = guide.data;
+const { title, description, seoTitle, seoDescription, updated, category, icon, decision, sources, faqs, mapPlaces } = guide.data;
 const metaTitle = seoTitle ?? title;
 const metaDescription = seoDescription ?? description;
 
@@ -28,11 +28,16 @@ const updatedHuman = updated.toLocaleDateString('en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
+  timeZone: 'UTC',
 });
 
 const guideImage = getGuideImage(guide.id);
 const pageUrl = new URL(`/guides/${guide.id}/`, Astro.site).toString();
 const guideImageUrl = new URL(guideImage.src, Astro.site).toString();
+const mapHandoffText = mapPlaces
+  .map((place, index) => `${index + 1}. ${place.name}${place.localName ? ` / ${place.localName}` : ''} — ${place.city}${place.note ? ` — ${place.note}` : ''}`)
+  .join('\n');
+const mapHandoffHref = `/map-import/?title=${encodeURIComponent(`${title} places`)}&text=${encodeURIComponent(mapHandoffText)}`;
 
 const jsonLd: object[] = [
   {
@@ -55,6 +60,7 @@ const jsonLd: object[] = [
       name: 'China Travel Made Easy',
       url: 'https://chinatravelmadeeasy.com/',
     },
+    citation: sources.map((source) => source.url),
   },
   {
     '@context': 'https://schema.org',
@@ -99,8 +105,30 @@ if (faqs.length > 0) {
       <p class="text-soft text-lg mt-3 leading-relaxed">{description}</p>
       <p class="text-sm text-faint mt-4 pb-6 border-b border-line">
         China Travel Made Easy concierge desk · Last updated <time datetime={updatedISO}>{updatedHuman}</time>
+        {sources.length > 0 && <> · {sources.length} primary source{sources.length === 1 ? '' : 's'} checked</>}
       </p>
     </header>
+
+    {decision && (
+      <section class="ds-panel mt-8 p-5" aria-labelledby="decision-heading">
+        <p class="ds-eyebrow">Decision first</p>
+        <h2 id="decision-heading" class="mt-2 text-2xl font-bold">What should I do?</h2>
+        <dl class="mt-4 grid gap-4 sm:grid-cols-3">
+          <div>
+            <dt class="ds-tag">Best for</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-soft">{decision.bestFor}</dd>
+          </div>
+          <div>
+            <dt class="ds-tag">Do this</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-soft">{decision.doThis}</dd>
+          </div>
+          <div>
+            <dt class="ds-tag">Watch for</dt>
+            <dd class="mt-2 text-sm leading-relaxed text-soft">{decision.watchFor}</dd>
+          </div>
+        </dl>
+      </section>
+    )}
 
     <figure class="ds-photo mt-8">
       <img src={guideImage.src} alt={guideImage.alt} class="h-72 w-full object-cover sm:h-96" />
@@ -109,6 +137,29 @@ if (faqs.length > 0) {
     <div class="prose mt-8">
       <Content />
     </div>
+
+    {mapPlaces.length > 0 && (
+      <section class="ds-panel mt-12 p-5 sm:p-6" aria-labelledby="map-ready-heading">
+        <p class="ds-eyebrow">From guide to map</p>
+        <div class="mt-2 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 id="map-ready-heading" class="text-2xl font-bold">Review the places from this guide</h2>
+            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-soft">
+              We keep the Chinese name and city together so you can verify the right branch before opening AMap, Apple Maps, or Didi.
+            </p>
+          </div>
+          <a href={mapHandoffHref} class="ds-button ds-button-primary shrink-0">Review {mapPlaces.length} places</a>
+        </div>
+        <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+          {mapPlaces.map((place) => (
+            <li class="rounded-md border border-line bg-white p-4">
+              <p class="font-semibold">{place.name}{place.localName && <> / {place.localName}</>}</p>
+              <p class="mt-1 text-sm text-soft">{place.city}{place.note && <> · {place.note}</>}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
     {faqs.length > 0 && (
       <section class="mt-12" aria-labelledby="faq-heading">
@@ -123,6 +174,25 @@ if (faqs.length > 0) {
             </div>
           ))}
         </dl>
+      </section>
+    )}
+
+    {sources.length > 0 && (
+      <section class="mt-12" aria-labelledby="sources-heading">
+        <h2 id="sources-heading" class="border-b border-line pb-3 text-2xl font-bold">Sources checked</h2>
+        <p class="mt-3 text-sm leading-relaxed text-soft">
+          We use official or first-party sources for rules and fast-changing product details. Community reports shape the failure-mode advice, not the underlying policy.
+        </p>
+        <ul class="mt-4 grid gap-3">
+          {sources.map((source) => (
+            <li class="ds-card p-4 text-sm">
+              <a href={source.url} target="_blank" rel="noopener" class="font-semibold text-ink hover:text-accent hover:underline">
+                {source.title}
+              </a>
+              <p class="mt-1 text-faint">Checked {source.checked.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</p>
+            </li>
+          ))}
+        </ul>
       </section>
     )}
 

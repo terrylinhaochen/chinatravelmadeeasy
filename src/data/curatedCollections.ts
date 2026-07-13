@@ -1,6 +1,73 @@
-export type CuratedCollectionRegionBucket = 'nyc' | 'milan' | 'rome' | 'switzerland' | 'unknown';
+import { communityVideos } from './communityVideos';
+
+export type CuratedCollectionRegionBucket =
+  | 'hong-kong'
+  | 'shanghai'
+  | 'beijing'
+  | 'chongqing'
+  | 'nyc'
+  | 'milan'
+  | 'rome'
+  | 'switzerland'
+  | 'unknown';
 
 export const curatedRegionMeta = {
+  'hong-kong': {
+    label: 'Hong Kong',
+    city: 'Hong Kong',
+    edition: 'Hong Kong field note',
+    focus: 'Harbour events, food leads, and historical footage resolved into the place a traveler can use now.',
+    hook: 'Open the creator evidence, keep uncertain branches as notes, and collect only the Traditional Chinese identity that survives the map handoff.',
+    annotation: 'Video evidence to map',
+    guide: 'Places',
+    scope: 'China',
+    cover: {
+      src: '/images/curated/region-hong-kong.jpg',
+      alt: 'Victoria Harbour and the Hong Kong skyline',
+    },
+  },
+  shanghai: {
+    label: 'Shanghai',
+    city: 'Shanghai',
+    edition: 'Shanghai field note',
+    focus: 'Exact riverbank, airport, street, or branch identity behind short-form Shanghai travel claims.',
+    hook: 'Use the post as evidence, then preserve the Chinese POI and the operational detail that prevents a wrong-side-of-the-river or wrong-terminal handoff.',
+    annotation: 'Resolve the exact side',
+    guide: 'Traveling',
+    scope: 'China',
+    cover: {
+      src: '/images/curated/region-shanghai.jpg',
+      alt: 'Shanghai riverfront and city skyline',
+    },
+  },
+  beijing: {
+    label: 'Beijing',
+    city: 'Beijing',
+    edition: 'Beijing field note',
+    focus: 'Landmark videos converted into the entrance, scenic-area identity, and transport chain a visitor actually needs.',
+    hook: 'A famous name is not enough: collect the booked entrance or scenic-area identity, then keep the ticket and return journey attached.',
+    annotation: 'Entrance before landmark',
+    guide: 'Traveling',
+    scope: 'China',
+    cover: {
+      src: '/images/curated/region-beijing.jpg',
+      alt: 'Beijing imperial architecture and city landscape',
+    },
+  },
+  chongqing: {
+    label: 'Chongqing',
+    city: 'Chongqing',
+    edition: 'Chongqing field note',
+    focus: 'Vertical streets, unusual transport, night landmarks, and day trips with the filmed claim attached.',
+    hook: 'Keep the creator context, then resolve which level, entrance, district, or out-of-city excursion the clip actually depicts.',
+    annotation: 'Vertical-city evidence',
+    guide: 'Places',
+    scope: 'China',
+    cover: {
+      src: '/images/curated/region-chongqing.jpg',
+      alt: 'Chongqing hillside city lights and layered streets',
+    },
+  },
   nyc: {
     label: 'NYC',
     city: 'New York City',
@@ -9,6 +76,7 @@ export const curatedRegionMeta = {
     hook: 'Use this when you want a dense downtown food crawl without starting from generic best-of lists.',
     annotation: 'Dense restaurant crawl',
     guide: 'Urban',
+    scope: 'Imported archive',
     cover: {
       src: '/images/curated/city-nyc-restaurant-row.jpg',
       alt: 'Restaurant Row street scene in New York City',
@@ -22,6 +90,7 @@ export const curatedRegionMeta = {
     hook: 'A small Milan set for choosing one or two meals near the core route.',
     annotation: 'Few pins, high intent',
     guide: 'Urban',
+    scope: 'Imported archive',
     cover: {
       src: '/images/curated/city-milan-brera.jpg',
       alt: 'Bar Brera street scene in Milan',
@@ -35,6 +104,7 @@ export const curatedRegionMeta = {
     hook: 'A dinner-first Rome set for pairing food stops with a historic walk.',
     annotation: 'Starter dinner map',
     guide: 'Historic',
+    scope: 'Imported archive',
     cover: {
       src: '/images/curated/city-rome-trastevere.jpg',
       alt: 'Restaurant exterior in Trastevere, Rome',
@@ -48,6 +118,7 @@ export const curatedRegionMeta = {
     hook: 'Useful when the trip is spread across scenic stops and you need food pins between moves.',
     annotation: 'Route-side saves',
     guide: 'Scenic',
+    scope: 'Imported archive',
     cover: {
       src: '/images/curated/city-switzerland-muerren.jpg',
       alt: 'Murren mountain village in the Bernese Oberland, Switzerland',
@@ -61,6 +132,7 @@ export const curatedRegionMeta = {
     hook: 'Review these pins before turning them into a travel-ready set.',
     annotation: 'Needs review',
     guide: 'Mixed',
+    scope: 'Imported archive',
     cover: {
       src: '/images/curated/home-local-treasures.jpg',
       alt: 'Scenic travel cover for uncategorized saved places',
@@ -76,6 +148,7 @@ export const curatedRegionMeta = {
     hook: string;
     annotation: string;
     guide: string;
+    scope: 'China' | 'Imported archive';
     cover: {
       src: string;
       alt: string;
@@ -98,12 +171,16 @@ export interface CuratedCollectionPlace {
   latitude: number;
   longitude: number;
   note: string;
+  localName?: string;
+  evidence?: string;
+  sourceUrl?: string;
   sourceProvider: string;
   regionBucket: CuratedCollectionRegionBucket;
 }
 
 export interface CuratedCollection {
   slug: string;
+  pathSlug?: string;
   provider: string;
   sourceUrl: string;
   canonicalUrl: string;
@@ -970,4 +1047,61 @@ export const bennyChanGoodRestaurants = {
   ]
 } satisfies CuratedCollection;
 
-export const curatedCollections = [bennyChanGoodRestaurants] as const;
+const cityBucketByName: Partial<Record<string, CuratedCollectionRegionBucket>> = {
+  'Hong Kong': 'hong-kong',
+  Shanghai: 'shanghai',
+  Beijing: 'beijing',
+  Chongqing: 'chongqing',
+};
+
+function slugify(value: string) {
+  return String(value || 'traveler')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '') || 'traveler';
+}
+
+export const travelerVideoCollections: CuratedCollection[] = communityVideos.flatMap((video) => {
+  const bucket = cityBucketByName[video.city];
+  const resolvedPlaces = video.places.filter((place) => place.resolution === 'resolved');
+  if (!bucket || !resolvedPlaces.length) return [];
+  return [{
+    slug: `field-note-${video.slug}`,
+    pathSlug: video.collectionSlug ?? slugify(video.title),
+    provider: video.platform === 'instagram' ? 'Instagram' : 'TikTok',
+    sourceUrl: video.sourceUrl,
+    canonicalUrl: video.sourceUrl,
+    listId: video.id,
+    title: video.title,
+    description: video.summary,
+    emoji: '🎬',
+    owner: {
+      name: video.creator,
+      slug: slugify(video.creator),
+      avatarUrl: video.poster,
+      id: `video-creator:${slugify(video.creator)}`,
+    },
+    placeCount: resolvedPlaces.length,
+    importedAt: video.checkedAt,
+    regionBuckets: { [bucket]: resolvedPlaces.length },
+    places: resolvedPlaces.map((place) => ({
+      id: `${video.id}:${place.id}`,
+      name: place.name,
+      localName: place.localName,
+      slug: place.slug,
+      address: place.address,
+      latitude: place.latitude,
+      longitude: place.longitude,
+      note: place.evidence,
+      evidence: place.evidence,
+      sourceUrl: video.sourceUrl,
+      sourceProvider: video.platform === 'instagram' ? 'Instagram' : 'TikTok',
+      regionBucket: bucket,
+    })),
+  }];
+});
+
+export const curatedCollections: CuratedCollection[] = [
+  ...travelerVideoCollections,
+  bennyChanGoodRestaurants,
+];

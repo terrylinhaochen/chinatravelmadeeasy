@@ -1,83 +1,188 @@
 ---
-title: "Internet in China: eSIMs, VPN Reality Check, and What's Blocked (2026)"
-description: "How to keep Google, WhatsApp, and Instagram working in China — why a travel eSIM beats a VPN, what's actually blocked, and the trade-offs of roaming vs a local SIM."
-seoTitle: "China eSIMs, VPNs, and Blocked Apps"
-seoDescription: "Keep Google, WhatsApp, Instagram, maps, and email working in China with eSIMs, roaming, VPN planning, and app backups."
-updated: 2026-06-07
+title: "Internet in China: Verify Your eSIM, Roaming, Wi-Fi & App Access"
+description: "A device-specific China connectivity plan — verify how an eSIM routes traffic, preserve your home number, prepare Android or iPhone correctly, and recover when data or a required app fails."
+seoTitle: "China eSIM, Roaming, VPN and Internet Guide"
+seoDescription: "Choose and verify a China eSIM or roaming plan, set up iPhone or Android safely, understand local-network restrictions, and carry an independent connectivity fallback."
+updated: 2026-07-12
 order: 3
 category: "Internet & Apps"
 icon: "wifi"
+decision:
+  bestFor: "Short-stay visitors who need maps, translation, payment, messaging, or work access and want to keep their home number available for verification texts."
+  doThis: "Buy a plan that explicitly covers mainland China and documents its app-access routing, hotspot rule, activation trigger, and support path; install it before departure and keep an independent fallback."
+  watchFor: "eSIM describes the SIM format, not the route your data takes. A local mainland plan, an international roaming plan, and two travel eSIM products can expose different services even on the same phone."
+sources:
+  - title: "State Council — 2025 guide to working and living in China"
+    url: "https://english.www.gov.cn/2025special/bizexpatsinchina2025"
+    checked: 2026-07-12
+  - title: "Apple Support — use eSIM while traveling internationally"
+    url: "https://support.apple.com/en-gb/118227"
+    checked: 2026-07-12
+  - title: "Apple Support — use Dual SIM with an eSIM"
+    url: "https://support.apple.com/en-us/109317"
+    checked: 2026-07-12
+  - title: "Google Pixel Help — use two SIMs and choose line preferences"
+    url: "https://support.google.com/pixelphone/answer/9449293?hl=en-uk"
+    checked: 2026-07-12
+  - title: "UK FCDO — China internet access and licensed-service warning"
+    url: "https://www.gov.uk/foreign-travel-advice/china/safety-and-security"
+    checked: 2026-07-12
+  - title: "Airalo Help — roaming-platform routing can still trigger app restrictions"
+    url: "https://www.airalo.com/help/using-managing-esims/ZSEEHBT5HW6F/begr%C3%A6nser-nogen-apps-eller-websteder-adgangen-n%C3%A5r-du-bruger-et-esim/X7MYRQ8FE0SR"
+    checked: 2026-07-12
+  - title: "Trip.com — its China eSIM uses international roaming protocols"
+    url: "https://www.trip.com/guide/phone/china-esim.html"
+    checked: 2026-07-12
 faqs:
-  - q: "Does Google Maps work in China?"
-    a: "Poorly, even with working internet. Google's map data for mainland China is outdated and offset, so walking navigation is unreliable. Use Apple Maps (excellent in China, English labels) or Amap, the dominant local app which added an English mode in 2025."
-  - q: "Why does a travel eSIM let me use blocked apps without a VPN?"
-    a: "Roaming traffic is tunneled back to the home carrier's network before reaching the internet, so it exits outside mainland China and isn't filtered by the Great Firewall. This applies to travel eSIMs (Airalo, Holafly, etc.) and to your home carrier's international roaming alike."
-  - q: "Are VPNs legal for tourists in China?"
-    a: "It's a gray zone: the rules target unlicensed VPN providers, and tourists are not a practical enforcement focus — there are no reports of visitors being punished for checking Gmail. The real problem is reliability: many famous VPNs simply don't connect from inside China, and you can't download one after arrival."
-  - q: "Which apps are blocked in China in 2026?"
-    a: "On local networks and Wi-Fi: Google services (Search, Gmail, Maps, YouTube), Instagram, Facebook, WhatsApp, X/Twitter, Telegram, Signal, Discord, Reddit, Wikipedia, and most Western news sites. Not blocked: Apple services including iMessage and FaceTime, Bing, Microsoft Outlook/Teams, and (with limitations) LinkedIn was withdrawn but its replacement and many work tools function. Always assume hotel Wi-Fi is filtered."
-  - q: "Should I buy a local Chinese SIM card instead?"
-    a: "Only if you need a Chinese phone number for app verifications or you're staying over a month. Local SIMs require passport registration at a carrier store, and the data is filtered by the firewall, so you'd still need a VPN for Google and WhatsApp. Most tourists are happier with a travel eSIM plus their home number active for SMS."
+  - q: "Does every travel eSIM bypass mainland China internet restrictions?"
+    a: "No. eSIM only describes how the SIM profile is stored. Traffic routing is a property of the plan. Buy only when the provider explicitly documents mainland China coverage and the access behavior you need; even roaming-platform providers warn that some apps may reject proxy-like routing or unsupported locations."
+  - q: "Will Google, WhatsApp, Instagram, and Gmail work in China?"
+    a: "Do not assume they will work on a local mainland SIM or ordinary hotel Wi-Fi. Current UK travel advice confirms permanent blocks on Google, Facebook, YouTube, and X and warns that other sites can change. A provider-documented international roaming plan may offer broader access, but test your must-have services and keep offline maps, addresses, and translation."
+  - q: "Should I buy a local Chinese SIM card?"
+    a: "A local SIM is useful when you genuinely need a +86 number, are staying longer, or your phone cannot use a travel eSIM. The State Council says foreign visitors can apply at China Telecom, China Mobile, or China Unicom service offices with a passport. Treat its local data as a separate, restricted connection and keep offline or approved work alternatives."
+  - q: "Are VPNs legal and reliable for tourists in China?"
+    a: "Do not rely on blanket internet assurances. Current UK travel advice says online services such as VPNs need Chinese government licensing, and real-world reliability changes by network and date. This guide does not recommend unlicensed providers. If work access is mandatory, arrange an employer-approved connection before travel and test a separate mobile-data fallback."
+  - q: "Can I keep my normal phone number while using a travel eSIM?"
+    a: "Often yes on a dual-SIM phone. Apple and Google both document choosing separate lines for data and calls or messages. Keep the home line enabled only after checking its roaming charges, disable data on that line, and make the travel plan the explicit cellular-data line."
+  - q: "Will a travel eSIM give me a Chinese phone number?"
+    a: "Many travel plans are data-only, but this is a product field, not an eSIM rule. Check whether the exact plan includes voice, SMS, or a +86 number. Do not buy it for delivery, Wi-Fi login, or mini-program verification unless the listing explicitly supplies the number type you need."
 ---
 
-The "Great Firewall" sounds like the hardest part of a China trip. In 2026 it's actually the easiest to bypass — not with a VPN, but with one purchasing decision made before you fly.
+The most common China connectivity mistake happens before the plane leaves: a traveler buys “an eSIM” as though that phrase guarantees coverage, unrestricted apps, a phone number, hotspot access, and a certain activation date. It guarantees none of those things.
 
-## The one-decision solution: a roaming eSIM
+The useful unit is the **specific plan on the specific device**. Verify that contract, then carry a second path that does not depend on the same account, network, or app.
 
-Data that **roams** into China is routed through your home carrier (or the eSIM provider's partner network) before it touches the open internet. It exits outside the mainland, so **the firewall never filters it**. Google, WhatsApp, Instagram, YouTube — all work, no VPN, no settings.
+## Choose the connection by the job
 
-Your options, as of mid-2026:
+| Connection | Good default when | What it does not prove |
+|---|---|---|
+| Provider-documented travel eSIM | Your unlocked phone supports eSIM and the listing explicitly covers mainland China plus the apps and hotspot behavior you need | That every app works, that a +86 number is included, or that activation waits for arrival |
+| Home-carrier roaming | The trip is short, keeping the home number matters, and your carrier confirms China pricing and service | That traffic routing matches another carrier's plan or that hotel Wi-Fi behaves the same way |
+| Local mainland SIM | You need a local number, have no usable eSIM, or are staying long enough to visit a carrier service office | Broader access to international services; it is a local-network connection |
+| Hotel or public Wi-Fi | You need a temporary support channel after cellular failure | Access to your normal apps, a simple login, privacy, or dependable speed |
+| Employer-managed connection | A laptop or work service is genuinely trip-critical | Personal-device coverage or a fallback outside the employer's system |
 
-- **Travel eSIM apps** — Airalo, Holafly, Nomad, Saily, Trip.com's eSIM, and dozens more sell China data packages (typically US$5–10 for 5GB-ish, unlimited plans exist). Install and activate the profile **before departure**; the stores are unreachable from inside China without already having internet. Check your phone is carrier-unlocked and eSIM-capable.
-- **Your home carrier's roaming pass** (e.g., international day passes). Simplest, often pricier; same unfiltered behavior, and your normal number keeps receiving SMS — handy for bank verification codes.
-- Best practice: travel eSIM for data + home SIM active for calls/SMS only.
+For most short visits, the practical default is **a verified international travel-data plan plus the home line retained for messages**, with a home-carrier roaming pass or passport-registered local SIM as the independent recovery path. “Verified” is doing the work in that sentence.
 
-Two honest caveats:
+## Audit the product before paying
 
-1. **No Chinese phone number.** A handful of services want a +86 number for SMS codes (some Wi-Fi portals, a few mini-programs). Tourists rarely truly need one; Alipay, WeChat, Didi, and 12306 all accept foreign numbers.
-2. **Latency.** Your traffic detours through Singapore/Hong Kong/home, adding lag. Browsing feels normal; competitive gaming won't.
+Open the exact plan—not a provider's generic China article—and record these fields:
 
-## The VPN reality check
+1. **Coverage:** it says *mainland China*, not only Hong Kong, Macau, “Asia,” or a nearby roaming zone.
+2. **Routing and required apps:** the provider explicitly states whether the plan reaches the services you need. Save that product statement offline.
+3. **Device support:** your exact model supports eSIM and is carrier-unlocked. On iPhone, Apple says **Settings → General → About → Carrier Lock** should show “No SIM Restrictions” for another carrier.
+4. **Activation trigger:** installation, first connection in the destination, a manual button, or a fixed purchase date. These are not interchangeable.
+5. **Validity:** calendar days versus 24-hour periods, time zone, expiry, and whether top-ups extend validity.
+6. **Data policy:** total allowance, daily allowance, throttled speed after the cap, and whether “unlimited” has a fair-use limit.
+7. **Hotspot:** permitted, blocked, or capped separately. This decides whether the phone can rescue a laptop.
+8. **Identity:** data-only, voice/SMS, and whether any included number is actually a mainland +86 number.
+9. **Setup:** required data-roaming setting, APN, network selection, and whether the provider app is needed after installation.
+10. **Support and refund:** how to reach support when that eSIM is the thing that failed, plus the refund rule for an unactivated or non-working profile.
 
-If you'll use laptops on hotel Wi-Fi, you may still want a VPN. Reality, not marketing:
+Airalo, for example, says its data uses a roaming platform but also warns that individual apps may reject the routing, proxy behavior, location, or provider. Trip.com says its own China plans use international roaming protocols. Those are **provider-specific statements**, not evidence that every eSIM product behaves the same way.
 
-- **Most big-name VPNs don't work from inside China.** The firewall actively detects and throttles VPN protocols, and effectiveness shifts month to month — especially around political events, when crackdowns intensify.
-- Services with a track record of investing in China-specific obfuscation (Astrill is the perennial expat answer; LetsVPN and Mullvad with bridges have worked in stretches) still have bad weeks. Treat any single VPN as ~80% reliable and carry two.
-- **Install before you fly.** VPN provider websites and app-store listings are blocked or hidden inside China; you cannot easily get one after arrival.
-- Legality: providers are the regulatory target, not tourists. Use common sense and don't make it your problem.
+## iPhone: keep the two lines unambiguous
 
-If your phone has a roaming eSIM, you can hotspot your laptop and skip hotel Wi-Fi entirely — often the cleanest answer.
+Apple's current travel instructions support using a home line and a travel eSIM together on compatible, unlocked models. Mainland carrier eSIM support is a different question: Apple currently limits domestic mainland eSIM activation to specific iPhone models, and a mainland-carrier eSIM cannot simply be assumed to work on a phone bought elsewhere.
 
-## What works and what doesn't on Chinese networks
+Before departure:
 
-**Blocked** (local SIM / any Wi-Fi): Google everything, YouTube, Gmail, Instagram, Facebook, WhatsApp, X, Telegram, Signal, Reddit, Wikipedia, Dropbox, most Western news.
+1. Confirm **No SIM Restrictions** under Carrier Lock.
+2. Install the travel profile while you have stable internet, unless its instructions say installation starts the validity clock.
+3. Label the lines **Home** and **China data** rather than leaving two carrier names you will not recognize after landing.
+4. Set **Cellular Data** to China data.
+5. Turn **Allow Cellular Data Switching** off unless you intentionally accept home-line data charges.
+6. Set **Data Roaming** on or off exactly as the travel provider instructs; many international profiles require it.
+7. Keep the home line enabled for SMS only after checking what the home carrier charges for roaming messages and calls.
+8. Screenshot the eSIM QR code or installation details on a second device or in an offline document. A QR code displayed on the same phone is not a recovery plan.
 
-**Works fine:** Apple iMessage, FaceTime, iCloud (mainland iCloud is operated locally by GCBD — sync works), App Store; Microsoft Bing, Outlook, Office 365, Teams; Zoom (international version, usually); Trip.com, Booking, Agoda; airline apps; Spotify and Netflix are *not officially available* but Spotify often streams over roaming.
+After landing, verify the line label in Control Center, load the offline hotel card, and send one message before leaving the staffed arrivals area.
 
-**The map app question matters more than you think:**
+## Android: verify the model, not just “Android”
 
-- **Apple Maps** — surprisingly excellent in China (built on Amap data), English labels, accurate transit directions. The default recommendation for iPhone users.
-- **Amap (高德地图)** — the local standard; released an English-interface version for foreigners in 2025 with POI search and ride-hailing built in. Best accuracy, Android users' top pick.
-- **Google Maps** — even unblocked via roaming, its mainland data is old and geo-offset. Fine for "which city is where," bad for "which exit of this metro station."
+Android menus and eSIM support vary by manufacturer, market, carrier, and model. Google documents dual-SIM line preferences on compatible Pixel phones, but that does not prove the same path on a Samsung, Xiaomi, or carrier-customized device.
 
-## Roaming vs local SIM vs eSIM — quick comparison
+Before departure:
 
-| | Travel eSIM | Home-carrier roaming | Local SIM (China Unicom/Mobile) |
-|---|---|---|---|
-| Firewall-free internet | ✅ | ✅ | ❌ (filtered) |
-| Chinese phone number | ❌ | ❌ | ✅ |
-| Setup | App, 10 min, before trip | One toggle | Passport registration at a store |
-| Cost for 2 weeks | ~US$10–30 | ~US$70–150 | ~US$15–25 |
-| Best for | Almost everyone | Short trips, simplicity | Long stays, +86 number needs |
+1. Check the manufacturer's support page for the **exact model number and purchase market**.
+2. Confirm the phone is carrier-unlocked.
+3. Install the profile under **Settings → Network & internet / Connections → SIMs / SIM manager**; names vary.
+4. Rename the lines Home and China data.
+5. Choose China data as the only mobile-data line and disable automatic data switching.
+6. Follow the plan's required roaming, APN, and preferred-network settings.
+7. Keep the provider's manual-install code, APN, and support channel offline.
+8. Install AMap Global, the intended translation tools, and necessary payment apps before departure rather than depending on an app-store search after arrival.
 
-China began rolling out domestic eSIM support for phones in late 2025, so carrier stores can increasingly provision a local plan onto an eSIM too — but it's still passport-registered and firewall-filtered.
+If the phone is locked or lacks eSIM support, do not improvise at the gate. Price the home-carrier roaming option and identify an official China Telecom, China Mobile, or China Unicom service office where a passport-registered physical SIM can be issued.
 
-## Practical setup checklist
+## Laptop and work access need their own plan
 
-1. Confirm your phone is unlocked and eSIM-capable.
-2. Buy and **install** the China eSIM at home; don't activate until landing if it's duration-based.
-3. Keep your home SIM enabled for SMS (bank codes!), with data roaming off for that line.
-4. Download offline maps and translation packs as backup.
-5. Optional: one or two VPNs installed and tested, if you'll work from hotel Wi-Fi.
+A working phone does not prove a working laptop.
 
-Do this and "the internet problem" quietly disappears from your trip.
+- Verify that the mobile plan permits hotspot and that the data allowance can sustain the work.
+- Confirm whether employer systems accept the plan's exit location and roaming IP; security tools may challenge an unfamiliar location.
+- Do not call hotel Wi-Fi the fallback for an app that the local network cannot reach.
+- If access is mandatory, ask the employer for its approved China connection and support contact before travel. Do not make an unfamiliar personal VPN the single point of failure.
+- Keep critical documents, meetings, recovery codes, and contacts available offline or through a second approved channel.
+
+Recent traveler reports disagree sharply about which VPN products work, sometimes in the same month. That disagreement is the evidence: a brand ranking is not durable operational guidance.
+
+## What “blocked in China” should mean in your plan
+
+Current UK travel advice explicitly lists Google, Facebook, YouTube, and X as permanently blocked and warns that other sites may be blocked intermittently. Treat an ordinary local mainland SIM or hotel Wi-Fi as unable to reach a required international service until you have tested it.
+
+Do not turn that into the opposite absolute—“all global apps work on roaming.” A documented international plan can provide broader access, but an app may still reject the provider's routing or location. Banks, workplace identity systems, streaming services, and AI products can apply their own regional or anti-proxy controls.
+
+For each must-have service, write one fallback:
+
+| Need | Primary | Independent fallback |
+|---|---|---|
+| Hotel arrival | Live AMap route | Offline Chinese hotel name, address, phone, and terminal route |
+| Translation | Online camera or conversation mode | Offline Simplified Chinese pack and saved phrases |
+| Payment | Alipay or WeChat on travel data | Second payment app, physical card, and RMB cash |
+| Family contact | Normal messaging app on verified roaming | Home-number SMS/call or a pre-agreed second app |
+| Work file | Employer-approved connection | Offline copy or a colleague who can relay the critical item |
+| eSIM support | Provider app or website | Saved order, ICCID, APN, QR/manual code, and alternate network |
+
+## The first-hour recovery ladder
+
+If data does not work after landing, remain in the staffed terminal or hotel lobby while you troubleshoot:
+
+1. Open SIM settings and confirm that **China data**, not Home, is the selected mobile-data line.
+2. Confirm the travel profile is turned on and Data Roaming matches the provider's instructions.
+3. Toggle Airplane Mode, wait, and reconnect; then restart once.
+4. Check the APN and automatic/manual network selection against the saved instructions.
+5. Look for a signal name and test one lightweight page, not a video app.
+6. Use staffed airport Wi-Fi or another phone only to reach the provider's saved support path; do not delete the eSIM unless support instructs you to, because many profiles cannot be reinstalled.
+7. Activate the pre-priced home-carrier roaming fallback if available.
+8. If the phone cannot use that path, take the passport to an official carrier service office and ask for a physical SIM and suitable data plan.
+
+Useful text to show staff:
+
+> 我的手机没有移动数据。请帮我检查这张 eSIM，或者告诉我最近的运营商营业厅。
+> My phone has no mobile data. Please help me check this eSIM or show me the nearest carrier service office.
+
+The State Council's current guide confirms that foreign visitors can apply for service at China Telecom, China Mobile, or China Unicom offices with a passport. It does not promise that every kiosk, reseller, airport desk, or eSIM flow handles foreign identity—use an official service office.
+
+## Leave home with one connectivity card
+
+Save this offline and give a copy to a travel partner:
+
+```text
+Phone model and lock status:
+Home carrier and roaming fallback price:
+Travel plan name and mainland coverage:
+Activation trigger and expiry:
+Data line label:
+Data Roaming required: yes / no
+APN and supported networks:
+Hotspot allowed: yes / no / capped
+Voice/SMS/+86 number included:
+Order number and ICCID:
+Support link and phone:
+Critical apps tested:
+Offline hotel card saved:
+Local carrier fallback location/query:
+```
+
+The goal is not to “beat the firewall.” It is to make maps, translation, payment, communication, and work recoverable when any one connection behaves differently than promised.

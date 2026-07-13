@@ -60,7 +60,7 @@
       "priority": 90,
       "question": "How do I turn a China travel link from social media into a saved place on my map?",
       "concern": "Travelers discover restaurants, neighborhoods, hotels, tea houses, and attractions in scattered posts, but saving those places into Apple Maps or a China map app is tedious.",
-      "answer_seed": "The simplest workflow is paste link, extract place, verify the place name and city, then save to Apple Maps by default. Keep Gaode/AMap as an alternate option for China-specific navigation. Sign-in should happen only when saving or syncing the user's saved-place collection.",
+      "answer_seed": "The simplest current workflow is paste the caption or OCR text rather than a bare link, review the place name, Chinese identity, city, and branch, then open it in Gaode/AMap by default for mainland execution. Apple Maps remains a second provider check. Sign-in should happen only when saving or syncing the reviewed collection.",
       "audience": ["itinerary planners", "food travelers", "social media users"],
       "related_guides": [
         { "title": "Save Places", "href": "/map-import/" },

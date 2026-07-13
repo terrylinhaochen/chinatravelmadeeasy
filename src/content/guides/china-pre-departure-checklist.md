@@ -1,80 +1,191 @@
 ---
-title: "China Pre-Departure Checklist: What to Set Up Before You Fly"
-description: "The two-week countdown for first-time visitors to China — apps to install, accounts to verify, bookings to make, and the mistakes that are hard to fix after landing."
-seoTitle: "China Pre-Departure Checklist"
-seoDescription: "Set up payments, eSIMs, trains, hotel details, attraction bookings, and backups before your first China trip."
-updated: 2026-06-08
+title: "China Pre-Departure Checklist and First 24-Hour Backup Plan"
+description: "Set up the trip before you fly, then carry one offline arrival card for the moment mobile data, payment, maps, or a hotel booking fails."
+seoTitle: "China Pre-Departure and Arrival Checklist"
+seoDescription: "A practical China first-trip checklist for payments, internet, hotel addresses, maps, arrival transport, accommodation registration, and emergency fallbacks."
+updated: 2026-07-12
 order: 1
 category: "Start Here"
 icon: "checklist"
+decision:
+  bestFor: "First-time visitors landing without a Chinese phone number or fluent Mandarin."
+  doThis: "Finish app setup at home and keep one offline first-night card with your hotel’s Chinese identity, address, phone number, booking reference, and route."
+  watchFor: "A working app is not a backup for another app. Carry cash, a second card, offline addresses, and a staffed-transport fallback."
+sources:
+  - title: "National Immigration Administration — 2026 accommodation registration rules"
+    url: "https://en.nia.gov.cn/n147418/n147463/c197328/content.html"
+    checked: 2026-07-12
+  - title: "State Council — 2025 guide to working and living in China"
+    url: "https://english.www.gov.cn/2025special/bizexpatsinchina2025"
+    checked: 2026-07-12
+  - title: "State Council — payment service guide for overseas visitors"
+    url: "https://english.www.gov.cn/news/202404/11/content_WS6617c858c6d0868f4e8e5f4d.html"
+    checked: 2026-07-12
+  - title: "General Administration of Customs — international passenger clearance guide"
+    url: "https://english.customs.gov.cn/statics/88707c1e-aa4e-40ca-a968-bdbdbb565e4f.html"
+    checked: 2026-07-12
+  - title: "China Railway — official 12306 English service"
+    url: "https://www.12306.cn/en/index.html"
+    checked: 2026-07-12
+  - title: "UK FCDO — emergency numbers and help in China"
+    url: "https://www.gov.uk/foreign-travel-advice/china/getting-help"
+    checked: 2026-07-12
 faqs:
-  - q: "What is the single most important thing to do before flying to China?"
-    a: "Set up Alipay (and ideally WeChat) with your foreign card linked and identity verification completed before you leave home. Payments touch everything in China — taxis, metro, food, attractions — and fixing a verification problem is far easier on home Wi-Fi than at the airport."
-  - q: "How far in advance should I start preparing for a China trip?"
-    a: "Two weeks is comfortable. Train tickets open for sale 15 days ahead, popular attractions like the Forbidden City release tickets about 7 days ahead, and app verification occasionally takes a day or two if a document gets rejected."
-  - q: "Do I need to print anything for a China trip?"
-    a: "Carry a paper copy of your passport photo page, your hotel address in Chinese characters, and your onward flight confirmation (required for visa-free transit). China itself is paperless, but a backup matters when your phone dies or an app refuses to load."
-  - q: "Do I need a visa to visit China in 2026?"
-    a: "Possibly not. As of mid-2026, citizens of dozens of countries (most of Europe, Australia, Japan, South Korea, and others) can enter visa-free for up to 30 days, and most other nationalities — including US, UK, and Canadian citizens — can use the 240-hour visa-free transit policy. Check the dedicated visa guide and confirm with your nearest Chinese embassy."
+  - q: "What is the single most useful thing to prepare before flying to China?"
+    a: "Make an offline first-night card with the hotel’s English and Chinese names, full Chinese address, phone number, booking reference, nearest usable station or pickup point, and a screenshot of the route. It still works when data, translation, maps, or payment does not."
+  - q: "How far in advance should I start preparing?"
+    a: "Begin about two weeks ahead. That gives you time to verify entry eligibility, match passport details across bookings, set up payment and connectivity, and buy train or attraction tickets when their official windows open."
+  - q: "Do I need to print anything?"
+    a: "Paper is optional, but one paper copy of your passport photo page, first-hotel address card, onward booking, insurance contact, and emergency contacts is a sensible independent fallback. Keep the same pack offline on your phone."
+  - q: "Must every traveler complete a digital China Customs form before landing?"
+    a: "Do not rely on old pandemic-era instructions. Follow the current signs and crew instructions at your arrival port. Travelers with declarable goods or cash above official thresholds must use the red channel and declare; travelers with nothing to declare normally use the green channel."
 ---
 
-China is the most app-dependent country you will ever visit, and most of those apps are easiest to set up **before** you land. This checklist is the order of operations I walk friends and family through. Everything links to a deeper guide.
+The goal is not to install every China app. It is to make sure one failure does not strand you at 11 pm with a dying phone and an English hotel name nobody can place.
 
-## Two weeks before
+Prepare the trip in layers: **identity, arrival address, connectivity, payment, transport, then recovery**. Each layer should have a fallback that does not depend on the layer above it.
 
-### 1. Confirm how you're entering the country
+## Two weeks before: lock the identity layer
 
-- Check whether your passport qualifies for **30-day visa-free entry** or the **240-hour visa-free transit** policy. As of mid-2026 a large share of Western travelers no longer need a visa at all — see the [visa-free entry guide](/guides/china-visa-free-2026/).
-- If you need a visa-free *transit*, your flights must form an A → China → B itinerary where B is a different country or region than A (Hong Kong counts as different). Book accordingly.
-- Passport validity: at least 6 months beyond arrival is the safe standard.
+### Confirm your entry route from an official source
 
-### 2. Set up payments — the big one
+Check your passport, visa or visa-free eligibility, permitted ports, length of stay, and onward-routing conditions against the current [visa guide](/guides/china-visa-free-2026/) and the linked immigration sources. Do not infer eligibility from an airline banner or an old social post.
 
-- Download **Alipay**, register with your home phone number, complete identity verification with your passport, and link a Visa/Mastercard (Amex, JCB, and Discover also work). Do the same in **WeChat**. Full walkthrough in the [payments guide](/guides/alipay-wechat-pay-foreign-cards/).
-- Test Alipay with a tiny transaction if you can (some travelers can't test until arrival — that's okay, the important part is that verification is approved).
-- Tell your bank you're traveling so card transactions from China aren't auto-blocked. This is one of the most common day-one failures.
+Then make every booking use the passport identity exactly:
 
-### 3. Solve internet before it's a problem
+- family name and given names in the correct fields;
+- passport number without letter–number substitutions;
+- nationality and birth date;
+- the passport you will physically carry, if you hold more than one.
 
-- Buy a **travel eSIM with China coverage** (Airalo, Holafly, Nomad, Saily, or your carrier's roaming pass). Roaming data routes through your home country, so Google, WhatsApp, and Instagram work without a VPN. Details and trade-offs in the [internet guide](/guides/internet-esim-vpn-blocked-apps/).
-- If you insist on a VPN instead, install and test it **before** departure — VPN websites are blocked inside China.
+This matters most for trains, timed attractions, and hotel check-in. A typo that looks harmless in English can become a failed identity match at a gate.
 
-## One week before
+### Build the first-night card
 
-### 4. Book the things that sell out
+Ask the hotel for its current Chinese name and full Chinese address. Do not translate the English brand yourself: chains can have several branches, and the useful identity may be the building or road name.
 
-- **Train tickets** go on sale 15 days ahead on 12306 or Trip.com; weekend and holiday high-speed trains between major cities sell out. See the [trains guide](/guides/china-high-speed-trains/).
-- **Forbidden City** tickets release about 7 days ahead and sell out almost instantly in peak season. Other reservation-required sights: Mao's Mausoleum area access is simpler, but the National Museum, Shaanxi History Museum, and popular Great Wall sections also use timed entry. Book with your passport number.
-- Reserve your **first hotel** through Trip.com and confirm it accepts foreign guests — not all Chinese hotels do. See the [hotels guide](/guides/hotels-foreigners-china/).
+Save this as a screenshot, an offline note, and ideally one paper copy:
 
-### 5. Prepare your phone
+```text
+FIRST NIGHT / 第一晚
+Hotel English name:
+酒店中文名:
+中文地址:
+酒店电话:
+Booking reference:
+Passport booking name:
+Nearest metro station + exit:
+Airport route or official taxi pickup:
+AMap / Apple Maps query checked:
+```
 
-- Download offline translation packs (Google Translate or Apple Translate — Chinese Simplified). The [language guide](/guides/translation-language-survival/) covers the toolkit.
-- Install: Alipay, WeChat, Trip.com, Didi, Amap (now has an English mode), and your airline's app.
-- Save your hotel name and address **in Chinese characters** to your notes app and as a screenshot.
+Open the saved query once before departure. Confirm that the pin, Chinese address, and hotel phone number agree. A map result with a similar English name is not enough.
 
-## A few days before
+## One week before: make the phone useful without trusting it completely
 
-### 6. Money backup plan
+### Payments: primary, secondary, cash
 
-- Get **¥500–1,000 in cash** from your bank or plan to withdraw at an airport ATM on arrival (Bank of China and ICBC ATMs reliably take foreign cards). Cash is your fallback, not your primary — see [where cash still matters](/guides/alipay-wechat-pay-foreign-cards/).
-- Bring a second physical card on a different network (e.g., one Visa + one Mastercard) stored separately.
+Set up Alipay and, if practical, WeChat Pay with the passport and foreign card you intend to use. The government’s visitor guidance confirms that overseas users can link major international card networks, but the issuing bank still has to approve the binding and transaction.
 
-### 7. Fill out the arrival card / customs declaration
+Use a three-level fallback:
 
-- China's arrival/customs declaration can be completed digitally via the official **China Customs** WeChat mini-program up to 24 hours before landing, or on paper forms in the arrival hall. Either works; the paper line moves fine.
+1. your tested mobile-payment app;
+2. a physical card on a different network;
+3. enough RMB cash for airport transport, food, and the first night.
 
-### 8. Print and copy
+Cash remains legal and official visitor guidance says foreign-card cash withdrawal is available at ATMs displaying the corresponding card network. That does not mean every machine or merchant will work. Withdraw before leaving the airport if your next stop is late, rural, or unstaffed. See the [payment failure guide](/guides/alipay-wechat-pay-foreign-cards/) for verification and card-decline recovery.
 
-- Paper copy of passport photo page (hotels and some ticket offices occasionally want it).
-- Onward/return flight confirmation — immigration officers ask for this under visa-free policies.
-- Travel insurance details, if you carry it.
+### Connectivity: decide what works at the gate
 
-## On arrival — first 2 hours
+Install and activate the eSIM or roaming plan early enough to fix an error at home, but follow the provider’s activation instructions so its validity period does not start too soon. Download offline Simplified Chinese in your translation app and offline copies of:
 
-1. **Connect**: your eSIM should pick up signal at the gate. Airport Wi-Fi exists but often requires a Chinese number for SMS login — another reason the eSIM wins.
-2. **Immigration**: visa-free transit users go to the marked counter to get the temporary entry permit stamped; 30-day visa-free entrants use normal lanes. Fingerprints are collected for most first-time visitors.
-3. **Cash**: withdraw at a Bank of China ATM in arrivals if you didn't bring any.
-4. **Transport**: take the metro/airport express (buy with Alipay or cash) or order a Didi — the [getting-around guide](/guides/didi-metro-getting-around/) covers pickup-point quirks at airports.
+- the first-night card;
+- passport and visa pages;
+- arrival and onward bookings;
+- travel insurance and its assistance number;
+- train and attraction confirmations;
+- the map around your arrival terminal and hotel.
 
-A final reality check: every item above is easy alone, but discovering three of them at once at 11pm in an airport is not. Spread the setup over two weeks and the trip itself feels surprisingly smooth — modern China is genuinely easy mode once your phone is configured.
+Do not make airport Wi-Fi your only plan. Login methods vary, and a Wi-Fi connection does not guarantee that every service you normally use will be reachable. The [internet guide](/guides/internet-esim-vpn-blocked-apps/) explains the roaming-versus-local-data tradeoff.
+
+### Install only the execution tools you can identify
+
+For a first trip, the practical minimum is:
+
+- Alipay and optionally WeChat for payment and mini-programs;
+- AMap for mainland place identity and routing;
+- Didi or the ride-hailing service inside Alipay;
+- Trip.com and/or 12306 for transport and booking support;
+- an offline translation app.
+
+Sign in, grant only necessary permissions, and learn where the QR code, ride pickup message, and booking support live. A folder of unopened icons is not preparation.
+
+## When sales open: book the things that can break the route
+
+Train inventory and attraction release windows change. Use the [high-speed rail guide](/guides/china-high-speed-trains/) and the [attraction ticket guide](/guides/china-attraction-tickets-reservations/) rather than treating “15 days,” “7 days,” or “passport required” as universal booking rules.
+
+Prioritize reservations whose failure would force a different day or city:
+
+- the train that connects two prepaid hotels;
+- an attraction with passport-bound timed entry;
+- the first hotel after a late arrival;
+- transfers after the last metro or train.
+
+Keep the booking reference and Chinese destination identity outside the booking app. If the app loses your session, staff can still work with a passport and a reference number.
+
+## Arrival: the first two hours
+
+### At the gate
+
+Turn on the intended data line and confirm that roaming is enabled for it. Send one message and load the hotel card. If data fails, stay inside the staffed terminal while you troubleshoot; do not begin a multi-transfer route based on a cached pin alone.
+
+### At immigration and Customs
+
+Use the lane that matches your actual entry permission and keep the onward booking available when it is part of that permission. After baggage claim, follow current airport signage.
+
+Ignore old blanket advice that every traveler must complete a pandemic-era health declaration. China Customs’ passenger guide distinguishes the green **Nothing to Declare** channel from the red **Goods to Declare** channel. If you carry restricted items, commercial goods, RMB 20,000 or more, or foreign cash equivalent to US$5,000 or more, check the official rules and declare as required.
+
+### Before leaving the terminal
+
+Do four checks while information desks, ATMs, and official taxi staff are still nearby:
+
+1. the hotel card opens offline;
+2. the payment QR screen loads;
+3. you have a small cash fallback;
+4. the route ends at the correct Chinese address, not merely the right hotel brand.
+
+Use the metro or airport rail when operating and practical. If the route is finished for the night, mobile payment fails, or the ride-hailing pickup point is unclear, use the staffed official taxi queue and show the Chinese address. Do not accept an unsolicited ride in the arrivals hall.
+
+## Hotel check-in and the 24-hour registration rule
+
+At a hotel, present the physical passport; the hotel submits the accommodation registration. If you stay in a private home or other non-hotel accommodation, you or the host must register with the local public security authorities within 24 hours.
+
+Since March 20, 2026, the NIA has piloted online private-accommodation registration in Hebei, Liaoning, Zhejiang, Hubei, Guangxi, Chongqing, and Sichuan through the NIA platform, app, and mini-programs. Online and in-person registration have the same legal effect in the pilot areas. Elsewhere—or if the online flow fails—ask the host to help at the local police or exit-entry service window. The NIA’s 12367 hotline handles registration questions.
+
+## When something fails: use the independent fallback
+
+| Failure | Do this now | Do not do |
+| --- | --- | --- |
+| No mobile data | Stay in the staffed terminal, check the active data line and roaming setting, then use official information or your hotel phone number. | Start walking toward a guessed pickup point. |
+| Alipay or WeChat payment fails | Try the second app or physical card, then use RMB cash. Contact the issuing bank later from a stable connection. | Repeat rapid transactions until the card is security-blocked. |
+| English hotel name returns several pins | Search the saved Chinese name and address together; call the hotel or show the address to staffed transport. | Choose the closest-looking branch. |
+| Didi pickup is confusing | Read the pickup message, use translation, or switch to the official taxi queue. | Follow a driver into an unmarked vehicle. |
+| Hotel cannot find the booking | Match the passport name and booking reference; contact the booking platform while at reception. | Pay a second non-refundable booking before checking the identity mismatch. |
+| Phone is lost or dead | Use the paper first-night card, cash, hotel phone number, and insurance or consular contacts. | Depend on an account whose recovery code is only on the lost phone. |
+
+## Keep these emergency lines offline
+
+- Police: **110**
+- Ambulance: **120**
+- Fire: **119**
+- Traffic police: **122**
+- Immigration and foreigner-service questions: **12367**
+
+Useful phrases:
+
+- 请帮我报警。— Please help me call the police.
+- 请帮我叫救护车。— Please help me call an ambulance.
+- 我需要去这个地址。— I need to go to this address.
+- 我找不到我的酒店。请帮我打这个电话。— I cannot find my hotel. Please help me call this number.
+
+The best arrival plan is intentionally boring. It preserves the exact local identity of the place you need, keeps the critical instructions offline, and gives every digital convenience a separate fallback.

@@ -1,0 +1,65 @@
+---
+const { destinationName, destinationSlug } = Astro.props;
+---
+
+<aside class="border-t border-line pt-6" aria-labelledby={`destination-feedback-${destinationSlug}`}>
+  <details class="group">
+    <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+      <div>
+        <p class="ds-eyebrow">Help improve this digest</p>
+        <h3 id={`destination-feedback-${destinationSlug}`} class="mt-1 text-xl">Was this useful for planning {destinationName}?</h3>
+      </div>
+      <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-sm font-bold text-soft group-open:border-accent group-open:text-accent" aria-hidden="true">
+        <span class="group-open:hidden">+</span><span class="hidden group-open:inline">−</span>
+      </span>
+    </summary>
+    <form class="mt-5 max-w-2xl" data-destination-feedback data-destination={destinationSlug}>
+      <fieldset>
+        <legend class="sr-only">Was this destination digest useful?</legend>
+        <div class="flex flex-wrap gap-2">
+          <label class="experience-choice"><input required type="radio" name="rating" value="useful" /><span>Useful</span></label>
+          <label class="experience-choice"><input required type="radio" name="rating" value="needs-detail" /><span>Needs more detail</span></label>
+        </div>
+      </fieldset>
+      <label class="mt-4 block text-xs font-semibold text-faint">
+        What should we add or correct?
+        <textarea name="note" maxlength="280" class="ds-input mt-1 min-h-20 text-sm" placeholder="A missing neighborhood, weak place match, route problem, or source we should check"></textarea>
+      </label>
+      <div class="mt-3 flex items-center gap-3">
+        <button type="submit" class="ds-button ds-button-secondary">Send feedback</button>
+        <p class="hidden text-sm text-soft" data-feedback-status></p>
+      </div>
+    </form>
+  </details>
+</aside>
+
+<script>
+  const feedbackKey = 'ctme-destination-feedback-v1';
+  document.querySelectorAll('[data-destination-feedback]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const item = {
+        destination: form.dataset.destination,
+        rating: data.get('rating'),
+        note: String(data.get('note') || '').trim(),
+        path: window.location.pathname,
+        createdAt: new Date().toISOString(),
+      };
+      const existing = JSON.parse(localStorage.getItem(feedbackKey) || '[]');
+      localStorage.setItem(feedbackKey, JSON.stringify([...existing, item].slice(-50)));
+      window.gtag?.('event', 'destination_digest_feedback', {
+        destination_slug: item.destination,
+        feedback_rating: item.rating,
+        has_note: Boolean(item.note),
+      });
+      const status = form.querySelector('[data-feedback-status]');
+      status.textContent = 'Saved on this device. Your email app has the message ready to send.';
+      status.classList.remove('hidden');
+      const subject = `Destination digest feedback: ${item.destination}`;
+      const body = [`Rating: ${item.rating}`, `Page: ${window.location.href}`, '', item.note || 'No additional note.'].join('\n');
+      window.location.href = `mailto:hello@chinatravelmadeeasy.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      form.reset();
+    });
+  });
+</script>

@@ -3,10 +3,21 @@ title: "China's High-Speed Trains: Booking on 12306 or Trip.com as a Foreigner"
 description: "How to book Chinese high-speed rail with a foreign passport — 12306 vs Trip.com, seat classes explained, passport gates at stations, and the timing rules that matter."
 seoTitle: "China High-Speed Trains for Foreigners"
 seoDescription: "Book China high-speed rail with a foreign passport, compare 12306 and Trip.com, choose seats, and pass station gates."
-updated: 2026-06-06
+updated: 2026-07-12
 order: 5
 category: "Transport"
 icon: "train"
+decision:
+  bestFor: "Foreign-passport travelers choosing between direct 12306 booking and a simpler English-language intermediary."
+  doThis: "Verify the passenger in 12306 early, compare live availability there, and use the same passport at booking and every station gate."
+  watchFor: "The itinerary sheet is not a ticket. Your passport is the travel credential, and some stations still require the staffed gate."
+sources:
+  - title: "China Railway 12306 English FAQ"
+    url: "https://www.12306.cn/en/faq.html?item=2"
+    checked: 2026-07-12
+  - title: "State Council guide for foreign travelers in China"
+    url: "https://english.www.gov.cn/2025special/bizexpatsinchina2025"
+    checked: 2026-07-12
 faqs:
   - q: "Can foreigners book Chinese train tickets online?"
     a: "Yes, two good ways: the official 12306 app/website, which has an English version and accepts foreign passports and international cards, or Trip.com, which has smoother English UX for a small or zero service fee. Both issue e-tickets tied to your passport — there is no paper ticket to collect."
