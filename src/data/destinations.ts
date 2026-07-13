@@ -753,6 +753,75 @@ const destinationRecords: Omit<Destination, 'image' | 'mapPin'>[] = [
     },
   },
   {
+    name: 'Lijiang',
+    slug: 'lijiang',
+    type: 'City',
+    summary: 'Three heritage towns, a living water system, and a snow-mountain day that needs an exact ticket product',
+    why: 'Lijiang becomes more than lantern lanes when Dayan, Shuhe, and Baisha are read as different parts of one World Heritage property—and Jade Dragon Snow Mountain is planned through exact entrances, ropeways, weather, and altitude limits.',
+    featured: true,
+    guideIds: ['china-attraction-tickets-reservations', 'china-high-speed-trains', 'neighborhoods-beyond-landmarks', 'didi-metro-getting-around', 'food-ordering-dietary'],
+    mapQuery: '丽江市 云南省',
+    editorial: {
+      dek: 'Lijiang is a living highland city, not one photogenic old town. Four days let you follow Dayan’s water system, distinguish Shuhe from Baisha, and approach Jade Dragon Snow Mountain with the correct admission, ropeway, weather, and altitude plan.',
+      sections: [
+        {
+          title: 'The World Heritage site has three towns',
+          body: 'UNESCO’s Old Town of Lijiang is a serial property: Dayan, including Black Dragon Pool; the Shuhe housing cluster; and the older Baisha housing cluster. They are not interchangeable branches of the same shopping street. Dayan is the dense commercial and administrative center, Shuhe grew along the Tea Horse Road northwest of it, and Baisha preserves an older settlement pattern and a mural complex farther north. Save all three Chinese identities before deciding which actually belongs in your trip.',
+        },
+        {
+          title: 'Day one: follow the water through Dayan',
+          body: 'Begin at Mufu for the Mu ruling house and the political story behind the old city, then use the lanes as a water route rather than a souvenir circuit. Follow canals and wells north toward Black Dragon Pool, the source landscape UNESCO includes in the Dayan component. The fixed pins are the museum complex and the park’s south gate; a broad “Lijiang Old Town” center pin cannot tell a driver where to meet you or preserve the direction of the walk. Recheck Mufu and park notices before relying on an interior visit.',
+        },
+        {
+          title: 'Day two: Shuhe and Baisha are not interchangeable',
+          body: 'Use Shuhe’s north gate as one clear arrival, then walk into the old streets instead of accepting the first parking-lot or e-cart substitute. Continue to Baisha only if you have time to read it slowly. The map-ready anchor there is the Baisha Murals ticket office, not a cafe using the town name. The murals and surviving religious complex preserve centuries of Naxi, Tibetan, Bai, and Han exchange. Shuhe can exceed 30,000 daily visits in peak periods, so “quieter than Dayan” is a relative claim, not a promise; go early and keep either town as a half-day rather than stacking every northern stop.',
+        },
+        {
+          title: 'Day three: book a product, not “the snow mountain”',
+          body: 'Jade Dragon Snow Mountain admission and a ropeway are not the same purchase. For 2026, scenic-area admission is sold up to seven days ahead through the official 玉龙雪山服务 mini program, with offline service at the new visitor center. Glacier Park, Spruce Meadow, and Yak Meadow are three separate ropeways with different lower stations, scenery, operating conditions, and capacity. The official operator has used seven-day real-name sales for ropeways; confirm the current release notice and never let a generic “cable car” clip choose the product for you.',
+        },
+        {
+          title: 'Keep every optional mountain product unbundled',
+          body: 'A May 2026 scenic-area notice says the ropeways, Impression Lijiang show, sightseeing train, and electric-cart products at Blue Moon Valley and Spruce Meadow are voluntary purchases rather than mandatory bundles. Compare the exact product names and prices before paying a hotel, driver, or reseller. Local authorities have specifically warned against unlicensed operators and false “guaranteed Glacier Park ropeway” claims. Use the official service center and official operator channels; if your chosen ropeway sells out, choose a different open product intentionally rather than buying an invented system ticket.',
+        },
+        {
+          title: 'Treat Glacier Park as an altitude day, not a costume change',
+          body: 'Dayan is already around 2,400 meters, while the Glacier Park visitor route reaches 4,680 meters. Keep the first two city days easy enough to notice how you are adapting, make the mountain day physically light, and do not ascend with altitude symptoms. If symptoms worsen at elevation, descend and seek help; travelers with relevant heart, lung, or other medical conditions should discuss high-altitude travel with a qualified clinician. The Glacier Park lower-station pin preserves the ropeway identity, but it is not an independent road entrance: follow the scenic-area transport and timed product instructions from the visitor center.',
+        },
+        {
+          title: 'Weather changes the plan; it does not open a shortcut',
+          body: 'Wind, snow, icing, lightning, fire control, or maintenance can stop a ropeway after you have planned the day. Check the official scenic-area and Lijiang Tourism Group channels again that morning and keep the original purchase channel for refunds. A closure is a signal to use a lower-elevation Dayan, Shuhe, Baisha, or museum day—not to follow a video into an undeveloped route. Lijiang authorities warn that entering unopened mountain areas can bring rescue costs and administrative penalties.',
+        },
+        {
+          title: 'Stay at the road edge your luggage can actually reach',
+          body: 'Dayan is the easiest first base for evening walks and city transport, but deep cobbled lanes turn a romantic address into a long luggage carry. Choose a named road-edge meeting point and confirm whether the property can collect you. Shuhe is a more spread-out base with additional road transfers; Baisha is slowest and farthest north, with fewer late options. Lijiang Station has direct rail links toward Dali and Shangri-La, but Tiger Leaping Gorge remains a separate onward-route decision—do not compress it into the snow-mountain day.',
+        },
+      ],
+      quickFacts: [
+        { label: 'Useful minimum', value: 'Four days: Dayan water route; Shuhe and Baisha; one movable mountain day; one recovery or onward day' },
+        { label: 'Best first base', value: 'The road edge of Dayan for a first visit—confirm the exact luggage handoff before booking a deep old-town lane' },
+        { label: 'Heritage rule', value: '大研古城, 束河古镇, and 白沙古镇 are three distinct World Heritage components, not duplicate old-town pins' },
+        { label: 'Ticket rule', value: '玉龙雪山门票 is separate from 冰川公园索道, 云杉坪索道, 牦牛坪索道, shows, trains, and electric carts' },
+        { label: 'Altitude rule', value: 'The city is near 2,400 m and Glacier Park reaches 4,680 m—keep the day light and descend if symptoms worsen' },
+        { label: 'Recovery rule', value: 'If weather closes the chosen ropeway, keep the official refund path and switch to a lower-elevation heritage day' },
+      ],
+      checkedAt: '2026-07-13',
+      sources: [
+        { title: 'UNESCO: Dayan, Black Dragon Pool, Baisha, Shuhe, water system, murals, and living heritage', url: 'https://whc.unesco.org/en/list/811/' },
+        { title: 'China World Heritage monitoring center: current protected-property scope across Dayan, Shuhe, and Baisha', url: 'https://www.wochmoc.org.cn/contents/32/2246.html' },
+        { title: 'Yunnan Xinhua: 2026 Jade Dragon admission, seven-day official mini-program purchase, and new visitor center', url: 'https://www.yn.news.cn/20251223/2ec236a557984b6e8bef8acc5d07b7b9/c.html' },
+        { title: 'Jade Dragon scenic-area notice: 2026 optional products must not be forced into ticket bundles', url: 'https://www.lijiang.cn/article/172717.html' },
+        { title: 'Yunnan Xinhua: Glacier Park, Spruce Meadow, and Yak Meadow are three separately booked ropeways', url: 'https://www.yn.xinhuanet.com/20250711/d900e7710f4c40d48c2f75069b9d3c8c/c.html' },
+        { title: 'Lijiang public-credit notice: unlicensed tours and false guaranteed Glacier Park ropeway claims', url: 'https://credit.lijiang.gov.cn/466b0067d6f645c689396bd2c7ec46cd.html' },
+        { title: 'Lijiang public-credit notice: undeveloped mountain areas, rescue costs, and penalties', url: 'https://credit.lijiang.gov.cn/top_dxal.html' },
+        { title: 'Jade Dragon service report: staffed support and the 4,680-metre Glacier Park visitor point', url: 'https://www.lijiang.cn/Appx/dislayArticlePage/ctype/article/cid/165320/' },
+        { title: 'CDC Yellow Book 2026: acclimatization, symptoms, descent, and high-altitude medical guidance', url: 'https://www.cdc.gov/yellow-book/hcp/environmental-hazards-risks/high-altitude-travel-and-altitude-illness.html' },
+        { title: 'Yunnan transport department: current Lijiang rail links and city-to-station tourism routes', url: 'https://jtyst.yn.gov.cn/html/2025/xingyexinwen_1113/3135630.html' },
+        { title: 'Lijiang public-credit report: peak Shuhe volume and current visitor-management measures', url: 'https://credit.lijiang.gov.cn/ebcff3e78f99468e9ae6b46cbf6e8975.html' },
+      ],
+    },
+  },
+  {
     name: 'Anhui',
     slug: 'anhui',
     type: 'Province',
@@ -1020,6 +1089,7 @@ const mapPins: Record<string, Destination['mapPin']> = {
   hangzhou: { x: 70, y: 65 },
   kunming: { x: 43, y: 76 },
   dali: { x: 39, y: 75 },
+  lijiang: { x: 40, y: 72 },
   anhui: { x: 65, y: 59 },
   fujian: { x: 68, y: 75 },
   gansu: { x: 43, y: 43 },

@@ -50,6 +50,12 @@ const knownPlaces = [
   { name: 'Yan Family Courtyard Museum', localName: '喜洲严家大院博物馆', city: 'Dali', category: 'See', aliases: ['yan family courtyard museum', 'xizhou yan family courtyard', '喜洲严家大院博物馆', '严家大院'] },
   { name: 'Longkan entrance to the Erhai Ecological Corridor', localName: '洱海生态廊道龙龛入口', city: 'Dali', category: 'See', aliases: ['longkan entrance to the erhai ecological corridor', 'longkan corridor entrance', '洱海生态廊道龙龛入口', '龙龛入口'] },
   { name: 'Cangshan Grand Cableway lower station', localName: '苍山大索道下站（天龙八部影视城）', city: 'Dali', category: 'See', aliases: ['cangshan grand cableway lower station', 'cangshan cableway lower station', '苍山大索道下站（天龙八部影视城）', '苍山大索道下站'] },
+  { name: 'Lijiang Ancient City Museum at Mufu', localName: '丽江古城博物院（木府）', city: 'Lijiang', category: 'See', aliases: ['lijiang ancient city museum at mufu', 'lijiang ancient city museum', 'mufu', '丽江古城博物院（木府）', '丽江古城博物院', '木府'] },
+  { name: 'Black Dragon Pool Park south gate', localName: '黑龙潭公园南门', city: 'Lijiang', category: 'See', aliases: ['black dragon pool park south gate', 'black dragon pool south gate', '黑龙潭公园南门'] },
+  { name: 'Shuhe Ancient Town north gate', localName: '束河古镇北门', city: 'Lijiang', category: 'See', aliases: ['shuhe ancient town north gate', 'shuhe north gate', '束河古镇北门'] },
+  { name: 'Baisha Murals Scenic Area ticket office', localName: '白沙壁画景区售票处', city: 'Lijiang', category: 'See', aliases: ['baisha murals scenic area ticket office', 'baisha murals ticket office', '白沙壁画景区售票处', '白沙壁画'] },
+  { name: 'Jade Dragon Snow Mountain new visitor service center', localName: '玉龙雪山新游客服务中心', city: 'Lijiang', category: 'See', aliases: ['jade dragon snow mountain new visitor service center', 'jade dragon snow mountain visitor center', '玉龙雪山新游客服务中心'] },
+  { name: 'Glacier Park Cableway lower station', localName: '冰川公园索道下站', city: 'Lijiang', category: 'See', aliases: ['glacier park cableway lower station', 'glacier park lower station', '冰川公园索道下站'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -219,6 +225,7 @@ function inferCity(text) {
   if (/杭州|Hangzhou|Broken Bridge|Bai Causeway|Lingyin|Feilai Peak|Shuangfeng|Deshou Palace|Liangzhu|断桥残雪|白堤|灵隐飞来峰|双峰馆区|德寿宫|中国京杭大运河博物馆|良渚博物院/i.test(text)) return 'Hangzhou';
   if (/昆明|Kunming|Green Lake|Cuihu|Dounan|Haigeng|Stone Forest|翠湖公园|昆明市博物馆|云南省博物馆|斗南花卉市场|海埂大坝|石林风景区/i.test(text)) return 'Kunming';
   if (/大理|\bDali\b|Cangshan|Erhai|Longkan|Xizhou|Yan Family Courtyard|Three Pagodas|苍山|洱海|龙龛|喜洲|严家大院|崇圣寺三塔/i.test(text)) return 'Dali';
+  if (/丽江|\bLijiang\b|Mufu|Black Dragon Pool|Shuhe|Baisha Murals|Jade Dragon Snow Mountain|Glacier Park|木府|黑龙潭|束河|白沙壁画|玉龙雪山|冰川公园/i.test(text)) return 'Lijiang';
   return '';
 }
 function inferCategory(text) {

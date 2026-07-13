@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-13T17:30:54.721Z",
+  "prepared_at": "2026-07-13T17:43:26.610Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -369,6 +369,12 @@
       "alt": "Ruins of Saint Paul's in Macau",
       "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg/3840px-%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg",
       "title": "Ruins of Saint Paul's"
+    },
+    "region:lijiang": {
+      "src": "/images/curated/region-yunnan.jpg",
+      "alt": "Stone roofs, lanes, and surrounding highlands in Lijiang old town",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Lijiang_-_panoramio_%286%29.jpg/3840px-Lijiang_-_panoramio_%286%29.jpg",
+      "title": "Old Town of Lijiang"
     }
   }
 }

@@ -50,6 +50,7 @@ const manifestAliases = {
   'region:xian': '/images/curated/region-shaanxi.jpg',
   'region:chengdu': '/images/curated/region-sichuan.jpg',
   'region:hangzhou': '/images/curated/region-zhejiang.jpg',
+  'region:lijiang': '/images/curated/region-yunnan.jpg',
 };
 
 const manifestSourceAliases = {

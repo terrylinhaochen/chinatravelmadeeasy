@@ -238,6 +238,24 @@ test('Dali city handoff keeps arrival, heritage, corridor, and cableway identiti
   assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
 });
 
+test('Lijiang handoff keeps three heritage components and exact mountain products separate', () => {
+  const result = extractTripPlaces({
+    title: 'Lijiang field-guide places',
+    text: '1. Lijiang Ancient City Museum at Mufu / 丽江古城博物院（木府） — Lijiang — Ground Dayan in the Mu ruling-house story.\n2. Black Dragon Pool Park south gate / 黑龙潭公园南门 — Lijiang — Preserve the water-system walk and exact pickup gate.\n3. Shuhe Ancient Town north gate / 束河古镇北门 — Lijiang — Keep Shuhe distinct from Dayan and Baisha.\n4. Baisha Murals Scenic Area ticket office / 白沙壁画景区售票处 — Lijiang — Resolve the protected mural complex, not a generic cafe pin.\n5. Jade Dragon Snow Mountain new visitor service center / 玉龙雪山新游客服务中心 — Lijiang — Separate scenic admission from optional products.\n6. Glacier Park Cableway lower station / 冰川公园索道下站 — Lijiang — Do not substitute Spruce Meadow or Yak Meadow ropeways.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '丽江古城博物院（木府）',
+    '黑龙潭公园南门',
+    '束河古镇北门',
+    '白沙壁画景区售票处',
+    '玉龙雪山新游客服务中心',
+    '冰川公园索道下站',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Lijiang'));
+  assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',
