@@ -26,6 +26,12 @@ const knownPlaces = [
   { name: 'Nanyue King Museum — King’s Tomb Exhibition Area', localName: '南越王博物院（王墓展区）', city: 'Guangzhou', category: 'See', aliases: ['nanyue king museum king’s tomb exhibition area', "nanyue king museum king's tomb exhibition area", 'nanyue king museum tomb', '南越王博物院（王墓展区）', '王墓展区'] },
   { name: 'Nanyue King Museum — Palace Exhibition Area', localName: '南越王博物院（王宫展区）', city: 'Guangzhou', category: 'See', aliases: ['nanyue king museum palace exhibition area', 'nanyue king museum palace', '南越王博物院（王宫展区）', '王宫展区'] },
   { name: 'Guangdong Museum', localName: '广东省博物馆', city: 'Guangzhou', category: 'See', aliases: ['guangdong museum', 'guangdong provincial museum', '广东省博物馆'] },
+  { name: 'Shenzhen Reform and Opening-Up Exhibition Hall', localName: '深圳改革开放展览馆（深圳市当代艺术与城市规划馆内）', city: 'Shenzhen', category: 'See', aliases: ['shenzhen reform and opening-up exhibition hall', 'shenzhen reform and opening up exhibition hall', '深圳改革开放展览馆'] },
+  { name: 'Lianhua Hill Park south gate', localName: '莲花山公园南门', city: 'Shenzhen', category: 'See', aliases: ['lianhua hill park south gate', 'lianhuashan park south gate', '莲花山公园南门', '莲花山公园'] },
+  { name: 'Nantou Ancient Town Museum at the south gate', localName: '南头古城博物馆（南门外）', city: 'Shenzhen', category: 'See', aliases: ['nantou ancient town museum', 'nantou ancient city museum', '南头古城博物馆', '南头古城南门'] },
+  { name: 'Sea World Culture and Arts Center', localName: '海上世界文化艺术中心', city: 'Shenzhen', category: 'See', aliases: ['sea world culture and arts center', 'sea world culture and art center', '海上世界文化艺术中心'] },
+  { name: 'Dafen Art Museum', localName: '大芬美术馆', city: 'Shenzhen', category: 'See', aliases: ['dafen art museum', '大芬美术馆'] },
+  { name: 'Futian Checkpoint', localName: '福田口岸', city: 'Shenzhen', category: 'Move', aliases: ['futian checkpoint', 'futian port', '福田口岸'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -191,6 +197,7 @@ function inferCity(text) {
   if (/北京|Beijing|Forbidden|Temple of Heaven|Mutianyu|故宫|天坛|慕田峪/i.test(text)) return 'Beijing';
   if (/西安|Xi'an|Terracotta|Muslim Quarter/i.test(text)) return "Xi'an";
   if (/广州|Guangzhou|Cantonese Opera|Chen Clan|Shamian|Nanyue King|Guangdong Museum|陈家祠|粤剧艺术|沙面岛|南越王博物院|广东省博物馆/i.test(text)) return 'Guangzhou';
+  if (/深圳|Shenzhen|Lianhua Hill|Nantou|Sea World Culture|Dafen|Futian Checkpoint|莲花山|南头古城|海上世界文化|大芬美术馆|福田口岸/i.test(text)) return 'Shenzhen';
   return '';
 }
 function inferCategory(text) {
@@ -199,12 +206,12 @@ function inferCategory(text) {
     .split(/\s+\/\s+|\s+[—–-]\s+/)[0];
   if (/food|lunch|snack|restaurant|hotpot|bao|noodle|bakery|market|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包|市场/i.test(subject)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
-  if (/station|airport|metro|train|站|机场/i.test(subject)) return 'Move';
+  if (/station|airport|metro|train|checkpoint|\bport\b|terminal|站|机场|口岸|码头|航站楼/i.test(subject)) return 'Move';
   if (/\btea(?:\s*house)?\b|teahouse|茶社|茶馆|茶/i.test(subject)) return 'Tea';
-  if (/museum|mosque|temple|pagoda|wall|monastery|shrine|garden|park|promenade|trail|island|bridge|博物馆|清真|寺|塔|城墙|公园|花园|海滨|步道|岛|桥/i.test(subject)) return 'See';
+  if (/museum|mosque|temple|pagoda|wall|monastery|shrine|garden|park|promenade|trail|island|bridge|art(?:s)? center|gallery|exhibition hall|博物馆|清真|寺|塔|城墙|公园|花园|海滨|步道|岛|桥|美术馆|艺术中心|展览馆/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包/i.test(text)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(text)) return 'Stay';
-  if (/station|airport|metro|train|站|机场/i.test(text)) return 'Move';
+  if (/station|airport|metro|train|checkpoint|\bport\b|terminal|站|机场|口岸|码头|航站楼/i.test(text)) return 'Move';
   if (/\btea\b|茶/i.test(text)) return 'Tea';
   return 'See';
 }

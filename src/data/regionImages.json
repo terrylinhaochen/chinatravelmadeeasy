@@ -65,6 +65,12 @@
     "source": "https://en.wikipedia.org/wiki/Canton_Tower",
     "title": "Guangzhou across the Pearl River"
   },
+  "shenzhen": {
+    "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Huawei_Store_at_One_Avenue_in_Shenzhen%2C_China.jpg",
+    "alt": "Smartphone flagship store in Shenzhen",
+    "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Huawei_Store_at_One_Avenue_in_Shenzhen%2C_China.jpg",
+    "title": "Huawei Store at One Avenue in Shenzhen"
+  },
   "guizhou": {
     "src": "https://upload.wikimedia.org/wikipedia/commons/3/30/HuangguoshuFall.jpg",
     "alt": "Huangguoshu Waterfall in Guizhou",

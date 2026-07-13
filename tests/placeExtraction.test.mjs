@@ -166,6 +166,24 @@ test('Guangzhou city handoff keeps route entrances and museum campuses as six se
   assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
 });
 
+test('Shenzhen city handoff keeps nested venues, route entrances, and the border checkpoint separate', () => {
+  const result = extractTripPlaces({
+    title: 'Shenzhen field-guide places',
+    text: '1. Shenzhen Reform and Opening-Up Exhibition Hall / 深圳改革开放展览馆（深圳市当代艺术与城市规划馆内） — Shenzhen — Keep the hall nested inside the correct museum building.\n2. Lianhua Hill Park south gate / 莲花山公园南门 — Shenzhen — Continue from the Civic Center through the chosen entrance.\n3. Nantou Ancient Town Museum at the south gate / 南头古城博物馆（南门外） — Shenzhen — Begin with the museum outside the surviving gate.\n4. Sea World Culture and Arts Center / 海上世界文化艺术中心 — Shenzhen — Do not substitute the commercial district or cruise terminal.\n5. Dafen Art Museum / 大芬美术馆 — Shenzhen — Use the museum as the working painting district anchor.\n6. Futian Checkpoint / 福田口岸 — Shenzhen — Preserve the mainland side of the Lok Ma Chau Spur Line crossing.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '深圳改革开放展览馆（深圳市当代艺术与城市规划馆内）',
+    '莲花山公园南门',
+    '南头古城博物馆（南门外）',
+    '海上世界文化艺术中心',
+    '大芬美术馆',
+    '福田口岸',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Shenzhen'));
+  assert.deepEqual(result.places.map((place) => place.category), ['See', 'See', 'See', 'See', 'See', 'Move']);
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',
