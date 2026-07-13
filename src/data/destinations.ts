@@ -366,6 +366,67 @@ const destinationRecords: Omit<Destination, 'image' | 'mapPin'>[] = [
     },
   },
   {
+    name: 'Xi’an',
+    slug: 'xian',
+    type: 'City',
+    summary: 'City walls, Tang Chang’an, Muslim foodways, Qin archaeology',
+    why: 'Xi’an is more useful as a three-day city with one separate Lintong archaeology day than as a compressed list of dynasties, towers, pagodas, and food streets.',
+    featured: true,
+    guideIds: ['china-attraction-tickets-reservations', '7-day-china-itinerary', 'street-food-night-markets', 'china-high-speed-trains', 'food-ordering-dietary'],
+    mapQuery: '西安市 陕西省',
+    editorial: {
+      dek: 'Xi’an becomes legible when you separate three cities that occupy the same map: the walled Ming city people still cross every day, the much larger Tang capital interpreted by museums and pagodas, and the Qin imperial landscape out in Lintong. Give each scale its own day instead of turning 2,000 years into a taxi checklist.',
+      sections: [
+        {
+          title: 'Begin with the wall as a piece of city, not a panorama ride',
+          body: 'Use Yongning Gate as the deliberate first entrance because it fixes the south side of the walled city and connects naturally to Shuyuanmen, the Bell Tower axis, and the lanes west of the Drum Tower. Walk one meaningful section before deciding whether a bicycle adds anything; a full circuit is exposed and repetitive in heat, wind, rain, or poor air. The useful question is how the wall still sets street direction and scale—not whether you completed every kilometre.',
+        },
+        {
+          title: 'Day one: Yongning Gate to the Great Mosque',
+          body: 'Start on the wall early or near dusk, leave enough time for the streets at ground level, and walk north toward the Bell and Drum towers. Treat the Bell Tower as an orientation point rather than an automatic paid interior. Enter the Great Mosque through Huajue Lane as a functioning religious complex, then continue through Dapiyuan, Xiyangshi, or Sajinqiao only if you still have appetite and attention. “Muslim Quarter” is a district lead: every restaurant, bakery, and snack stall needs its own Chinese storefront and current branch before it becomes a saved place.',
+        },
+        {
+          title: 'Day two: let one museum explain Tang Chang’an',
+          body: 'Make the Shaanxi History Museum main building the first choice when you secure its timed reservation. It is the provincial collection beside Xiaozhai—not the separate Qin–Han museum in Xixian—and the original passport used for booking must match at entry. Continue east to Da Ci’en Temple and the Big Wild Goose Pagoda to connect Xuanzang, translation, and the Tang capital’s southern scale. The evening entertainment district nearby is optional; the museum and temple carry the historical argument without a costume-show checklist.',
+        },
+        {
+          title: 'Give Lintong a full archaeology day',
+          body: 'The Emperor Qinshihuang’s Mausoleum Site Museum is not one downtown pin. Its ticket covers the Terracotta Warriors Museum and Lishan Garden archaeological park, which the official guide says each need about ninety minutes, with a free shuttle between them. Add the city-to-Lintong ride, security, queues, walking, and return before promising another major sight that evening. Reserve through the official museum channel with the carried passport, save the exact museum identity in Chinese, and confirm the final return before leaving the city.',
+        },
+        {
+          title: 'Use Xi’an Museum as the sold-out or closed-day recovery',
+          body: 'Xi’an Museum and the Small Wild Goose Pagoda share one quieter campus at Youyi West Road. It is not a lesser version of the Shaanxi History Museum: the city collection, Jianfu Temple landscape, and surviving Tang pagoda make a coherent half-day without pretending the two museums are interchangeable. The campus normally closes Tuesday rather than Monday, so it can rescue a museum plan on the provincial museum’s closed day; recheck the current notice and reservation channel before travel.',
+        },
+        {
+          title: 'Stay where the first morning and last meal both work',
+          body: 'Inside the wall near Yongning Gate gives the easiest first arrival, metro access, and evening walks without forcing every meal through the busiest visitor streets. The Xiaozhai–Dayanta area is better when museums and the southern Tang sites matter more than late old-city walks. A hotel near Xi’an North Railway Station saves one early departure but is not a good default city base. Save the hotel’s Chinese name, street address, and the correct rail station before arrival.',
+        },
+        {
+          title: 'Build the itinerary around reservation failure, heat, and distance',
+          body: 'Reserve the Terracotta Warriors and Shaanxi History Museum first, then place the wall and outdoor streets around weather and energy. If the provincial museum is sold out, do not buy a vague third-party bundle or silently substitute its distant Qin–Han branch: use Xi’an Museum, a smaller museum, or the wall and mosque day. In summer, move exposed wall time to morning or evening; in rain or poor air, protect one indoor anchor and a simple metro or taxi exit. Keep the passport used for reservations on every controlled-entry day.',
+        },
+      ],
+      quickFacts: [
+        { label: 'Useful minimum', value: 'Three full days: walled city, Tang museum-and-pagoda day, and a separate Lintong day' },
+        { label: 'Best first base', value: 'Inside or just south of the wall near Yongning Gate; Xiaozhai for museum-led days' },
+        { label: 'Booking priority', value: 'Terracotta Warriors and Shaanxi History Museum main building, using the passport you will carry' },
+        { label: 'Museum identity', value: '陕西历史博物馆 is not 陕西历史博物馆秦汉馆; check the site, address, and entry rule' },
+        { label: 'Food-map rule', value: '回民街 is an area lead; save an exact Chinese storefront and branch for every meal' },
+        { label: 'Closed-day recovery', value: 'Xi’an Museum and Small Wild Goose Pagoda share one campus and normally close Tuesday' },
+      ],
+      checkedAt: '2026-07-13',
+      sources: [
+        { title: 'Emperor Qinshihuang’s Mausoleum Site Museum: reservations, two-site visit, and passport entry', url: 'https://www.bmy.com.cn/guide/' },
+        { title: 'Shaanxi History Museum: 2026 hours, five-day reservation window, passport support, and separate branches', url: 'https://www.sxhm.com/guide.html' },
+        { title: 'Shaanxi History Museum: English visitor information and weekly closures', url: 'https://www.sxhm.com/en/visit.html' },
+        { title: 'Xi’an Museum: official reservation and closure notice', url: 'https://www.xabwy.com/index.html' },
+        { title: 'Xi’an government: 2026 attraction names and addresses', url: 'https://www.xa.gov.cn/ztzl/ztzl/lzledc/ywdc/1824366329290301442.html' },
+        { title: 'Xi’an local gazetteer: Great Mosque identity and history', url: 'https://xadfz.xa.gov.cn/xadq/rwxa/1861327952662859777.html' },
+        { title: 'Shaanxi government: Small Wild Goose Pagoda and Xi’an Museum campus context', url: 'https://en.shaanxi.gov.cn/tourism/ms/201705/t20170516_1594578.html' },
+      ],
+    },
+  },
+  {
     name: 'Anhui',
     slug: 'anhui',
     type: 'Province',
@@ -627,6 +688,7 @@ const mapPins: Record<string, Destination['mapPin']> = {
   tianjin: { x: 69, y: 37 },
   chongqing: { x: 51, y: 64 },
   chengdu: { x: 45, y: 62 },
+  xian: { x: 53, y: 51 },
   anhui: { x: 65, y: 59 },
   fujian: { x: 68, y: 75 },
   gansu: { x: 43, y: 43 },

@@ -14,6 +14,12 @@ const knownPlaces = [
   { name: 'Yulin West Road', localName: '玉林西路', city: 'Chengdu', category: 'Eat', aliases: ['yulin west road', 'yulin road', '玉林西路', '玉林路'] },
   { name: 'Chengdu Wuhou Shrine Museum', localName: '成都武侯祠博物馆', city: 'Chengdu', category: 'See', aliases: ['wuhou shrine', 'wuhou temple', '成都武侯祠博物馆', '武侯祠'] },
   { name: 'Xiaolongkan Hotpot', localName: '小龙坎火锅', city: 'Chengdu', category: 'Eat', aliases: ['小龙坎火锅', 'xiaolongkan hotpot', 'xiao long kan'] },
+  { name: 'Xi’an City Wall at Yongning Gate', localName: '西安城墙（永宁门）', city: "Xi'an", category: 'See', aliases: ['xi’an city wall at yongning gate', "xi'an city wall at yongning gate", 'yongning gate', '永宁门', '西安城墙'] },
+  { name: 'Great Mosque of Xi’an', localName: '西安化觉巷清真大寺', city: "Xi'an", category: 'See', aliases: ['great mosque of xi’an', "great mosque of xi'an", 'huajue lane mosque', '化觉巷清真大寺', '西安化觉巷清真大寺'] },
+  { name: 'Shaanxi History Museum — main museum', localName: '陕西历史博物馆（本馆）', city: "Xi'an", category: 'See', aliases: ['shaanxi history museum', '陕西历史博物馆', '陕西历史博物馆（本馆）'] },
+  { name: 'Da Ci’en Temple and Big Wild Goose Pagoda', localName: '大慈恩寺（大雁塔）', city: "Xi'an", category: 'See', aliases: ['da ci’en temple', "da ci'en temple", 'big wild goose pagoda', '大慈恩寺', '大雁塔'] },
+  { name: 'Xi’an Museum and Small Wild Goose Pagoda', localName: '西安博物院（小雁塔）', city: "Xi'an", category: 'See', aliases: ['xi’an museum', "xi'an museum", 'small wild goose pagoda', '西安博物院', '小雁塔'] },
+  { name: 'Emperor Qinshihuang’s Mausoleum Site Museum', localName: '秦始皇帝陵博物院', city: "Xi'an", category: 'See', aliases: ["emperor qinshihuang's mausoleum site museum", 'emperor qinshihuang’s mausoleum site museum', 'terracotta warriors museum', 'terracotta army museum', '秦始皇帝陵博物院', '兵马俑'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -181,6 +187,14 @@ function inferCity(text) {
   return '';
 }
 function inferCategory(text) {
+  const subject = String(text || '')
+    .replace(/^\s*\d{1,2}[.)、:]\s+/, '')
+    .split(/\s+\/\s+|\s+[—–-]\s+/)[0];
+  if (/food|lunch|snack|restaurant|hotpot|bao|noodle|bakery|market|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包|市场/i.test(subject)) return 'Eat';
+  if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
+  if (/station|airport|metro|train|站|机场/i.test(subject)) return 'Move';
+  if (/tea|tea house|teahouse|茶社|茶馆|茶/i.test(subject)) return 'Tea';
+  if (/museum|mosque|temple|pagoda|wall|monastery|shrine|garden|park|promenade|trail|博物馆|清真|寺|塔|城墙|公园|花园|海滨|步道/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包/i.test(text)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(text)) return 'Stay';
   if (/station|airport|metro|train|站|机场/i.test(text)) return 'Move';

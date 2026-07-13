@@ -32,6 +32,7 @@
 28. As a traveler saving from the homepage, I use the same account flow as Curated and map review; my pending place survives the email-link return exactly once, with AMap as the mainland default and Apple Maps still available as a second check.
 29. As a traveler holding a TikTok or Instagram URL, I can expand one entry under Add Places and immediately reopen a previously processed traveler story and its Curated city collection; an unseen link clearly asks for the caption instead of fabricating extraction or silently returning zero places.
 30. As a traveler planning Chengdu, I can open a first-class city edition rather than a broad Sichuan page, distinguish TFU from CTU and South Gate from a panda-campus center, then review six exact bilingual city anchors without mixing in Leshan, Dujiangyan, or other province excursions.
+31. As a traveler planning Xi’an, I can distinguish the walled city, Tang museum-and-pagoda day, and Lintong archaeology day; keep the Shaanxi History Museum’s main and Qin–Han sites separate; and hand six exact bilingual identities into one review task.
 
 ## Not yet complete
 
@@ -39,7 +40,7 @@
 - Shared task links are reopenable snapshots; they do not provide live multi-user state, participant identity, concurrent voting, or decision history.
 - Unknown places are still resolved heuristically; a production version needs a bilingual POI resolver.
 - The static site does not fetch arbitrary social posts or perform image OCR.
-- Chengdu has a complete editorial and map-ready destination digest but no verified TikTok or Instagram traveler stories yet; the page intentionally does not invent a media rail.
+- Chengdu and Xi’an have complete editorial and map-ready destination digests but no verified TikTok or Instagram traveler stories yet; their pages intentionally do not invent media rails.
 
 ## Local Prototype State
 

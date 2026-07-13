@@ -130,6 +130,24 @@ test('Chengdu city handoff keeps nested venues, a chosen panda gate, and the nei
   assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Chengdu'));
 });
 
+test('Xi’an city handoff keeps entrances, nested sites, museum branches, and Lintong separate', () => {
+  const result = extractTripPlaces({
+    title: 'Xi’an field-guide places',
+    text: "1. Xi’an City Wall at Yongning Gate / 西安城墙（永宁门） — Xi'an — Save the chosen south entrance, not the wall center.\n2. Great Mosque of Xi’an / 西安化觉巷清真大寺 — Xi'an — Keep the place of worship distinct from the food district.\n3. Shaanxi History Museum — main museum / 陕西历史博物馆（本馆） — Xi'an — Do not substitute the Qin–Han branch.\n4. Da Ci’en Temple and Big Wild Goose Pagoda / 大慈恩寺（大雁塔） — Xi'an — Preserve the temple and nested pagoda identity.\n5. Xi’an Museum and Small Wild Goose Pagoda / 西安博物院（小雁塔） — Xi'an — Keep the shared campus together.\n6. Emperor Qinshihuang’s Mausoleum Site Museum / 秦始皇帝陵博物院 — Xi'an — Keep the Lintong transfer and two-site visit attached.",
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '西安城墙（永宁门）',
+    '西安化觉巷清真大寺',
+    '陕西历史博物馆（本馆）',
+    '大慈恩寺（大雁塔）',
+    '西安博物院（小雁塔）',
+    '秦始皇帝陵博物院',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill("Xi'an"));
+  assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',
