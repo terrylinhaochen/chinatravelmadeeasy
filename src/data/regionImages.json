@@ -107,6 +107,12 @@
     "source": "https://en.wikipedia.org/wiki/Yellow_Crane_Tower",
     "title": "Yellow Crane Tower"
   },
+  "wuhan": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/7/7f/CN_-_Hubei_-_Wuhan_-_Kranichpagode.jpg",
+    "alt": "Yellow Crane Tower above the Wuchang skyline in Wuhan",
+    "source": "https://commons.wikimedia.org/wiki/File:CN_-_Hubei_-_Wuhan_-_Kranichpagode.jpg",
+    "title": "Yellow Crane Tower in Wuhan"
+  },
   "hunan": {
     "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg/3840px-1_tianzishan_wulingyuan_zhangjiajie_2012.jpg",
     "alt": "Zhangjiajie sandstone pillars in Hunan",

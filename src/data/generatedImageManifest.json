@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-13T18:36:26.599Z",
+  "prepared_at": "2026-07-13T18:49:00.763Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -405,6 +405,12 @@
       "alt": "Stone Elephant Road inside Ming Xiaoling in Nanjing",
       "source": "https://upload.wikimedia.org/wikipedia/commons/f/f0/%E5%8D%97%E4%BA%AC%E6%98%8E%E5%AD%9D%E9%99%B5%E7%9F%B3%E8%B1%A1%E8%B7%AF_-_panoramio_%281%29.jpg",
       "title": "Stone Elephant Road at Ming Xiaoling"
+    },
+    "region:wuhan": {
+      "src": "/images/curated/region-hubei.jpg",
+      "alt": "Yellow Crane Tower above the Wuchang skyline in Wuhan",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/7/7f/CN_-_Hubei_-_Wuhan_-_Kranichpagode.jpg",
+      "title": "Yellow Crane Tower in Wuhan"
     }
   }
 }

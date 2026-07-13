@@ -346,6 +346,24 @@ test('Nanjing handoff keeps the rail hub, museum, memorial entrance, mountain pr
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
 });
 
+test('Wuhan handoff keeps the rail hub, museum gate, greenway portal, tower gate, ferry terminal, and customs museum separate', () => {
+  const result = extractTripPlaces({
+    title: 'Wuhan field-guide places',
+    text: '1. Wuhan Railway Station / 武汉站 — Wuhan — Keep the high-speed arrival separate from Hankou and Wuchang stations.\n2. Hubei Provincial Museum South Gate / 湖北省博物馆南门 — Wuhan — Preserve the individual-visitor entrance and the provincial institution.\n3. East Lake Greenway at Lake Light Prelude / 东湖绿道湖光序曲驿站 — Wuhan — Save one named portal rather than the whole lake.\n4. Yellow Crane Tower Park South Gate / 黄鹤楼公园南门 — Wuhan — Keep paid park admission separate from the metro photo wall.\n5. Zhonghua Road No. 1 Ferry Terminal / 中华路1号码头 — Wuhan — Preserve the numbered Wuchang endpoint of the ordinary ferry.\n6. Wuhan Customs House Museum / 江汉关博物馆 — Wuhan — Keep the museum separate from the adjacent ferry terminal and Wuhan Museum.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '武汉站',
+    '湖北省博物馆南门',
+    '东湖绿道湖光序曲驿站',
+    '黄鹤楼公园南门',
+    '中华路1号码头',
+    '江汉关博物馆',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Wuhan'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'Move', 'See']);
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',

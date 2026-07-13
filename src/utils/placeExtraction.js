@@ -86,6 +86,12 @@ const knownPlaces = [
   { name: 'Sun Yat-sen Mausoleum at Bo’ai Square', localName: '中山陵（博爱广场入口）', city: 'Nanjing', category: 'See', aliases: ['sun yat-sen mausoleum at bo’ai square', "sun yat-sen mausoleum at bo'ai square", 'sun yat-sen mausoleum', '中山陵（博爱广场入口）', '中山陵博爱广场'] },
   { name: 'Ming Xiaoling Scenic Area Gate 3', localName: '明孝陵景区3号门', city: 'Nanjing', category: 'See', aliases: ['ming xiaoling scenic area gate 3', 'ming xiaoling gate 3', '明孝陵景区3号门', '明孝陵3号门'] },
   { name: 'Nanjing City Wall at Zhonghua Gate Barbican', localName: '南京城墙中华门瓮城景区', city: 'Nanjing', category: 'See', aliases: ['nanjing city wall at zhonghua gate barbican', 'zhonghua gate barbican', '南京城墙中华门瓮城景区', '中华门瓮城'] },
+  { name: 'Wuhan Railway Station', localName: '武汉站', city: 'Wuhan', category: 'Move', aliases: ['wuhan railway station', 'wuhan station', '武汉站'] },
+  { name: 'Hubei Provincial Museum South Gate', localName: '湖北省博物馆南门', city: 'Wuhan', category: 'See', aliases: ['hubei provincial museum south gate', 'hubei museum south gate', '湖北省博物馆南门'] },
+  { name: 'East Lake Greenway at Lake Light Prelude', localName: '东湖绿道湖光序曲驿站', city: 'Wuhan', category: 'See', aliases: ['east lake greenway at lake light prelude', 'lake light prelude', '东湖绿道湖光序曲驿站', '湖光序曲驿站'] },
+  { name: 'Yellow Crane Tower Park South Gate', localName: '黄鹤楼公园南门', city: 'Wuhan', category: 'See', aliases: ['yellow crane tower park south gate', 'yellow crane tower south gate', '黄鹤楼公园南门'] },
+  { name: 'Zhonghua Road No. 1 Ferry Terminal', localName: '中华路1号码头', city: 'Wuhan', category: 'Move', aliases: ['zhonghua road no. 1 ferry terminal', 'zhonghua road no 1 ferry terminal', 'zhonghua road number 1 ferry terminal', '中华路1号码头', '中华路一号码头'] },
+  { name: 'Wuhan Customs House Museum', localName: '江汉关博物馆', city: 'Wuhan', category: 'See', aliases: ['wuhan customs house museum', 'jianghanguan museum', '江汉关博物馆'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -261,13 +267,14 @@ function inferCity(text) {
   if (/张家界|\bZhangjiajie\b|Wulingyuan|Wujiayu|Tianzi Mountain|Bailong Elevator|Tianmen Mountain|武陵源|吴家峪|天子山|百龙天梯|天门山/i.test(text)) return 'Zhangjiajie';
   if (/苏州|\bSuzhou\b|Humble Administrator|Master-of-the-Nets|Master of the Nets|Lingering Garden|Tiger Hill|拙政园|网师园|留园|虎丘/i.test(text)) return 'Suzhou';
   if (/南京南站|南京博物院|南京大屠杀史实展|侵华日军南京大屠杀|中山陵|明孝陵|中华门瓮城|Nanjing South|Nanjing Museum|Nanjing Massacre history exhibition|Sun Yat-sen Mausoleum|Ming Xiaoling|Zhonghua Gate Barbican/i.test(text)) return 'Nanjing';
+  if (/武汉站|湖北省博物馆南门|湖光序曲|黄鹤楼公园南门|中华路1号码头|中华路一号码头|江汉关博物馆|Wuhan Railway|Hubei Provincial Museum South Gate|Lake Light Prelude|Yellow Crane Tower Park South Gate|Zhonghua Road (?:No\.?|Number) 1 Ferry|Wuhan Customs House Museum/i.test(text)) return 'Wuhan';
   return '';
 }
 function inferCategory(text) {
   const subject = String(text || '')
     .replace(/^\s*\d{1,2}[.)、:]\s+/, '')
     .split(/\s+\/\s+|\s+[—–-]\s+/)[0];
-  if (/flower market|scenic area (?:visitor cent(?:er|re)|.*(?:gate|entrance))|花卉市场|景区(?:游客中心|.*(?:门|入口))/i.test(subject)) return 'See';
+  if (/flower market|scenic area (?:visitor cent(?:er|re)|.*(?:gate|entrance))|greenway.*(?:prelude|portal|gateway)|花卉市场|景区(?:游客中心|.*(?:门|入口))|绿道.*(?:驿站|入口)/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|noodle|bakery|market|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包|市场/i.test(subject)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
   if (/station|airport|metro|train|checkpoint|\bport\b|wharf|pier|terminal|cableway|ropeway|elevator|站|机场|口岸|码头|航站楼|索道|天梯/i.test(subject)) return 'Move';
