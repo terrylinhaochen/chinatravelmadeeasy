@@ -55,6 +55,7 @@ const manifestAliases = {
   'region:zhangjiajie': '/images/curated/region-hunan.jpg',
   'region:suzhou': '/images/curated/region-jiangsu.jpg',
   'region:wuhan': '/images/curated/region-hubei.jpg',
+  'region:qingdao': '/images/curated/region-shandong.jpg',
 };
 
 const manifestSourceAliases = {

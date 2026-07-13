@@ -179,6 +179,12 @@
     "source": "https://en.wikipedia.org/wiki/Qingdao",
     "title": "Qingdao"
   },
+  "qingdao": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/1/18/Qingdao_Harbour_51341-Qingdao_%2849055637186%29.jpg",
+    "alt": "Historic harbor and coastal cityscape in Qingdao",
+    "source": "https://commons.wikimedia.org/wiki/File:Qingdao_Harbour_51341-Qingdao_(49055637186).jpg",
+    "title": "Qingdao historic harbor"
+  },
   "shanxi": {
     "src": "https://upload.wikimedia.org/wikipedia/commons/7/74/Pingyao-oldtown.jpg",
     "alt": "Pingyao old city in Shanxi",

@@ -31,6 +31,7 @@ export const destinationCoordinates: Record<string, DestinationCoordinate> = {
   liaoning: { lon: 123.4315, lat: 41.8057 },
   qinghai: { lon: 101.7782, lat: 36.6171 },
   shaanxi: { lon: 108.9398, lat: 34.3416 },
+  qingdao: { lon: 120.3826, lat: 36.0671 },
   shandong: { lon: 117.1201, lat: 36.6512 },
   shanxi: { lon: 112.5492, lat: 37.8706 },
   sichuan: { lon: 104.0665, lat: 30.5728 },

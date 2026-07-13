@@ -92,6 +92,12 @@ const knownPlaces = [
   { name: 'Yellow Crane Tower Park South Gate', localName: '黄鹤楼公园南门', city: 'Wuhan', category: 'See', aliases: ['yellow crane tower park south gate', 'yellow crane tower south gate', '黄鹤楼公园南门'] },
   { name: 'Zhonghua Road No. 1 Ferry Terminal', localName: '中华路1号码头', city: 'Wuhan', category: 'Move', aliases: ['zhonghua road no. 1 ferry terminal', 'zhonghua road no 1 ferry terminal', 'zhonghua road number 1 ferry terminal', '中华路1号码头', '中华路一号码头'] },
   { name: 'Wuhan Customs House Museum', localName: '江汉关博物馆', city: 'Wuhan', category: 'See', aliases: ['wuhan customs house museum', 'jianghanguan museum', '江汉关博物馆'] },
+  { name: 'Qingdao Railway Station', localName: '青岛站', city: 'Qingdao', category: 'Move', aliases: ['qingdao railway station', 'qingdao station', '青岛站'] },
+  { name: 'Qingdao Tianhou Temple', localName: '青岛天后宫', city: 'Qingdao', category: 'See', aliases: ['qingdao tianhou temple', 'qingdao tianhou palace', '青岛天后宫'] },
+  { name: "Qingdao German Governor's Residence Museum", localName: '青岛德国总督楼旧址博物馆', city: 'Qingdao', category: 'See', aliases: ["qingdao german governor's residence museum", 'qingdao german governor’s residence museum', 'german governor residence museum', '青岛德国总督楼旧址博物馆'] },
+  { name: 'Tsingtao Brewery Museum', localName: '青岛啤酒博物馆', city: 'Qingdao', category: 'See', aliases: ['tsingtao brewery museum', 'qingdao beer museum', '青岛啤酒博物馆'] },
+  { name: 'Qingdao First Bathing Beach', localName: '青岛第一海水浴场', city: 'Qingdao', category: 'See', aliases: ['qingdao first bathing beach', 'first bathing beach qingdao', '青岛第一海水浴场'] },
+  { name: 'Laoshan Scenic Area Visitor Service Center at Dahedong', localName: '崂山游客服务中心（大河东）', city: 'Qingdao', category: 'See', aliases: ['laoshan scenic area visitor service center at dahedong', 'laoshan visitor service center at dahedong', 'dahedong visitor service center', '崂山游客服务中心（大河东）', '崂山大河东游客服务中心'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -268,6 +274,7 @@ function inferCity(text) {
   if (/苏州|\bSuzhou\b|Humble Administrator|Master-of-the-Nets|Master of the Nets|Lingering Garden|Tiger Hill|拙政园|网师园|留园|虎丘/i.test(text)) return 'Suzhou';
   if (/南京南站|南京博物院|南京大屠杀史实展|侵华日军南京大屠杀|中山陵|明孝陵|中华门瓮城|Nanjing South|Nanjing Museum|Nanjing Massacre history exhibition|Sun Yat-sen Mausoleum|Ming Xiaoling|Zhonghua Gate Barbican/i.test(text)) return 'Nanjing';
   if (/武汉站|湖北省博物馆南门|湖光序曲|黄鹤楼公园南门|中华路1号码头|中华路一号码头|江汉关博物馆|Wuhan Railway|Hubei Provincial Museum South Gate|Lake Light Prelude|Yellow Crane Tower Park South Gate|Zhonghua Road (?:No\.?|Number) 1 Ferry|Wuhan Customs House Museum/i.test(text)) return 'Wuhan';
+  if (/青岛站|青岛天后宫|青岛德国总督楼旧址博物馆|青岛啤酒博物馆|青岛第一海水浴场|崂山游客服务中心|Qingdao Railway|Qingdao Tianhou|Qingdao German Governor|Tsingtao Brewery Museum|Qingdao First Bathing Beach|Laoshan Scenic Area Visitor Service Center/i.test(text)) return 'Qingdao';
   return '';
 }
 function inferCategory(text) {

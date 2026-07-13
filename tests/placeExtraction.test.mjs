@@ -364,6 +364,24 @@ test('Wuhan handoff keeps the rail hub, museum gate, greenway portal, tower gate
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'Move', 'See']);
 });
 
+test('Qingdao handoff keeps the rail arrival, maritime temple, residence museum, brewery, supervised beach, and Laoshan gateway separate', () => {
+  const result = extractTripPlaces({
+    title: 'Qingdao field-guide places',
+    text: "1. Qingdao Railway Station / 青岛站 — Qingdao — Keep the old-city arrival separate from Qingdao North and West.\n2. Qingdao Tianhou Temple / 青岛天后宫 — Qingdao — Preserve the pre-colonial maritime-history anchor.\n3. Qingdao German Governor's Residence Museum / 青岛德国总督楼旧址博物馆 — Qingdao — Keep the residence separate from the Governor's Office and Signal Hill.\n4. Tsingtao Brewery Museum / 青岛啤酒博物馆 — Qingdao — Preserve the historic industrial museum rather than a bar or festival.\n5. Qingdao First Bathing Beach / 青岛第一海水浴场 — Qingdao — Keep supervised seasonal swimming separate from a generic coast pin.\n6. Laoshan Scenic Area Visitor Service Center at Dahedong / 崂山游客服务中心（大河东） — Qingdao — Preserve the Taiqing ticket and sightseeing-bus handoff.",
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '青岛站',
+    '青岛天后宫',
+    '青岛德国总督楼旧址博物馆',
+    '青岛啤酒博物馆',
+    '青岛第一海水浴场',
+    '崂山游客服务中心（大河东）',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Qingdao'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',
