@@ -427,6 +427,68 @@ const destinationRecords: Omit<Destination, 'image' | 'mapPin'>[] = [
     },
   },
   {
+    name: 'Guangzhou',
+    slug: 'guangzhou',
+    type: 'City',
+    summary: 'Cantonese foodways, port history, Xiguan, and the Pearl River',
+    why: 'Guangzhou is best read as a trading city whose old neighborhoods, museums, food rituals, and modern riverfront explain one another—not as a Canton Tower photo stop or a list of dim sum chains.',
+    featured: true,
+    guideIds: ['street-food-night-markets', 'food-ordering-dietary', 'china-high-speed-trains', 'china-attraction-tickets-reservations', 'alipay-wechat-pay-foreign-cards'],
+    mapQuery: '广州市 广东省',
+    editorial: {
+      dek: 'Guangzhou makes sense when you follow the city’s exchanges: river trade, overseas communities, clan networks, Cantonese opera, morning tea, and a modern business district built on the opposite bank. Keep Xiguan, the old political center, and Zhujiang New Town as three distinct city readings instead of commuting between isolated landmarks.',
+      sections: [
+        {
+          title: 'Begin in Xiguan, where the city still works at walking speed',
+          body: 'Start at the Chen Clan Academy for the wood, stone, ceramic, plaster, and iron craft that turn a clan hall into an argument about regional skill and patronage. Then move west to the Cantonese Opera Art Museum and walk a bounded section of Enning Road toward Yongqing Fang or Lychee Bay. The museum is the fixed cultural anchor; Enning Road is a living street, not one attraction pin, so cafes, noodle shops, and restored compounds should be saved separately only after their Chinese storefronts are confirmed.',
+        },
+        {
+          title: 'Day one: Chen Clan Academy to Shamian without a heritage checklist',
+          body: 'Give the morning to the Chen Clan Academy, then continue to Enning Road and the Cantonese Opera Art Museum. From there, take transit or a deliberate longer walk toward Shamian Island. Enter at the east bridge so the route has a real beginning, then cross the compact island once while reading its former concession buildings alongside the river and nearby trading districts. Weekend and holiday crowding is a known constraint; if the island is saturated, stay with the Xiguan walk and use Lychee Bay as the recovery route rather than forcing a photo circuit.',
+        },
+        {
+          title: 'Day two: keep the two Nanyue King Museum campuses separate',
+          body: 'The King’s Tomb Exhibition Area on Jiefang North Road and the Palace Exhibition Area on Zhongshan Fourth Road are different archaeological sites with different addresses and ticket rules. Begin at the Tomb branch for the royal burial and excavated collection, but note that the original tomb chamber has been closed for preventive conservation since October 2025 while the other galleries remain open. Use the free Palace branch later for the excavated palace, garden, waterworks, and the old-city layer near Beijing Road. Never let a search for “Nanyue King Museum” choose the campus for you.',
+        },
+        {
+          title: 'Day three: use the modern riverfront to read the city’s change of scale',
+          body: 'Reserve the Guangdong Museum, enter through the current individual-visitor gate, and give its regional history, art, natural history, and temporary exhibitions enough time to carry the day. Walk Huacheng Square afterward and look across the Pearl River toward Canton Tower before deciding whether the paid tower experience adds anything. The skyline is the conclusion to a trade-city story, not proof that the old neighborhoods are past tense. In heat or thunderstorms, protect the museum slot and shorten the exposed square rather than abandoning the whole day.',
+        },
+        {
+          title: 'Treat morning tea as a format, not a famous-chain recommendation',
+          body: 'A useful dim sum note names the Chinese restaurant, branch, floor or hotel, serving period, queue method, tea charge, and whether a small party can order sensibly. “Tao Tao Ju,” “Guangzhou Restaurant,” or “best dim sum in Guangzhou” is not yet a resolved place because long-lived brands have many branches with different menus and operating patterns. The same rule applies to roast goose, claypot rice, wonton noodles, and dessert shops. Save the exact storefront; keep a dish-only Reel as an eating lead until the branch is grounded.',
+        },
+        {
+          title: 'Stay for the city you want, not the station printed on the ticket',
+          body: 'Liwan or Yuexiu is the stronger first base for Xiguan, old-city walks, and food, while Zhujiang New Town suits travelers prioritizing the museum, modern riverfront, or business appointments. Guangzhou South Railway Station is a major Panyu hub, not a useful default neighborhood; Guangzhou, Guangzhou East, Guangzhou Baiyun, and Guangzhou South are separate stations whose services are changing. Save the exact station in Chinese and build the hotel transfer from that identity, not from the word “Guangzhou.”',
+        },
+        {
+          title: 'Resolve the airport terminal before the arrival ride',
+          body: 'Baiyun Airport now has three terminals. As of the July 2026 check, international and regional flights use Terminal 3, Spring Airlines also uses T3, and several domestic operations remain split across T1 and T2. T3 does not have a direct metro stop: the official route uses the free shuttle from Gaozeng, an intercity connection from Airport North at T2, or a correctly addressed road transfer. Confirm the live airline terminal, carry the hotel’s Chinese name and address, and preserve enough time for a free inter-terminal shuttle if the arrival information changes.',
+        },
+      ],
+      quickFacts: [
+        { label: 'Useful minimum', value: 'Three full days: Xiguan and Shamian, two Nanyue archaeology campuses, then the modern riverfront' },
+        { label: 'Best first base', value: 'Liwan or Yuexiu for old-city walks; Zhujiang New Town for the museum, riverfront, and business trips' },
+        { label: 'Food-map rule', value: 'A dish or chain name is a lead; save the current Chinese branch, serving period, and queue method' },
+        { label: 'Museum identity', value: '南越王博物院（王墓展区） and 南越王博物院（王宫展区） are separate places and reservations' },
+        { label: 'Closure recovery', value: 'Chen Clan Academy closes Tuesday; most major museums close Monday; preserve one outdoor neighborhood route' },
+        { label: 'Arrival rule', value: 'Save the exact rail station or CAN terminal; T3 currently needs a shuttle, intercity connection, or road transfer' },
+      ],
+      checkedAt: '2026-07-13',
+      sources: [
+        { title: 'Guangzhou culture guide: current Xiguan route, Chen Clan Academy, and Cantonese Opera Art Museum hours', url: 'https://www.gz.gov.cn/zt/jrshts/2026n/nwzgz/nwgz/content/post_10686807.html' },
+        { title: 'Liwan government: Cantonese Opera Art Museum identity and address', url: 'https://www.lw.gov.cn/zwgkk/gzjg/qjdbsc/dbj/hldb/content/post_9730490.html' },
+        { title: 'Nanyue King Museum: two campuses, admission, overseas visitor entry, and current hours', url: 'https://www.nywmuseum.org.cn/News/VisitIndex/Visit' },
+        { title: 'Nanyue King Museum: Tomb chamber conservation closure while other galleries remain open', url: 'https://www.nywmuseum.org.cn/News/Details/tzgg?nid=12496' },
+        { title: 'Guangdong Museum: current real-name reservation rules and weekly hours', url: 'https://www.gdmuseum.com/col88/index' },
+        { title: 'Guangzhou airport: January 2026 airline moves and current T1/T3 split', url: 'https://www.gz.gov.cn/guangzhouinternational/home/bulletin/content/post_10660392.html' },
+        { title: 'Guangzhou airport: T3 ground transport and free inter-terminal shuttle', url: 'https://www.gz.gov.cn/guangzhouinternational/home/headline/content/post_10509533.html' },
+        { title: 'Guangzhou railway: January 2026 service changes at Guangzhou Station', url: 'https://www.gz.gov.cn/guangzhouinternational/home/citynews/content/post_10663571.html' },
+      ],
+    },
+  },
+  {
     name: 'Anhui',
     slug: 'anhui',
     type: 'Province',
@@ -689,6 +751,7 @@ const mapPins: Record<string, Destination['mapPin']> = {
   chongqing: { x: 51, y: 64 },
   chengdu: { x: 45, y: 62 },
   xian: { x: 53, y: 51 },
+  guangzhou: { x: 59, y: 80 },
   anhui: { x: 65, y: 59 },
   fujian: { x: 68, y: 75 },
   gansu: { x: 43, y: 43 },

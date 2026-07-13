@@ -20,6 +20,12 @@ const knownPlaces = [
   { name: 'Da Ci’en Temple and Big Wild Goose Pagoda', localName: '大慈恩寺（大雁塔）', city: "Xi'an", category: 'See', aliases: ['da ci’en temple', "da ci'en temple", 'big wild goose pagoda', '大慈恩寺', '大雁塔'] },
   { name: 'Xi’an Museum and Small Wild Goose Pagoda', localName: '西安博物院（小雁塔）', city: "Xi'an", category: 'See', aliases: ['xi’an museum', "xi'an museum", 'small wild goose pagoda', '西安博物院', '小雁塔'] },
   { name: 'Emperor Qinshihuang’s Mausoleum Site Museum', localName: '秦始皇帝陵博物院', city: "Xi'an", category: 'See', aliases: ["emperor qinshihuang's mausoleum site museum", 'emperor qinshihuang’s mausoleum site museum', 'terracotta warriors museum', 'terracotta army museum', '秦始皇帝陵博物院', '兵马俑'] },
+  { name: 'Guangdong Folk Arts Museum at Chen Clan Academy', localName: '广东民间工艺博物馆（陈家祠）', city: 'Guangzhou', category: 'See', aliases: ['guangdong folk arts museum', 'chen clan academy', 'chen clan ancestral hall', '广东民间工艺博物馆', '陈家祠'] },
+  { name: 'Cantonese Opera Art Museum', localName: '粤剧艺术博物馆', city: 'Guangzhou', category: 'See', aliases: ['cantonese opera art museum', '粤剧艺术博物馆'] },
+  { name: 'Shamian Island at the East Bridge', localName: '沙面岛（东桥入口）', city: 'Guangzhou', category: 'See', aliases: ['shamian island at the east bridge', 'shamian island', '沙面岛', '沙面东桥'] },
+  { name: 'Nanyue King Museum — King’s Tomb Exhibition Area', localName: '南越王博物院（王墓展区）', city: 'Guangzhou', category: 'See', aliases: ['nanyue king museum king’s tomb exhibition area', "nanyue king museum king's tomb exhibition area", 'nanyue king museum tomb', '南越王博物院（王墓展区）', '王墓展区'] },
+  { name: 'Nanyue King Museum — Palace Exhibition Area', localName: '南越王博物院（王宫展区）', city: 'Guangzhou', category: 'See', aliases: ['nanyue king museum palace exhibition area', 'nanyue king museum palace', '南越王博物院（王宫展区）', '王宫展区'] },
+  { name: 'Guangdong Museum', localName: '广东省博物馆', city: 'Guangzhou', category: 'See', aliases: ['guangdong museum', 'guangdong provincial museum', '广东省博物馆'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -184,6 +190,7 @@ function inferCity(text) {
   if (/成都|Chengdu|Heming|People's Park|Wenshu|Panda Base|Wuhou|Yulin|小龙坎|鹤鸣|人民公园|文殊院|熊猫繁育|武侯祠|玉林西路/i.test(text)) return 'Chengdu';
   if (/北京|Beijing|Forbidden|Temple of Heaven|Mutianyu|故宫|天坛|慕田峪/i.test(text)) return 'Beijing';
   if (/西安|Xi'an|Terracotta|Muslim Quarter/i.test(text)) return "Xi'an";
+  if (/广州|Guangzhou|Cantonese Opera|Chen Clan|Shamian|Nanyue King|Guangdong Museum|陈家祠|粤剧艺术|沙面岛|南越王博物院|广东省博物馆/i.test(text)) return 'Guangzhou';
   return '';
 }
 function inferCategory(text) {
@@ -193,12 +200,12 @@ function inferCategory(text) {
   if (/food|lunch|snack|restaurant|hotpot|bao|noodle|bakery|market|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包|市场/i.test(subject)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
   if (/station|airport|metro|train|站|机场/i.test(subject)) return 'Move';
-  if (/tea|tea house|teahouse|茶社|茶馆|茶/i.test(subject)) return 'Tea';
-  if (/museum|mosque|temple|pagoda|wall|monastery|shrine|garden|park|promenade|trail|博物馆|清真|寺|塔|城墙|公园|花园|海滨|步道/i.test(subject)) return 'See';
+  if (/\btea(?:\s*house)?\b|teahouse|茶社|茶馆|茶/i.test(subject)) return 'Tea';
+  if (/museum|mosque|temple|pagoda|wall|monastery|shrine|garden|park|promenade|trail|island|bridge|博物馆|清真|寺|塔|城墙|公园|花园|海滨|步道|岛|桥/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包/i.test(text)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(text)) return 'Stay';
   if (/station|airport|metro|train|站|机场/i.test(text)) return 'Move';
-  if (/tea|茶/i.test(text)) return 'Tea';
+  if (/\btea\b|茶/i.test(text)) return 'Tea';
   return 'See';
 }
 function evidenceLine(text, place) {

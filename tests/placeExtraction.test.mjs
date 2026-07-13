@@ -148,6 +148,24 @@ test('Xi’an city handoff keeps entrances, nested sites, museum branches, and L
   assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
 });
 
+test('Guangzhou city handoff keeps route entrances and museum campuses as six separate identities', () => {
+  const result = extractTripPlaces({
+    title: 'Guangzhou field-guide places',
+    text: "1. Guangdong Folk Arts Museum at Chen Clan Academy / 广东民间工艺博物馆（陈家祠） — Guangzhou — Preserve the museum and historic building identity.\n2. Cantonese Opera Art Museum / 粤剧艺术博物馆 — Guangzhou — Use the venue as the fixed Enning Road anchor.\n3. Shamian Island at the East Bridge / 沙面岛（东桥入口） — Guangzhou — Start at the east bridge instead of an arbitrary island center.\n4. Nanyue King Museum — King’s Tomb Exhibition Area / 南越王博物院（王墓展区） — Guangzhou — Keep the paid tomb branch and current closure notice attached.\n5. Nanyue King Museum — Palace Exhibition Area / 南越王博物院（王宫展区） — Guangzhou — Keep the free palace branch and east entrance separate.\n6. Guangdong Museum / 广东省博物馆 — Guangzhou — Preserve the timed provincial-museum identity.",
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '广东民间工艺博物馆（陈家祠）',
+    '粤剧艺术博物馆',
+    '沙面岛（东桥入口）',
+    '南越王博物院（王墓展区）',
+    '南越王博物院（王宫展区）',
+    '广东省博物馆',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Guangzhou'));
+  assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',

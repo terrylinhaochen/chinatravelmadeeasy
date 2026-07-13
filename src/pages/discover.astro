@@ -154,6 +154,7 @@ const jsonLd = [
             <article
               class="ds-card group flex h-full flex-col overflow-hidden"
               data-discover-item
+              data-title={destination.name.toLowerCase()}
               data-intents={intentForDestination(destination.guideIds).join(' ')}
               data-search={`${destination.name} ${destination.summary} ${destination.places.map((place) => `${place.name} ${place.area} ${place.mapQuery}`).join(' ')} ${videoSearchText(destination.slug)}`.toLowerCase()}
             >
@@ -199,6 +200,7 @@ const jsonLd = [
         {guides.map((guide) => (
           <div
             data-discover-item
+            data-title={guide.data.title.toLowerCase()}
             data-intents={intentForGuide(guide.id).join(' ')}
             data-search={`${guide.data.title} ${guide.data.description} ${guide.data.category} ${guide.data.mapPlaces.map((place) => `${place.name} ${place.localName ?? ''} ${place.city}`).join(' ')}`.toLowerCase()}
           >
@@ -243,10 +245,13 @@ const jsonLd = [
 
     const applyFilters = () => {
       const query = search.value.trim().toLowerCase();
+      const hasExactTitle = Boolean(query && items.some((item) => (item.dataset.title || '') === query));
       let visible = 0;
       items.forEach((item) => {
         const intentMatch = (item.dataset.intents || '').split(' ').includes(activeIntent);
-        const searchMatch = !query || (item.dataset.search || '').includes(query);
+        const searchMatch = !query || (hasExactTitle
+          ? (item.dataset.title || '') === query
+          : (item.dataset.search || '').includes(query));
         const show = intentMatch && searchMatch;
         item.classList.toggle('hidden', !show);
         if (show) visible += 1;
