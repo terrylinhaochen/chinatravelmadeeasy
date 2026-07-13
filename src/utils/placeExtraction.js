@@ -80,6 +80,12 @@ const knownPlaces = [
   { name: 'Master-of-the-Nets Garden', localName: '网师园', city: 'Suzhou', category: 'See', aliases: ['master-of-the-nets garden', 'master of the nets garden', 'master-of-nets garden', '网师园'] },
   { name: 'Lingering Garden entrance', localName: '留园入口（留园路338号）', city: 'Suzhou', category: 'See', aliases: ['lingering garden entrance', 'lingering garden', '留园入口（留园路338号）', '留园入口'] },
   { name: 'Tiger Hill Scenic Area South Gate', localName: '虎丘山风景名胜区南门', city: 'Suzhou', category: 'See', aliases: ['tiger hill scenic area south gate', 'tiger hill south gate', '虎丘山风景名胜区南门', '虎丘南门'] },
+  { name: 'Nanjing South Railway Station', localName: '南京南站', city: 'Nanjing', category: 'Move', aliases: ['nanjing south railway station', 'nanjing south station', '南京南站'] },
+  { name: 'Nanjing Museum', localName: '南京博物院', city: 'Nanjing', category: 'See', aliases: ['nanjing museum', '南京博物院'] },
+  { name: 'Nanjing Massacre history exhibition at Gate 1', localName: '侵华日军南京大屠杀遇难同胞纪念馆（南京大屠杀史实展1号门）', city: 'Nanjing', category: 'See', aliases: ['nanjing massacre history exhibition at gate 1', 'nanjing massacre history exhibition', '侵华日军南京大屠杀遇难同胞纪念馆（南京大屠杀史实展1号门）', '南京大屠杀史实展1号门'] },
+  { name: 'Sun Yat-sen Mausoleum at Bo’ai Square', localName: '中山陵（博爱广场入口）', city: 'Nanjing', category: 'See', aliases: ['sun yat-sen mausoleum at bo’ai square', "sun yat-sen mausoleum at bo'ai square", 'sun yat-sen mausoleum', '中山陵（博爱广场入口）', '中山陵博爱广场'] },
+  { name: 'Ming Xiaoling Scenic Area Gate 3', localName: '明孝陵景区3号门', city: 'Nanjing', category: 'See', aliases: ['ming xiaoling scenic area gate 3', 'ming xiaoling gate 3', '明孝陵景区3号门', '明孝陵3号门'] },
+  { name: 'Nanjing City Wall at Zhonghua Gate Barbican', localName: '南京城墙中华门瓮城景区', city: 'Nanjing', category: 'See', aliases: ['nanjing city wall at zhonghua gate barbican', 'zhonghua gate barbican', '南京城墙中华门瓮城景区', '中华门瓮城'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -254,6 +260,7 @@ function inferCity(text) {
   if (/桂林|\bGuilin\b|Lingui|Duxiu Peak|Jingjiang Princes|Elephant Trunk Hill|Reed Flute Cave|Mopan Mountain|Zhujiang Passenger|临桂|独秀峰|靖江王城|象鼻山|芦笛岩|磨盘山客运港|竹江客运港/i.test(text)) return 'Guilin';
   if (/张家界|\bZhangjiajie\b|Wulingyuan|Wujiayu|Tianzi Mountain|Bailong Elevator|Tianmen Mountain|武陵源|吴家峪|天子山|百龙天梯|天门山/i.test(text)) return 'Zhangjiajie';
   if (/苏州|\bSuzhou\b|Humble Administrator|Master-of-the-Nets|Master of the Nets|Lingering Garden|Tiger Hill|拙政园|网师园|留园|虎丘/i.test(text)) return 'Suzhou';
+  if (/南京南站|南京博物院|南京大屠杀史实展|侵华日军南京大屠杀|中山陵|明孝陵|中华门瓮城|Nanjing South|Nanjing Museum|Nanjing Massacre history exhibition|Sun Yat-sen Mausoleum|Ming Xiaoling|Zhonghua Gate Barbican/i.test(text)) return 'Nanjing';
   return '';
 }
 function inferCategory(text) {

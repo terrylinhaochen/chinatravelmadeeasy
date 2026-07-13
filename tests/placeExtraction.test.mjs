@@ -328,6 +328,24 @@ test('Suzhou handoff preserves the central rail arrival, separate reservations, 
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
 });
 
+test('Nanjing handoff keeps the rail hub, museum, memorial entrance, mountain products, and city-wall section separate', () => {
+  const result = extractTripPlaces({
+    title: 'Nanjing field-guide places',
+    text: '1. Nanjing South Railway Station / 南京南站 — Nanjing — Keep the main high-speed arrival separate from Nanjing Station.\n2. Nanjing Museum / 南京博物院 — Nanjing — Preserve the provincial museum rather than the municipal institution.\n3. Nanjing Massacre history exhibition at Gate 1 / 侵华日军南京大屠杀遇难同胞纪念馆（南京大屠杀史实展1号门） — Nanjing — Keep the separately reserved history exhibition and exact entrance.\n4. Sun Yat-sen Mausoleum at Bo’ai Square / 中山陵（博爱广场入口） — Nanjing — Attach the free reservation to the mausoleum approach.\n5. Ming Xiaoling Scenic Area Gate 3 / 明孝陵景区3号门 — Nanjing — Preserve the separate paid World Heritage product and metro-side gate.\n6. Nanjing City Wall at Zhonghua Gate Barbican / 南京城墙中华门瓮城景区 — Nanjing — Use the paid southern wall section rather than a generic old-city pin.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '南京南站',
+    '南京博物院',
+    '侵华日军南京大屠杀遇难同胞纪念馆（南京大屠杀史实展1号门）',
+    '中山陵（博爱广场入口）',
+    '明孝陵景区3号门',
+    '南京城墙中华门瓮城景区',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Nanjing'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',
