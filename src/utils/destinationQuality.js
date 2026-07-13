@@ -1,6 +1,6 @@
 const includesAny = (value, terms) => terms.some((term) => value.includes(term));
 
-export const PUBLISHED_DESTINATION_SLUGS = ['hong-kong', 'shanghai', 'beijing', 'chongqing', 'chengdu', 'xian', 'guangzhou', 'shenzhen', 'hangzhou', 'kunming', 'dali', 'lijiang'];
+export const PUBLISHED_DESTINATION_SLUGS = ['hong-kong', 'shanghai', 'beijing', 'chongqing', 'chengdu', 'xian', 'guangzhou', 'shenzhen', 'hangzhou', 'kunming', 'dali', 'lijiang', 'guilin', 'yangshuo'];
 
 export const DESTINATION_RUBRIC = [
   { id: 'point_of_view', label: 'Editorial point of view' },

@@ -203,6 +203,18 @@
     "source": "https://en.wikipedia.org/wiki/Old_Town_of_Lijiang",
     "title": "Old Town of Lijiang"
   },
+  "guilin": {
+    "src": "https://commons.wikimedia.org/wiki/Special:Redirect/file/View_of_Guilin_from_Elephant_Trunk_Hill.jpg",
+    "alt": "Guilin city threaded between karst towers and rivers",
+    "source": "https://commons.wikimedia.org/wiki/File:View_of_Guilin_from_Elephant_Trunk_Hill.jpg",
+    "title": "View of Guilin from Elephant Trunk Hill"
+  },
+  "yangshuo": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/1_guilin_yangshuo_2017.jpg/3840px-1_guilin_yangshuo_2017.jpg",
+    "alt": "Li River and tower-karst landscape near Yangshuo",
+    "source": "https://commons.wikimedia.org/wiki/File:1_guilin_yangshuo_2017.jpg",
+    "title": "Yangshuo karst landscape"
+  },
   "zhejiang": {
     "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/West_Lake%2C_Hangzhou_2025.jpg/3840px-West_Lake%2C_Hangzhou_2025.jpg",
     "alt": "West Lake in Hangzhou, Zhejiang",

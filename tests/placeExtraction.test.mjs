@@ -256,6 +256,42 @@ test('Lijiang handoff keeps three heritage components and exact mountain product
   assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
 });
 
+test('Guilin handoff keeps the city context and two classic-cruise ports separate', () => {
+  const result = extractTripPlaces({
+    title: 'Guilin field-guide places',
+    text: '1. Guilin Museum — Lingui building / 桂林博物馆（临桂馆） — Guilin — Keep the current museum separate from its former address.\n2. Duxiu Peak–Jingjiang Princes’ City at Zhengyang Gate / 独秀峰王城景区（正阳门） — Guilin — Enter the royal city at its operational gate.\n3. Elephant Trunk Hill Scenic Area Gate 1 / 象鼻山景区1号门 — Guilin — Use one exact city-river entrance.\n4. Reed Flute Cave visitor center / 芦笛岩景区游客中心 — Guilin — Ground the cave ticket and return transport.\n5. Mopan Mountain Passenger Port / 磨盘山客运港码头 — Guilin — Preserve the three-star cruise departure.\n6. Zhujiang Passenger Port / 竹江客运港码头 — Guilin — Preserve the separate four-star cruise departure.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '桂林博物馆（临桂馆）',
+    '独秀峰王城景区（正阳门）',
+    '象鼻山景区1号门',
+    '芦笛岩景区游客中心',
+    '磨盘山客运港码头',
+    '竹江客运港码头',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Guilin'));
+  assert.deepEqual(result.places.map((place) => place.category), ['See', 'See', 'See', 'See', 'Move', 'Move']);
+});
+
+test('Yangshuo handoff separates Xingping rail and Li River products from the Yulong route', () => {
+  const result = extractTripPlaces({
+    title: 'Yangshuo field-guide places',
+    text: '1. Yangshuo Railway Station / 阳朔站 — Yangshuo — Keep the Xingping rail arrival separate from the county town.\n2. Xingping Chaobanshan Wharf / 兴坪朝板山码头 — Yangshuo — Preserve the local Li River product.\n3. Yangshuo Longtoushan Wharf / 阳朔龙头山码头 — Yangshuo — Ground the one-way Guilin cruise arrival.\n4. Jima Wharf on the Yulong River / 遇龙河景区骥马码头 — Yangshuo — Start one named bamboo-raft route.\n5. Gongnong Bridge comprehensive wharf / 工农桥综合码头 — Yangshuo — Preserve the route endpoint and pickup.\n6. Shuangliu Ferry Pavilion in Jiuxian / 旧县村双流义渡亭 — Yangshuo — Anchor a bounded public cycling route.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '阳朔站',
+    '兴坪朝板山码头',
+    '阳朔龙头山码头',
+    '遇龙河景区骥马码头',
+    '工农桥综合码头',
+    '旧县村双流义渡亭',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Yangshuo'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'Move', 'Move', 'Move', 'Move', 'See']);
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',

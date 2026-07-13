@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-13T17:43:26.610Z",
+  "prepared_at": "2026-07-13T17:57:18.037Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -375,6 +375,18 @@
       "alt": "Stone roofs, lanes, and surrounding highlands in Lijiang old town",
       "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Lijiang_-_panoramio_%286%29.jpg/3840px-Lijiang_-_panoramio_%286%29.jpg",
       "title": "Old Town of Lijiang"
+    },
+    "region:guilin": {
+      "src": "/images/curated/region-guilin.jpg",
+      "alt": "Guilin city threaded between karst towers and rivers",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/View_of_Guilin_from_Elephant_Trunk_Hill.jpg",
+      "title": "View of Guilin from Elephant Trunk Hill"
+    },
+    "region:yangshuo": {
+      "src": "/images/curated/region-guangxi.jpg",
+      "alt": "Li River and tower-karst landscape near Yangshuo",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/1_guilin_yangshuo_2017.jpg/3840px-1_guilin_yangshuo_2017.jpg",
+      "title": "Yangshuo karst landscape"
     }
   }
 }
