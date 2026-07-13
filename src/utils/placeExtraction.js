@@ -74,6 +74,12 @@ const knownPlaces = [
   { name: 'Tianzi Mountain Cableway lower station', localName: '天子山索道下站', city: 'Zhangjiajie', category: 'Move', aliases: ['tianzi mountain cableway lower station', 'tianzi mountain cableway station', '天子山索道下站'] },
   { name: 'Bailong Elevator lower station', localName: '百龙天梯下站', city: 'Zhangjiajie', category: 'Move', aliases: ['bailong elevator lower station', 'bailong elevator', '百龙天梯下站'] },
   { name: 'Tianmen Mountain Cableway lower station', localName: '天门山索道下站', city: 'Zhangjiajie', category: 'Move', aliases: ['tianmen mountain cableway lower station', 'tianmen mountain cableway station', '天门山索道下站'] },
+  { name: 'Suzhou Railway Station', localName: '苏州站', city: 'Suzhou', category: 'Move', aliases: ['suzhou railway station', 'suzhou station', '苏州站'] },
+  { name: 'Humble Administrator’s Garden entrance', localName: '拙政园入口（东北街178号）', city: 'Suzhou', category: 'See', aliases: ['humble administrator’s garden entrance', "humble administrator's garden entrance", 'humble administrators garden entrance', '拙政园入口（东北街178号）', '拙政园入口'] },
+  { name: 'Suzhou Museum main building', localName: '苏州博物馆本馆', city: 'Suzhou', category: 'See', aliases: ['suzhou museum main building', 'suzhou museum', '苏州博物馆本馆'] },
+  { name: 'Master-of-the-Nets Garden', localName: '网师园', city: 'Suzhou', category: 'See', aliases: ['master-of-the-nets garden', 'master of the nets garden', 'master-of-nets garden', '网师园'] },
+  { name: 'Lingering Garden entrance', localName: '留园入口（留园路338号）', city: 'Suzhou', category: 'See', aliases: ['lingering garden entrance', 'lingering garden', '留园入口（留园路338号）', '留园入口'] },
+  { name: 'Tiger Hill Scenic Area South Gate', localName: '虎丘山风景名胜区南门', city: 'Suzhou', category: 'See', aliases: ['tiger hill scenic area south gate', 'tiger hill south gate', '虎丘山风景名胜区南门', '虎丘南门'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -247,13 +253,14 @@ function inferCity(text) {
   if (/阳朔|\bYangshuo\b|Xingping|Chaobanshan|Longtoushan|Yulong River|Jima Wharf|Gongnong Bridge|Jiuxian|兴坪|朝板山|龙头山|遇龙河|骥马码头|工农桥|旧县村|双流义渡亭/i.test(text)) return 'Yangshuo';
   if (/桂林|\bGuilin\b|Lingui|Duxiu Peak|Jingjiang Princes|Elephant Trunk Hill|Reed Flute Cave|Mopan Mountain|Zhujiang Passenger|临桂|独秀峰|靖江王城|象鼻山|芦笛岩|磨盘山客运港|竹江客运港/i.test(text)) return 'Guilin';
   if (/张家界|\bZhangjiajie\b|Wulingyuan|Wujiayu|Tianzi Mountain|Bailong Elevator|Tianmen Mountain|武陵源|吴家峪|天子山|百龙天梯|天门山/i.test(text)) return 'Zhangjiajie';
+  if (/苏州|\bSuzhou\b|Humble Administrator|Master-of-the-Nets|Master of the Nets|Lingering Garden|Tiger Hill|拙政园|网师园|留园|虎丘/i.test(text)) return 'Suzhou';
   return '';
 }
 function inferCategory(text) {
   const subject = String(text || '')
     .replace(/^\s*\d{1,2}[.)、:]\s+/, '')
     .split(/\s+\/\s+|\s+[—–-]\s+/)[0];
-  if (/flower market|scenic area visitor cent(?:er|re)|花卉市场|景区游客中心/i.test(subject)) return 'See';
+  if (/flower market|scenic area (?:visitor cent(?:er|re)|.*(?:gate|entrance))|花卉市场|景区(?:游客中心|.*(?:门|入口))/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|noodle|bakery|market|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包|市场/i.test(subject)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
   if (/station|airport|metro|train|checkpoint|\bport\b|wharf|pier|terminal|cableway|ropeway|elevator|站|机场|口岸|码头|航站楼|索道|天梯/i.test(subject)) return 'Move';

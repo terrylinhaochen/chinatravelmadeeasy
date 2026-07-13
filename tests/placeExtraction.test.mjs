@@ -310,6 +310,24 @@ test('Zhangjiajie handoff preserves the rail arrival, two park gates, vertical t
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'Move', 'Move', 'Move']);
 });
 
+test('Suzhou handoff preserves the central rail arrival, separate reservations, garden identities, and Tiger Hill gate', () => {
+  const result = extractTripPlaces({
+    title: 'Suzhou field-guide places',
+    text: '1. Suzhou Railway Station / 苏州站 — Suzhou — Keep the central arrival separate from Suzhou North.\n2. Humble Administrator’s Garden entrance / 拙政园入口（东北街178号） — Suzhou — Preserve the timed garden ticket and exact entrance.\n3. Suzhou Museum main building / 苏州博物馆本馆 — Suzhou — Keep the free museum reservation separate from the garden next door.\n4. Master-of-the-Nets Garden / 网师园 — Suzhou — Compare a compact residential garden with the larger first-day garden.\n5. Lingering Garden entrance / 留园入口（留园路338号） — Suzhou — Preserve the western garden identity and reservation.\n6. Tiger Hill Scenic Area South Gate / 虎丘山风景名胜区南门 — Suzhou — Navigate to the paid hill entrance rather than the district or metro station.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '苏州站',
+    '拙政园入口（东北街178号）',
+    '苏州博物馆本馆',
+    '网师园',
+    '留园入口（留园路338号）',
+    '虎丘山风景名胜区南门',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Suzhou'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',

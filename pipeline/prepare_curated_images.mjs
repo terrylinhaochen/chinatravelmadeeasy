@@ -53,6 +53,7 @@ const manifestAliases = {
   'region:lijiang': '/images/curated/region-yunnan.jpg',
   'region:yangshuo': '/images/curated/region-guangxi.jpg',
   'region:zhangjiajie': '/images/curated/region-hunan.jpg',
+  'region:suzhou': '/images/curated/region-jiangsu.jpg',
 };
 
 const manifestSourceAliases = {

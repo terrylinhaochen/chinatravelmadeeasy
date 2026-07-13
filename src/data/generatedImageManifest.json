@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-13T18:10:44.516Z",
+  "prepared_at": "2026-07-13T18:23:55.214Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -249,6 +249,12 @@
       "alt": "Suzhou classical garden in Jiangsu",
       "source": "https://upload.wikimedia.org/wikipedia/commons/c/ce/20240203_Lingering_Garden_09.jpg",
       "title": "Classical Gardens of Suzhou"
+    },
+    "region:suzhou": {
+      "src": "/images/curated/region-jiangsu.jpg",
+      "alt": "Covered walk, water, and planted rooms inside Lingering Garden in Suzhou",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/c/ce/20240203_Lingering_Garden_09.jpg",
+      "title": "Lingering Garden in Suzhou"
     },
     "region:jiangxi": {
       "src": "/images/curated/region-jiangxi.jpg",
