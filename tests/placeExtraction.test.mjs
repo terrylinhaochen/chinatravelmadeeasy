@@ -202,6 +202,24 @@ test('Hangzhou city handoff keeps route starts, reservation complexes, museum br
   assert.deepEqual(result.places.map((place) => place.category), ['See', 'See', 'Tea', 'See', 'See', 'See']);
 });
 
+test('Kunming city handoff keeps history branches, flower trade, seasonal ecology, and the Stone Forest transfer separate', () => {
+  const result = extractTripPlaces({
+    title: 'Kunming field-guide places',
+    text: '1. Green Lake Park south gate / 翠湖公园南门 — Kunming — Begin the old-center morning at a fixed entrance.\n2. Kunming City Museum / 昆明市博物馆 — Kunming — Keep the city museum distinct from the provincial institution.\n3. Yunnan Provincial Museum / 云南省博物馆 — Kunming — Use the current Guangfu Road building.\n4. Kunming Dounan Flower Market main hall / 昆明斗南花卉市场（主场馆） — Kunming — Ground the working flower district at the main building.\n5. Haigeng Dam viewing section / 海埂大坝（观景路观鸥段） — Kunming — Preserve the seasonal bird-viewing section rather than generic Dianchi.\n6. Stone Forest Scenic Area visitor center / 石林风景区游客中心 — Kunming — Resolve the arrival beyond Shilin West station.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '翠湖公园南门',
+    '昆明市博物馆',
+    '云南省博物馆',
+    '昆明斗南花卉市场（主场馆）',
+    '海埂大坝（观景路观鸥段）',
+    '石林风景区游客中心',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Kunming'));
+  assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',

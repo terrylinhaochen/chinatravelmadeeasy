@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-05T04:12:25.411Z",
+  "prepared_at": "2026-07-13T17:16:11.782Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -274,12 +274,6 @@
       "source": "https://upload.wikimedia.org/wikipedia/commons/8/88/51714-Terracota-Army.jpg",
       "title": "Terracotta Army"
     },
-    "region:xian": {
-      "src": "/images/curated/region-shaanxi.jpg",
-      "alt": "Terracotta Army near Xi’an",
-      "source": "https://upload.wikimedia.org/wikipedia/commons/8/88/51714-Terracota-Army.jpg",
-      "title": "Terracotta Army"
-    },
     "region:shandong": {
       "src": "/images/curated/region-shandong.jpg",
       "alt": "Qingdao coast in Shandong",
@@ -291,6 +285,12 @@
       "alt": "Pingyao old city in Shanxi",
       "source": "https://upload.wikimedia.org/wikipedia/commons/7/74/Pingyao-oldtown.jpg",
       "title": "Pingyao"
+    },
+    "region:xian": {
+      "src": "/images/curated/region-shaanxi.jpg",
+      "alt": "Terracotta Army near Xi’an",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/8/88/51714-Terracota-Army.jpg",
+      "title": "Terracotta Army"
     },
     "region:chengdu": {
       "src": "/images/curated/region-sichuan.jpg",
@@ -309,6 +309,12 @@
       "alt": "Lijiang old town in Yunnan",
       "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Lijiang_-_panoramio_%286%29.jpg/3840px-Lijiang_-_panoramio_%286%29.jpg",
       "title": "Old Town of Lijiang"
+    },
+    "region:kunming": {
+      "src": "/images/curated/region-kunming.jpg",
+      "alt": "Boats, pavilions, and city life at Green Lake Park in Kunming",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Boats_at_Green_Lake_Park.jpg",
+      "title": "Green Lake Park, Kunming"
     },
     "region:zhejiang": {
       "src": "/images/curated/region-zhejiang.jpg",

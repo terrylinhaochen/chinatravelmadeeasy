@@ -34,10 +34,11 @@ const mapHandoffText = featuredPlaces
   .map((place, index) => `${index + 1}. ${place.name}${place.localName ? ` / ${place.localName}` : ''} — ${destination.name} — ${place.why}`)
   .join('\n');
 const mapHandoffHref = `/map-import/?title=${encodeURIComponent(`${destination.name} field-guide places`)}&text=${encodeURIComponent(mapHandoffText)}`;
+const lowercaseFirst = (value: string) => value ? `${value[0].toLowerCase()}${value.slice(1)}` : value;
 const faqItems = [
   {
     q: `What is ${destination.name} best for on a China trip?`,
-    a: `${destination.name} is best for ${destination.summary.toLowerCase()}. ${destination.why}`,
+    a: `${destination.name} is best for ${lowercaseFirst(destination.summary)}. ${destination.why}`,
   },
   ...(featuredPlaces.length
     ? [

@@ -620,6 +620,75 @@ const destinationRecords: Omit<Destination, 'image' | 'mapPin'>[] = [
     },
   },
   {
+    name: 'Kunming',
+    slug: 'kunming',
+    type: 'City',
+    summary: 'Plateau-city history, living flower trade, Dianchi ecology, and the route into Yunnan',
+    why: 'Kunming earns more than a flight connection when its museums, working markets, lake ecology, and rail geography are read together—and when Stone Forest is treated as a separate excursion rather than a spare-hour add-on.',
+    featured: true,
+    guideIds: ['china-high-speed-trains', 'china-attraction-tickets-reservations', 'food-ordering-dietary', 'neighborhoods-beyond-landmarks', 'didi-metro-getting-around'],
+    mapQuery: '昆明市 云南省',
+    editorial: {
+      dek: 'Kunming is not merely the airport before Dali or Lijiang. It is a high plateau city shaped by the Dianchi basin, southwest trade and migration, a remarkable flower economy, and transport routes that now extend across Yunnan and into Southeast Asia. Give the city three days before deciding what belongs to the rest of the province.',
+      sections: [
+        {
+          title: 'Begin with the basin, not the “eternal spring” slogan',
+          body: 'Kunming sits around 1,900 meters above sea level beside Dianchi, with older streets and institutions north of the main railway station and newer districts stretching south toward Chenggong. That geography explains the trip better than a list of flowers and mild-weather claims. Start at Green Lake, where the public park, former military academy, university streets, and nearby old-city fabric can form one slow morning. Then use a museum to connect the Dian Kingdom, later southwest kingdoms, wartime routes, and the modern border region instead of treating Yunnan’s cultures as decorative costumes.',
+        },
+        {
+          title: 'Day one: let the compact city reveal its different histories',
+          body: 'Enter Green Lake through the south gate early, when exercise, music, and ordinary park life are still the main event. Walk the lake and choose one adjacent institution rather than collecting every courtyard. Later, take the metro or a short ride to Kunming City Museum on Tuodong Road: the ancient Dali-Kingdom pagoda, Dianchi bronze material, city photographs, and Flying Tigers history belong to different periods, but together they make Kunming legible as a city rather than a transfer point. The museum normally closes Monday; confirm the live notice before fixing the day.',
+        },
+        {
+          title: 'Day two: put provincial history before the souvenir version of Yunnan',
+          body: 'Yunnan Provincial Museum is in Guandu, far south of Green Lake and close enough to Guandu Old Town to make one coherent day. Use the permanent sequence—from prehistory and Dian bronzes through Nanzhao–Dali, later imperial rule, and modern Yunnan—to understand why the province cannot be reduced to one “ethnic” aesthetic. Admission and reservation rules can change around holidays, so use the museum’s current official channel and carry the same physical passport used in the booking. If the galleries run long, skip the old town rather than rushing both.',
+        },
+        {
+          title: 'See Dounan when flowers are work, not only decoration',
+          body: 'Dounan is a wholesale and logistics system as well as a visitor market. Go in the late afternoon or evening, after the museum day or as its own Chenggong trip, and pay attention to grading, bundling, auctions, cold-chain movement, and the difference between wholesale halls and retail displays. Metro Line 1 reaches Dounan, but the market complex is larger than one exit. Save the main flower-market building and confirm the return train rather than assuming a 24-hour trade cycle means every visitor hall, stall, or metro service runs all night.',
+        },
+        {
+          title: 'Make Dianchi a seasonal ecology day',
+          body: 'Haigeng Dam is most distinctive during the red-billed gull season, roughly October into the following spring; a summer clip promising the same spectacle is stale evidence. At any time, read Dianchi as a heavily managed plateau-lake system with restored wetlands and a still-visible urban edge. Use Metro Line 5 and a short walk or transfer, keep to public paths, and follow the current civilized bird-viewing rules: do not chase, touch, trap, frighten, or feed unsuitable food. Western Hills can extend the day, but its cableways, gates, and return route are separate products—check them before crossing the lake or climbing.',
+        },
+        {
+          title: 'Give Stone Forest a full excursion and preserve every transfer',
+          body: 'Stone Forest is in Shilin Yi Autonomous County, roughly 70–80 kilometers from central Kunming. The correct pin is the main scenic-area visitor center, not a generic county label, Naigu Stone Forest, or a hotel called “Stone Forest.” High-speed trains use Kunming South and Shilin West, but Shilin West is still well outside the main entrance and needs a current onward shuttle, bus, or car. Coaches use a different terminal and timetable. Choose one complete chain, leave early, retain the return buffer, and do not attempt the trip during a short airport layover simply because the rail segment looks brief.',
+        },
+        {
+          title: 'Stay in the old center, and never shorten the station name',
+          body: 'For a first visit, stay between Green Lake, Dongfeng Square, and Tangzixiang: the old center remains walkable while Lines 2, 3, and 6 make museum and airport connections manageable. Kunming Railway Station (昆明站) is the central conventional and intercity station; Kunming South (昆明南站) is the large high-speed hub in Chenggong and can be roughly an hour away by metro. Changshui Airport uses Line 6 from Airport Center to Tangzixiang, not a direct train to Kunming South. Copy the exact Chinese station from every ticket before booking a hotel, transfer, or same-day excursion.',
+        },
+        {
+          title: 'Treat wild-mushroom season as food with a safety protocol',
+          body: 'Seasonal mushrooms are a real pleasure, but “locals eat it” and a viral hallucination joke are not safety evidence. Use an established restaurant, do not buy or forage unfamiliar wild mushrooms to cook yourself, let the kitchen finish its required cooking time, avoid mixing many unknown species, and do not combine the meal with alcohol. If dizziness, nausea, vomiting, abdominal pain, diarrhea, agitation, or hallucinations appear, seek medical care immediately and tell the clinician what was eaten; do not wait for the experience to become a story.',
+        },
+      ],
+      quickFacts: [
+        { label: 'Useful minimum', value: 'Three full city days; add a fourth for Stone Forest rather than squeezing it into an arrival day' },
+        { label: 'Best first base', value: 'Green Lake–Dongfeng Square–Tangzixiang for walkable evenings and airport/metro connections' },
+        { label: 'History sequence', value: 'Green Lake and Kunming City Museum first; Yunnan Provincial Museum gets a separate south-city half-day' },
+        { label: 'Lake rule', value: 'Red-billed gulls are seasonal; keep bird welfare and current access rules attached to every Dianchi clip' },
+        { label: 'Excursion rule', value: '昆明南站 → 石林西站 is only the rail segment; resolve the visitor-center transfer and return too' },
+        { label: 'Station rule', value: '昆明站, 昆明南站, and 长水机场 are different products—never plan from the shortened word “Kunming”' },
+      ],
+      checkedAt: '2026-07-13',
+      sources: [
+        { title: 'Kunming official tourism: Green Lake Park and seasonal red-billed gulls', url: 'https://chinakunming.travel/en/listings/item/31421/green-lake-park' },
+        { title: 'Kunming City Museum: current regular hours, Monday closure, and Tuodong Road address', url: 'https://m.kmmuseum.com/zl_info.asp?id=21' },
+        { title: 'Yunnan Provincial Museum: official permanent exhibition on later Yunnan history', url: 'https://www.ynmuseum.org/detail/642.html' },
+        { title: 'Kunming official tourism: Yunnan Provincial Museum collection and permanent-gallery sequence', url: 'https://chinakunming.travel/en/blog/item/4570/yunnan-provincial-museum-a-glimpse-into-yunnan-s-history' },
+        { title: 'Kunming government: Dounan Flower Market scale, identity, and Metro Line 1 access', url: 'https://en.www.km.gov.cn/2021-06/02/c_629372.htm' },
+        { title: 'Kunming government: Dianchi wetland restoration and bird diversity', url: 'https://en.www.km.gov.cn/2023-10/09/c_927552.htm' },
+        { title: 'Kunming civil rule: prohibited behavior while viewing red-billed gulls', url: 'https://www.kmrd.gov.cn/c/2023-10-20/527187.shtml' },
+        { title: 'Kunming official tourism: Yunnan Stone Forest GeoPark identity and distance', url: 'https://chinakunming.travel/en/destinations/item/33807/yunnan-stone-forest-geopark' },
+        { title: 'Kunming official tourism: Stone Forest rail and coach dependency chain', url: 'https://chinakunming.travel/html/180427/1005.html' },
+        { title: 'Kunming Airport: Metro Line 6 terminus, transfers, and B2 boarding point', url: 'https://km.ynairport.com/zhjt/5749.jhtml' },
+        { title: 'Yunnan CDC: June 2026 wild-mushroom poisoning and cooking warning', url: 'https://ynsjkj.yn.gov.cn/html/2026/jikongkepu_0606/2117.html' },
+      ],
+    },
+  },
+  {
     name: 'Anhui',
     slug: 'anhui',
     type: 'Province',
@@ -885,6 +954,7 @@ const mapPins: Record<string, Destination['mapPin']> = {
   guangzhou: { x: 59, y: 80 },
   shenzhen: { x: 60, y: 81 },
   hangzhou: { x: 70, y: 65 },
+  kunming: { x: 43, y: 76 },
   anhui: { x: 65, y: 59 },
   fujian: { x: 68, y: 75 },
   gansu: { x: 43, y: 43 },

@@ -38,6 +38,12 @@ const knownPlaces = [
   { name: 'Southern Song Deshou Palace Site Museum', localName: '南宋德寿宫遗址博物馆', city: 'Hangzhou', category: 'See', aliases: ['southern song deshou palace site museum', 'deshou palace site museum', '南宋德寿宫遗址博物馆', '德寿宫'] },
   { name: 'China Beijing–Hangzhou Grand Canal Museum', localName: '中国京杭大运河博物馆', city: 'Hangzhou', category: 'See', aliases: ['china beijing–hangzhou grand canal museum', 'china beijing-hangzhou grand canal museum', 'beijing-hangzhou grand canal museum', '中国京杭大运河博物馆'] },
   { name: 'Liangzhu Museum', localName: '良渚博物院', city: 'Hangzhou', category: 'See', aliases: ['liangzhu museum', '良渚博物院'] },
+  { name: 'Green Lake Park south gate', localName: '翠湖公园南门', city: 'Kunming', category: 'See', aliases: ['green lake park south gate', 'cuihu park south gate', '翠湖公园南门', '翠湖南门'] },
+  { name: 'Kunming City Museum', localName: '昆明市博物馆', city: 'Kunming', category: 'See', aliases: ['kunming city museum', 'kunming municipal museum', '昆明市博物馆'] },
+  { name: 'Yunnan Provincial Museum', localName: '云南省博物馆', city: 'Kunming', category: 'See', aliases: ['yunnan provincial museum', '云南省博物馆'] },
+  { name: 'Kunming Dounan Flower Market main hall', localName: '昆明斗南花卉市场（主场馆）', city: 'Kunming', category: 'See', aliases: ['kunming dounan flower market main hall', 'dounan flower market main hall', 'dounan flower market', '昆明斗南花卉市场（主场馆）', '斗南花卉市场'] },
+  { name: 'Haigeng Dam viewing section', localName: '海埂大坝（观景路观鸥段）', city: 'Kunming', category: 'See', aliases: ['haigeng dam viewing section', 'haigeng dam', '海埂大坝（观景路观鸥段）', '海埂大坝'] },
+  { name: 'Stone Forest Scenic Area visitor center', localName: '石林风景区游客中心', city: 'Kunming', category: 'See', aliases: ['stone forest scenic area visitor center', 'stone forest visitor center', '石林风景区游客中心'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -205,12 +211,14 @@ function inferCity(text) {
   if (/广州|Guangzhou|Cantonese Opera|Chen Clan|Shamian|Nanyue King|Guangdong Museum|陈家祠|粤剧艺术|沙面岛|南越王博物院|广东省博物馆/i.test(text)) return 'Guangzhou';
   if (/深圳|Shenzhen|Lianhua Hill|Nantou|Sea World Culture|Dafen|Futian Checkpoint|莲花山|南头古城|海上世界文化|大芬美术馆|福田口岸/i.test(text)) return 'Shenzhen';
   if (/杭州|Hangzhou|Broken Bridge|Bai Causeway|Lingyin|Feilai Peak|Shuangfeng|Deshou Palace|Liangzhu|断桥残雪|白堤|灵隐飞来峰|双峰馆区|德寿宫|中国京杭大运河博物馆|良渚博物院/i.test(text)) return 'Hangzhou';
+  if (/昆明|Kunming|Green Lake|Cuihu|Dounan|Haigeng|Stone Forest|翠湖公园|昆明市博物馆|云南省博物馆|斗南花卉市场|海埂大坝|石林风景区/i.test(text)) return 'Kunming';
   return '';
 }
 function inferCategory(text) {
   const subject = String(text || '')
     .replace(/^\s*\d{1,2}[.)、:]\s+/, '')
     .split(/\s+\/\s+|\s+[—–-]\s+/)[0];
+  if (/flower market|scenic area visitor cent(?:er|re)|花卉市场|景区游客中心/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|noodle|bakery|market|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包|市场/i.test(subject)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
   if (/station|airport|metro|train|checkpoint|\bport\b|terminal|站|机场|口岸|码头|航站楼/i.test(subject)) return 'Move';

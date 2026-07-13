@@ -185,6 +185,12 @@
     "source": "https://en.wikipedia.org/wiki/Old_Town_of_Lijiang",
     "title": "Old Town of Lijiang"
   },
+  "kunming": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Boats_at_Green_Lake_Park.jpg",
+    "alt": "Boats, pavilions, and city life at Green Lake Park in Kunming",
+    "source": "https://commons.wikimedia.org/wiki/File:Boats_at_Green_Lake_Park.jpg",
+    "title": "Green Lake Park, Kunming"
+  },
   "zhejiang": {
     "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/West_Lake%2C_Hangzhou_2025.jpg/3840px-West_Lake%2C_Hangzhou_2025.jpg",
     "alt": "West Lake in Hangzhou, Zhejiang",
