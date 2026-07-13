@@ -49,13 +49,13 @@ const knownPlaces = [
   { name: 'Chongsheng Temple Three Pagodas Cultural Tourism Area entrance', localName: '崇圣寺三塔文化旅游区入口', city: 'Dali', category: 'See', aliases: ['chongsheng temple three pagodas cultural tourism area entrance', 'three pagodas entrance', '崇圣寺三塔文化旅游区入口', '崇圣寺三塔'] },
   { name: 'Yan Family Courtyard Museum', localName: '喜洲严家大院博物馆', city: 'Dali', category: 'See', aliases: ['yan family courtyard museum', 'xizhou yan family courtyard', '喜洲严家大院博物馆', '严家大院'] },
   { name: 'Longkan entrance to the Erhai Ecological Corridor', localName: '洱海生态廊道龙龛入口', city: 'Dali', category: 'See', aliases: ['longkan entrance to the erhai ecological corridor', 'longkan corridor entrance', '洱海生态廊道龙龛入口', '龙龛入口'] },
-  { name: 'Cangshan Grand Cableway lower station', localName: '苍山大索道下站（天龙八部影视城）', city: 'Dali', category: 'See', aliases: ['cangshan grand cableway lower station', 'cangshan cableway lower station', '苍山大索道下站（天龙八部影视城）', '苍山大索道下站'] },
+  { name: 'Cangshan Grand Cableway lower station', localName: '苍山大索道下站（天龙八部影视城）', city: 'Dali', category: 'Move', aliases: ['cangshan grand cableway lower station', 'cangshan cableway lower station', '苍山大索道下站（天龙八部影视城）', '苍山大索道下站'] },
   { name: 'Lijiang Ancient City Museum at Mufu', localName: '丽江古城博物院（木府）', city: 'Lijiang', category: 'See', aliases: ['lijiang ancient city museum at mufu', 'lijiang ancient city museum', 'mufu', '丽江古城博物院（木府）', '丽江古城博物院', '木府'] },
   { name: 'Black Dragon Pool Park south gate', localName: '黑龙潭公园南门', city: 'Lijiang', category: 'See', aliases: ['black dragon pool park south gate', 'black dragon pool south gate', '黑龙潭公园南门'] },
   { name: 'Shuhe Ancient Town north gate', localName: '束河古镇北门', city: 'Lijiang', category: 'See', aliases: ['shuhe ancient town north gate', 'shuhe north gate', '束河古镇北门'] },
   { name: 'Baisha Murals Scenic Area ticket office', localName: '白沙壁画景区售票处', city: 'Lijiang', category: 'See', aliases: ['baisha murals scenic area ticket office', 'baisha murals ticket office', '白沙壁画景区售票处', '白沙壁画'] },
   { name: 'Jade Dragon Snow Mountain new visitor service center', localName: '玉龙雪山新游客服务中心', city: 'Lijiang', category: 'See', aliases: ['jade dragon snow mountain new visitor service center', 'jade dragon snow mountain visitor center', '玉龙雪山新游客服务中心'] },
-  { name: 'Glacier Park Cableway lower station', localName: '冰川公园索道下站', city: 'Lijiang', category: 'See', aliases: ['glacier park cableway lower station', 'glacier park lower station', '冰川公园索道下站'] },
+  { name: 'Glacier Park Cableway lower station', localName: '冰川公园索道下站', city: 'Lijiang', category: 'Move', aliases: ['glacier park cableway lower station', 'glacier park lower station', '冰川公园索道下站'] },
   { name: 'Guilin Museum — Lingui building', localName: '桂林博物馆（临桂馆）', city: 'Guilin', category: 'See', aliases: ['guilin museum lingui building', 'guilin museum — lingui building', 'guilin museum', '桂林博物馆（临桂馆）', '桂林博物馆'] },
   { name: 'Duxiu Peak–Jingjiang Princes’ City at Zhengyang Gate', localName: '独秀峰王城景区（正阳门）', city: 'Guilin', category: 'See', aliases: ['duxiu peak–jingjiang princes’ city at zhengyang gate', "duxiu peak-jingjiang princes' city at zhengyang gate", 'jingjiang princes city zhengyang gate', '独秀峰王城景区（正阳门）', '独秀峰王城景区正阳门'] },
   { name: 'Elephant Trunk Hill Scenic Area Gate 1', localName: '象鼻山景区1号门', city: 'Guilin', category: 'See', aliases: ['elephant trunk hill scenic area gate 1', 'elephant trunk hill gate 1', '象鼻山景区1号门', '象山景区1号门'] },
@@ -68,6 +68,12 @@ const knownPlaces = [
   { name: 'Jima Wharf on the Yulong River', localName: '遇龙河景区骥马码头', city: 'Yangshuo', category: 'Move', aliases: ['jima wharf on the yulong river', 'jima wharf', '遇龙河景区骥马码头', '骥马码头'] },
   { name: 'Gongnong Bridge comprehensive wharf', localName: '工农桥综合码头', city: 'Yangshuo', category: 'Move', aliases: ['gongnong bridge comprehensive wharf', 'gongnong bridge wharf', '工农桥综合码头'] },
   { name: 'Shuangliu Ferry Pavilion in Jiuxian', localName: '旧县村双流义渡亭', city: 'Yangshuo', category: 'See', aliases: ['shuangliu ferry pavilion in jiuxian', 'shuangliu ferry pavilion', '旧县村双流义渡亭', '双流义渡亭'] },
+  { name: 'Zhangjiajie West Railway Station', localName: '张家界西站', city: 'Zhangjiajie', category: 'Move', aliases: ['zhangjiajie west railway station', 'zhangjiajie west station', '张家界西站'] },
+  { name: 'Wulingyuan East Gate at the landmark gate', localName: '武陵源标志门（东门）', city: 'Zhangjiajie', category: 'See', aliases: ['wulingyuan east gate at the landmark gate', 'wulingyuan east gate', 'wujiayu ticket station', '武陵源标志门（东门）', '武陵源标志门', '吴家峪门票站'] },
+  { name: 'Zhangjiajie National Forest Park South Gate', localName: '张家界国家森林公园南门（森林公园门票站）', city: 'Zhangjiajie', category: 'See', aliases: ['zhangjiajie national forest park south gate', 'forest park south gate', '张家界国家森林公园南门（森林公园门票站）', '张家界国家森林公园南门', '森林公园门票站'] },
+  { name: 'Tianzi Mountain Cableway lower station', localName: '天子山索道下站', city: 'Zhangjiajie', category: 'Move', aliases: ['tianzi mountain cableway lower station', 'tianzi mountain cableway station', '天子山索道下站'] },
+  { name: 'Bailong Elevator lower station', localName: '百龙天梯下站', city: 'Zhangjiajie', category: 'Move', aliases: ['bailong elevator lower station', 'bailong elevator', '百龙天梯下站'] },
+  { name: 'Tianmen Mountain Cableway lower station', localName: '天门山索道下站', city: 'Zhangjiajie', category: 'Move', aliases: ['tianmen mountain cableway lower station', 'tianmen mountain cableway station', '天门山索道下站'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -240,21 +246,22 @@ function inferCity(text) {
   if (/丽江|\bLijiang\b|Mufu|Black Dragon Pool|Shuhe|Baisha Murals|Jade Dragon Snow Mountain|Glacier Park|木府|黑龙潭|束河|白沙壁画|玉龙雪山|冰川公园/i.test(text)) return 'Lijiang';
   if (/阳朔|\bYangshuo\b|Xingping|Chaobanshan|Longtoushan|Yulong River|Jima Wharf|Gongnong Bridge|Jiuxian|兴坪|朝板山|龙头山|遇龙河|骥马码头|工农桥|旧县村|双流义渡亭/i.test(text)) return 'Yangshuo';
   if (/桂林|\bGuilin\b|Lingui|Duxiu Peak|Jingjiang Princes|Elephant Trunk Hill|Reed Flute Cave|Mopan Mountain|Zhujiang Passenger|临桂|独秀峰|靖江王城|象鼻山|芦笛岩|磨盘山客运港|竹江客运港/i.test(text)) return 'Guilin';
+  if (/张家界|\bZhangjiajie\b|Wulingyuan|Wujiayu|Tianzi Mountain|Bailong Elevator|Tianmen Mountain|武陵源|吴家峪|天子山|百龙天梯|天门山/i.test(text)) return 'Zhangjiajie';
   return '';
 }
 function inferCategory(text) {
   const subject = String(text || '')
     .replace(/^\s*\d{1,2}[.)、:]\s+/, '')
     .split(/\s+\/\s+|\s+[—–-]\s+/)[0];
-  if (/flower market|scenic area visitor cent(?:er|re)|cableway lower station|花卉市场|景区游客中心|索道下站/i.test(subject)) return 'See';
+  if (/flower market|scenic area visitor cent(?:er|re)|花卉市场|景区游客中心/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|noodle|bakery|market|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包|市场/i.test(subject)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
-  if (/station|airport|metro|train|checkpoint|\bport\b|wharf|pier|terminal|站|机场|口岸|码头|航站楼/i.test(subject)) return 'Move';
+  if (/station|airport|metro|train|checkpoint|\bport\b|wharf|pier|terminal|cableway|ropeway|elevator|站|机场|口岸|码头|航站楼|索道|天梯/i.test(subject)) return 'Move';
   if (/\btea(?:\s*house)?\b|teahouse|茶社|茶馆|茶/i.test(subject)) return 'Tea';
   if (/museum|mosque|temple|pagoda|wall|monastery|shrine|garden|park|promenade|trail|island|bridge|art(?:s)? center|gallery|exhibition hall|博物馆|清真|寺|塔|城墙|公园|花园|海滨|步道|岛|桥|美术馆|艺术中心|展览馆/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包/i.test(text)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(text)) return 'Stay';
-  if (/station|airport|metro|train|checkpoint|\bport\b|wharf|pier|terminal|站|机场|口岸|码头|航站楼/i.test(text)) return 'Move';
+  if (/station|airport|metro|train|checkpoint|\bport\b|wharf|pier|terminal|cableway|ropeway|elevator|站|机场|口岸|码头|航站楼|索道|天梯/i.test(text)) return 'Move';
   if (/\btea\b|茶/i.test(text)) return 'Tea';
   return 'See';
 }

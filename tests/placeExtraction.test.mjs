@@ -235,7 +235,7 @@ test('Dali city handoff keeps arrival, heritage, corridor, and cableway identiti
     '苍山大索道下站（天龙八部影视城）',
   ]);
   assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Dali'));
-  assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
+  assert.deepEqual(result.places.map((place) => place.category), ['See', 'See', 'See', 'See', 'See', 'Move']);
 });
 
 test('Lijiang handoff keeps three heritage components and exact mountain products separate', () => {
@@ -253,7 +253,7 @@ test('Lijiang handoff keeps three heritage components and exact mountain product
     '冰川公园索道下站',
   ]);
   assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Lijiang'));
-  assert.deepEqual(result.places.map((place) => place.category), Array(6).fill('See'));
+  assert.deepEqual(result.places.map((place) => place.category), ['See', 'See', 'See', 'See', 'See', 'Move']);
 });
 
 test('Guilin handoff keeps the city context and two classic-cruise ports separate', () => {
@@ -290,6 +290,24 @@ test('Yangshuo handoff separates Xingping rail and Li River products from the Yu
   ]);
   assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Yangshuo'));
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'Move', 'Move', 'Move', 'Move', 'See']);
+});
+
+test('Zhangjiajie handoff preserves the rail arrival, two park gates, vertical transport, and separate Tianmen product', () => {
+  const result = extractTripPlaces({
+    title: 'Zhangjiajie field-guide places',
+    text: '1. Zhangjiajie West Railway Station / 张家界西站 — Zhangjiajie — Keep the rail arrival separate from the Wulingyuan base.\n2. Wulingyuan East Gate at the landmark gate / 武陵源标志门（东门） — Zhangjiajie — Start the Tianzi and Yuanjiajie circuit at its booked gate.\n3. Zhangjiajie National Forest Park South Gate / 张家界国家森林公园南门（森林公园门票站） — Zhangjiajie — Ground the Huangshizhai and Golden Whip Stream day.\n4. Tianzi Mountain Cableway lower station / 天子山索道下站 — Zhangjiajie — Preserve the East Gate ascent product.\n5. Bailong Elevator lower station / 百龙天梯下站 — Zhangjiajie — Keep the Yuanjiajie vertical handoff and its queue.\n6. Tianmen Mountain Cableway lower station / 天门山索道下站 — Zhangjiajie — Keep the separate Yongding mountain ticket out of Wulingyuan.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '张家界西站',
+    '武陵源标志门（东门）',
+    '张家界国家森林公园南门（森林公园门票站）',
+    '天子山索道下站',
+    '百龙天梯下站',
+    '天门山索道下站',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Zhangjiajie'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'Move', 'Move', 'Move']);
 });
 
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {

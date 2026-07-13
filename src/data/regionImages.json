@@ -113,6 +113,12 @@
     "source": "https://en.wikipedia.org/wiki/Zhangjiajie_National_Forest_Park",
     "title": "Zhangjiajie National Forest Park"
   },
+  "zhangjiajie": {
+    "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg/3840px-1_tianzishan_wulingyuan_zhangjiajie_2012.jpg",
+    "alt": "Quartz-sandstone pillars and forest at Tianzi Mountain in Zhangjiajie",
+    "source": "https://commons.wikimedia.org/wiki/File:1_tianzishan_wulingyuan_zhangjiajie_2012.jpg",
+    "title": "Tianzi Mountain in Zhangjiajie"
+  },
   "jiangsu": {
     "src": "https://upload.wikimedia.org/wikipedia/commons/c/ce/20240203_Lingering_Garden_09.jpg",
     "alt": "Suzhou classical garden in Jiangsu",

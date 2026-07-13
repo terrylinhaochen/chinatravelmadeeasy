@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-13T17:57:18.037Z",
+  "prepared_at": "2026-07-13T18:10:44.516Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -40,6 +40,12 @@
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Forbidden_City_Beijing_China_(164849005).jpeg",
       "title": "Forbidden City Beijing China"
     },
+    "guide:china-attraction-tickets-reservations": {
+      "src": "/images/curated/great-wall-route.jpg",
+      "alt": "Palace Museum courtyards in Beijing for attraction ticket and entrance planning",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Forbidden_City_Beijing_China_(164849005).jpeg",
+      "title": "Forbidden City Beijing China"
+    },
     "guide:alipay-wechat-pay-foreign-cards": {
       "src": "/images/curated/mobile-payment.jpg",
       "alt": "Mobile payment QR codes in China",
@@ -51,12 +57,6 @@
       "alt": "China railway ticket detail for train booking planning",
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/China-Railway-Ticket-Paper-Normal.jpg",
       "title": "China Railway Ticket"
-    },
-    "guide:china-attraction-tickets-reservations": {
-      "src": "/images/curated/great-wall-route.jpg",
-      "alt": "Palace Museum courtyards in Beijing for attraction ticket and entrance planning",
-      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Forbidden_City_Beijing_China_(164849005).jpeg",
-      "title": "Forbidden City Beijing China"
     },
     "guide:china-pre-departure-checklist": {
       "src": "/images/curated/predeparture-checklist.jpg",
@@ -238,6 +238,12 @@
       "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg/3840px-1_tianzishan_wulingyuan_zhangjiajie_2012.jpg",
       "title": "Zhangjiajie National Forest Park"
     },
+    "region:zhangjiajie": {
+      "src": "/images/curated/region-hunan.jpg",
+      "alt": "Quartz-sandstone pillars and forest at Tianzi Mountain in Zhangjiajie",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/1_tianzishan_wulingyuan_zhangjiajie_2012.jpg/3840px-1_tianzishan_wulingyuan_zhangjiajie_2012.jpg",
+      "title": "Tianzi Mountain in Zhangjiajie"
+    },
     "region:jiangsu": {
       "src": "/images/curated/region-jiangsu.jpg",
       "alt": "Suzhou classical garden in Jiangsu",
@@ -322,6 +328,24 @@
       "source": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Dali%2C_Cangshan.jpg",
       "title": "Dali and Cangshan"
     },
+    "region:lijiang": {
+      "src": "/images/curated/region-yunnan.jpg",
+      "alt": "Stone roofs, lanes, and surrounding highlands in Lijiang old town",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Lijiang_-_panoramio_%286%29.jpg/3840px-Lijiang_-_panoramio_%286%29.jpg",
+      "title": "Old Town of Lijiang"
+    },
+    "region:guilin": {
+      "src": "/images/curated/region-guilin.jpg",
+      "alt": "Guilin city threaded between karst towers and rivers",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/View_of_Guilin_from_Elephant_Trunk_Hill.jpg",
+      "title": "View of Guilin from Elephant Trunk Hill"
+    },
+    "region:yangshuo": {
+      "src": "/images/curated/region-guangxi.jpg",
+      "alt": "Li River and tower-karst landscape near Yangshuo",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/1_guilin_yangshuo_2017.jpg/3840px-1_guilin_yangshuo_2017.jpg",
+      "title": "Yangshuo karst landscape"
+    },
     "region:zhejiang": {
       "src": "/images/curated/region-zhejiang.jpg",
       "alt": "West Lake in Hangzhou, Zhejiang",
@@ -369,24 +393,6 @@
       "alt": "Ruins of Saint Paul's in Macau",
       "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg/3840px-%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg",
       "title": "Ruins of Saint Paul's"
-    },
-    "region:lijiang": {
-      "src": "/images/curated/region-yunnan.jpg",
-      "alt": "Stone roofs, lanes, and surrounding highlands in Lijiang old town",
-      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Lijiang_-_panoramio_%286%29.jpg/3840px-Lijiang_-_panoramio_%286%29.jpg",
-      "title": "Old Town of Lijiang"
-    },
-    "region:guilin": {
-      "src": "/images/curated/region-guilin.jpg",
-      "alt": "Guilin city threaded between karst towers and rivers",
-      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/View_of_Guilin_from_Elephant_Trunk_Hill.jpg",
-      "title": "View of Guilin from Elephant Trunk Hill"
-    },
-    "region:yangshuo": {
-      "src": "/images/curated/region-guangxi.jpg",
-      "alt": "Li River and tower-karst landscape near Yangshuo",
-      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/1_guilin_yangshuo_2017.jpg/3840px-1_guilin_yangshuo_2017.jpg",
-      "title": "Yangshuo karst landscape"
     }
   }
 }
