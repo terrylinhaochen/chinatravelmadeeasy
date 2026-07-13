@@ -316,6 +316,12 @@
       "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/West_Lake%2C_Hangzhou_2025.jpg/3840px-West_Lake%2C_Hangzhou_2025.jpg",
       "title": "West Lake"
     },
+    "region:hangzhou": {
+      "src": "/images/curated/region-zhejiang.jpg",
+      "alt": "Causeways and wooded hills around West Lake in Hangzhou",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/West_Lake%2C_Hangzhou_2025.jpg/3840px-West_Lake%2C_Hangzhou_2025.jpg",
+      "title": "West Lake, Hangzhou"
+    },
     "region:guangxi": {
       "src": "/images/curated/region-guangxi.jpg",
       "alt": "Yangshuo karst landscape in Guangxi",

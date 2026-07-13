@@ -32,6 +32,12 @@ const knownPlaces = [
   { name: 'Sea World Culture and Arts Center', localName: '海上世界文化艺术中心', city: 'Shenzhen', category: 'See', aliases: ['sea world culture and arts center', 'sea world culture and art center', '海上世界文化艺术中心'] },
   { name: 'Dafen Art Museum', localName: '大芬美术馆', city: 'Shenzhen', category: 'See', aliases: ['dafen art museum', '大芬美术馆'] },
   { name: 'Futian Checkpoint', localName: '福田口岸', city: 'Shenzhen', category: 'Move', aliases: ['futian checkpoint', 'futian port', '福田口岸'] },
+  { name: 'Broken Bridge and Bai Causeway start', localName: '断桥残雪（白堤东端）', city: 'Hangzhou', category: 'See', aliases: ['broken bridge and bai causeway start', 'broken bridge', 'bai causeway start', '断桥残雪', '白堤东端'] },
+  { name: 'Lingyin–Feilai Peak Scenic Area main entrance', localName: '灵隐飞来峰景区入口', city: 'Hangzhou', category: 'See', aliases: ['lingyin–feilai peak scenic area main entrance', 'lingyin-feilai peak scenic area main entrance', 'lingyin feilai peak', '灵隐飞来峰景区入口', '灵隐飞来峰'] },
+  { name: 'China National Tea Museum — Shuangfeng Branch', localName: '中国茶叶博物馆（双峰馆区）', city: 'Hangzhou', category: 'Tea', aliases: ['china national tea museum shuangfeng branch', 'china national tea museum — shuangfeng branch', 'tea museum shuangfeng', '中国茶叶博物馆（双峰馆区）', '双峰馆区'] },
+  { name: 'Southern Song Deshou Palace Site Museum', localName: '南宋德寿宫遗址博物馆', city: 'Hangzhou', category: 'See', aliases: ['southern song deshou palace site museum', 'deshou palace site museum', '南宋德寿宫遗址博物馆', '德寿宫'] },
+  { name: 'China Beijing–Hangzhou Grand Canal Museum', localName: '中国京杭大运河博物馆', city: 'Hangzhou', category: 'See', aliases: ['china beijing–hangzhou grand canal museum', 'china beijing-hangzhou grand canal museum', 'beijing-hangzhou grand canal museum', '中国京杭大运河博物馆'] },
+  { name: 'Liangzhu Museum', localName: '良渚博物院', city: 'Hangzhou', category: 'See', aliases: ['liangzhu museum', '良渚博物院'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -198,6 +204,7 @@ function inferCity(text) {
   if (/西安|Xi'an|Terracotta|Muslim Quarter/i.test(text)) return "Xi'an";
   if (/广州|Guangzhou|Cantonese Opera|Chen Clan|Shamian|Nanyue King|Guangdong Museum|陈家祠|粤剧艺术|沙面岛|南越王博物院|广东省博物馆/i.test(text)) return 'Guangzhou';
   if (/深圳|Shenzhen|Lianhua Hill|Nantou|Sea World Culture|Dafen|Futian Checkpoint|莲花山|南头古城|海上世界文化|大芬美术馆|福田口岸/i.test(text)) return 'Shenzhen';
+  if (/杭州|Hangzhou|Broken Bridge|Bai Causeway|Lingyin|Feilai Peak|Shuangfeng|Deshou Palace|Liangzhu|断桥残雪|白堤|灵隐飞来峰|双峰馆区|德寿宫|中国京杭大运河博物馆|良渚博物院/i.test(text)) return 'Hangzhou';
   return '';
 }
 function inferCategory(text) {

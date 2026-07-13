@@ -184,6 +184,24 @@ test('Shenzhen city handoff keeps nested venues, route entrances, and the border
   assert.deepEqual(result.places.map((place) => place.category), ['See', 'See', 'See', 'See', 'See', 'Move']);
 });
 
+test('Hangzhou city handoff keeps route starts, reservation complexes, museum branches, and heritage systems separate', () => {
+  const result = extractTripPlaces({
+    title: 'Hangzhou field-guide places',
+    text: '1. Broken Bridge and Bai Causeway start / 断桥残雪（白堤东端） — Hangzhou — Use a fixed start instead of a generic West Lake pin.\n2. Lingyin–Feilai Peak Scenic Area main entrance / 灵隐飞来峰景区入口 — Hangzhou — Keep the timed scenic-area reservation attached to the entrance.\n3. China National Tea Museum — Shuangfeng Branch / 中国茶叶博物馆（双峰馆区） — Hangzhou — Preserve the chosen campus rather than the whole tea region.\n4. Southern Song Deshou Palace Site Museum / 南宋德寿宫遗址博物馆 — Hangzhou — Separate archaeological fabric from reconstructed interpretation.\n5. China Beijing–Hangzhou Grand Canal Museum / 中国京杭大运河博物馆 — Hangzhou — Do not substitute the similarly named Yangzhou museum.\n6. Liangzhu Museum / 良渚博物院 — Hangzhou — Keep the museum separate from the archaeological park five kilometers away.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '断桥残雪（白堤东端）',
+    '灵隐飞来峰景区入口',
+    '中国茶叶博物馆（双峰馆区）',
+    '南宋德寿宫遗址博物馆',
+    '中国京杭大运河博物馆',
+    '良渚博物院',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Hangzhou'));
+  assert.deepEqual(result.places.map((place) => place.category), ['See', 'See', 'Tea', 'See', 'See', 'See']);
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',
