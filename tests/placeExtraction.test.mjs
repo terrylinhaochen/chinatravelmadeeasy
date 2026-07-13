@@ -382,6 +382,24 @@ test('Qingdao handoff keeps the rail arrival, maritime temple, residence museum,
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
 });
 
+test('Changsha handoff keeps the high-speed arrival, provincial museum, academy ticket, island route, slips museum, and river pavilion separate', () => {
+  const result = extractTripPlaces({
+    title: 'Changsha field-guide places',
+    text: '1. Changsha South Railway Station / 长沙南站 — Changsha — Keep the high-speed arrival separate from Changsha Station and the maglev platform.\n2. Hunan Museum / 湖南博物院 — Changsha — Preserve the Mawangdui collection venue rather than the tomb site or city museum.\n3. Yuelu Academy / 岳麓书院 — Changsha — Keep the paid academy reservation separate from the free mountain and university campus.\n4. Orange Isle Scenic Area / 橘子洲景区 — Changsha — Preserve the long island route rather than one monument or metro pin.\n5. Changsha Bamboo Slips Museum / 长沙简牍博物馆 — Changsha — Keep the Tuesday-closed old-city museum separate from Hunan Museum.\n6. Du Fu Pavilion / 杜甫江阁 — Changsha — Preserve the ticketed riverfront interior rather than the whole promenade or an assumed fireworks schedule.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '长沙南站',
+    '湖南博物院',
+    '岳麓书院',
+    '橘子洲景区',
+    '长沙简牍博物馆',
+    '杜甫江阁',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Changsha'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',

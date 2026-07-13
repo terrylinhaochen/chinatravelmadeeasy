@@ -98,6 +98,12 @@ const knownPlaces = [
   { name: 'Tsingtao Brewery Museum', localName: '青岛啤酒博物馆', city: 'Qingdao', category: 'See', aliases: ['tsingtao brewery museum', 'qingdao beer museum', '青岛啤酒博物馆'] },
   { name: 'Qingdao First Bathing Beach', localName: '青岛第一海水浴场', city: 'Qingdao', category: 'See', aliases: ['qingdao first bathing beach', 'first bathing beach qingdao', '青岛第一海水浴场'] },
   { name: 'Laoshan Scenic Area Visitor Service Center at Dahedong', localName: '崂山游客服务中心（大河东）', city: 'Qingdao', category: 'See', aliases: ['laoshan scenic area visitor service center at dahedong', 'laoshan visitor service center at dahedong', 'dahedong visitor service center', '崂山游客服务中心（大河东）', '崂山大河东游客服务中心'] },
+  { name: 'Changsha South Railway Station', localName: '长沙南站', city: 'Changsha', category: 'Move', aliases: ['changsha south railway station', 'changsha south station', '长沙南站'] },
+  { name: 'Hunan Museum', localName: '湖南博物院', city: 'Changsha', category: 'See', aliases: ['hunan museum', '湖南博物院'] },
+  { name: 'Yuelu Academy', localName: '岳麓书院', city: 'Changsha', category: 'See', aliases: ['yuelu academy', '岳麓书院'] },
+  { name: 'Orange Isle Scenic Area', localName: '橘子洲景区', city: 'Changsha', category: 'See', aliases: ['orange isle scenic area', 'orange isle', 'juzizhou scenic area', '橘子洲景区'] },
+  { name: 'Changsha Bamboo Slips Museum', localName: '长沙简牍博物馆', city: 'Changsha', category: 'See', aliases: ['changsha bamboo slips museum', 'changsha bamboo and wooden slips museum', '长沙简牍博物馆'] },
+  { name: 'Du Fu Pavilion', localName: '杜甫江阁', city: 'Changsha', category: 'See', aliases: ['du fu pavilion', 'dufu pavilion', '杜甫江阁'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -275,6 +281,7 @@ function inferCity(text) {
   if (/南京南站|南京博物院|南京大屠杀史实展|侵华日军南京大屠杀|中山陵|明孝陵|中华门瓮城|Nanjing South|Nanjing Museum|Nanjing Massacre history exhibition|Sun Yat-sen Mausoleum|Ming Xiaoling|Zhonghua Gate Barbican/i.test(text)) return 'Nanjing';
   if (/武汉站|湖北省博物馆南门|湖光序曲|黄鹤楼公园南门|中华路1号码头|中华路一号码头|江汉关博物馆|Wuhan Railway|Hubei Provincial Museum South Gate|Lake Light Prelude|Yellow Crane Tower Park South Gate|Zhonghua Road (?:No\.?|Number) 1 Ferry|Wuhan Customs House Museum/i.test(text)) return 'Wuhan';
   if (/青岛站|青岛天后宫|青岛德国总督楼旧址博物馆|青岛啤酒博物馆|青岛第一海水浴场|崂山游客服务中心|Qingdao Railway|Qingdao Tianhou|Qingdao German Governor|Tsingtao Brewery Museum|Qingdao First Bathing Beach|Laoshan Scenic Area Visitor Service Center/i.test(text)) return 'Qingdao';
+  if (/长沙南站|湖南博物院|岳麓书院|橘子洲景区|长沙简牍博物馆|杜甫江阁|Changsha South Railway|Hunan Museum|Yuelu Academy|Orange Isle Scenic Area|Changsha Bamboo Slips Museum|Du Fu Pavilion/i.test(text)) return 'Changsha';
   return '';
 }
 function inferCategory(text) {
@@ -286,7 +293,7 @@ function inferCategory(text) {
   if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
   if (/station|airport|metro|train|checkpoint|\bport\b|wharf|pier|terminal|cableway|ropeway|elevator|站|机场|口岸|码头|航站楼|索道|天梯/i.test(subject)) return 'Move';
   if (/\btea(?:\s*house)?\b|teahouse|茶社|茶馆|茶/i.test(subject)) return 'Tea';
-  if (/museum|mosque|temple|pagoda|wall|monastery|shrine|garden|park|promenade|trail|island|bridge|art(?:s)? center|gallery|exhibition hall|博物馆|清真|寺|塔|城墙|公园|花园|海滨|步道|岛|桥|美术馆|艺术中心|展览馆/i.test(subject)) return 'See';
+  if (/museum|mosque|temple|pagoda|wall|monastery|shrine|garden|park|promenade|trail|island|isle|bridge|art(?:s)? center|gallery|exhibition hall|博物馆|清真|寺|塔|城墙|公园|花园|海滨|步道|岛|桥|美术馆|艺术中心|展览馆/i.test(subject)) return 'See';
   if (/food|lunch|snack|restaurant|hotpot|bao|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包/i.test(text)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(text)) return 'Stay';
   if (/station|airport|metro|train|checkpoint|\bport\b|wharf|pier|terminal|cableway|ropeway|elevator|站|机场|口岸|码头|航站楼|索道|天梯/i.test(text)) return 'Move';

@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-13T19:01:04.147Z",
+  "prepared_at": "2026-07-13T19:15:13.121Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -417,6 +417,12 @@
       "alt": "Historic harbor and coastal cityscape in Qingdao",
       "source": "https://upload.wikimedia.org/wikipedia/commons/1/18/Qingdao_Harbour_51341-Qingdao_%2849055637186%29.jpg",
       "title": "Qingdao historic harbor"
+    },
+    "region:changsha": {
+      "src": "/images/curated/region-changsha.jpg",
+      "alt": "Xiang River and Orange Isle running through central Changsha",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Xiang_River_and_Orange_Isle%2C_Changsha.jpg",
+      "title": "Xiang River and Orange Isle, Changsha"
     }
   }
 }

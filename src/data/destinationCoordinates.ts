@@ -24,6 +24,7 @@ export const destinationCoordinates: Record<string, DestinationCoordinate> = {
   heilongjiang: { lon: 126.6424, lat: 45.7567 },
   henan: { lon: 113.7536, lat: 34.7657 },
   hubei: { lon: 114.3054, lat: 30.5931 },
+  changsha: { lon: 112.9388, lat: 28.2282 },
   hunan: { lon: 112.9823, lat: 28.1941 },
   jiangsu: { lon: 118.7969, lat: 32.0603 },
   jiangxi: { lon: 115.8582, lat: 28.6829 },
