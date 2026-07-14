@@ -17,6 +17,7 @@ export const destinationCoordinates: Record<string, DestinationCoordinate> = {
   anhui: { lon: 117.283, lat: 31.8612 },
   xiamen: { lon: 118.0894, lat: 24.4798 },
   fuzhou: { lon: 119.2965, lat: 26.0745 },
+  quanzhou: { lon: 118.5894, lat: 24.9089 },
   fujian: { lon: 117.9849, lat: 26.0745 },
   gansu: { lon: 103.8263, lat: 36.0594 },
   guangdong: { lon: 113.2665, lat: 23.1322 },

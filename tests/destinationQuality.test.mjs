@@ -14,7 +14,7 @@ const [{ destinations }, { communityVideos }] = await Promise.all([
 ]);
 
 test('every destination is evaluated against the same six-part editorial rubric', () => {
-  assert.equal(destinations.length, 52);
+  assert.equal(destinations.length, 53);
   for (const destination of destinations) {
     const videos = communityVideos.filter((video) => video.destinationSlug === destination.slug);
     const audit = auditDestination(destination, videos);

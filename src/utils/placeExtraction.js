@@ -116,6 +116,12 @@ const knownPlaces = [
   { name: 'Fujian Museum', localName: '福建博物院', city: 'Fuzhou', category: 'See', aliases: ['fujian museum', '福建博物院'] },
   { name: 'Drum Mountain Visitor Center at Lower Courtyard', localName: '鼓山旅游景区游客中心（下院）', city: 'Fuzhou', category: 'See', aliases: ['drum mountain visitor center at lower courtyard', 'drum mountain visitor center', 'gushan visitor center', '鼓山旅游景区游客中心（下院）', '鼓山游客中心', '鼓山下院'] },
   { name: 'China Shipbuilding Culture Museum', localName: '中国船政文化博物馆', city: 'Fuzhou', category: 'See', aliases: ['china shipbuilding culture museum', 'china shipping administration culture museum', '中国船政文化博物馆'] },
+  { name: 'Quanzhou Railway Station', localName: '泉州站', city: 'Quanzhou', category: 'Move', aliases: ['quanzhou railway station', 'quanzhou station', '泉州站'] },
+  { name: 'Quanzhou West Street Visitor Service Center', localName: '泉州西街游客服务中心', city: 'Quanzhou', category: 'See', aliases: ['quanzhou west street visitor service center', 'west street visitor service center', '泉州西街游客服务中心', '西街游客服务中心'] },
+  { name: 'Quanzhou Kaiyuan Temple', localName: '泉州开元寺', city: 'Quanzhou', category: 'See', aliases: ['quanzhou kaiyuan temple', 'kaiyuan temple quanzhou', '泉州开元寺', '大开元寺'] },
+  { name: 'Qingjing Mosque', localName: '清净寺', city: 'Quanzhou', category: 'See', aliases: ['qingjing mosque', 'qingjing temple', '清净寺'] },
+  { name: 'Quanzhou Maritime Museum', localName: '泉州海外交通史博物馆', city: 'Quanzhou', category: 'See', aliases: ['quanzhou maritime museum', 'quanzhou overseas relations history museum', '泉州海外交通史博物馆', '泉州海交馆'] },
+  { name: 'Luoyang Bridge Visitor Center — south end', localName: '洛阳桥游客中心（桥南）', city: 'Quanzhou', category: 'See', aliases: ['luoyang bridge visitor center south end', 'luoyang bridge visitor center', '洛阳桥游客中心（桥南）', '洛阳桥游客中心'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -160,7 +166,7 @@ export function extractTripPlaces(source) {
       name: cleanName(structured[1]),
       localName: cleanName(structured[2]),
       city: cleanName(structured[3]),
-      category: inferCategory(line),
+      category: inferCategory(`${structured[1]} / ${structured[2]}`),
       confidence: 'structured list',
       sourceUrl: raw.url,
       sourcePlatform: raw.platform,
@@ -296,6 +302,7 @@ function inferCity(text) {
   if (/长沙南站|湖南博物院|岳麓书院|橘子洲景区|长沙简牍博物馆|杜甫江阁|Changsha South Railway|Hunan Museum|Yuelu Academy|Orange Isle Scenic Area|Changsha Bamboo Slips Museum|Du Fu Pavilion/i.test(text)) return 'Changsha';
   if (/厦门北站|邮轮中心厦鼓码头|东渡客运码头|三丘田码头|华侨博物院|南普陀寺|厦门园林植物园西大门|Xiamen North Railway|Xiamen International Cruise Center Gulangyu Wharf|Sanqiutian Wharf|Overseas Chinese Museum|Nanputuo Temple|Xiamen Botanical Garden West Gate/i.test(text)) return 'Xiamen';
   if (/福州站|三坊七巷游客中心|福州市林则徐纪念馆|福建博物院|鼓山旅游景区游客中心|鼓山下院|中国船政文化博物馆|Fuzhou Railway Station|Sanfang Qixiang Visitor Center|Lin Zexu Memorial Hall|Fujian Museum|Drum Mountain Visitor Center|China Shipbuilding Culture Museum/i.test(text)) return 'Fuzhou';
+  if (/泉州站|泉州西街游客服务中心|西街游客服务中心|泉州开元寺|清净寺|泉州海外交通史博物馆|泉州海交馆|洛阳桥游客中心|Quanzhou Railway Station|Quanzhou West Street Visitor Service Center|Quanzhou Kaiyuan Temple|Qingjing Mosque|Quanzhou Maritime Museum|Luoyang Bridge Visitor Center/i.test(text)) return 'Quanzhou';
   return '';
 }
 function inferCategory(text) {

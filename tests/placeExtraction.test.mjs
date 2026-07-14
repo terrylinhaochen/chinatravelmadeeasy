@@ -274,6 +274,24 @@ test('Fuzhou handoff keeps the old city, mountain gateway, and Mawei museum sepa
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
 });
 
+test('Quanzhou handoff keeps the rail arrival, old-city anchors, museum campus, and bridge entrance separate', () => {
+  const result = extractTripPlaces({
+    title: 'Quanzhou field-guide places',
+    text: '1. Quanzhou Railway Station / 泉州站 — Quanzhou — Do not substitute Quanzhou South or East.\n2. Quanzhou West Street Visitor Service Center / 泉州西街游客服务中心 — Quanzhou — It is more executable than saving the middle of a crowded food street.\n3. Quanzhou Kaiyuan Temple / 泉州开元寺 — Quanzhou — Keep the living monastery separate from West Street.\n4. Qingjing Mosque / 清净寺 — Quanzhou — Preserve current worship and visitor rules.\n5. Quanzhou Maritime Museum / 泉州海外交通史博物馆 — Quanzhou — Use the East Lake main campus, not the ancient-ship gallery.\n6. Luoyang Bridge Visitor Center — south end / 洛阳桥游客中心（桥南） — Quanzhou — Start on the Quanzhou side instead of dropping a pin into the river.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '泉州站',
+    '泉州西街游客服务中心',
+    '泉州开元寺',
+    '清净寺',
+    '泉州海外交通史博物馆',
+    '洛阳桥游客中心（桥南）',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Quanzhou'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
+});
+
 test('Guilin handoff keeps the city context and two classic-cruise ports separate', () => {
   const result = extractTripPlaces({
     title: 'Guilin field-guide places',
