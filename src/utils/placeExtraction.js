@@ -110,6 +110,12 @@ const knownPlaces = [
   { name: 'Overseas Chinese Museum', localName: '华侨博物院', city: 'Xiamen', category: 'See', aliases: ['overseas chinese museum', '华侨博物院'] },
   { name: 'Nanputuo Temple', localName: '南普陀寺', city: 'Xiamen', category: 'See', aliases: ['nanputuo temple', 'south putuo temple', '南普陀寺'] },
   { name: 'Xiamen Botanical Garden West Gate', localName: '厦门园林植物园西大门', city: 'Xiamen', category: 'See', aliases: ['xiamen botanical garden west gate', 'xiamen garden botanical garden west gate', '厦门园林植物园西大门', '植物园西大门'] },
+  { name: 'Fuzhou Railway Station', localName: '福州站', city: 'Fuzhou', category: 'Move', aliases: ['fuzhou railway station', 'fuzhou station', '福州站'] },
+  { name: 'Sanfang Qixiang Visitor Center', localName: '三坊七巷游客中心', city: 'Fuzhou', category: 'See', aliases: ['sanfang qixiang visitor center', 'three lanes and seven alleys visitor center', '三坊七巷游客中心'] },
+  { name: 'Lin Zexu Memorial Hall', localName: '福州市林则徐纪念馆', city: 'Fuzhou', category: 'See', aliases: ['lin zexu memorial hall', 'fuzhou lin zexu memorial hall', '福州市林则徐纪念馆', '林则徐纪念馆'] },
+  { name: 'Fujian Museum', localName: '福建博物院', city: 'Fuzhou', category: 'See', aliases: ['fujian museum', '福建博物院'] },
+  { name: 'Drum Mountain Visitor Center at Lower Courtyard', localName: '鼓山旅游景区游客中心（下院）', city: 'Fuzhou', category: 'See', aliases: ['drum mountain visitor center at lower courtyard', 'drum mountain visitor center', 'gushan visitor center', '鼓山旅游景区游客中心（下院）', '鼓山游客中心', '鼓山下院'] },
+  { name: 'China Shipbuilding Culture Museum', localName: '中国船政文化博物馆', city: 'Fuzhou', category: 'See', aliases: ['china shipbuilding culture museum', 'china shipping administration culture museum', '中国船政文化博物馆'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -289,6 +295,7 @@ function inferCity(text) {
   if (/青岛站|青岛天后宫|青岛德国总督楼旧址博物馆|青岛啤酒博物馆|青岛第一海水浴场|崂山游客服务中心|Qingdao Railway|Qingdao Tianhou|Qingdao German Governor|Tsingtao Brewery Museum|Qingdao First Bathing Beach|Laoshan Scenic Area Visitor Service Center/i.test(text)) return 'Qingdao';
   if (/长沙南站|湖南博物院|岳麓书院|橘子洲景区|长沙简牍博物馆|杜甫江阁|Changsha South Railway|Hunan Museum|Yuelu Academy|Orange Isle Scenic Area|Changsha Bamboo Slips Museum|Du Fu Pavilion/i.test(text)) return 'Changsha';
   if (/厦门北站|邮轮中心厦鼓码头|东渡客运码头|三丘田码头|华侨博物院|南普陀寺|厦门园林植物园西大门|Xiamen North Railway|Xiamen International Cruise Center Gulangyu Wharf|Sanqiutian Wharf|Overseas Chinese Museum|Nanputuo Temple|Xiamen Botanical Garden West Gate/i.test(text)) return 'Xiamen';
+  if (/福州站|三坊七巷游客中心|福州市林则徐纪念馆|福建博物院|鼓山旅游景区游客中心|鼓山下院|中国船政文化博物馆|Fuzhou Railway Station|Sanfang Qixiang Visitor Center|Lin Zexu Memorial Hall|Fujian Museum|Drum Mountain Visitor Center|China Shipbuilding Culture Museum/i.test(text)) return 'Fuzhou';
   return '';
 }
 function inferCategory(text) {

@@ -256,6 +256,24 @@ test('Lijiang handoff keeps three heritage components and exact mountain product
   assert.deepEqual(result.places.map((place) => place.category), ['See', 'See', 'See', 'See', 'See', 'Move']);
 });
 
+test('Fuzhou handoff keeps the old city, mountain gateway, and Mawei museum separate', () => {
+  const result = extractTripPlaces({
+    title: 'Fuzhou field-guide places',
+    text: '1. Fuzhou Railway Station / 福州站 — Fuzhou — Keep the central station separate from Fuzhou South.\n2. Sanfang Qixiang Visitor Center / 三坊七巷游客中心 — Fuzhou — Use one fixed planning anchor for the lane network.\n3. Lin Zexu Memorial Hall / 福州市林则徐纪念馆 — Fuzhou — Do not substitute the separately reopened former residence.\n4. Fujian Museum / 福建博物院 — Fuzhou — Keep the provincial museum distinct from the municipal museum.\n5. Drum Mountain Visitor Center at Lower Courtyard / 鼓山旅游景区游客中心（下院） — Fuzhou — Ground the mountain route at the city-side gateway.\n6. China Shipbuilding Culture Museum / 中国船政文化博物馆 — Fuzhou — Preserve the museum inside the wider Mawei heritage complex.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '福州站',
+    '三坊七巷游客中心',
+    '福州市林则徐纪念馆',
+    '福建博物院',
+    '鼓山旅游景区游客中心（下院）',
+    '中国船政文化博物馆',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Fuzhou'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
+});
+
 test('Guilin handoff keeps the city context and two classic-cruise ports separate', () => {
   const result = extractTripPlaces({
     title: 'Guilin field-guide places',
