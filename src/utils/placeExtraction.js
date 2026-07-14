@@ -104,6 +104,12 @@ const knownPlaces = [
   { name: 'Orange Isle Scenic Area', localName: '橘子洲景区', city: 'Changsha', category: 'See', aliases: ['orange isle scenic area', 'orange isle', 'juzizhou scenic area', '橘子洲景区'] },
   { name: 'Changsha Bamboo Slips Museum', localName: '长沙简牍博物馆', city: 'Changsha', category: 'See', aliases: ['changsha bamboo slips museum', 'changsha bamboo and wooden slips museum', '长沙简牍博物馆'] },
   { name: 'Du Fu Pavilion', localName: '杜甫江阁', city: 'Changsha', category: 'See', aliases: ['du fu pavilion', 'dufu pavilion', '杜甫江阁'] },
+  { name: 'Xiamen North Railway Station', localName: '厦门北站', city: 'Xiamen', category: 'Move', aliases: ['xiamen north railway station', 'xiamen north station', '厦门北站'] },
+  { name: 'Xiamen International Cruise Center Gulangyu Wharf', localName: '邮轮中心厦鼓码头（东渡客运码头）', city: 'Xiamen', category: 'Move', aliases: ['xiamen international cruise center gulangyu wharf', 'cruise center gulangyu wharf', '邮轮中心厦鼓码头', '东渡客运码头'] },
+  { name: 'Sanqiutian Wharf', localName: '鼓浪屿三丘田码头', city: 'Xiamen', category: 'Move', aliases: ['sanqiutian wharf', 'sanqiutian ferry terminal', '鼓浪屿三丘田码头', '三丘田码头'] },
+  { name: 'Overseas Chinese Museum', localName: '华侨博物院', city: 'Xiamen', category: 'See', aliases: ['overseas chinese museum', '华侨博物院'] },
+  { name: 'Nanputuo Temple', localName: '南普陀寺', city: 'Xiamen', category: 'See', aliases: ['nanputuo temple', 'south putuo temple', '南普陀寺'] },
+  { name: 'Xiamen Botanical Garden West Gate', localName: '厦门园林植物园西大门', city: 'Xiamen', category: 'See', aliases: ['xiamen botanical garden west gate', 'xiamen garden botanical garden west gate', '厦门园林植物园西大门', '植物园西大门'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -282,6 +288,7 @@ function inferCity(text) {
   if (/武汉站|湖北省博物馆南门|湖光序曲|黄鹤楼公园南门|中华路1号码头|中华路一号码头|江汉关博物馆|Wuhan Railway|Hubei Provincial Museum South Gate|Lake Light Prelude|Yellow Crane Tower Park South Gate|Zhonghua Road (?:No\.?|Number) 1 Ferry|Wuhan Customs House Museum/i.test(text)) return 'Wuhan';
   if (/青岛站|青岛天后宫|青岛德国总督楼旧址博物馆|青岛啤酒博物馆|青岛第一海水浴场|崂山游客服务中心|Qingdao Railway|Qingdao Tianhou|Qingdao German Governor|Tsingtao Brewery Museum|Qingdao First Bathing Beach|Laoshan Scenic Area Visitor Service Center/i.test(text)) return 'Qingdao';
   if (/长沙南站|湖南博物院|岳麓书院|橘子洲景区|长沙简牍博物馆|杜甫江阁|Changsha South Railway|Hunan Museum|Yuelu Academy|Orange Isle Scenic Area|Changsha Bamboo Slips Museum|Du Fu Pavilion/i.test(text)) return 'Changsha';
+  if (/厦门北站|邮轮中心厦鼓码头|东渡客运码头|三丘田码头|华侨博物院|南普陀寺|厦门园林植物园西大门|Xiamen North Railway|Xiamen International Cruise Center Gulangyu Wharf|Sanqiutian Wharf|Overseas Chinese Museum|Nanputuo Temple|Xiamen Botanical Garden West Gate/i.test(text)) return 'Xiamen';
   return '';
 }
 function inferCategory(text) {

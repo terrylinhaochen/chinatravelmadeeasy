@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-13T19:15:13.121Z",
+  "prepared_at": "2026-07-13T19:25:35.482Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -423,6 +423,12 @@
       "alt": "Xiang River and Orange Isle running through central Changsha",
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Xiang_River_and_Orange_Isle%2C_Changsha.jpg",
       "title": "Xiang River and Orange Isle, Changsha"
+    },
+    "region:xiamen": {
+      "src": "/images/curated/region-xiamen.jpg",
+      "alt": "Xiamen harbor and waterfront seen from a ferry",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Xiamen_ferry_views.jpg",
+      "title": "Xiamen harbor from the ferry"
     }
   }
 }

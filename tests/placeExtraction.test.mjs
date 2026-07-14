@@ -400,6 +400,24 @@ test('Changsha handoff keeps the high-speed arrival, provincial museum, academy 
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
 });
 
+test('Xiamen handoff keeps the rail arrival, ferry wharves, museum, temple, and garden gate separate', () => {
+  const result = extractTripPlaces({
+    title: 'Xiamen field-guide places',
+    text: '1. Xiamen North Railway Station / 厦门北站 — Xiamen — Keep the mainland high-speed arrival separate from Xiamen Station.\n2. Xiamen International Cruise Center Gulangyu Wharf / 邮轮中心厦鼓码头（东渡客运码头） — Xiamen — Preserve the booked daytime visitor departure wharf.\n3. Sanqiutian Wharf / 鼓浪屿三丘田码头 — Xiamen — Keep the visitor arrival and return pier distinct from Neicuo’ao and Piano wharves.\n4. Overseas Chinese Museum / 华侨博物院 — Xiamen — Preserve the migration-history institution rather than the municipal museum.\n5. Nanputuo Temple / 南普陀寺 — Xiamen — Keep the living monastery separate from the university campus and rear hill.\n6. Xiamen Botanical Garden West Gate / 厦门园林植物园西大门 — Xiamen — Use the official main entrance rather than a mountain center pin.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '厦门北站',
+    '邮轮中心厦鼓码头（东渡客运码头）',
+    '鼓浪屿三丘田码头',
+    '华侨博物院',
+    '南普陀寺',
+    '厦门园林植物园西大门',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Xiamen'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'Move', 'Move', 'See', 'See', 'See']);
+});
+
 test('attraction guide handoff preserves ticket products, entrances, and cities as six exact places', () => {
   const result = extractTripPlaces({
     title: 'China Attraction Tickets: Passport Booking, Release Windows & Sold-Out Recovery places',
