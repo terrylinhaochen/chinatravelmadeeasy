@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-14T05:22:59.259Z",
+  "prepared_at": "2026-07-15T04:43:42.381Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -441,6 +441,12 @@
       "alt": "Lantern-lined cloister and visitors inside Quanzhou Kaiyuan Temple",
       "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Kaiyuan_Temple,_Quanzhou_8.jpg",
       "title": "Kaiyuan Temple cloister, Quanzhou"
+    },
+    "region:taiyuan": {
+      "src": "/images/curated/region-taiyuan.jpg",
+      "alt": "Historic gate and courtyard at Jinci in Taiyuan",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Jinci_Temple_%2854572159327%29.jpg",
+      "title": "Jinci, Taiyuan"
     }
   }
 }

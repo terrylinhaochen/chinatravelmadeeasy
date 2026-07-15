@@ -457,6 +457,24 @@ test('Qingdao handoff keeps the rail arrival, maritime temple, residence museum,
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
 });
 
+test('Taiyuan handoff keeps the rail arrival and four museum identities distinct from Jinci', () => {
+  const result = extractTripPlaces({
+    title: 'Taiyuan field-guide places',
+    text: '1. Taiyuan South Railway Station / 太原南站 — Taiyuan — Keep the high-speed arrival separate from Taiyuan Station and the airport.\n2. Shanxi Museum / 山西博物院 — Taiyuan — Preserve the provincial institution on Binhe West Road; it is not Taiyuan Museum.\n3. Jinci Museum main entrance / 晋祠博物馆（正门） — Taiyuan — Keep the heritage complex separate from Jinci Park and Tianlongshan.\n4. Taiyuan Northern Qi Mural Museum / 太原北齐壁画博物馆 — Taiyuan — Preserve the original-site museum and its capacity limit.\n5. Taiyuan Museum / 太原市博物馆 — Taiyuan — Keep the municipal institution distinct from the nearby Bronze Museum.\n6. Taiyuan Twin Pagoda Museum at Yongzuo Temple / 太原市双塔博物馆（永祚寺） — Taiyuan — Preserve the scheduled interior rather than the public park or skyline view.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '太原南站',
+    '山西博物院',
+    '晋祠博物馆（正门）',
+    '太原北齐壁画博物馆',
+    '太原市博物馆',
+    '太原市双塔博物馆（永祚寺）',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Taiyuan'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
+});
+
 test('Changsha handoff keeps the high-speed arrival, provincial museum, academy ticket, island route, slips museum, and river pavilion separate', () => {
   const result = extractTripPlaces({
     title: 'Changsha field-guide places',
