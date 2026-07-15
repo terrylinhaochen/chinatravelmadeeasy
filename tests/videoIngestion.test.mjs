@@ -6,7 +6,12 @@ import { videoMapImportHref } from '../src/utils/communityMap.js';
 
 test('accepts supported Instagram and TikTok links and rejects arbitrary hosts', () => {
   assert.equal(normalizeVideoUrl('https://www.instagram.com/reel/ABC_123/').platform, 'instagram');
-  assert.equal(normalizeVideoUrl('https://www.tiktok.com/@creator/video/7412345678901234567').platform, 'tiktok');
+  assert.deepEqual(normalizeVideoUrl('https://www.tiktok.com/@creator/video/7412345678901234567?is_from_webapp=1'), {
+    platform: 'tiktok',
+    externalId: '7412345678901234567',
+    cacheKey: 'tiktok:7412345678901234567',
+    canonicalUrl: 'https://www.tiktok.com/@creator/video/7412345678901234567',
+  });
   assert.throws(() => normalizeVideoUrl('https://example.com/video/123'), /unsupported_host/);
   assert.throws(() => normalizeVideoUrl('https://www.youtube.com/watch?v=4OJcNbiixEQ'), /unsupported_host/);
 });

@@ -23,6 +23,7 @@ const homeVideoCache = communityVideos.map((video) => ({
   fieldNoteHref: destinationFieldNoteHref(video),
   collectionHref: videoCuratedCollectionHref(video),
 }));
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 
 const travelModes = [
   {
@@ -258,6 +259,12 @@ const jsonLd = [
                 <input id="homeVideoUrl" type="url" class="ds-input text-sm" placeholder="https://www.tiktok.com/@creator/video/..." />
                 <button id="homeVideoFind" type="button" class="ds-button ds-button-dark">Find places</button>
               </div>
+              {turnstileSiteKey && (
+                <div class="mt-3">
+                  <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-size="flexible"></div>
+                  <p class="mt-2 text-xs text-faint">Verification protects anonymous video submissions.</p>
+                </div>
+              )}
               <p id="homeVideoStatus" class="mt-3 hidden rounded-md border border-line bg-paper p-3 text-sm leading-relaxed text-soft"></p>
               <div id="homeVideoActions" class="mt-3 hidden flex flex-wrap gap-2">
                 <a id="homeVideoFieldNote" href="#" class="ds-button ds-button-primary">Open story</a>
@@ -449,6 +456,8 @@ const jsonLd = [
     </div>
   </section>
 
+  {turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
 </Base>
 
 <style>
@@ -617,6 +626,7 @@ const jsonLd = [
 <script>
   import { DEFAULT_MAINLAND_MAP_PROVIDER, displayName, extractTripPlaces, mapProviderUrl, normalizeSource } from '../utils/placeExtraction.js';
   import { getSavedPinLists, getUser, savePinList } from '../utils/localPrototypeState.js';
+  import { getVideoStatus, submitVideo } from '../utils/communityApi.js';
   import { parseShortFormVideoUrl } from '../utils/videoEmbed.js';
 
   const homeVideoUrl = document.querySelector('#homeVideoUrl');
@@ -723,7 +733,7 @@ const jsonLd = [
     }
   }
 
-  function findHomeVideo() {
+  async function findHomeVideo() {
     homeVideoActions.classList.add('hidden');
     homeVideoCollection.classList.add('hidden');
     let parsed;
@@ -743,8 +753,40 @@ const jsonLd = [
     }
     const match = homeVideoCache.find((video) => video.platform === parsed.platform && video.externalId === parsed.externalId);
     if (!match) {
-      showHomeVideoStatus('This link format is supported, but it is not in the processed cache and live ingestion is not connected in this build. Paste the caption, OCR text, or named places below to review them now.', false);
-      homeMapText.focus();
+      homeVideoFind.disabled = true;
+      homeVideoFind.textContent = 'Checking…';
+      const turnstileToken = document.querySelector('[name="cf-turnstile-response"]')?.value || '';
+      const result = await submitVideo(homeVideoUrl.value, turnstileToken);
+      homeVideoFind.disabled = false;
+      homeVideoFind.textContent = 'Find places';
+      if (!result.configured) {
+        showHomeVideoStatus('This link format is supported, but it is not in the processed cache and live ingestion is not connected in this build. Paste the caption, OCR text, or named places below to review them now.', false);
+        homeMapText.focus();
+        return;
+      }
+      if (result.error || result.data?.error) {
+        const code = result.data?.error || 'submission_failed';
+        const message = code === 'turnstile_failed'
+          ? 'Complete the verification check, then submit the link again.'
+          : code === 'rate_limited'
+            ? 'Submission limit reached. Try again after the displayed retry window.'
+            : 'The source could not be queued safely. Paste its caption or named places below for manual review.';
+        showHomeVideoStatus(message, true);
+        return;
+      }
+      const status = result.data?.status;
+      if (status === 'published' && result.data?.slug) {
+        showHomeVideoStatus('This source has passed place review. Open its destination story to inspect the evidence before saving.', false);
+        homeVideoFieldNote.href = `/videos/${result.data.slug}/`;
+        homeVideoActions.classList.remove('hidden');
+        return;
+      }
+      if (status === 'rejected' || status === 'removed') {
+        showHomeVideoStatus('This source is unavailable or did not pass the publication checks. No place was added.', true);
+        return;
+      }
+      showHomeVideoStatus('Source accepted for official metadata review. No pin has been added; place evidence and branch identity still have to pass review.', false);
+      if (result.data?.videoId) pollHomeVideoStatus(result.data.videoId, 0);
       return;
     }
     const placeCopy = match.resolvedCount
@@ -757,6 +799,35 @@ const jsonLd = [
       homeVideoCollection.href = match.collectionHref;
       homeVideoCollection.classList.remove('hidden');
     }
+  }
+
+  async function pollHomeVideoStatus(videoId, attempt) {
+    if (attempt >= 5) return;
+    window.setTimeout(async () => {
+      const result = await getVideoStatus(videoId);
+      const state = result.data;
+      if (!result.configured || result.error || !state) return;
+      if (state.status === 'published') {
+        showHomeVideoStatus(`Place review complete: ${state.places?.length || 0} grounded ${state.places?.length === 1 ? 'place' : 'places'} ready.`, false);
+        if (state.slug) {
+          homeVideoFieldNote.href = `/videos/${state.slug}/`;
+          homeVideoActions.classList.remove('hidden');
+        }
+        return;
+      }
+      if (state.status === 'rejected' || state.stage === 'failed') {
+        showHomeVideoStatus('The official source was unavailable or failed a terminal check. No place was added.', true);
+        return;
+      }
+      if (state.stage === 'metadata_ready') {
+        showHomeVideoStatus('Official source metadata is ready. Place extraction and branch verification are still pending; no pin has been published.', false);
+        return;
+      }
+      if (state.stage === 'retryable') {
+        showHomeVideoStatus('The platform is temporarily unavailable. The source remains queued for a controlled retry; no pin has been added.', false);
+      }
+      pollHomeVideoStatus(videoId, attempt + 1);
+    }, 3000);
   }
 
   function showHomeVideoStatus(message, isError) {

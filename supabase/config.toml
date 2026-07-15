@@ -435,6 +435,12 @@ entrypoint = "./functions/video-status/index.ts"
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/video-status/*.html" ]
 
+[functions.process-video-jobs]
+enabled = true
+verify_jwt = false
+import_map = "./functions/process-video-jobs/deno.json"
+entrypoint = "./functions/process-video-jobs/index.ts"
+
 [functions.save-map-items]
 enabled = true
 verify_jwt = true

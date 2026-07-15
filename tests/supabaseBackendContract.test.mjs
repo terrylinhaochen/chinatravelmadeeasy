@@ -10,6 +10,7 @@ test("private operational schema stays outside the Data API", async () => {
   const edgeFiles = await Promise.all([
     "submit-video",
     "video-status",
+    "process-video-jobs",
     "save-map-items",
     "place-experience",
     "place-correction",
@@ -37,8 +38,38 @@ test("video submission uses atomic service-only RPCs", async () => {
 
 test("unpublished extraction evidence is not returned by video status", async () => {
   const status = await read("supabase/functions/video-status/index.ts");
-  assert.match(status, /publication_state !== "published"[^;]+places: \[\]/s);
+  assert.match(status, /publication_state !== "published"[\s\S]+?places: \[\]/);
   assert.match(status, /\.eq\("resolution_state", "resolved"\)/);
+});
+
+test("official metadata worker consumes the private queue through service-only RPCs", async () => {
+  const worker = await read("supabase/functions/process-video-jobs/index.ts");
+  const adapter = await read("supabase/functions/_shared/videoMetadata.ts");
+  const migration = await read("supabase/migrations/20260715055019_video_ingestion_worker.sql");
+
+  assert.match(worker, /rpc\("claim_video_ingestion_jobs"/);
+  assert.match(worker, /fetchOfficialMetadata/);
+  assert.match(worker, /rpc\("complete_video_metadata_stage"/);
+  assert.match(worker, /rpc\("fail_video_ingestion_job"/);
+  assert.match(adapter, /https:\/\/www\.tiktok\.com\/oembed/);
+  assert.doesNotMatch(adapter, /youtube/i);
+  assert.doesNotMatch(worker, /publication_state[^\n]+published/);
+  for (const fn of ["claim_video_ingestion_jobs", "complete_video_metadata_stage", "fail_video_ingestion_job", "get_video_processing_status"]) {
+    assert.match(migration, new RegExp(`revoke all on function public\\.${fn}[^;]+from public, anon, authenticated;`, "s"));
+    assert.match(migration, new RegExp(`grant execute on function public\\.${fn}[^;]+to service_role;`, "s"));
+  }
+  assert.match(migration, /set publication_state = 'processing'/);
+  assert.doesNotMatch(migration, /set publication_state = 'published'/);
+  assert.match(migration, /pgmq\.create\('place_reresolution'\)/);
+  assert.match(migration, /pgmq\.send\(\s*'place_reresolution'/s);
+});
+
+test("TikTok canonical identity remains usable by the official oEmbed adapter", async () => {
+  const shared = await read("supabase/functions/_shared/ctme.ts");
+  const pipeline = await read("pipeline/video_ingestion_contract.mjs");
+  assert.doesNotMatch(shared, /@i\/video/);
+  assert.doesNotMatch(pipeline, /@i\/video/);
+  assert.match(shared, /url\.pathname\.replace/);
 });
 
 test("public feedback surface omits identity and idempotency fields", async () => {

@@ -13,11 +13,14 @@ export function parseVideoUrl(value: string) {
   const host = url.hostname.toLowerCase().replace(/^www\./, "");
   let platform: "tiktok" | "instagram";
   let externalId = "";
-  if (host === "tiktok.com") { platform = "tiktok"; externalId = url.pathname.match(/\/video\/(\d+)/)?.[1] || ""; }
-  else if (host === "instagram.com") { platform = "instagram"; externalId = url.pathname.match(/\/(?:reel|p)\/([^/?]+)/)?.[1] || ""; }
+  if (host === "tiktok.com") { platform = "tiktok"; externalId = url.pathname.match(/^\/@[A-Za-z0-9._]{1,64}\/video\/(\d+)\/?$/)?.[1] || ""; }
+  else if (host === "instagram.com") { platform = "instagram"; externalId = url.pathname.match(/^\/(?:reel|p)\/([A-Za-z0-9_-]+)\/?$/)?.[1] || ""; }
   else throw new Error("unsupported_host");
   if (!externalId || !/^[A-Za-z0-9_-]{6,40}$/.test(externalId)) throw new Error("unsupported_url");
-  return { platform, externalId, canonicalUrl: platform === "tiktok" ? `https://www.tiktok.com/@i/video/${externalId}` : `https://www.instagram.com/reel/${externalId}/` };
+  const canonicalUrl = platform === "tiktok"
+    ? `https://www.tiktok.com${url.pathname.replace(/\/$/, "")}`
+    : `https://www.instagram.com/reel/${externalId}/`;
+  return { platform, externalId, canonicalUrl };
 }
 
 export async function requireUser(req: Request) {

@@ -3,8 +3,8 @@ import { isUuid, parseVideoUrl } from "./ctme.ts";
 
 Deno.test("the production parser accepts TikTok and Instagram short-form URLs only", () => {
   assertEquals(
-    parseVideoUrl("https://www.tiktok.com/@traveler/video/7412345678901234567").platform,
-    "tiktok",
+    parseVideoUrl("https://www.tiktok.com/@traveler/video/7412345678901234567?is_from_webapp=1").canonicalUrl,
+    "https://www.tiktok.com/@traveler/video/7412345678901234567",
   );
   assertEquals(
     parseVideoUrl("https://www.instagram.com/reel/ABC_123/").canonicalUrl,
@@ -14,6 +14,11 @@ Deno.test("the production parser accepts TikTok and Instagram short-form URLs on
     () => parseVideoUrl("https://www.youtube.com/watch?v=4OJcNbiixEQ"),
     Error,
     "unsupported_host",
+  );
+  assertThrows(
+    () => parseVideoUrl("https://www.tiktok.com/@traveler/video/7412345678901234567/extra"),
+    Error,
+    "unsupported_url",
   );
 });
 

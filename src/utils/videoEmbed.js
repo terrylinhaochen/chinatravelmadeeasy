@@ -20,12 +20,12 @@ export function parseShortFormVideoUrl(value) {
   }
   const host = url.hostname.toLowerCase().replace(/^www\./, '');
   if (host === 'tiktok.com') {
-    const externalId = url.pathname.match(/\/video\/(\d+)/)?.[1];
+    const externalId = url.pathname.match(/^\/@[A-Za-z0-9._]{1,64}\/video\/(\d+)\/?$/)?.[1];
     if (!externalId) throw new Error('use_full_tiktok_url');
     return { platform: 'tiktok', externalId };
   }
   if (host === 'instagram.com') {
-    const externalId = url.pathname.match(/\/(?:reel|p)\/([^/?]+)/)?.[1];
+    const externalId = url.pathname.match(/^\/(?:reel|p)\/([A-Za-z0-9_-]+)\/?$/)?.[1];
     if (!externalId) throw new Error('use_instagram_reel_url');
     return { platform: 'instagram', externalId };
   }

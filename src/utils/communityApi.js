@@ -7,6 +7,13 @@ export async function submitVideo(url, turnstileToken = '') {
   return { configured: true, data, error };
 }
 
+export async function getVideoStatus(videoId) {
+  if (!isSupabaseConfigured()) return { configured: false, status: 'backend_not_connected' };
+  const client = await getSupabaseBrowserClient();
+  const { data, error } = await client.functions.invoke(`video-status/${videoId}`, { method: 'GET' });
+  return { configured: true, data, error };
+}
+
 export async function saveMapItems(payload) {
   if (!isSupabaseConfigured()) return { configured: false };
   const client = await getSupabaseBrowserClient();

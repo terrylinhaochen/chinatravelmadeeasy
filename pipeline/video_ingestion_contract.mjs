@@ -11,10 +11,13 @@ export function normalizeVideoUrl(input) {
   const url = new URL(input); const platform = hosts.get(url.hostname.toLowerCase());
   if (!platform) throw new Error('unsupported_host');
   let externalId = '';
-  if (platform === 'tiktok') externalId = url.pathname.match(/\/video\/(\d+)/)?.[1];
-  if (platform === 'instagram') externalId = url.pathname.match(/\/(?:reel|p)\/([^/?]+)/)?.[1];
+  if (platform === 'tiktok') externalId = url.pathname.match(/^\/@[A-Za-z0-9._]{1,64}\/video\/(\d+)\/?$/)?.[1];
+  if (platform === 'instagram') externalId = url.pathname.match(/^\/(?:reel|p)\/([A-Za-z0-9_-]+)\/?$/)?.[1];
   if (!externalId) throw new Error('unsupported_url');
-  return { platform, externalId, cacheKey: `${platform}:${externalId}`, canonicalUrl: platform === 'instagram' ? `https://www.instagram.com/reel/${externalId}/` : `https://www.tiktok.com/@i/video/${externalId}` };
+  const canonicalUrl = platform === 'instagram'
+    ? `https://www.instagram.com/reel/${externalId}/`
+    : `https://www.tiktok.com${url.pathname.replace(/\/$/, '')}`;
+  return { platform, externalId, cacheKey: `${platform}:${externalId}`, canonicalUrl };
 }
 
 export function pickBindingEvidence(candidates) {

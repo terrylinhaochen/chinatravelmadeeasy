@@ -18,7 +18,7 @@
     "test:videos": "node --test tests/videoIngestion.test.mjs",
     "test:library-search": "node --test tests/librarySearch.test.mjs",
     "test:destinations": "node --test tests/destinationQuality.test.mjs",
-    "test:supabase-functions": "deno test --allow-env --allow-net supabase/functions/_shared/ctme_test.ts && for dir in supabase/functions/submit-video supabase/functions/video-status supabase/functions/save-map-items supabase/functions/place-experience supabase/functions/place-correction supabase/functions/report-content; do deno check --config \"$dir/deno.json\" \"$dir/index.ts\" || exit 1; done",
+    "test:supabase-functions": "deno test --allow-env --allow-net supabase/functions/_shared/ctme_test.ts supabase/functions/_shared/videoMetadata_test.ts && for dir in supabase/functions/submit-video supabase/functions/video-status supabase/functions/process-video-jobs supabase/functions/save-map-items supabase/functions/place-experience supabase/functions/place-correction supabase/functions/report-content; do deno check --config \"$dir/deno.json\" \"$dir/index.ts\" || exit 1; done",
     "test:supabase-contract": "node --test tests/supabaseBackendContract.test.mjs",
     "videos:materialize": "node pipeline/materialize_video_snapshots.mjs",
     "test": "npm run test:places && npm run test:state && npm run test:community-map && npm run test:shared-task && npm run test:videos && npm run test:library-search && npm run test:destinations && npm run test:supabase-contract",

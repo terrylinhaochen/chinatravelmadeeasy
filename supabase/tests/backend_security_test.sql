@@ -1,6 +1,6 @@
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(21);
+select plan(36);
 
 select ok(
   (select bool_and(c.relrowsecurity)
@@ -29,6 +29,38 @@ select ok(
 select ok(
   has_function_privilege('service_role', 'public.register_video_submission(public.video_platform,text,text,text)', 'execute'),
   'service functions can atomically register ingestion jobs'
+);
+select ok(
+  not has_function_privilege('anon', 'public.claim_video_ingestion_jobs(integer,integer)', 'execute'),
+  'anonymous clients cannot claim ingestion jobs'
+);
+select ok(
+  has_function_privilege('service_role', 'public.claim_video_ingestion_jobs(integer,integer)', 'execute'),
+  'the worker service can claim ingestion jobs'
+);
+select ok(
+  not has_function_privilege('authenticated', 'public.complete_video_metadata_stage(bigint,uuid,text,text,jsonb,text,text,text,text,text,timestamptz)', 'execute'),
+  'authenticated clients cannot complete metadata jobs'
+);
+select ok(
+  has_function_privilege('service_role', 'public.complete_video_metadata_stage(bigint,uuid,text,text,jsonb,text,text,text,text,text,timestamptz)', 'execute'),
+  'the worker service can complete metadata jobs'
+);
+select ok(
+  not has_function_privilege('authenticated', 'public.fail_video_ingestion_job(bigint,uuid,text,text,boolean,integer)', 'execute'),
+  'authenticated clients cannot transition ingestion failures'
+);
+select ok(
+  has_function_privilege('service_role', 'public.fail_video_ingestion_job(bigint,uuid,text,text,boolean,integer)', 'execute'),
+  'the worker service can transition ingestion failures'
+);
+select ok(
+  not has_function_privilege('anon', 'public.get_video_processing_status(uuid)', 'execute'),
+  'anonymous clients cannot bypass the safe status function'
+);
+select ok(
+  has_function_privilege('service_role', 'public.get_video_processing_status(uuid)', 'execute'),
+  'the status Edge Function can read safe processing state'
 );
 select ok(
   not has_function_privilege('authenticated', 'public.save_place_experience(uuid,uuid,uuid,public.experience_verdict,text,date,text,text[])', 'execute'),
@@ -106,6 +138,53 @@ select is(
   (select count(*)::integer from pgmq.q_video_ingestion where message->>'idempotency_key' = 'instagram:C0DEX_TEST_01:contract-test-v1'),
   1,
   'duplicate registrations enqueue one durable message'
+);
+
+create temporary table claimed_ingestion as
+select * from public.claim_video_ingestion_jobs(5, 120)
+where idempotency_key = 'instagram:C0DEX_TEST_01:contract-test-v1';
+
+select is((select count(*)::integer from claimed_ingestion), 1, 'the queue worker claims the durable message once');
+select ok(
+  public.complete_video_metadata_stage(
+    (select message_id from claimed_ingestion),
+    (select video_id from claimed_ingestion),
+    (select idempotency_key from claimed_ingestion),
+    'instagram_oembed',
+    '{"title":"Contract test","author_name":"CTME"}'::jsonb,
+    'Contract test',
+    'CTME',
+    null,
+    'link_only',
+    repeat('a', 64),
+    now() + interval '1 day'
+  ),
+  'official metadata completion succeeds atomically'
+);
+select is(
+  (select publication_state::text from public.videos where external_video_id = 'C0DEX_TEST_01'),
+  'processing',
+  'metadata completion does not publish before place resolution'
+);
+select is(
+  (select status from ctme_private.ingestion_jobs where pipeline_version = 'contract-test-v1'),
+  'metadata_ready',
+  'the durable job records the metadata-ready stage'
+);
+select is(
+  (select count(*)::integer from pgmq.q_video_ingestion where message->>'idempotency_key' = 'instagram:C0DEX_TEST_01:contract-test-v1'),
+  0,
+  'successful metadata work leaves no active queue message'
+);
+select is(
+  (select count(*)::integer from pgmq.a_video_ingestion where message->>'idempotency_key' = 'instagram:C0DEX_TEST_01:contract-test-v1'),
+  1,
+  'successful metadata work archives its queue message for audit'
+);
+select is(
+  (select count(*)::integer from ctme_private.provider_payloads where provider = 'instagram_oembed'),
+  1,
+  'the official provider response is retained only in the private schema'
 );
 
 select * from finish();
