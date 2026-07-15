@@ -104,6 +104,12 @@ const knownPlaces = [
   { name: 'Taiyuan Northern Qi Mural Museum', localName: '太原北齐壁画博物馆', city: 'Taiyuan', category: 'See', aliases: ['taiyuan northern qi mural museum', 'northern qi mural museum', '太原北齐壁画博物馆', '北齐壁画博物馆'] },
   { name: 'Taiyuan Museum', localName: '太原市博物馆', city: 'Taiyuan', category: 'See', aliases: ['taiyuan museum', 'taiyuan city museum', 'taiyuan municipal museum', '太原市博物馆'] },
   { name: 'Taiyuan Twin Pagoda Museum at Yongzuo Temple', localName: '太原市双塔博物馆（永祚寺）', city: 'Taiyuan', category: 'See', aliases: ['taiyuan twin pagoda museum at yongzuo temple', 'taiyuan twin pagoda museum', 'yongzuo temple', '太原市双塔博物馆（永祚寺）', '太原市双塔博物馆', '永祚寺'] },
+  { name: 'Datong South Railway Station', localName: '大同南站', city: 'Datong', category: 'Move', aliases: ['datong south railway station', 'datong south station', '大同南站'] },
+  { name: 'Datong Museum', localName: '大同市博物馆', city: 'Datong', category: 'See', aliases: ['datong museum', 'datong city museum', 'datong municipal museum', '大同市博物馆'] },
+  { name: 'Yungang Grottoes Visitor Center', localName: '云冈石窟游客服务中心', city: 'Datong', category: 'See', aliases: ['yungang grottoes visitor center', 'yungang visitor center', '云冈石窟游客服务中心'] },
+  { name: 'Huayan Temple scenic-area entrance', localName: '华严寺景区入口', city: 'Datong', category: 'See', aliases: ['huayan temple scenic-area entrance', 'huayan temple scenic area entrance', 'huayan temple entrance', '华严寺景区入口'] },
+  { name: 'Shanhua Temple', localName: '善化寺', city: 'Datong', category: 'See', aliases: ['shanhua temple', '善化寺'] },
+  { name: 'Hengshan Visitor Center for Hanging Temple', localName: '恒山游客中心（悬空寺换乘）', city: 'Datong', category: 'Move', aliases: ['hengshan visitor center for hanging temple', 'hengshan visitor center', 'hanging temple transfer', '恒山游客中心（悬空寺换乘）', '恒山游客中心', '悬空寺换乘'] },
   { name: 'Changsha South Railway Station', localName: '长沙南站', city: 'Changsha', category: 'Move', aliases: ['changsha south railway station', 'changsha south station', '长沙南站'] },
   { name: 'Hunan Museum', localName: '湖南博物院', city: 'Changsha', category: 'See', aliases: ['hunan museum', '湖南博物院'] },
   { name: 'Yuelu Academy', localName: '岳麓书院', city: 'Changsha', category: 'See', aliases: ['yuelu academy', '岳麓书院'] },
@@ -198,6 +204,9 @@ export function extractTripPlaces(source) {
         add({ ...place, confidence: 'known place', sourceUrl: raw.url, sourcePlatform: raw.platform, note: evidenceLine(text, place) });
       }
     }
+  }
+  if (structuredCount) {
+    return { source: raw, places: results.slice(0, 8), needsMoreText: false };
   }
   const lines = text.split(/\n|。|；|;|•|·/).map((line) => line.trim()).filter(Boolean);
   const chinesePlace = /([\u4e00-\u9fa5A-Za-z0-9'’&·\-\s]{2,28}?(?:路|街|巷|寺|站|机场|公园|广场|市场|博物馆|酒店|饭店|餐厅|茶社|茶馆|火锅|小吃|面馆|咖啡|书店|中心|外滩))/g;
@@ -318,6 +327,7 @@ function inferCity(text) {
   if (/武汉站|湖北省博物馆南门|湖光序曲|黄鹤楼公园南门|中华路1号码头|中华路一号码头|江汉关博物馆|Wuhan Railway|Hubei Provincial Museum South Gate|Lake Light Prelude|Yellow Crane Tower Park South Gate|Zhonghua Road (?:No\.?|Number) 1 Ferry|Wuhan Customs House Museum/i.test(text)) return 'Wuhan';
   if (/青岛站|青岛天后宫|青岛德国总督楼旧址博物馆|青岛啤酒博物馆|青岛第一海水浴场|崂山游客服务中心|Qingdao Railway|Qingdao Tianhou|Qingdao German Governor|Tsingtao Brewery Museum|Qingdao First Bathing Beach|Laoshan Scenic Area Visitor Service Center/i.test(text)) return 'Qingdao';
   if (/太原南站|山西博物院|晋祠博物馆|太原北齐壁画博物馆|太原市博物馆|太原市双塔博物馆|永祚寺|Taiyuan South Railway|Shanxi Museum|Jinci Museum|Taiyuan Northern Qi Mural Museum|Taiyuan Museum|Taiyuan Twin Pagoda Museum|Yongzuo Temple/i.test(text)) return 'Taiyuan';
+  if (/大同南站|大同市博物馆|云冈石窟游客服务中心|华严寺景区入口|善化寺|恒山游客中心|Datong South Railway|Datong Museum|Yungang Grottoes Visitor Center|Huayan Temple scenic-area entrance|Shanhua Temple|Hengshan Visitor Center/i.test(text)) return 'Datong';
   if (/长沙南站|湖南博物院|岳麓书院|橘子洲景区|长沙简牍博物馆|杜甫江阁|Changsha South Railway|Hunan Museum|Yuelu Academy|Orange Isle Scenic Area|Changsha Bamboo Slips Museum|Du Fu Pavilion/i.test(text)) return 'Changsha';
   if (/厦门北站|邮轮中心厦鼓码头|东渡客运码头|三丘田码头|华侨博物院|南普陀寺|厦门园林植物园西大门|Xiamen North Railway|Xiamen International Cruise Center Gulangyu Wharf|Sanqiutian Wharf|Overseas Chinese Museum|Nanputuo Temple|Xiamen Botanical Garden West Gate/i.test(text)) return 'Xiamen';
   if (/福州站|三坊七巷游客中心|福州市林则徐纪念馆|福建博物院|鼓山旅游景区游客中心|鼓山下院|中国船政文化博物馆|Fuzhou Railway Station|Sanfang Qixiang Visitor Center|Lin Zexu Memorial Hall|Fujian Museum|Drum Mountain Visitor Center|China Shipbuilding Culture Museum/i.test(text)) return 'Fuzhou';
@@ -331,6 +341,7 @@ function inferCategory(text) {
     .replace(/^\s*\d{1,2}[.)、:]\s+/, '')
     .split(/\s+\/\s+|\s+[—–-]\s+/)[0];
   if (/flower market|scenic area (?:visitor cent(?:er|re)|.*(?:gate|entrance))|greenway.*(?:prelude|portal|gateway)|花卉市场|景区(?:游客中心|.*(?:门|入口))|绿道.*(?:驿站|入口)/i.test(subject)) return 'See';
+  if (/visitor cent(?:er|re).*(?:transfer|shuttle|hanging temple)|游客中心.*(?:换乘|接驳|悬空寺)/i.test(subject)) return 'Move';
   if (/food|lunch|snack|restaurant|hotpot|bao|noodle|bakery|market|小吃|火锅|餐厅|饭店|面馆|咖啡|汤包|市场/i.test(subject)) return 'Eat';
   if (/hotel|stay|lobby|酒店|民宿/i.test(subject)) return 'Stay';
   if (/station|airport|metro|train|checkpoint|\bport\b|wharf|pier|terminal|cableway|ropeway|elevator|站|机场|口岸|码头|航站楼|索道|天梯/i.test(subject)) return 'Move';

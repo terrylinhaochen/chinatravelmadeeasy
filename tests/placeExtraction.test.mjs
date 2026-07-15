@@ -475,6 +475,24 @@ test('Taiyuan handoff keeps the rail arrival and four museum identities distinct
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
 });
 
+test('Datong handoff keeps rail, museum, cave, temple, and Hunyuan transfer identities separate', () => {
+  const result = extractTripPlaces({
+    title: 'Datong field-guide places',
+    text: '1. Datong South Railway Station / 大同南站 — Datong — Keep the high-speed arrival separate from Datong Station and the airport; the linked 大同综合客运中心 remains supporting evidence, not a seventh pin.\n2. Datong Museum / 大同市博物馆 — Datong — Preserve the main municipal museum at Taihe Road rather than one of its branches.\n3. Yungang Grottoes Visitor Center / 云冈石窟游客服务中心 — Datong — Keep the booking, passport-help, and controlled cave gateway separate from Cave 20 or a parking pin.\n4. Huayan Temple scenic-area entrance / 华严寺景区入口 — Datong — Preserve the protected temple entrance rather than the commercial street or reconstructed pagoda.\n5. Shanhua Temple / 善化寺 — Datong — Keep the surviving Liao–Jin complex at South Temple Street separate from the south gate district.\n6. Hengshan Visitor Center for Hanging Temple / 恒山游客中心（悬空寺换乘） — Datong — Preserve the mandatory Hunyuan ticket and shuttle handoff rather than the cliff structure or a black-car stop.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '大同南站',
+    '大同市博物馆',
+    '云冈石窟游客服务中心',
+    '华严寺景区入口',
+    '善化寺',
+    '恒山游客中心（悬空寺换乘）',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Datong'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'Move']);
+});
+
 test('Changsha handoff keeps the high-speed arrival, provincial museum, academy ticket, island route, slips museum, and river pavilion separate', () => {
   const result = extractTripPlaces({
     title: 'Changsha field-guide places',

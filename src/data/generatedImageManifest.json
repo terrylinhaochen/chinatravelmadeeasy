@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-15T04:43:42.381Z",
+  "prepared_at": "2026-07-15T05:17:17.166Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -447,6 +447,12 @@
       "alt": "Historic gate and courtyard at Jinci in Taiyuan",
       "source": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Jinci_Temple_%2854572159327%29.jpg",
       "title": "Jinci, Taiyuan"
+    },
+    "region:datong": {
+      "src": "/images/curated/region-datong.jpg",
+      "alt": "Cave 20 and its monumental Buddha at the Yungang Grottoes near Datong",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Cave_20%2C_Yungang_Grottoes.jpg/960px-Cave_20%2C_Yungang_Grottoes.jpg",
+      "title": "Cave 20, Yungang Grottoes"
     }
   }
 }
