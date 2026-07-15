@@ -39,6 +39,7 @@ export const destinationCoordinates: Record<string, DestinationCoordinate> = {
   shandong: { lon: 117.1201, lat: 36.6512 },
   taiyuan: { lon: 112.5492, lat: 37.8706 },
   datong: { lon: 113.3001, lat: 40.0768 },
+  pingyao: { lon: 112.1835, lat: 37.2041 },
   shanxi: { lon: 112.5492, lat: 37.8706 },
   sichuan: { lon: 104.0665, lat: 30.5728 },
   yunnan: { lon: 102.8329, lat: 24.8801 },

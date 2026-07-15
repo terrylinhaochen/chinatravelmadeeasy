@@ -493,6 +493,24 @@ test('Datong handoff keeps rail, museum, cave, temple, and Hunyuan transfer iden
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'Move']);
 });
 
+test('Pingyao handoff keeps high-speed rail, city institutions, and the two outer temples separate', () => {
+  const result = extractTripPlaces({
+    title: 'Pingyao field-guide places',
+    text: '1. Pingyao Ancient City Railway Station / 平遥古城站 — Pingyao — Keep the high-speed station on 文景大道 separate from the conventional 平遥站 and the city gates.\n2. Pingyao Ancient City South Gate at Yingxun Gate / 平遥古城南门（迎薰门） — Pingyao — Preserve the named south-wall route anchor rather than a generic old-city center or a hotel meeting gate.\n3. Rishengchang Former Bank / 日昇昌票号 — Pingyao — Keep the former remittance house at 西大街38号 separate from neighboring draft-bank museums and current shops.\n4. Pingyao County Government Office Museum / 平遥县衙博物馆 — Pingyao — Preserve the museum at 衙门街77号 rather than the current county government or a performance listing.\n5. Shuanglin Temple / 双林寺 — Pingyao — Keep the southwest World Heritage sculpture site in Qiaotou Village separate from the old city and the high-speed station.\n6. Zhenguo Temple / 镇国寺 — Pingyao — Keep the northeastern Five Dynasties timber site in Haodong Village separate from Shuanglin and the old-city temples.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '平遥古城站',
+    '平遥古城南门（迎薰门）',
+    '日昇昌票号',
+    '平遥县衙博物馆',
+    '双林寺',
+    '镇国寺',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Pingyao'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
+});
+
 test('Changsha handoff keeps the high-speed arrival, provincial museum, academy ticket, island route, slips museum, and river pavilion separate', () => {
   const result = extractTripPlaces({
     title: 'Changsha field-guide places',

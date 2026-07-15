@@ -2033,6 +2033,88 @@ const destinationRecords: Omit<Destination, 'image' | 'mapPin'>[] = [
     },
   },
   {
+    name: 'Pingyao',
+    slug: 'pingyao',
+    type: 'City',
+    summary: 'An intact county-town system of walls, lanes, civic institutions, merchant finance, courtyard life, and two outlying temples',
+    why: 'Pingyao is more than a photogenic old street. Its value comes from reading defense, government, commerce, ritual, and domestic life as one preserved urban system—then completing the World Heritage story at Shuanglin and Zhenguo temples.',
+    featured: true,
+    guideIds: ['china-high-speed-trains', 'china-attraction-tickets-reservations', 'neighborhoods-beyond-landmarks', 'street-food-night-markets', 'didi-metro-getting-around'],
+    mapQuery: '平遥古城 山西省晋中市平遥县',
+    editorial: {
+      dek: 'Pingyao becomes much richer once it stops being an “ancient town” backdrop. Read the wall, magistrate’s compound, financial houses, temples, shops, residences, and lanes as the machinery of a county seat; then travel beyond the wall to the two temples that complete the World Heritage property. Three days lets the city remain inhabited instead of becoming a costume-photo checklist.',
+      sections: [
+        {
+          title: 'Read a county town, not a theme-park street',
+          body: 'The old city is a complete spatial argument: the wall defines defense; 平遥县衙 makes county government tangible; 日昇昌 and neighboring financial houses explain the merchant economy; the Confucian and City God temples express civic and ritual order; lanes, courtyards, workshops, and homes preserve the domestic city between them. South Street is only one commercial spine. Keep leaving it for quieter east–west streets and residential lanes, and notice where heritage display, current business, rebuilt fabric, and ordinary life meet rather than calling everything “Ming and Qing.”',
+        },
+        {
+          title: 'Arrival: 平遥古城站 and 平遥站 are not the same station',
+          body: '平遥古城站 is the high-speed-rail station southwest of town on 文景大道. 平遥站 is the older conventional-rail station near the northwest side of the old city. Save the exact Chinese station printed on the 12306 ticket before choosing a hotel or ride. The high-speed station name sounds as if it is at the wall, but it still requires a last-mile transfer; the conventional station may look closer while serving a completely different train. Protect enough time for station scale, traffic, luggage, and the gate where the hotel can actually meet you.',
+        },
+        {
+          title: 'Day one: follow the institutions that made the city work',
+          body: 'Begin at 迎薰门, the south gate, to understand the wall and the north–south commercial axis. Continue to 平遥县衙 before the rooms lose their meaning in a late-day rush: the sequence of offices, court spaces, prison, residence, and service yards turns an abstract county administration into a physical system. Then cross to 西大街 and 日昇昌票号, using one well-read financial house to understand remittance, accounting, trust, staff networks, and the wider merchant city. Finish with the public streets after the ticketed interiors close instead of treating night lighting as a substitute for them.',
+        },
+        {
+          title: 'Day two: slow down enough to see the inhabited fabric',
+          body: 'Use the second day for the city between headline sites. Walk one wall section only when the current entrance and weather make it worthwhile, then choose one or two institutions—文庙, 城隍庙, a courtyard, another financial house—rather than repeating similar displays until they blur. Spend the remaining hours on lanes away from the densest retail spine, observing courtyard thresholds, drainage, shop-house depth, building repair, resident access, and the way tourism shares a protected town with daily life. Early morning and the hour after ticketed sites close reveal a different city from midday groups.',
+        },
+        {
+          title: 'Day three: complete “one city, two temples”',
+          body: 'The World Heritage property is not just the area inside the wall. 双林寺, roughly six kilometres southwest, holds an exceptional ensemble of painted sculpture; 镇国寺, about twelve kilometres northeast, preserves the 963 Wanfo Hall and rare Five Dynasties fabric and sculpture. They point in opposite directions and are not a casual walk or one map cluster. Arrange a driver, current public transport, or two explicit out-and-back transfers with waiting and return terms before leaving. If only one fits, choose by interest—sculpture at Shuanglin, early timber architecture at Zhenguo—and keep the other as a real omission rather than replacing it with a similarly named temple.',
+        },
+        {
+          title: 'Separate the free city from the paid interiors',
+          body: 'Entering and walking the public streets of the old city does not require the combined attraction ticket; the wall, county office, Rishengchang, and other named interiors are controlled attractions. The latest indexed March 2026 operator notice listed a ¥125 full-price old-city combined ticket, ¥35 for Shuanglin, and ¥25 for Zhenguo, while a February 2026 operating notice reported 08:00–18:00 hours with entry ending fifteen minutes before closing. These are dated planning inputs, not promises: recheck the official service platform for today’s price, validity, passport procedure, closures, and last entry before paying or sequencing the day.',
+        },
+        {
+          title: 'Stay for the lanes—but solve the gate and luggage first',
+          body: 'A courtyard hotel inside the wall earns its premium when early and late walks matter, but vehicle controls, uneven stone, narrow lanes, and six different gates can turn “inside Pingyao” into a long luggage drag. Ask the property for its current Chinese name, exact address, nearest usable gate, legal vehicle drop-off, pickup method, and staff luggage handoff before arrival. Outside the wall near the northwest is practical for 平遥站 and simpler car access; the south and southwest work better for some newer hotels and 平遥古城站 transfers. Straight-line distance to the wall is not the same as an executable arrival.',
+        },
+        {
+          title: 'Treat food and costume clips as leads, not proof',
+          body: '平遥牛肉, 碗托, 栲栳栳, 长山药, 油茶, and other local foods are useful eating vocabulary, not restaurant pins. Preserve the creator’s visit date, Chinese storefront, branch, address, visible dish, price context, and first-person verdict before mapping one. The same evidence rule applies to 旅拍: a costume montage may show an attractive lane or courtyard, but it does not establish the building, public-access rules, historical claim, or lived quality of a visit. Save the story when useful; save a location only when the exact current identity is grounded.',
+        },
+        {
+          title: 'Build recovery into tickets, weather, and festival days',
+          body: 'If the combined ticket is sold out, unavailable, or no longer worth the remaining hours, the public lanes still support a real city walk; verify any individually controlled interior rather than assuming it remains accessible. Heavy rain, ice, high wind, conservation work, or crowd control can close a wall section, so move the day to the county office, financial houses, temples, or low-exposure lanes. Film-festival and holiday programs can change road access, venue schedules, and room prices. Drop an outer temple before sacrificing the protected return to the station, and never compress both temples into the gap before an onward train.',
+        },
+        {
+          title: 'Use video to identify the exact courtyard, gate, and storefront',
+          body: 'A mappable Pingyao clip names the gate, museum, former bank, temple, courtyard, hotel, restaurant branch, performance, or festival venue and supplies a visit date or visible current sign. Caption and location-tag evidence outrank narration; OCR and visual resemblance remain supporting clues. A generic grey-brick montage cannot prove which courtyard is open, a wall panorama cannot identify the access gate, and a bowl of beef cannot choose a restaurant. The editorial note can retain uncertainty, but the map must preserve it instead of inventing certainty.',
+        },
+        {
+          title: 'Keep Shanxi collections at city and excursion scale',
+          body: 'Pingyao, Taiyuan, Datong, Wutai Mountain, Qiao Family Courtyard, Wang Family Courtyard, and the province’s dispersed temples are different plans, not one list of nearby pins. This edition may include Shuanglin and Zhenguo because UNESCO, admission, and an explicit return contract bind them to Pingyao. A mixed Shanxi import should split into city or county collections first, retain the original source, and show the rail or road transfer between them. Province-level proximity is not itinerary proximity.',
+        },
+      ],
+      quickFacts: [
+        { label: 'Useful minimum', value: 'Three days: institutions, inhabited lanes, then one city–two temples with secured transport' },
+        { label: 'Best first base', value: 'Inside the wall for early and late walks only after the hotel confirms the usable gate and luggage handoff' },
+        { label: 'Arrival rule', value: '平遥古城站 is the high-speed station; 平遥站 is a separate conventional station closer to the wall' },
+        { label: 'Ticket rule', value: 'Public streets are free to enter; ticketed interiors and the two outer temples keep current, separate access terms' },
+        { label: 'World Heritage rule', value: 'The property is the walled city plus 双林寺 and 镇国寺—not one central old-town pin' },
+        { label: 'Video-to-map rule', value: 'Resolve the exact gate, courtyard, former bank, temple, hotel, performance, or restaurant branch' },
+      ],
+      checkedAt: '2026-07-14',
+      sources: [
+        { title: 'UNESCO World Heritage Centre: Ancient City of Ping Yao, Shuanglin Temple, and Zhenguo Temple', url: 'https://whc.unesco.org/en/list/812/' },
+        { title: 'Pingyao Ancient City scenic area: official current site and booking entry', url: 'https://pingyao888.cn/' },
+        { title: 'Pingyao International Film Festival: public-street entry versus ticketed old-city attractions', url: 'https://www.pyiffestival.com/AboutGuide' },
+        { title: '2026 scenic-operator notice mirror: full-price ticket baseline and official service platform', url: 'https://www.15386.cn/post/135947.html' },
+        { title: 'Sichuan Daily network citing Shanxi Daily: February 2026 attraction hours and last entry', url: 'https://cbgc.scol.com.cn/news/7293290' },
+        { title: 'National trade-policy database: current Pingyao Ancient City protection regulation', url: 'https://policy.mofcom.gov.cn/claw/clawContent.shtml?id=65368' },
+        { title: 'Shanxi government tourism plan: old city, Shuanglin, and Zhenguo “1+2” structure', url: 'https://wlt.shanxi.gov.cn/zwgk/xxgk/xxgkml/qt/202204/P020220420405006964545.pdf' },
+        { title: 'Shanxi government portal: current one-city-two-temples route and city institutions', url: 'https://www.jccq.gov.cn/cqzx/sjdt_5/szfyw_1/202504/t20250403_2124773.shtml' },
+        { title: 'Shanxi government portal: 2026 heritage conservation and living-city context', url: 'https://www.jcgov.gov.cn/dtxx/tpxw/202606/t20260613_2360414.shtml' },
+        { title: 'AMap: Pingyao Ancient City Railway Station identity, address, and coordinates', url: 'https://ditu.amap.com/place/B0FFFRH4NV' },
+        { title: 'AMap: Pingyao County Government Office Museum identity and Yamen Street address', url: 'https://ditu.amap.com/place/B016200PSI' },
+        { title: 'AMap: Shuanglin Temple identity and Shuanglin Main Street address', url: 'https://ditu.amap.com/place/B016200M7A' },
+      ],
+    },
+  },
+  {
     name: 'Shanxi',
     slug: 'shanxi',
     type: 'Province',
@@ -2242,6 +2324,7 @@ const mapPins: Record<string, Destination['mapPin']> = {
   shandong: { x: 68, y: 45 },
   taiyuan: { x: 59, y: 43 },
   datong: { x: 60, y: 37 },
+  pingyao: { x: 59, y: 46 },
   shanxi: { x: 59, y: 43 },
   sichuan: { x: 45, y: 65 },
   yunnan: { x: 42, y: 79 },

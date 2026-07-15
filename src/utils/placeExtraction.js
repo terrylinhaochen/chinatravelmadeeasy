@@ -110,6 +110,12 @@ const knownPlaces = [
   { name: 'Huayan Temple scenic-area entrance', localName: '华严寺景区入口', city: 'Datong', category: 'See', aliases: ['huayan temple scenic-area entrance', 'huayan temple scenic area entrance', 'huayan temple entrance', '华严寺景区入口'] },
   { name: 'Shanhua Temple', localName: '善化寺', city: 'Datong', category: 'See', aliases: ['shanhua temple', '善化寺'] },
   { name: 'Hengshan Visitor Center for Hanging Temple', localName: '恒山游客中心（悬空寺换乘）', city: 'Datong', category: 'Move', aliases: ['hengshan visitor center for hanging temple', 'hengshan visitor center', 'hanging temple transfer', '恒山游客中心（悬空寺换乘）', '恒山游客中心', '悬空寺换乘'] },
+  { name: 'Pingyao Ancient City Railway Station', localName: '平遥古城站', city: 'Pingyao', category: 'Move', aliases: ['pingyao ancient city railway station', 'pingyao ancient city station', 'pingyao high-speed railway station', '平遥古城站'] },
+  { name: 'Pingyao Ancient City South Gate at Yingxun Gate', localName: '平遥古城南门（迎薰门）', city: 'Pingyao', category: 'See', aliases: ['pingyao ancient city south gate at yingxun gate', 'pingyao ancient city south gate', 'yingxun gate', '平遥古城南门（迎薰门）', '平遥古城南门', '迎薰门'] },
+  { name: 'Rishengchang Former Bank', localName: '日昇昌票号', city: 'Pingyao', category: 'See', aliases: ['rishengchang former bank', 'rishengchang draft bank', 'rishengchang', '日昇昌票号', '日升昌票号'] },
+  { name: 'Pingyao County Government Office Museum', localName: '平遥县衙博物馆', city: 'Pingyao', category: 'See', aliases: ['pingyao county government office museum', 'pingyao county government office', 'pingyao county yamen', '平遥县衙博物馆', '平遥县衙'] },
+  { name: 'Shuanglin Temple', localName: '双林寺', city: 'Pingyao', category: 'See', aliases: ['shuanglin temple', '双林寺'] },
+  { name: 'Zhenguo Temple', localName: '镇国寺', city: 'Pingyao', category: 'See', aliases: ['zhenguo temple', 'zhen guo temple', '镇国寺'] },
   { name: 'Changsha South Railway Station', localName: '长沙南站', city: 'Changsha', category: 'Move', aliases: ['changsha south railway station', 'changsha south station', '长沙南站'] },
   { name: 'Hunan Museum', localName: '湖南博物院', city: 'Changsha', category: 'See', aliases: ['hunan museum', '湖南博物院'] },
   { name: 'Yuelu Academy', localName: '岳麓书院', city: 'Changsha', category: 'See', aliases: ['yuelu academy', '岳麓书院'] },
@@ -328,6 +334,7 @@ function inferCity(text) {
   if (/青岛站|青岛天后宫|青岛德国总督楼旧址博物馆|青岛啤酒博物馆|青岛第一海水浴场|崂山游客服务中心|Qingdao Railway|Qingdao Tianhou|Qingdao German Governor|Tsingtao Brewery Museum|Qingdao First Bathing Beach|Laoshan Scenic Area Visitor Service Center/i.test(text)) return 'Qingdao';
   if (/太原南站|山西博物院|晋祠博物馆|太原北齐壁画博物馆|太原市博物馆|太原市双塔博物馆|永祚寺|Taiyuan South Railway|Shanxi Museum|Jinci Museum|Taiyuan Northern Qi Mural Museum|Taiyuan Museum|Taiyuan Twin Pagoda Museum|Yongzuo Temple/i.test(text)) return 'Taiyuan';
   if (/大同南站|大同市博物馆|云冈石窟游客服务中心|华严寺景区入口|善化寺|恒山游客中心|Datong South Railway|Datong Museum|Yungang Grottoes Visitor Center|Huayan Temple scenic-area entrance|Shanhua Temple|Hengshan Visitor Center/i.test(text)) return 'Datong';
+  if (/平遥古城站|平遥古城南门|迎薰门|日昇昌票号|日升昌票号|平遥县衙|双林寺|镇国寺|Pingyao Ancient City Railway|Pingyao Ancient City South Gate|Yingxun Gate|Rishengchang|Pingyao County Government Office|Shuanglin Temple|Zhenguo Temple/i.test(text)) return 'Pingyao';
   if (/长沙南站|湖南博物院|岳麓书院|橘子洲景区|长沙简牍博物馆|杜甫江阁|Changsha South Railway|Hunan Museum|Yuelu Academy|Orange Isle Scenic Area|Changsha Bamboo Slips Museum|Du Fu Pavilion/i.test(text)) return 'Changsha';
   if (/厦门北站|邮轮中心厦鼓码头|东渡客运码头|三丘田码头|华侨博物院|南普陀寺|厦门园林植物园西大门|Xiamen North Railway|Xiamen International Cruise Center Gulangyu Wharf|Sanqiutian Wharf|Overseas Chinese Museum|Nanputuo Temple|Xiamen Botanical Garden West Gate/i.test(text)) return 'Xiamen';
   if (/福州站|三坊七巷游客中心|福州市林则徐纪念馆|福建博物院|鼓山旅游景区游客中心|鼓山下院|中国船政文化博物馆|Fuzhou Railway Station|Sanfang Qixiang Visitor Center|Lin Zexu Memorial Hall|Fujian Museum|Drum Mountain Visitor Center|China Shipbuilding Culture Museum/i.test(text)) return 'Fuzhou';

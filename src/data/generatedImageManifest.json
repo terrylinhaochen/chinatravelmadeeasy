@@ -1,5 +1,5 @@
 {
-  "prepared_at": "2026-07-15T05:17:17.166Z",
+  "prepared_at": "2026-07-15T05:35:08.941Z",
   "generator": "curated-authentic-photo",
   "model": null,
   "note": "Prepared from authentic source photographs by pipeline/prepare_curated_images.mjs. The pipeline only crops, resizes, and compresses real photos for site performance; it does not use AI image generation or style transfer.",
@@ -453,6 +453,12 @@
       "alt": "Cave 20 and its monumental Buddha at the Yungang Grottoes near Datong",
       "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Cave_20%2C_Yungang_Grottoes.jpg/960px-Cave_20%2C_Yungang_Grottoes.jpg",
       "title": "Cave 20, Yungang Grottoes"
+    },
+    "region:pingyao": {
+      "src": "/images/curated/region-pingyao.jpg",
+      "alt": "Brick rampart and watchtowers along Pingyao city wall",
+      "source": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Pingyao_city_wall.jpg",
+      "title": "Pingyao city wall"
     }
   }
 }
