@@ -5,6 +5,7 @@ import {
   aggregateLocalLensRecords,
   classifyLocalLensEligibility,
   createLocalLensRecord,
+  normalizeLocalLensRecruitmentSource,
   normalizeBaselineSelection,
   seededRank,
   summarizeLocalLensStudy,
@@ -167,6 +168,12 @@ test('primary cohort requires a real trip window, limited destination-language c
   ]);
 });
 
+test('recruitment attribution is anonymous, bounded, and stable', () => {
+  assert.equal(normalizeLocalLensRecruitmentSource(' Reddit / KoreaTravel '), 'reddit-koreatravel');
+  assert.equal(normalizeLocalLensRecruitmentSource(''), 'direct');
+  assert.equal(normalizeLocalLensRecruitmentSource('A'.repeat(100)).length, 64);
+});
+
 function completedRecord({
   sessionId,
   completedAt,
@@ -189,6 +196,7 @@ function completedRecord({
       tripStatus: 'planning-six-months',
       languageComfort: 'none',
       existingStops: ['The Bund', 'Shanghai Museum', 'Jing\'an Temple'],
+      recruitmentSource: 'reddit-travelchina',
     },
     baselineKeptIds: ['north-bund'],
     treatmentDecisions,
@@ -248,6 +256,7 @@ test('pilot aggregation deduplicates sessions and separates attributable novelty
   assert.equal(report.counterfactualNoveltyCount, 1);
   assert.equal(report.counterfactualAmongChangedRate, 1);
   assert.equal(report.averageConfidence, 3.5);
+  assert.deepEqual(report.recruitmentSourceCounts, { 'reddit-travelchina': 2 });
 });
 
 test('pilot aggregation keeps exploratory records but excludes them from the primary outcome', () => {

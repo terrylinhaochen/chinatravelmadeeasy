@@ -102,6 +102,8 @@ export function formatPilotReport(report) {
     .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]));
   const eligibilityReasons = Object.entries(report.eligibilityReasonCounts || {})
     .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]));
+  const recruitmentSources = Object.entries(report.recruitmentSourceCounts || {})
+    .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]));
   const minimumParticipants = report.minimumParticipants || 20;
   const pilotGate = report.eligibleParticipants < minimumParticipants
     ? `Directional only: recruit ${minimumParticipants - report.eligibleParticipants} more eligible participant${minimumParticipants - report.eligibleParticipants === 1 ? '' : 's'} before applying the pilot falsification threshold.`
@@ -138,6 +140,12 @@ export function formatPilotReport(report) {
     ...(eligibilityReasons.length
       ? eligibilityReasons.map(([reason, count]) => `- ${reason}: ${count}`)
       : ['- No structurally valid records were excluded from the primary cohort.']),
+    '',
+    '## Eligible participants by recruitment source',
+    '',
+    ...(recruitmentSources.length
+      ? recruitmentSources.map(([source, count]) => `- ${source}: ${count}`)
+      : ['- No eligible recruitment sources recorded.']),
     '',
     '## Decisions',
     '',

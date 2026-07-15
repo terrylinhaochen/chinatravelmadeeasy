@@ -4,6 +4,16 @@ export const LOCAL_LENS_PRIMARY_TRIP_STATUSES = ['planning-six-months', 'returne
 export const LOCAL_LENS_PRIMARY_LANGUAGE_LEVELS = ['none', 'basic'];
 export const LOCAL_LENS_MIN_EXISTING_STOPS = 3;
 
+export function normalizeLocalLensRecruitmentSource(value) {
+  const normalized = String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 64);
+  return normalized || 'direct';
+}
+
 export function classifyLocalLensEligibility(profile = {}) {
   const reasons = [];
   const tripStatus = String(profile.tripStatus || '');
@@ -163,10 +173,15 @@ export function aggregateLocalLensRecords(records, options = {}) {
   const eligibleParticipants = eligibleRecords.length;
   const ineligibleParticipants = participants - eligibleParticipants;
   const eligibilityReasonCounts = {};
+  const recruitmentSourceCounts = {};
   accepted.filter((record) => !record.eligibility.eligible).forEach((record) => {
     record.eligibility.reasons.forEach((reason) => {
       eligibilityReasonCounts[reason] = (eligibilityReasonCounts[reason] || 0) + 1;
     });
+  });
+  eligibleRecords.forEach((record) => {
+    const source = normalizeLocalLensRecruitmentSource(record.profile?.recruitmentSource);
+    recruitmentSourceCounts[source] = (recruitmentSourceCounts[source] || 0) + 1;
   });
   const decisionTotals = Object.fromEntries(LOCAL_LENS_DECISIONS.map((decision) => [decision, 0]));
   const reasonCounts = {};
@@ -207,6 +222,7 @@ export function aggregateLocalLensRecords(records, options = {}) {
     eligibleParticipants,
     ineligibleParticipants,
     eligibilityReasonCounts,
+    recruitmentSourceCounts,
     changedPlanCount,
     decisionChangeRate: eligibleParticipants ? changedPlanCount / eligibleParticipants : null,
     replaceParticipantRate: eligibleParticipants ? replaceParticipantCount / eligibleParticipants : null,

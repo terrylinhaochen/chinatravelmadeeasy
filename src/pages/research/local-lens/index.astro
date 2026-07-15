@@ -92,7 +92,7 @@ const studies = [
                 <dd class="mt-1 font-semibold">{study.mapProviders}</dd>
               </div>
             </dl>
-            <a href={study.path} class="ds-button ds-button-dark mt-6 self-start">Start {study.city}</a>
+            <a href={study.path} class="ds-button ds-button-dark mt-6 self-start" data-study-link>Start {study.city}</a>
           </article>
         ))}
       </div>
@@ -127,3 +127,17 @@ const studies = [
     </aside>
   </div>
 </Base>
+
+<script>
+  import { normalizeLocalLensRecruitmentSource } from '../../../utils/localLensStudy.js';
+
+  const recruitmentSource = normalizeLocalLensRecruitmentSource(new URLSearchParams(window.location.search).get('campaign'));
+  if (recruitmentSource !== 'direct') {
+    document.querySelectorAll<HTMLAnchorElement>('[data-study-link]').forEach((link) => {
+      const destination = new URL(link.href, window.location.origin);
+      destination.searchParams.set('campaign', recruitmentSource);
+      link.href = destination.toString();
+    });
+  }
+  window.gtag?.('event', 'local_lens_recruitment_hub', { recruitment_source: recruitmentSource });
+</script>

@@ -8,6 +8,8 @@ Applies to: Shanghai Local Lens and Seoul Local Lens
 
 Runnable participant entry: `/research/local-lens/`
 
+Channel shortlist and permission-first outreach copy: [`local-lens-recruitment-shortlist-2026-07-15.md`](./local-lens-recruitment-shortlist-2026-07-15.md)
+
 ## Decision this study must make
 
 Continue investing in local-language discovery only if access to the second source ecosystem causes relevant travelers to add or replace a real stop, and the chosen candidate survives the map-provider handoff.

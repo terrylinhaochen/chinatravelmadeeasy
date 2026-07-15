@@ -293,6 +293,7 @@ const studyData = JSON.stringify({
   import {
     LOCAL_LENS_MAX_BASELINE,
     createLocalLensRecord,
+    normalizeLocalLensRecruitmentSource,
     seededRank,
     summarizeLocalLensStudy,
   } from '../../../utils/localLensStudy.js';
@@ -305,6 +306,7 @@ const studyData = JSON.stringify({
   const localById = new Map((studyData.localLanguageCandidates || []).map((candidate) => [candidate.id, candidate]));
   const sessionKey = 'ctme-local-lens-seoul-session-v2';
   const resultKey = 'ctme-local-lens-seoul-results-v2';
+  const recruitmentSource = normalizeLocalLensRecruitmentSource(new URLSearchParams(window.location.search).get('campaign'));
   let sessionId = localStorage.getItem(sessionKey);
   if (!sessionId) {
     sessionId = globalThis.crypto?.randomUUID?.() || `study-${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -324,6 +326,7 @@ const studyData = JSON.stringify({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     profile = {
+      recruitmentSource,
       tripStatus: String(formData.get('tripStatus') || ''),
       languageComfort: String(formData.get('languageComfort') || ''),
       base: String(formData.get('base') || '').trim(),
@@ -332,6 +335,12 @@ const studyData = JSON.stringify({
       existingStops: String(formData.get('existingStops') || '').split('\n').map((item) => item.trim()).filter(Boolean),
       constraints: String(formData.get('constraints') || '').trim(),
     };
+    const intakeRecord = buildRecord(null);
+    window.gtag?.('event', 'local_lens_started', {
+      destination: 'seoul',
+      primary_cohort_eligible: intakeRecord.eligibility.eligible,
+      recruitment_source: recruitmentSource,
+    });
     showStep('baseline');
   });
 
@@ -391,7 +400,13 @@ const studyData = JSON.stringify({
     currentRecord = buildRecord(feedback);
     persistRecord(currentRecord);
     setStatus('Saved on this device. Your email app has the study result ready to send.');
-    window.gtag?.('event', 'local_lens_feedback', { destination: 'seoul', changed_plan: currentRecord.summary.changedPlan, confidence: feedback.confidence });
+    window.gtag?.('event', 'local_lens_feedback', {
+      destination: 'seoul',
+      changed_plan: currentRecord.summary.changedPlan,
+      confidence: feedback.confidence,
+      primary_cohort_eligible: currentRecord.eligibility.eligible,
+      recruitment_source: recruitmentSource,
+    });
     window.location.href = `mailto:hello@chinatravelmadeeasy.com?subject=${encodeURIComponent('Seoul Local Lens study result')}&body=${encodeURIComponent(formatRecord(currentRecord))}`;
   });
 
@@ -419,9 +434,15 @@ const studyData = JSON.stringify({
     link.remove();
     URL.revokeObjectURL(url);
     setStatus('Structured result downloaded. Send that file with the pilot response.');
+    window.gtag?.('event', 'local_lens_result_downloaded', {
+      destination: 'seoul',
+      primary_cohort_eligible: currentRecord.eligibility.eligible,
+      recruitment_source: recruitmentSource,
+    });
   });
 
   root?.querySelector('[data-reset-study]')?.addEventListener('click', () => {
+    removeCurrentRecord();
     localStorage.removeItem(sessionKey);
     window.location.reload();
   });
@@ -534,7 +555,14 @@ const studyData = JSON.stringify({
 
     currentRecord = buildRecord(null);
     persistRecord(currentRecord);
-    window.gtag?.('event', 'local_lens_completed', { destination: 'seoul', changed_plan: summary.changedPlan, add_count: summary.counts.add, replace_count: summary.counts.replace });
+    window.gtag?.('event', 'local_lens_completed', {
+      destination: 'seoul',
+      changed_plan: summary.changedPlan,
+      add_count: summary.counts.add,
+      replace_count: summary.counts.replace,
+      primary_cohort_eligible: currentRecord.eligibility.eligible,
+      recruitment_source: recruitmentSource,
+    });
   }
 
   function replacementLabel(value) {
@@ -569,6 +597,17 @@ const studyData = JSON.stringify({
     }
   }
 
+  function removeCurrentRecord() {
+    try {
+      const records = JSON.parse(localStorage.getItem(resultKey) || '[]')
+        .filter((item) => item.sessionId !== sessionId);
+      if (records.length) localStorage.setItem(resultKey, JSON.stringify(records));
+      else localStorage.removeItem(resultKey);
+    } catch {
+      localStorage.removeItem(resultKey);
+    }
+  }
+
   function formatRecord(record) {
     const changed = Object.entries(record.treatmentDecisions)
       .filter(([, decision]) => decision === 'add' || decision === 'replace')
@@ -589,6 +628,7 @@ const studyData = JSON.stringify({
       `Trip status: ${record.profile.tripStatus || 'not provided'}`,
       `Korean-app comfort: ${record.profile.languageComfort || 'not provided'}`,
       `Existing stops: ${record.eligibility.existingStopCount}`,
+      `Recruitment source: ${record.profile.recruitmentSource}`,
       `Interests: ${(record.profile.interests || []).join(', ') || 'not provided'}`,
       '', 'Decision-changing ideas:', ...(changed.length ? changed : ['- None']), '',
       `Confidence: ${record.feedback?.confidence || 'not provided'}`,
