@@ -79,7 +79,7 @@ The most important result is therefore not “Chinese recommendations are better
 
 Build a **Local Lens** test for Shanghai before broadening the destination catalog.
 
-The first runnable version is available at `/research/local-lens/shanghai/`. It deliberately hides source-language and ecosystem labels during selection, randomizes candidate order per local session, requires a decision on all ten treatment candidates, records `add`, `replace`, `maybe`, and `not for me` separately, and reveals original names and provenance only after the choice. Results are stored on the participant's device and can be copied or prepared as an email; no response is transmitted without a participant action.
+The first runnable version is available at `/research/local-lens/shanghai/`. It deliberately hides source-language and ecosystem labels during selection, randomizes candidate order per local session, requires a decision on all ten treatment candidates, records `add`, `replace`, `maybe`, and `not for me` separately, and reveals original names and provenance only after the choice. The final form now captures the counterfactual promised by this protocol. Results stay on the participant's device and can be downloaded as structured JSON, copied, or prepared as an email; no response is transmitted without a participant action. Use the [pilot runbook](./local-lens-pilot-runbook.md) to recruit, moderate, collect, and analyze responses without changing the study version mid-pilot.
 
 ### Experience
 

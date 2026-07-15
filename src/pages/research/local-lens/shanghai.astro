@@ -45,7 +45,7 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
           </p>
           <div class="mt-6 rounded-2xl border border-line bg-surface p-5 text-sm leading-relaxed text-soft">
             <p class="font-semibold text-ink">About five minutes</p>
-            <p class="mt-2">No account is required. A study result is saved on this device; nothing is sent unless you choose to prepare an email at the end.</p>
+            <p class="mt-2">No account is required. A study result stays on this device; you can download it or choose to prepare an email at the end.</p>
           </div>
         </div>
 
@@ -212,6 +212,24 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
             </fieldset>
 
             <fieldset class="mt-6">
+              <legend class="text-sm font-semibold">Without the second set, would any of its places have entered your trip?</legend>
+              <div class="mt-3 grid gap-2 sm:grid-cols-2">
+                {[
+                  ['definitely-not', 'Definitely not'],
+                  ['probably-not', 'Probably not'],
+                  ['unsure', 'Unsure'],
+                  ['probably-yes', 'Probably yes'],
+                  ['definitely-yes', 'Definitely yes'],
+                ].map(([value, label]) => (
+                  <label class="study-check">
+                    <input required type="radio" name="counterfactual" value={value} />
+                    <span>{label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset class="mt-6">
               <legend class="text-sm font-semibold">What mattered most?</legend>
               <div class="mt-3 flex flex-wrap gap-2">
                 {['More specific', 'Different area', 'Better reason', 'Easier to picture', 'Too inconvenient', 'No meaningful difference'].map((reason) => (
@@ -231,6 +249,7 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
             <div class="mt-6 flex flex-wrap items-center gap-3">
               <button type="submit" class="ds-button ds-button-dark">Save and prepare email</button>
               <button type="button" class="ds-button ds-button-secondary" data-copy-result>Copy result</button>
+              <button type="button" class="ds-button ds-button-secondary" data-download-result>Download JSON</button>
               <button type="button" class="text-sm font-semibold text-soft hover:text-accent" data-reset-study>Start over</button>
             </div>
             <p class="mt-3 hidden text-sm text-soft" data-feedback-status aria-live="polite"></p>
@@ -348,6 +367,7 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
     const formData = new FormData(event.currentTarget);
     const feedback = {
       confidence: Number(formData.get('confidence')),
+      counterfactual: String(formData.get('counterfactual') || ''),
       reasons: formData.getAll('reasons').map(String),
       note: String(formData.get('note') || '').trim(),
     };
@@ -375,6 +395,24 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
       status.textContent = 'Result saved on this device. Clipboard access was unavailable.';
     }
     status.classList.remove('hidden');
+  });
+
+  root?.querySelector('[data-download-result]')?.addEventListener('click', () => {
+    currentRecord ||= buildRecord(null);
+    persistRecord(currentRecord);
+    const status = root.querySelector('[data-feedback-status]');
+    const blob = new Blob([`${JSON.stringify(currentRecord, null, 2)}\n`], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `ctme-shanghai-local-lens-${currentRecord.sessionId}.json`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    status.textContent = 'Structured result downloaded. Send that file with the pilot response.';
+    status.classList.remove('hidden');
+    window.gtag?.('event', 'local_lens_result_downloaded', { destination: 'shanghai' });
   });
 
   root?.querySelector('[data-reset-study]')?.addEventListener('click', () => {
@@ -569,6 +607,7 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
       ...(changed.length ? changed : ['- None']),
       '',
       `Confidence: ${record.feedback?.confidence || 'not provided'}`,
+      `Would have entered otherwise: ${record.feedback?.counterfactual || 'not provided'}`,
       `Reasons: ${(record.feedback?.reasons || []).join(', ') || 'not provided'}`,
       `Note: ${record.feedback?.note || 'not provided'}`,
     ].join('\n');

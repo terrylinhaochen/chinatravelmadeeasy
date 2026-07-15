@@ -35,6 +35,7 @@
     "test:agent-reach-import": "python3 pipeline/agent_reach_to_crowdlisten.py pipeline/agent-reach-sample.jsonl --out /tmp/china-agent-reach-normalized.json",
     "sample:agent-reach": "python3 pipeline/agent_reach_to_crowdlisten.py pipeline/agent-reach-sample.jsonl --out pipeline/agent-reach-normalized-seeds.json",
     "report:agent-reach-gap": "python3 pipeline/agent_reach_gap_report.py",
+    "study:local-lens:analyze": "node pipeline/analyze_local_lens_results.mjs",
     "import:handoff": "python3 pipeline/import_handoff_from_crowdlisten.py",
     "draft:handoff": "python3 pipeline/materialize_handoff_drafts.py"
   },
