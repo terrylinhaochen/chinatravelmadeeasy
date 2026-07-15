@@ -122,6 +122,12 @@ const knownPlaces = [
   { name: 'Qingjing Mosque', localName: '清净寺', city: 'Quanzhou', category: 'See', aliases: ['qingjing mosque', 'qingjing temple', '清净寺'] },
   { name: 'Quanzhou Maritime Museum', localName: '泉州海外交通史博物馆', city: 'Quanzhou', category: 'See', aliases: ['quanzhou maritime museum', 'quanzhou overseas relations history museum', '泉州海外交通史博物馆', '泉州海交馆'] },
   { name: 'Luoyang Bridge Visitor Center — south end', localName: '洛阳桥游客中心（桥南）', city: 'Quanzhou', category: 'See', aliases: ['luoyang bridge visitor center south end', 'luoyang bridge visitor center', '洛阳桥游客中心（桥南）', '洛阳桥游客中心'] },
+  { name: 'Tianjin Railway Station', localName: '天津站', city: 'Tianjin', category: 'Move', aliases: ['tianjin railway station', 'tianjin station', '天津站'] },
+  { name: 'Wudadao Cultural Tourism Area Visitor Service Center', localName: '天津五大道文化旅游区游客服务中心', city: 'Tianjin', category: 'See', aliases: ['wudadao cultural tourism area visitor service center', 'wudadao visitor service center', 'five great avenues visitor center', '天津五大道文化旅游区游客服务中心', '五大道游客服务中心'] },
+  { name: 'Tianjin Museum', localName: '天津博物馆', city: 'Tianjin', category: 'See', aliases: ['tianjin museum', '天津博物馆'] },
+  { name: 'Tianjin Tianhou Palace', localName: '天津天后宫', city: 'Tianjin', category: 'See', aliases: ['tianjin tianhou palace', 'tianhou palace tianjin', '天津天后宫', '天后宫'] },
+  { name: 'Liang Qichao Memorial Hall', localName: '天津梁启超纪念馆', city: 'Tianjin', category: 'See', aliases: ['liang qichao memorial hall', 'liang qichao memorial museum', '天津梁启超纪念馆', '梁启超纪念馆'] },
+  { name: 'National Maritime Museum of China', localName: '国家海洋博物馆', city: 'Tianjin', category: 'See', aliases: ['national maritime museum of china', 'national maritime museum', '国家海洋博物馆'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -303,6 +309,7 @@ function inferCity(text) {
   if (/厦门北站|邮轮中心厦鼓码头|东渡客运码头|三丘田码头|华侨博物院|南普陀寺|厦门园林植物园西大门|Xiamen North Railway|Xiamen International Cruise Center Gulangyu Wharf|Sanqiutian Wharf|Overseas Chinese Museum|Nanputuo Temple|Xiamen Botanical Garden West Gate/i.test(text)) return 'Xiamen';
   if (/福州站|三坊七巷游客中心|福州市林则徐纪念馆|福建博物院|鼓山旅游景区游客中心|鼓山下院|中国船政文化博物馆|Fuzhou Railway Station|Sanfang Qixiang Visitor Center|Lin Zexu Memorial Hall|Fujian Museum|Drum Mountain Visitor Center|China Shipbuilding Culture Museum/i.test(text)) return 'Fuzhou';
   if (/泉州站|泉州西街游客服务中心|西街游客服务中心|泉州开元寺|清净寺|泉州海外交通史博物馆|泉州海交馆|洛阳桥游客中心|Quanzhou Railway Station|Quanzhou West Street Visitor Service Center|Quanzhou Kaiyuan Temple|Qingjing Mosque|Quanzhou Maritime Museum|Luoyang Bridge Visitor Center/i.test(text)) return 'Quanzhou';
+  if (/天津站|天津五大道文化旅游区游客服务中心|五大道游客服务中心|天津博物馆|天津天后宫|天津梁启超纪念馆|梁启超纪念馆|国家海洋博物馆|Tianjin Railway Station|Wudadao Cultural Tourism Area Visitor Service Center|Tianjin Museum|Tianjin Tianhou Palace|Liang Qichao Memorial Hall|National Maritime Museum of China/i.test(text)) return 'Tianjin';
   return '';
 }
 function inferCategory(text) {

@@ -292,6 +292,24 @@ test('Quanzhou handoff keeps the rail arrival, old-city anchors, museum campus, 
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
 });
 
+test('Tianjin handoff keeps the central arrival, city districts, local museum, and Binhai day separate', () => {
+  const result = extractTripPlaces({
+    title: 'Tianjin field-guide places',
+    text: '1. Tianjin Railway Station / 天津站 — Tianjin — Do not substitute Tianjin West, South, Binhai, or Binhai West.\n2. Wudadao Cultural Tourism Area Visitor Service Center / 天津五大道文化旅游区游客服务中心 — Tianjin — Use the Minyuan Square model before the architecture walk.\n3. Tianjin Museum / 天津博物馆 — Tianjin — Start with the permanent city-history displays, not an adjacent museum.\n4. Tianjin Tianhou Palace / 天津天后宫 — Tianjin — Keep the living Mazu institution separate from the commercial food street around it.\n5. Liang Qichao Memorial Hall / 天津梁启超纪念馆 — Tianjin — Ground the former Italian concession in a specific life and institution.\n6. National Maritime Museum of China / 国家海洋博物馆 — Tianjin — Treat Binhai as a reserved day with a protected return.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '天津站',
+    '天津五大道文化旅游区游客服务中心',
+    '天津博物馆',
+    '天津天后宫',
+    '天津梁启超纪念馆',
+    '国家海洋博物馆',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Tianjin'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
+});
+
 test('Guilin handoff keeps the city context and two classic-cruise ports separate', () => {
   const result = extractTripPlaces({
     title: 'Guilin field-guide places',
