@@ -11,6 +11,8 @@ test("private operational schema stays outside the Data API", async () => {
     "submit-video",
     "video-status",
     "process-video-jobs",
+    "submit-local-research",
+    "local-research-status",
     "save-map-items",
     "place-experience",
     "place-correction",
@@ -20,6 +22,27 @@ test("private operational schema stays outside the Data API", async () => {
   assert.match(config, /schemas\s*=\s*\["public",\s*"graphql_public"\]/);
   assert.doesNotMatch(config, /schemas\s*=\s*\[[^\]]*ctme_private/);
   for (const source of edgeFiles) assert.doesNotMatch(source, /\.schema\(["']ctme_private["']\)/);
+});
+
+test("local-language research is an owner-only queued agent workflow", async () => {
+  const submit = await read("supabase/functions/submit-local-research/index.ts");
+  const status = await read("supabase/functions/local-research-status/index.ts");
+  const migration = await read("supabase/migrations/20260715155655_local_language_research_jobs.sql");
+
+  assert.match(submit, /requireUser\(req\)/);
+  assert.match(submit, /rpc\("register_local_research_job"/);
+  assert.match(status, /from\("local_research_jobs"\)/);
+  assert.match(status, /job\.status !== "completed"[\s\S]+candidates: \[\]/);
+  assert.match(migration, /pgmq\.create\('local_language_research'\)/);
+  assert.match(migration, /alter table public\.local_research_jobs enable row level security/);
+  assert.match(migration, /local_research_jobs_owner_read[\s\S]+auth\.uid\(\)/);
+  assert.match(migration, /local_research_candidates_owner_read[\s\S]+auth\.uid\(\)/);
+  assert.match(migration, /create table ctme_private\.local_research_provider_payloads/);
+  assert.doesNotMatch(submit, /xiaohongshu|dianping/i);
+  for (const fn of ["register_local_research_job", "claim_local_research_jobs", "complete_local_research_job", "fail_local_research_job"]) {
+    assert.match(migration, new RegExp(`revoke all on function public\\.${fn}[^;]+from public, anon, authenticated;`, "s"));
+    assert.match(migration, new RegExp(`grant execute on function public\\.${fn}[^;]+to service_role;`, "s"));
+  }
 });
 
 test("video submission uses atomic service-only RPCs", async () => {

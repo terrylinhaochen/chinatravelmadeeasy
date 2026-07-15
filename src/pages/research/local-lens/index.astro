@@ -1,143 +1,234 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { localLanguageCandidates } from '../../../data/localLensShanghai.js';
-import { seoulLocalLanguageCandidates } from '../../../data/localLensSeoul.js';
+import { buildLocalLensHandoff } from '../../../utils/localLensHandoff.js';
+import {
+  localResearchStages,
+  shanghaiNativeQueries,
+  sourceAdapterState,
+  summarizeAgentResearch,
+} from '../../../utils/localLanguageResearch.js';
 
-const description = 'A blinded participant study testing whether local-language recommendation ecosystems change real Shanghai and Seoul itineraries.';
-const studies = [
-  {
-    city: 'Shanghai',
-    path: '/research/local-lens/shanghai/',
-    body: 'Compare ten familiar recommendations with ten ideas grounded in Chinese-language sources, then inspect the AMap and Apple handoff evidence.',
-    candidateCount: localLanguageCandidates.length,
-    mapProviders: 'AMap + Apple Maps',
-    time: 'About 5 minutes',
-  },
-  {
-    city: 'Seoul',
-    path: '/research/local-lens/seoul/',
-    body: 'Run the same blinded decision test with Korean-language sources and provider handoffs built for the Korean map ecosystem.',
-    candidateCount: seoulLocalLanguageCandidates.length,
-    mapProviders: 'Naver + Kakao + Apple Maps',
-    time: 'About 4 minutes',
-  },
-];
+const description = 'An agent-run workflow that researches a destination in its local language, preserves source evidence, and resolves recommendations to usable map identities.';
+const summary = summarizeAgentResearch(localLanguageCandidates);
+const adapters = sourceAdapterState();
+const featuredCandidates = localLanguageCandidates.filter((candidate) => [
+  'yuyuan-segment',
+  'green-hill',
+  'soap-dream-space',
+  'fuxing-island-park',
+].includes(candidate.id));
 ---
 
-<Base title="Test whether local-language recommendations change a trip" description={description} robots="noindex, nofollow">
+<Base title="Research a city through its local internet" description={description} robots="noindex, nofollow">
   <section class="border-b border-line bg-[linear-gradient(135deg,#f4efe5_0%,#fff_52%,#edf3f1_100%)]">
     <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
       <a href="/discover/" class="text-sm font-semibold text-soft hover:text-accent">← Back to Discover</a>
-      <div class="mt-8 grid gap-8 lg:grid-cols-[1.3fr_.7fr] lg:items-end">
+      <div class="mt-8 grid gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-end">
         <div>
-          <p class="ds-eyebrow">Local Lens participant study</p>
-          <h1 class="mt-3 max-w-4xl text-4xl leading-[1.04] sm:text-6xl">Would a different information ecosystem change your actual trip?</h1>
+          <p class="ds-eyebrow">Local-language research agent</p>
+          <h1 class="mt-3 max-w-4xl text-4xl leading-[1.04] sm:text-6xl">Ask the local internet before you plan.</h1>
           <p class="mt-5 max-w-3xl text-lg leading-relaxed text-soft">
-            Compare two blinded recommendation sets for Shanghai or Seoul. Tell us what you would add or replace before the language and source ecosystem are revealed.
+            Tell us what kind of trip you want. Our backend agent researches in the destination language, explains why each place is recommended, and proves the map identity before asking you to save it.
           </p>
         </div>
-        <div class="rounded-2xl border border-line bg-white/80 p-5 text-sm leading-relaxed text-soft">
-          <p class="font-semibold text-ink">Current evidence status</p>
-          <p class="mt-2">The study design and source comparisons are ready. No participant result has been reported yet, so the product hypothesis remains unvalidated.</p>
+        <div class="rounded-2xl border border-line bg-white/85 p-5 text-sm leading-relaxed text-soft">
+          <p class="font-semibold text-ink">The traveler does not source the recommendations.</p>
+          <p class="mt-2">People judge the researched result and decide whether it changes the trip. Retrieval, translation, evidence capture, and map matching belong to the agent.</p>
         </div>
       </div>
     </div>
   </section>
 
   <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
-    <section class="grid gap-6 lg:grid-cols-[.8fr_1.2fr]" aria-labelledby="eligibility-heading">
+    <section class="grid gap-7 lg:grid-cols-[.75fr_1.25fr]" aria-labelledby="research-request-heading">
       <div>
-        <p class="ds-eyebrow">Who we need</p>
-        <h2 id="eligibility-heading" class="mt-2 text-3xl leading-tight">Bring a real trip draft</h2>
-        <p class="mt-4 leading-relaxed text-soft">Exploratory responses are welcome, but the primary result only counts travelers who meet all three criteria.</p>
+        <p class="ds-eyebrow">Start a research run</p>
+        <h2 id="research-request-heading" class="mt-2 text-3xl leading-tight">What do you want to understand?</h2>
+        <p class="mt-4 leading-relaxed text-soft">A useful request describes the experience and constraints. The agent expands it into native-intent queries for the destination ecosystem.</p>
       </div>
-      <ol class="grid gap-3 sm:grid-cols-3">
-        <li class="rounded-2xl border border-line bg-white p-5">
-          <span class="text-sm font-bold text-accent">01</span>
-          <p class="mt-3 font-semibold">A real trip window</p>
-          <p class="mt-2 text-sm leading-relaxed text-soft">Planning within six months, or returned within the last three.</p>
-        </li>
-        <li class="rounded-2xl border border-line bg-white p-5">
-          <span class="text-sm font-bold text-accent">02</span>
-          <p class="mt-3 font-semibold">An existing draft</p>
-          <p class="mt-2 text-sm leading-relaxed text-soft">At least three places already saved or written down.</p>
-        </li>
-        <li class="rounded-2xl border border-line bg-white p-5">
-          <span class="text-sm font-bold text-accent">03</span>
-          <p class="mt-3 font-semibold">A language gap</p>
-          <p class="mt-2 text-sm leading-relaxed text-soft">Not comfortable searching Chinese or Korean local apps unaided.</p>
-        </li>
+      <form class="ds-panel p-5 sm:p-7" data-local-research-form>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block text-sm font-semibold">
+            Destination
+            <input name="destination" class="ds-input mt-2" value="Shanghai" required minlength="2" maxlength="120" />
+          </label>
+          <label class="block text-sm font-semibold">
+            Research language
+            <select name="destinationLanguage" class="ds-input mt-2" required>
+              <option value="zh-CN" selected>Chinese</option>
+              <option value="ko-KR">Korean</option>
+              <option value="ja-JP">Japanese</option>
+            </select>
+          </label>
+        </div>
+        <label class="mt-5 block text-sm font-semibold">
+          What kind of day are you trying to build?
+          <textarea name="intent" class="ds-input mt-2 min-h-28" required minlength="8" maxlength="500">A walkable neighborhood day with architecture, ordinary food stops, and fewer marquee attractions</textarea>
+        </label>
+        <label class="mt-5 block text-sm font-semibold">
+          Constraints
+          <input name="constraints" class="ds-input mt-2" maxlength="1000" value="No transfer longer than 45 minutes; usable in AMap and Apple Maps" />
+        </label>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <button type="submit" class="ds-button ds-button-dark">Research in the local language</button>
+          <span class="text-xs leading-relaxed text-soft">Fresh runs require sign-in and a connected research worker.</span>
+        </div>
+        <div class="mt-5 hidden rounded-2xl border border-line bg-surface p-4 text-sm leading-relaxed" data-research-status aria-live="polite"></div>
+      </form>
+    </section>
+
+    <section class="mt-16" aria-labelledby="pipeline-heading">
+      <p class="ds-eyebrow">What happens on the backend</p>
+      <h2 id="pipeline-heading" class="mt-2 text-3xl leading-tight">Discovery first. Translation second. Map proof before save.</h2>
+      <ol class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {localResearchStages.map((stage, index) => (
+          <li class="rounded-2xl border border-line bg-white p-5">
+            <span class="text-sm font-bold text-accent">{String(index + 1).padStart(2, '0')}</span>
+            <h3 class="mt-3 text-xl leading-tight">{stage.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-soft">{stage.body}</p>
+          </li>
+        ))}
       </ol>
     </section>
 
-    <section class="mt-14" aria-labelledby="choose-study-heading">
-      <p class="ds-eyebrow">Choose a destination</p>
-      <h2 id="choose-study-heading" class="mt-2 text-3xl leading-tight">Use the city already in your plans</h2>
-      <div class="mt-6 grid gap-5 md:grid-cols-2">
-        {studies.map((study) => (
-          <article class="ds-card flex h-full flex-col p-6 sm:p-7">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <p class="ds-tag">Blinded itinerary test</p>
-              <span class="text-sm font-semibold text-soft">{study.time}</span>
+    <section class="mt-16 grid gap-7 lg:grid-cols-[.7fr_1.3fr]" aria-labelledby="adapter-heading">
+      <div>
+        <p class="ds-eyebrow">Source adapters</p>
+        <h2 id="adapter-heading" class="mt-2 text-3xl leading-tight">Say what was actually searched.</h2>
+        <p class="mt-4 leading-relaxed text-soft">A local-language query and a local platform are different things. The result should never imply Xiaohongshu evidence unless that adapter retrieved it.</p>
+      </div>
+      <div class="grid gap-3">
+        {adapters.map((adapter) => (
+          <article class="rounded-2xl border border-line bg-white p-5 sm:flex sm:items-start sm:justify-between sm:gap-5">
+            <div>
+              <h3 class="font-semibold">{adapter.name}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-soft">{adapter.detail}</p>
             </div>
-            <h3 class="mt-5 text-3xl leading-tight">{study.city}</h3>
-            <p class="mt-3 flex-1 leading-relaxed text-soft">{study.body}</p>
-            <dl class="mt-6 grid grid-cols-2 gap-3 border-t border-line pt-5 text-sm">
-              <div>
-                <dt class="text-soft">Second-set ideas</dt>
-                <dd class="mt-1 font-semibold">{study.candidateCount}</dd>
-              </div>
-              <div>
-                <dt class="text-soft">Map handoff</dt>
-                <dd class="mt-1 font-semibold">{study.mapProviders}</dd>
-              </div>
-            </dl>
-            <a href={study.path} class="ds-button ds-button-dark mt-6 self-start" data-study-link>Start {study.city}</a>
+            <span class:list={['mt-3 inline-flex shrink-0 rounded-full px-3 py-1 text-xs font-bold sm:mt-0', adapter.state === 'reviewed' ? 'bg-success/10 text-success' : 'bg-surface-strong text-soft']}>
+              {adapter.state === 'reviewed' ? 'Available now' : adapter.state === 'not-connected' ? 'Not connected' : 'Planned'}
+            </span>
           </article>
         ))}
       </div>
     </section>
 
-    <section class="mt-14 grid gap-6 rounded-3xl border border-line bg-ink p-6 text-white sm:p-8 lg:grid-cols-[1fr_1fr]" aria-labelledby="evidence-heading">
-      <div>
-        <p class="text-xs font-bold uppercase tracking-[.15em] text-white/60">What counts as evidence</p>
-        <h2 id="evidence-heading" class="mt-3 text-3xl leading-tight">A changed decision, not a positive reaction</h2>
+    <section class="mt-16" id="reviewed-run" aria-labelledby="reviewed-run-heading">
+      <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div>
+          <p class="ds-eyebrow">Reviewed Shanghai run · checked 14 July 2026</p>
+          <h2 id="reviewed-run-heading" class="mt-2 max-w-4xl text-3xl leading-tight sm:text-4xl">A neighborhood walk assembled from Chinese-language sources</h2>
+          <p class="mt-4 max-w-3xl leading-relaxed text-soft">This is a stored research result, not a live Xiaohongshu search. It shows the output contract a fresh backend run must satisfy.</p>
+        </div>
+        <dl class="grid grid-cols-3 gap-2 text-center text-sm">
+          <div class="rounded-xl border border-line bg-white px-4 py-3"><dt class="text-soft">Sources</dt><dd class="mt-1 text-xl font-semibold">{summary.sourceCount}</dd></div>
+          <div class="rounded-xl border border-line bg-white px-4 py-3"><dt class="text-soft">Ideas</dt><dd class="mt-1 text-xl font-semibold">{summary.candidateCount}</dd></div>
+          <div class="rounded-xl border border-line bg-white px-4 py-3"><dt class="text-soft">Auto-save</dt><dd class="mt-1 text-xl font-semibold">{summary.autoSaveCount}</dd></div>
+        </dl>
       </div>
-      <ul class="space-y-3 text-sm leading-relaxed text-white/75">
-        <li><strong class="text-white">Add:</strong> the recommendation earns time in the actual itinerary.</li>
-        <li><strong class="text-white">Replace:</strong> name the stop or activity it displaces.</li>
-        <li><strong class="text-white">Handoff:</strong> after the reveal, check whether the mapped identity is usable in the destination’s map ecosystem.</li>
-      </ul>
+
+      <div class="mt-7 rounded-2xl border border-line bg-ink p-5 text-white sm:p-6">
+        <p class="text-xs font-bold uppercase tracking-[.15em] text-white/60">Native query pack</p>
+        <div class="mt-3 flex flex-wrap gap-2">
+          {shanghaiNativeQueries.map((query) => <span class="rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-sm">{query}</span>)}
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-4">
+        {featuredCandidates.map((candidate, index) => {
+          const handoff = buildLocalLensHandoff(candidate);
+          return (
+            <details class="group rounded-2xl border border-line bg-white" open={index === 0}>
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-5 p-5 sm:p-6">
+                <div>
+                  <p class="ds-tag">{candidate.type} · {candidate.providerMatch.state === 'resolved' ? 'Map identity verified' : 'Map review required'}</p>
+                  <h3 class="mt-3 text-2xl leading-tight">{candidate.name}</h3>
+                  <p class="mt-1 text-base text-soft" lang="zh-CN">{candidate.originalName}</p>
+                  <p class="mt-3 max-w-3xl font-medium leading-relaxed">{candidate.hook}</p>
+                </div>
+                <span class="mt-1 text-2xl text-soft transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+              </summary>
+              <div class="border-t border-line px-5 pb-6 pt-5 sm:px-6">
+                <div class="grid gap-6 lg:grid-cols-[1fr_.8fr]">
+                  <div>
+                    <p class="text-xs font-bold uppercase tracking-[.12em] text-soft">Agent explanation</p>
+                    <p class="mt-2 leading-relaxed">{candidate.detail}</p>
+                    <p class="mt-5 text-xs font-bold uppercase tracking-[.12em] text-soft">Source evidence</p>
+                    <p class="mt-2 text-sm leading-relaxed text-soft">This result comes from {candidate.sourceLabel}; Xiaohongshu is not part of this snapshot.</p>
+                    <a href={candidate.sourceUrl} target="_blank" rel="noopener noreferrer" class="mt-3 inline-flex text-sm font-semibold text-accent hover:text-ink">Open original-language source ↗</a>
+                  </div>
+                  <div class="rounded-xl border border-line bg-surface p-4">
+                    <p class="text-xs font-bold uppercase tracking-[.12em] text-soft">Map decision</p>
+                    <p class="mt-2 font-semibold">{handoff.statusLabel}</p>
+                    <p class="mt-2 text-sm leading-relaxed text-soft">{candidate.providerMatch.note}</p>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                      {handoff.links.map((link) => <a href={link.url} target="_blank" rel="noopener noreferrer" class="ds-button ds-button-secondary text-sm">{link.label}</a>)}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </details>
+          );
+        })}
+      </div>
     </section>
 
-    <section class="mt-14 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center" aria-labelledby="privacy-heading">
+    <section class="mt-16 grid gap-6 rounded-3xl border border-line bg-surface p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center" aria-labelledby="evaluation-heading">
       <div>
-        <p class="ds-eyebrow">Privacy and submission</p>
-        <h2 id="privacy-heading" class="mt-2 text-3xl leading-tight">Nothing is transmitted automatically</h2>
-        <p class="mt-3 max-w-3xl leading-relaxed text-soft">Your result stays in local browser storage. At the end, you may copy it, download structured JSON, or choose to open an email with the result prepared for review.</p>
+        <p class="ds-eyebrow">Then test the result</p>
+        <h2 id="evaluation-heading" class="mt-2 text-3xl leading-tight">Did the agent’s research earn time in the trip?</h2>
+        <p class="mt-3 max-w-3xl leading-relaxed text-soft">Traveler evaluation remains useful downstream: add, replace, reject, or correct a researched recommendation. It is not the discovery engine.</p>
       </div>
-      <a href="mailto:hello@chinatravelmadeeasy.com?subject=Local%20Lens%20moderated%20session" class="ds-button ds-button-secondary whitespace-nowrap">Ask about a moderated session</a>
+      <div class="flex flex-wrap gap-2 lg:justify-end">
+        <a href="/research/local-lens/shanghai/" class="ds-button ds-button-dark">Evaluate Shanghai output</a>
+        <a href="/research/local-lens/seoul/" class="ds-button ds-button-secondary">Evaluate Seoul output</a>
+      </div>
     </section>
-
-    <aside class="mt-14 rounded-3xl border border-line bg-surface p-6 sm:p-8" aria-labelledby="contribute-heading">
-      <p class="ds-eyebrow">Not planning either city?</p>
-      <h2 id="contribute-heading" class="mt-2 text-2xl leading-tight">Contribute a local-language recommendation instead</h2>
-      <p class="mt-3 max-w-3xl leading-relaxed text-soft">Share the original source, the place or route it supports, why a traveler would act on it, and the provider identity if you know it.</p>
-      <a href="/map-import/#contribute" class="mt-5 inline-flex font-semibold text-accent hover:text-ink">Contribute a source →</a>
-    </aside>
   </div>
 </Base>
 
 <script>
-  import { normalizeLocalLensRecruitmentSource } from '../../../utils/localLensStudy.js';
+  import { submitLocalResearch } from '../../../utils/localResearchClient.js';
 
-  const recruitmentSource = normalizeLocalLensRecruitmentSource(new URLSearchParams(window.location.search).get('campaign'));
-  if (recruitmentSource !== 'direct') {
-    document.querySelectorAll<HTMLAnchorElement>('[data-study-link]').forEach((link) => {
-      const destination = new URL(link.href, window.location.origin);
-      destination.searchParams.set('campaign', recruitmentSource);
-      link.href = destination.toString();
-    });
+  const form = document.querySelector('[data-local-research-form]');
+  const status = document.querySelector('[data-research-status]');
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const request = {
+      destination: String(data.get('destination') || '').trim(),
+      destinationLanguage: String(data.get('destinationLanguage') || ''),
+      intent: String(data.get('intent') || '').trim(),
+      constraints: String(data.get('constraints') || '').trim(),
+    };
+    const submitButton = event.currentTarget.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    status.classList.remove('hidden');
+    status.textContent = 'Preparing the native-language research request…';
+    const result = await submitLocalResearch(request);
+    submitButton.disabled = false;
+    if (result.ok) {
+      status.innerHTML = `<strong>Research queued.</strong> Job ${escapeHtml(result.jobId)} is ${escapeHtml(result.status)}${result.cached ? ' (recent result reused)' : ''}.`;
+      return;
+    }
+    if (result.error === 'sign_in_required') {
+      status.innerHTML = '<strong>Sign in to run fresh agent research.</strong> <a class="font-semibold text-accent" href="/profile/">Open your profile →</a>';
+      return;
+    }
+    if (!result.configured) {
+      const isShanghai = request.destination.toLowerCase().includes('shanghai');
+      status.innerHTML = isShanghai
+        ? '<strong>The live research worker is not connected in this local build.</strong> Showing the reviewed Shanghai run below.'
+        : '<strong>The live research worker is not connected in this local build.</strong> The Shanghai result below demonstrates the reviewed output contract; this request was not submitted.';
+      if (isShanghai) document.querySelector('#reviewed-run')?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    status.innerHTML = `<strong>The research request could not be queued.</strong> ${escapeHtml(result.error || 'Please try again.')}`;
+  });
+
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>'"]/g, (character) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;',
+    })[character]);
   }
-  window.gtag?.('event', 'local_lens_recruitment_hub', { recruitment_source: recruitmentSource });
 </script>

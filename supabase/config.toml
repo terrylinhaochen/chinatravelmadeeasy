@@ -441,6 +441,18 @@ verify_jwt = false
 import_map = "./functions/process-video-jobs/deno.json"
 entrypoint = "./functions/process-video-jobs/index.ts"
 
+[functions.submit-local-research]
+enabled = true
+verify_jwt = true
+import_map = "./functions/submit-local-research/deno.json"
+entrypoint = "./functions/submit-local-research/index.ts"
+
+[functions.local-research-status]
+enabled = true
+verify_jwt = true
+import_map = "./functions/local-research-status/deno.json"
+entrypoint = "./functions/local-research-status/index.ts"
+
 [functions.save-map-items]
 enabled = true
 verify_jwt = true

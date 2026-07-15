@@ -77,9 +77,9 @@ The most important result is therefore not “Chinese recommendations are better
 
 ## Product experiment
 
-Build a **Local Lens** test for Shanghai before broadening the destination catalog.
+Build a **Local Lens research agent** for Shanghai before broadening the destination catalog. The agent—not the traveler—retrieves destination-language evidence, translates the recommendation, and resolves the map identity. The blind choice exercise is a downstream evaluation of the agent’s output, not the product’s discovery mechanism.
 
-The first runnable version is available at `/research/local-lens/shanghai/`. It deliberately hides source-language and ecosystem labels during selection, randomizes candidate order per local session, requires a decision on all ten treatment candidates, records `add`, `replace`, `maybe`, and `not for me` separately, and reveals original names and provenance only after the choice. The final form now captures the counterfactual promised by this protocol. Results stay on the participant's device and can be downloaded as structured JSON, copied, or prepared as an email; no response is transmitted without a participant action. Use the [pilot runbook](./local-lens-pilot-runbook.md) to recruit, moderate, collect, and analyze responses without changing the study version mid-pilot.
+The agent request and reviewed result surface is available at `/research/local-lens/`; its backend contract is documented in [local-language-agent-research.md](./local-language-agent-research.md). `/research/local-lens/shanghai/` remains a downstream evaluation: it hides source-language and ecosystem labels during selection, randomizes candidate order per local session, records `add`, `replace`, `maybe`, and `not for me`, and reveals provenance after the choice. Results stay on-device unless the participant deliberately exports them.
 
 ### Experience
 
@@ -129,7 +129,7 @@ Reconsider the wedge if, after controlling for category and distance:
 
 ## Short-term community supply
 
-Until authenticated local-platform retrieval is available, collect evidence rather than asking for generic recommendations.
+Community submission is a fallback for coverage gaps, not the primary discovery workflow. The backend agent should research accessible destination-language sources now and add authenticated local-platform adapters later. A traveler or local contributor may still submit evidence the agent could not access, but the product cannot depend on them to do the search.
 
 The first runnable intake lives at `/map-import/#contribute`, inside the same Add Places workflow travelers already use. It preserves the original source, language, place-versus-route shape, local name, decision-changing reason, optional map link, and sharing consent, then produces a reviewer-ready JSON or email packet. It does not auto-publish or transmit in the background. Use the [contribution runbook](./local-knowledge-contribution-runbook.md) for the record contract, reviewer aggregation command, and initial 20-submission gate.
 
