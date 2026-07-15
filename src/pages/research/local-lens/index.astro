@@ -1,0 +1,129 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { localLanguageCandidates } from '../../../data/localLensShanghai.js';
+import { seoulLocalLanguageCandidates } from '../../../data/localLensSeoul.js';
+
+const description = 'A blinded participant study testing whether local-language recommendation ecosystems change real Shanghai and Seoul itineraries.';
+const studies = [
+  {
+    city: 'Shanghai',
+    path: '/research/local-lens/shanghai/',
+    body: 'Compare ten familiar recommendations with ten ideas grounded in Chinese-language sources, then inspect the AMap and Apple handoff evidence.',
+    candidateCount: localLanguageCandidates.length,
+    mapProviders: 'AMap + Apple Maps',
+    time: 'About 5 minutes',
+  },
+  {
+    city: 'Seoul',
+    path: '/research/local-lens/seoul/',
+    body: 'Run the same blinded decision test with Korean-language sources and provider handoffs built for the Korean map ecosystem.',
+    candidateCount: seoulLocalLanguageCandidates.length,
+    mapProviders: 'Naver + Kakao + Apple Maps',
+    time: 'About 4 minutes',
+  },
+];
+---
+
+<Base title="Test whether local-language recommendations change a trip" description={description} robots="noindex, nofollow">
+  <section class="border-b border-line bg-[linear-gradient(135deg,#f4efe5_0%,#fff_52%,#edf3f1_100%)]">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
+      <a href="/discover/" class="text-sm font-semibold text-soft hover:text-accent">← Back to Discover</a>
+      <div class="mt-8 grid gap-8 lg:grid-cols-[1.3fr_.7fr] lg:items-end">
+        <div>
+          <p class="ds-eyebrow">Local Lens participant study</p>
+          <h1 class="mt-3 max-w-4xl text-4xl leading-[1.04] sm:text-6xl">Would a different information ecosystem change your actual trip?</h1>
+          <p class="mt-5 max-w-3xl text-lg leading-relaxed text-soft">
+            Compare two blinded recommendation sets for Shanghai or Seoul. Tell us what you would add or replace before the language and source ecosystem are revealed.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-line bg-white/80 p-5 text-sm leading-relaxed text-soft">
+          <p class="font-semibold text-ink">Current evidence status</p>
+          <p class="mt-2">The study design and source comparisons are ready. No participant result has been reported yet, so the product hypothesis remains unvalidated.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+    <section class="grid gap-6 lg:grid-cols-[.8fr_1.2fr]" aria-labelledby="eligibility-heading">
+      <div>
+        <p class="ds-eyebrow">Who we need</p>
+        <h2 id="eligibility-heading" class="mt-2 text-3xl leading-tight">Bring a real trip draft</h2>
+        <p class="mt-4 leading-relaxed text-soft">Exploratory responses are welcome, but the primary result only counts travelers who meet all three criteria.</p>
+      </div>
+      <ol class="grid gap-3 sm:grid-cols-3">
+        <li class="rounded-2xl border border-line bg-white p-5">
+          <span class="text-sm font-bold text-accent">01</span>
+          <p class="mt-3 font-semibold">A real trip window</p>
+          <p class="mt-2 text-sm leading-relaxed text-soft">Planning within six months, or returned within the last three.</p>
+        </li>
+        <li class="rounded-2xl border border-line bg-white p-5">
+          <span class="text-sm font-bold text-accent">02</span>
+          <p class="mt-3 font-semibold">An existing draft</p>
+          <p class="mt-2 text-sm leading-relaxed text-soft">At least three places already saved or written down.</p>
+        </li>
+        <li class="rounded-2xl border border-line bg-white p-5">
+          <span class="text-sm font-bold text-accent">03</span>
+          <p class="mt-3 font-semibold">A language gap</p>
+          <p class="mt-2 text-sm leading-relaxed text-soft">Not comfortable searching Chinese or Korean local apps unaided.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="mt-14" aria-labelledby="choose-study-heading">
+      <p class="ds-eyebrow">Choose a destination</p>
+      <h2 id="choose-study-heading" class="mt-2 text-3xl leading-tight">Use the city already in your plans</h2>
+      <div class="mt-6 grid gap-5 md:grid-cols-2">
+        {studies.map((study) => (
+          <article class="ds-card flex h-full flex-col p-6 sm:p-7">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <p class="ds-tag">Blinded itinerary test</p>
+              <span class="text-sm font-semibold text-soft">{study.time}</span>
+            </div>
+            <h3 class="mt-5 text-3xl leading-tight">{study.city}</h3>
+            <p class="mt-3 flex-1 leading-relaxed text-soft">{study.body}</p>
+            <dl class="mt-6 grid grid-cols-2 gap-3 border-t border-line pt-5 text-sm">
+              <div>
+                <dt class="text-soft">Second-set ideas</dt>
+                <dd class="mt-1 font-semibold">{study.candidateCount}</dd>
+              </div>
+              <div>
+                <dt class="text-soft">Map handoff</dt>
+                <dd class="mt-1 font-semibold">{study.mapProviders}</dd>
+              </div>
+            </dl>
+            <a href={study.path} class="ds-button ds-button-dark mt-6 self-start">Start {study.city}</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-14 grid gap-6 rounded-3xl border border-line bg-ink p-6 text-white sm:p-8 lg:grid-cols-[1fr_1fr]" aria-labelledby="evidence-heading">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[.15em] text-white/60">What counts as evidence</p>
+        <h2 id="evidence-heading" class="mt-3 text-3xl leading-tight">A changed decision, not a positive reaction</h2>
+      </div>
+      <ul class="space-y-3 text-sm leading-relaxed text-white/75">
+        <li><strong class="text-white">Add:</strong> the recommendation earns time in the actual itinerary.</li>
+        <li><strong class="text-white">Replace:</strong> name the stop or activity it displaces.</li>
+        <li><strong class="text-white">Handoff:</strong> after the reveal, check whether the mapped identity is usable in the destination’s map ecosystem.</li>
+      </ul>
+    </section>
+
+    <section class="mt-14 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center" aria-labelledby="privacy-heading">
+      <div>
+        <p class="ds-eyebrow">Privacy and submission</p>
+        <h2 id="privacy-heading" class="mt-2 text-3xl leading-tight">Nothing is transmitted automatically</h2>
+        <p class="mt-3 max-w-3xl leading-relaxed text-soft">Your result stays in local browser storage. At the end, you may copy it, download structured JSON, or choose to open an email with the result prepared for review.</p>
+      </div>
+      <a href="mailto:hello@chinatravelmadeeasy.com?subject=Local%20Lens%20moderated%20session" class="ds-button ds-button-secondary whitespace-nowrap">Ask about a moderated session</a>
+    </section>
+
+    <aside class="mt-14 rounded-3xl border border-line bg-surface p-6 sm:p-8" aria-labelledby="contribute-heading">
+      <p class="ds-eyebrow">Not planning either city?</p>
+      <h2 id="contribute-heading" class="mt-2 text-2xl leading-tight">Contribute a local-language recommendation instead</h2>
+      <p class="mt-3 max-w-3xl leading-relaxed text-soft">Share the original source, the place or route it supports, why a traveler would act on it, and the provider identity if you know it.</p>
+      <a href="/map-import/#contribute" class="mt-5 inline-flex font-semibold text-accent hover:text-ink">Contribute a source →</a>
+    </aside>
+  </div>
+</Base>

@@ -13,7 +13,7 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
 >
   <section class="border-b border-line bg-[linear-gradient(135deg,#f4efe5_0%,#fff_58%,#eef3ee_100%)]">
     <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-      <a href="/discover/" class="text-sm font-semibold text-soft hover:text-accent">← Back to Discover</a>
+      <a href="/research/local-lens/" class="text-sm font-semibold text-soft hover:text-accent">← Back to Local Lens</a>
       <div class="mt-8 grid gap-8 lg:grid-cols-[1.35fr_.65fr] lg:items-end">
         <div>
           <p class="ds-eyebrow">Shanghai Local Lens study</p>
@@ -46,11 +46,34 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
           <div class="mt-6 rounded-2xl border border-line bg-surface p-5 text-sm leading-relaxed text-soft">
             <p class="font-semibold text-ink">About five minutes</p>
             <p class="mt-2">No account is required. A study result stays on this device; you can download it or choose to prepare an email at the end.</p>
+            <p class="mt-2">You can explore either way. Primary-cohort results require a real trip draft with at least three existing stops.</p>
           </div>
         </div>
 
         <form class="ds-panel p-5 sm:p-7" data-context-form>
           <div class="grid gap-5 sm:grid-cols-2">
+            <label class="block text-sm font-semibold">
+              Where are you in planning?
+              <select name="tripStatus" class="ds-input mt-2" required>
+                <option value="">Choose one</option>
+                <option value="planning-six-months">Planning a real trip within six months</option>
+                <option value="returned-three-months">Returned within the last three months</option>
+                <option value="general-inspiration">Exploring without a current trip</option>
+              </select>
+            </label>
+            <label class="block text-sm font-semibold">
+              How comfortably can you search Chinese apps?
+              <select name="languageComfort" class="ds-input mt-2" required>
+                <option value="">Choose one</option>
+                <option value="none">Not at all</option>
+                <option value="basic">A little, with translation help</option>
+                <option value="comfortable">Comfortably</option>
+                <option value="fluent">Fluently</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="mt-5 grid gap-5 sm:grid-cols-2">
             <label class="block text-sm font-semibold">
               Where would you stay?
               <input name="base" class="ds-input mt-2" placeholder="For example, Jing’an or near People’s Square" />
@@ -81,6 +104,7 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
           <label class="mt-6 block text-sm font-semibold">
             Stops already in your plan
             <textarea name="existingStops" class="ds-input mt-2 min-h-28" placeholder="One per line — The Bund, Shanghai Museum, a food tour…"></textarea>
+            <span class="mt-2 block text-xs font-normal leading-relaxed text-soft">Enter at least three for the primary study cohort. Exploratory responses are saved separately.</span>
           </label>
 
           <label class="mt-6 block text-sm font-semibold">
@@ -276,8 +300,8 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
   const studyData = JSON.parse(dataNode?.textContent || '{}');
   const baselineById = new Map((studyData.baselineCandidates || []).map((candidate) => [candidate.id, candidate]));
   const localById = new Map((studyData.localLanguageCandidates || []).map((candidate) => [candidate.id, candidate]));
-  const sessionKey = 'ctme-local-lens-shanghai-session-v1';
-  const resultKey = 'ctme-local-lens-results-v1';
+  const sessionKey = 'ctme-local-lens-shanghai-session-v2';
+  const resultKey = 'ctme-local-lens-shanghai-results-v2';
   let sessionId = localStorage.getItem(sessionKey);
   if (!sessionId) {
     sessionId = globalThis.crypto?.randomUUID?.() || `study-${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -297,6 +321,8 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     profile = {
+      tripStatus: String(formData.get('tripStatus') || ''),
+      languageComfort: String(formData.get('languageComfort') || ''),
       base: String(formData.get('base') || '').trim(),
       days: String(formData.get('days') || ''),
       interests: formData.getAll('interests').map(String),
@@ -605,10 +631,16 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
       });
     return [
       `Study: ${record.studyVersion}`,
+      `Destination: ${record.destination}`,
       `Session: ${record.sessionId}`,
+      `Primary cohort eligible: ${record.eligibility.eligible ? 'yes' : 'no'}`,
+      `Eligibility notes: ${record.eligibility.reasons.join(', ') || 'none'}`,
       `Changed plan: ${record.summary.changedPlan ? 'yes' : 'no'}`,
       `Add: ${record.summary.counts.add}; Replace: ${record.summary.counts.replace}; Maybe: ${record.summary.counts.maybe}; Not for me: ${record.summary.counts['not-for-me']}`,
       `Base: ${record.profile.base || 'not provided'}; Days: ${record.profile.days}`,
+      `Trip status: ${record.profile.tripStatus || 'not provided'}`,
+      `Chinese-app comfort: ${record.profile.languageComfort || 'not provided'}`,
+      `Existing stops: ${record.eligibility.existingStopCount}`,
       `Interests: ${(record.profile.interests || []).join(', ') || 'not provided'}`,
       '',
       'Decision-changing places:',

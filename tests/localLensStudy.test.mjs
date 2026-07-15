@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   LOCAL_LENS_MAX_BASELINE,
   aggregateLocalLensRecords,
+  classifyLocalLensEligibility,
   createLocalLensRecord,
   normalizeBaselineSelection,
   seededRank,
@@ -144,6 +145,28 @@ test('study records preserve the blind choice and produce stable seeded ordering
   assert.notEqual(seededRank('green-hill', 'abc'), seededRank('green-hill', 'xyz'));
 });
 
+test('primary cohort requires a real trip window, limited destination-language comfort, and an existing draft', () => {
+  const eligible = classifyLocalLensEligibility({
+    tripStatus: 'planning-six-months',
+    languageComfort: 'basic',
+    existingStops: ['The Bund', 'Shanghai Museum', 'Jing\'an Temple'],
+  });
+  const exploratory = classifyLocalLensEligibility({
+    tripStatus: 'general-inspiration',
+    languageComfort: 'fluent',
+    existingStops: ['The Bund'],
+  });
+
+  assert.equal(eligible.eligible, true);
+  assert.deepEqual(eligible.reasons, []);
+  assert.equal(exploratory.eligible, false);
+  assert.deepEqual(exploratory.reasons, [
+    'outside-real-trip-window',
+    'comfortable-in-destination-language',
+    'fewer-than-three-existing-stops',
+  ]);
+});
+
 function completedRecord({
   sessionId,
   completedAt,
@@ -159,7 +182,14 @@ function completedRecord({
     studyVersion: localLensStudyVersion,
     sessionId,
     destination: 'Shanghai',
-    profile: { base: 'Jing\'an', days: '3', interests: ['food'] },
+    profile: {
+      base: 'Jing\'an',
+      days: '3',
+      interests: ['food'],
+      tripStatus: 'planning-six-months',
+      languageComfort: 'none',
+      existingStops: ['The Bund', 'Shanghai Museum', 'Jing\'an Temple'],
+    },
     baselineKeptIds: ['north-bund'],
     treatmentDecisions,
     replaceTargets: replaceId ? { [replaceId]: 'set-one:north-bund' } : {},
@@ -208,6 +238,8 @@ test('pilot aggregation deduplicates sessions and separates attributable novelty
   });
 
   assert.equal(report.participants, 2);
+  assert.equal(report.eligibleParticipants, 2);
+  assert.equal(report.ineligibleParticipants, 0);
   assert.equal(report.duplicatesDropped, 1);
   assert.equal(report.changedPlanCount, 1);
   assert.equal(report.decisionChangeRate, 0.5);
@@ -216,4 +248,35 @@ test('pilot aggregation deduplicates sessions and separates attributable novelty
   assert.equal(report.counterfactualNoveltyCount, 1);
   assert.equal(report.counterfactualAmongChangedRate, 1);
   assert.equal(report.averageConfidence, 3.5);
+});
+
+test('pilot aggregation keeps exploratory records but excludes them from the primary outcome', () => {
+  const eligible = completedRecord({
+    sessionId: 'eligible-participant',
+    completedAt: '2026-07-14T15:00:00.000Z',
+    addId: 'green-hill',
+  });
+  const exploratory = completedRecord({
+    sessionId: 'exploratory-participant',
+    completedAt: '2026-07-14T16:00:00.000Z',
+  });
+  exploratory.profile.tripStatus = 'general-inspiration';
+  exploratory.profile.languageComfort = 'fluent';
+  exploratory.profile.existingStops = [];
+
+  const report = aggregateLocalLensRecords([eligible, exploratory], {
+    studyVersion: localLensStudyVersion,
+    treatmentIds: localLanguageCandidates.map((candidate) => candidate.id),
+  });
+
+  assert.equal(report.participants, 2);
+  assert.equal(report.eligibleParticipants, 1);
+  assert.equal(report.ineligibleParticipants, 1);
+  assert.equal(report.changedPlanCount, 1);
+  assert.equal(report.decisionChangeRate, 1);
+  assert.deepEqual(report.eligibilityReasonCounts, {
+    'outside-real-trip-window': 1,
+    'comfortable-in-destination-language': 1,
+    'fewer-than-three-existing-stops': 1,
+  });
 });

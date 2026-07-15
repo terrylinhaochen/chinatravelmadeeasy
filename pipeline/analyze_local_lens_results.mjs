@@ -69,7 +69,7 @@ if (study && !files.length) {
   };
   if (jsonOutput) console.log(JSON.stringify(output, null, 2));
   else console.log(formatPilotReport(output));
-  if (!report.participants) process.exitCode = 2;
+  if (!report.eligibleParticipants) process.exitCode = 2;
 }
 
 export function parseResultFile(source) {
@@ -100,9 +100,11 @@ export function formatPilotReport(report) {
     .slice(0, 10);
   const reasons = Object.entries(report.reasonCounts)
     .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]));
+  const eligibilityReasons = Object.entries(report.eligibilityReasonCounts || {})
+    .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]));
   const minimumParticipants = report.minimumParticipants || 20;
-  const pilotGate = report.participants < minimumParticipants
-    ? `Directional only: recruit ${minimumParticipants - report.participants} more participant${minimumParticipants - report.participants === 1 ? '' : 's'} before applying the pilot falsification threshold.`
+  const pilotGate = report.eligibleParticipants < minimumParticipants
+    ? `Directional only: recruit ${minimumParticipants - report.eligibleParticipants} more eligible participant${minimumParticipants - report.eligibleParticipants === 1 ? '' : 's'} before applying the pilot falsification threshold.`
     : report.decisionChangeRate < 0.15
       ? 'Falsification signal: decision-change rate is below the pre-registered 15% threshold.'
       : 'The decision-change rate clears the pre-registered 15% pilot threshold; provider handoff and later-trip behavior still need validation.';
@@ -111,23 +113,31 @@ export function formatPilotReport(report) {
     `# ${report.destination || 'Local Lens'} pilot readout`,
     '',
     `Study version: ${report.studyVersion}`,
-    `Valid participants: ${report.participants}`,
+    `Structurally valid records: ${report.participants}`,
+    `Eligible primary-cohort participants: ${report.eligibleParticipants}`,
+    `Exploratory or ineligible records: ${report.ineligibleParticipants}`,
     `Rejected records: ${report.rejected.length}`,
     `Duplicate sessions removed: ${report.duplicatesDropped}`,
     `Unreadable files: ${report.parseErrors.length}`,
     '',
     '## Primary evidence',
     '',
-    `- Decision-change rate: ${pct(report.decisionChangeRate)} (${report.changedPlanCount}/${report.participants})`,
+    `- Decision-change rate: ${pct(report.decisionChangeRate)} (${report.changedPlanCount}/${report.eligibleParticipants})`,
     `- Replacement participant rate: ${pct(report.replaceParticipantRate)}`,
     `- Mean add-or-replace decisions per participant: ${decimal(report.meanDecisionChangingPlaces)}`,
-    `- Counterfactual novelty rate: ${pct(report.counterfactualNoveltyRate)} (${report.counterfactualNoveltyCount}/${report.participants})`,
+    `- Counterfactual novelty rate: ${pct(report.counterfactualNoveltyRate)} (${report.counterfactualNoveltyCount}/${report.eligibleParticipants})`,
     `- Counterfactual novelty among changed plans: ${pct(report.counterfactualAmongChangedRate)}`,
     `- Average revised-plan confidence: ${decimal(report.averageConfidence)} / 5`,
     '',
     `**Interpretation gate:** ${pilotGate}`,
     '',
     '“Counterfactual novelty” counts only participants who both changed the plan and said the place probably or definitely would not have entered without the second set.',
+    '',
+    '## Primary-cohort exclusions',
+    '',
+    ...(eligibilityReasons.length
+      ? eligibilityReasons.map(([reason, count]) => `- ${reason}: ${count}`)
+      : ['- No structurally valid records were excluded from the primary cohort.']),
     '',
     '## Decisions',
     '',

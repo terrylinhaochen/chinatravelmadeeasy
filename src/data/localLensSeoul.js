@@ -1,4 +1,4 @@
-export const localLensSeoulStudyVersion = 'seoul-local-lens-v1';
+export const localLensSeoulStudyVersion = 'seoul-local-lens-v2';
 
 export const seoulBaselineCandidates = [
   {

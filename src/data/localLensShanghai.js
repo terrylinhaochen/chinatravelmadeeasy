@@ -1,4 +1,4 @@
-export const localLensStudyVersion = 'shanghai-local-lens-v1';
+export const localLensStudyVersion = 'shanghai-local-lens-v2';
 
 export const baselineCandidates = [
   {

@@ -1,5 +1,27 @@
 export const LOCAL_LENS_MAX_BASELINE = 5;
 export const LOCAL_LENS_DECISIONS = ['add', 'replace', 'maybe', 'not-for-me'];
+export const LOCAL_LENS_PRIMARY_TRIP_STATUSES = ['planning-six-months', 'returned-three-months'];
+export const LOCAL_LENS_PRIMARY_LANGUAGE_LEVELS = ['none', 'basic'];
+export const LOCAL_LENS_MIN_EXISTING_STOPS = 3;
+
+export function classifyLocalLensEligibility(profile = {}) {
+  const reasons = [];
+  const tripStatus = String(profile.tripStatus || '');
+  const languageComfort = String(profile.languageComfort || '');
+  const existingStopCount = Array.isArray(profile.existingStops) ? profile.existingStops.length : 0;
+
+  if (!LOCAL_LENS_PRIMARY_TRIP_STATUSES.includes(tripStatus)) reasons.push('outside-real-trip-window');
+  if (!LOCAL_LENS_PRIMARY_LANGUAGE_LEVELS.includes(languageComfort)) reasons.push('comfortable-in-destination-language');
+  if (existingStopCount < LOCAL_LENS_MIN_EXISTING_STOPS) reasons.push('fewer-than-three-existing-stops');
+
+  return {
+    eligible: reasons.length === 0,
+    reasons,
+    tripStatus,
+    languageComfort,
+    existingStopCount,
+  };
+}
 
 export function seededRank(value, seed) {
   const input = `${seed}:${value}`;
@@ -48,11 +70,13 @@ export function summarizeLocalLensStudy({ baselineKeptIds = [], treatmentDecisio
 
 export function createLocalLensRecord(input, now = new Date()) {
   const summary = summarizeLocalLensStudy(input);
+  const profile = input.profile || {};
   return {
     studyVersion: input.studyVersion,
     sessionId: input.sessionId,
     destination: String(input.destination || 'Shanghai'),
-    profile: input.profile,
+    profile,
+    eligibility: classifyLocalLensEligibility(profile),
     baselineKeptIds: [...new Set(input.baselineKeptIds || [])],
     treatmentDecisions: { ...(input.treatmentDecisions || {}) },
     replaceTargets: { ...(input.replaceTargets || {}) },
@@ -100,7 +124,12 @@ export function validateLocalLensRecord(record, {
     if (unknown.length) errors.push(`unknown treatment candidates: ${unknown.join(', ')}`);
   }
 
-  return { valid: errors.length === 0, errors, summary };
+  return {
+    valid: errors.length === 0,
+    errors,
+    summary,
+    eligibility: classifyLocalLensEligibility(record.profile || {}),
+  };
 }
 
 export function aggregateLocalLensRecords(records, options = {}) {
@@ -118,7 +147,11 @@ export function aggregateLocalLensRecords(records, options = {}) {
     const existing = latestBySession.get(record.sessionId);
     if (!existing || Date.parse(record.completedAt) > Date.parse(existing.completedAt)) {
       if (existing) duplicatesDropped += 1;
-      latestBySession.set(record.sessionId, { ...record, summary: validation.summary });
+      latestBySession.set(record.sessionId, {
+        ...record,
+        summary: validation.summary,
+        eligibility: validation.eligibility,
+      });
     } else {
       duplicatesDropped += 1;
     }
@@ -126,6 +159,15 @@ export function aggregateLocalLensRecords(records, options = {}) {
 
   const accepted = [...latestBySession.values()];
   const participants = accepted.length;
+  const eligibleRecords = accepted.filter((record) => record.eligibility.eligible);
+  const eligibleParticipants = eligibleRecords.length;
+  const ineligibleParticipants = participants - eligibleParticipants;
+  const eligibilityReasonCounts = {};
+  accepted.filter((record) => !record.eligibility.eligible).forEach((record) => {
+    record.eligibility.reasons.forEach((reason) => {
+      eligibilityReasonCounts[reason] = (eligibilityReasonCounts[reason] || 0) + 1;
+    });
+  });
   const decisionTotals = Object.fromEntries(LOCAL_LENS_DECISIONS.map((decision) => [decision, 0]));
   const reasonCounts = {};
   const candidateCounts = Object.fromEntries((options.treatmentIds || []).map((id) => [id, {
@@ -139,7 +181,7 @@ export function aggregateLocalLensRecords(records, options = {}) {
   let counterfactualNoveltyCount = 0;
   const confidenceValues = [];
 
-  accepted.forEach((record) => {
+  eligibleRecords.forEach((record) => {
     if (record.summary.changedPlan) changedPlanCount += 1;
     if (record.summary.counts.replace > 0) replaceParticipantCount += 1;
     LOCAL_LENS_DECISIONS.forEach((decision) => {
@@ -162,12 +204,15 @@ export function aggregateLocalLensRecords(records, options = {}) {
   const totalDecisionChanges = decisionTotals.add + decisionTotals.replace;
   return {
     participants,
+    eligibleParticipants,
+    ineligibleParticipants,
+    eligibilityReasonCounts,
     changedPlanCount,
-    decisionChangeRate: participants ? changedPlanCount / participants : null,
-    replaceParticipantRate: participants ? replaceParticipantCount / participants : null,
-    meanDecisionChangingPlaces: participants ? totalDecisionChanges / participants : null,
+    decisionChangeRate: eligibleParticipants ? changedPlanCount / eligibleParticipants : null,
+    replaceParticipantRate: eligibleParticipants ? replaceParticipantCount / eligibleParticipants : null,
+    meanDecisionChangingPlaces: eligibleParticipants ? totalDecisionChanges / eligibleParticipants : null,
     counterfactualNoveltyCount,
-    counterfactualNoveltyRate: participants ? counterfactualNoveltyCount / participants : null,
+    counterfactualNoveltyRate: eligibleParticipants ? counterfactualNoveltyCount / eligibleParticipants : null,
     counterfactualAmongChangedRate: changedPlanCount ? counterfactualNoveltyCount / changedPlanCount : null,
     averageConfidence: confidenceValues.length
       ? confidenceValues.reduce((sum, value) => sum + value, 0) / confidenceValues.length
@@ -178,5 +223,6 @@ export function aggregateLocalLensRecords(records, options = {}) {
     duplicatesDropped,
     rejected,
     acceptedRecords: accepted,
+    eligibleRecords,
   };
 }

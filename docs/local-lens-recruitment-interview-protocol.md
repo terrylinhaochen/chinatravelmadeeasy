@@ -1,10 +1,12 @@
 # Local Lens recruitment and interview protocol
 
-Version: 1.0
+Version: 1.1
 
 Date: 2026-07-15
 
 Applies to: Shanghai Local Lens and Seoul Local Lens
+
+Runnable participant entry: `/research/local-lens/`
 
 ## Decision this study must make
 
@@ -24,6 +26,8 @@ Include participants who:
 - normally use a traveler-facing source such as Google Maps, Apple Maps, Reddit, TikTok, Instagram, a guidebook, or a travel planner.
 
 Track but do not pool fluent readers, residents, and local-app power users. They are valuable expert interviews but answer a different question.
+
+The self-guided v2 intake records trip window, destination-language comfort, and existing-stop count before revealing recommendations. Structurally complete but ineligible responses remain available as exploratory records and are excluded from the primary denominator by the analyzer.
 
 Targets:
 
@@ -64,7 +68,7 @@ Ask the participant to bring the plan they would use without this study. A scree
 
 Prepare:
 
-- the correct frozen study version;
+- the correct frozen study version (`shanghai-local-lens-v2` or `seoul-local-lens-v2`);
 - a participant ID with no name or email embedded;
 - a screen recorder only if separately consented;
 - the participant log template;
