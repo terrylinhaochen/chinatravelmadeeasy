@@ -9,6 +9,7 @@ import {
   summarizeLocalLensStudy,
   validateLocalLensRecord,
 } from '../src/utils/localLensStudy.js';
+import { buildLocalLensHandoff, validateLocalLensProviderMatch } from '../src/utils/localLensHandoff.js';
 import { baselineCandidates, localLanguageCandidates, localLensStudyVersion } from '../src/data/localLensShanghai.js';
 
 test('Shanghai Local Lens keeps two balanced ten-candidate sets', () => {
@@ -16,6 +17,30 @@ test('Shanghai Local Lens keeps two balanced ten-candidate sets', () => {
   assert.equal(localLanguageCandidates.length, 10);
   assert.equal(new Set([...baselineCandidates, ...localLanguageCandidates].map((item) => item.id)).size, 20);
   assert.ok(localLanguageCandidates.every((item) => item.originalName && item.sourceUrl && item.mapStatus));
+});
+
+test('provider audit applies one rubric to every treatment candidate', () => {
+  const validations = localLanguageCandidates.map(validateLocalLensProviderMatch);
+  assert.equal(validations.every((result) => result.valid), true, validations.flatMap((result) => result.errors).join('; '));
+  assert.equal(localLanguageCandidates.filter((candidate) => candidate.providerMatch.state === 'resolved').length, 1);
+  assert.equal(localLanguageCandidates.filter((candidate) => candidate.providerMatch.state === 'probable').length, 8);
+  assert.equal(localLanguageCandidates.filter((candidate) => candidate.providerMatch.state === 'unresolved').length, 1);
+  assert.equal(localLanguageCandidates.filter((candidate) => candidate.providerMatch.kind === 'route').length, 4);
+});
+
+test('only two-provider place agreement is eligible for automatic save', () => {
+  const fuxing = localLanguageCandidates.find((candidate) => candidate.id === 'fuxing-island-park');
+  const wharf = localLanguageCandidates.find((candidate) => candidate.id === 'qinhuangdao-wharf-station');
+  const route = localLanguageCandidates.find((candidate) => candidate.id === 'yuyuan-segment');
+  const unbounded = localLanguageCandidates.find((candidate) => candidate.id === 'huoshan-road');
+
+  assert.equal(buildLocalLensHandoff(fuxing).canAutoSave, true);
+  assert.match(buildLocalLensHandoff(fuxing).links[0].url, /B00154DQQ7/);
+  assert.equal(buildLocalLensHandoff(wharf).canAutoSave, false);
+  assert.equal(buildLocalLensHandoff(wharf).links.length, 3);
+  assert.match(buildLocalLensHandoff(route).statusLabel, /Bounded route/);
+  assert.equal(buildLocalLensHandoff(route).links.length, 3);
+  assert.match(buildLocalLensHandoff(unbounded).statusLabel, /Not map-ready/);
 });
 test('baseline normalization deduplicates, validates, and caps selections', () => {
   const validIds = baselineCandidates.map((item) => item.id);

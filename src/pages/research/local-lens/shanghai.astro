@@ -269,6 +269,7 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
     seededRank,
     summarizeLocalLensStudy,
   } from '../../../utils/localLensStudy.js';
+  import { buildLocalLensHandoff } from '../../../utils/localLensHandoff.js';
 
   const root = document.querySelector('[data-local-lens-study]');
   const dataNode = document.querySelector('#localLensData');
@@ -525,8 +526,10 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
       localReveal.innerHTML = [...localById.values()].map((candidate) => {
         const decision = treatmentDecisions[candidate.id];
         const target = replaceTargets[candidate.id] ? replacementLabel(replaceTargets[candidate.id]) : '';
-        const amap = `https://uri.amap.com/search?keyword=${encodeURIComponent(candidate.mapQuery)}&city=310000&callnative=1`;
-        const apple = `https://maps.apple.com/?q=${encodeURIComponent(candidate.mapQuery)}`;
+        const handoff = buildLocalLensHandoff(candidate);
+        const evidenceLink = candidate.providerMatch?.evidenceUrl && candidate.providerMatch.evidenceUrl !== candidate.sourceUrl
+          ? `<a href="${candidate.providerMatch.evidenceUrl}" target="_blank" rel="noreferrer">Match evidence ↗</a>`
+          : '';
         return `<article class="study-reveal-card" data-decision-result="${decision}">
           <div class="flex flex-wrap items-center justify-between gap-3">
             <span class="study-decision-label">${decisionLabel(decision)}</span>
@@ -536,11 +539,16 @@ const studyData = JSON.stringify({ baselineCandidates, localLanguageCandidates, 
           <p class="mt-1 font-medium text-accent">${escapeHtml(candidate.originalName)}</p>
           ${target ? `<p class="mt-3 text-sm"><strong>Would replace:</strong> ${escapeHtml(target)}</p>` : ''}
           <p class="mt-3 text-sm leading-relaxed text-soft">${escapeHtml(candidate.sourceLabel)}</p>
-          <p class="mt-2 text-sm leading-relaxed text-soft">${escapeHtml(candidate.mapStatus)}</p>
+          <div class="mt-4 rounded-2xl border border-line bg-surface p-4" data-provider-state="${handoff.statusTone}">
+            <p class="text-sm font-semibold text-ink">${escapeHtml(handoff.statusLabel)}</p>
+            ${candidate.providerMatch?.address ? `<p class="mt-1 text-sm text-soft">${escapeHtml(candidate.providerMatch.address)}</p>` : ''}
+            <p class="mt-2 text-sm leading-relaxed text-soft">${escapeHtml(handoff.note)}</p>
+            ${handoff.canAutoSave ? '<p class="mt-2 text-xs font-bold uppercase tracking-[.12em] text-accent">Two-provider identity agreement</p>' : '<p class="mt-2 text-xs font-bold uppercase tracking-[.12em] text-faint">Preview only · not eligible for automatic save</p>'}
+          </div>
           <div class="mt-4 flex flex-wrap gap-3 text-sm font-semibold">
             <a href="${candidate.sourceUrl}" target="_blank" rel="noreferrer">Source ↗</a>
-            <a href="${amap}" target="_blank" rel="noreferrer">Search AMap ↗</a>
-            <a href="${apple}" target="_blank" rel="noreferrer">Search Apple Maps ↗</a>
+            ${evidenceLink}
+            ${handoff.links.map((link) => `<a href="${link.url}" target="_blank" rel="noreferrer">${escapeHtml(link.label)}</a>`).join('')}
           </div>
         </article>`;
       }).join('');
