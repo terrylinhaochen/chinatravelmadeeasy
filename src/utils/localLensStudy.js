@@ -51,7 +51,7 @@ export function createLocalLensRecord(input, now = new Date()) {
   return {
     studyVersion: input.studyVersion,
     sessionId: input.sessionId,
-    destination: 'Shanghai',
+    destination: String(input.destination || 'Shanghai'),
     profile: input.profile,
     baselineKeptIds: [...new Set(input.baselineKeptIds || [])],
     treatmentDecisions: { ...(input.treatmentDecisions || {}) },

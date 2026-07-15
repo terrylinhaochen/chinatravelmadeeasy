@@ -2,17 +2,48 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { aggregateLocalLensRecords } from '../src/utils/localLensStudy.js';
 import { localLanguageCandidates, localLensStudyVersion } from '../src/data/localLensShanghai.js';
+import {
+  localLensSeoulStudyVersion,
+  seoulLocalLanguageCandidates,
+} from '../src/data/localLensSeoul.js';
 
-const candidateIds = localLanguageCandidates.map((candidate) => candidate.id);
-const candidateNames = new Map(localLanguageCandidates.map((candidate) => [candidate.id, candidate.name]));
 const args = process.argv.slice(2);
 const jsonOutput = args.includes('--json');
-const files = args.filter((argument) => argument !== '--json');
+const studyFlagIndex = args.indexOf('--study');
+const studyKey = studyFlagIndex >= 0 ? args[studyFlagIndex + 1] : 'shanghai';
+const studies = {
+  shanghai: {
+    destination: 'Shanghai',
+    studyVersion: localLensStudyVersion,
+    candidates: localLanguageCandidates,
+    minimumParticipants: 20,
+  },
+  seoul: {
+    destination: 'Seoul',
+    studyVersion: localLensSeoulStudyVersion,
+    candidates: seoulLocalLanguageCandidates,
+    minimumParticipants: 10,
+  },
+};
+const study = studies[studyKey];
+const files = args.filter((argument, index) => (
+  argument !== '--json'
+  && argument !== '--study'
+  && index !== studyFlagIndex + 1
+));
 
-if (!files.length) {
-  console.error('Usage: node pipeline/analyze_local_lens_results.mjs [--json] result.json [more-results.json]');
+if (!study) {
+  console.error(`Unknown study: ${studyKey}. Use shanghai or seoul.`);
   process.exitCode = 1;
-} else {
+}
+
+const candidateIds = study?.candidates.map((candidate) => candidate.id) || [];
+const candidateNames = new Map((study?.candidates || []).map((candidate) => [candidate.id, candidate.name]));
+
+if (study && !files.length) {
+  console.error('Usage: node pipeline/analyze_local_lens_results.mjs [--study shanghai|seoul] [--json] result.json [more-results.json]');
+  process.exitCode = 1;
+} else if (study) {
   const records = [];
   const parseErrors = [];
 
@@ -25,10 +56,17 @@ if (!files.length) {
   }
 
   const report = aggregateLocalLensRecords(records, {
-    studyVersion: localLensStudyVersion,
+    studyVersion: study.studyVersion,
     treatmentIds: candidateIds,
   });
-  const output = { studyVersion: localLensStudyVersion, sourceFiles: files, parseErrors, ...report };
+  const output = {
+    destination: study.destination,
+    studyVersion: study.studyVersion,
+    minimumParticipants: study.minimumParticipants,
+    sourceFiles: files,
+    parseErrors,
+    ...report,
+  };
   if (jsonOutput) console.log(JSON.stringify(output, null, 2));
   else console.log(formatPilotReport(output));
   if (!report.participants) process.exitCode = 2;
@@ -62,14 +100,15 @@ export function formatPilotReport(report) {
     .slice(0, 10);
   const reasons = Object.entries(report.reasonCounts)
     .sort((left, right) => right[1] - left[1] || left[0].localeCompare(right[0]));
-  const pilotGate = report.participants < 20
-    ? `Directional only: recruit ${20 - report.participants} more participant${20 - report.participants === 1 ? '' : 's'} before applying the pilot falsification threshold.`
+  const minimumParticipants = report.minimumParticipants || 20;
+  const pilotGate = report.participants < minimumParticipants
+    ? `Directional only: recruit ${minimumParticipants - report.participants} more participant${minimumParticipants - report.participants === 1 ? '' : 's'} before applying the pilot falsification threshold.`
     : report.decisionChangeRate < 0.15
       ? 'Falsification signal: decision-change rate is below the pre-registered 15% threshold.'
       : 'The decision-change rate clears the pre-registered 15% pilot threshold; provider handoff and later-trip behavior still need validation.';
 
   return [
-    '# Shanghai Local Lens pilot readout',
+    `# ${report.destination || 'Local Lens'} pilot readout`,
     '',
     `Study version: ${report.studyVersion}`,
     `Valid participants: ${report.participants}`,

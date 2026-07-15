@@ -10,7 +10,13 @@ import {
   validateLocalLensRecord,
 } from '../src/utils/localLensStudy.js';
 import { buildLocalLensHandoff, validateLocalLensProviderMatch } from '../src/utils/localLensHandoff.js';
+import { buildKoreaLocalLensHandoff, validateKoreaLocalLensProviderMatch } from '../src/utils/localLensKoreaHandoff.js';
 import { baselineCandidates, localLanguageCandidates, localLensStudyVersion } from '../src/data/localLensShanghai.js';
+import {
+  localLensSeoulStudyVersion,
+  seoulBaselineCandidates,
+  seoulLocalLanguageCandidates,
+} from '../src/data/localLensSeoul.js';
 
 test('Shanghai Local Lens keeps two balanced ten-candidate sets', () => {
   assert.equal(baselineCandidates.length, 10);
@@ -42,6 +48,53 @@ test('only two-provider place agreement is eligible for automatic save', () => {
   assert.equal(buildLocalLensHandoff(route).links.length, 3);
   assert.match(buildLocalLensHandoff(unbounded).statusLabel, /Not map-ready/);
 });
+
+test('Seoul Local Lens keeps two balanced eight-candidate sets', () => {
+  assert.equal(seoulBaselineCandidates.length, 8);
+  assert.equal(seoulLocalLanguageCandidates.length, 8);
+  assert.equal(new Set([...seoulBaselineCandidates, ...seoulLocalLanguageCandidates].map((item) => item.id)).size, 16);
+  assert.ok(seoulLocalLanguageCandidates.every((item) => item.originalName && item.sourceUrl && item.mapStatus));
+});
+
+test('Seoul applies the same provider rubric without pretending search links are resolved identities', () => {
+  const validations = seoulLocalLanguageCandidates.map(validateKoreaLocalLensProviderMatch);
+  assert.equal(validations.every((result) => result.valid), true, validations.flatMap((result) => result.errors).join('; '));
+  assert.equal(seoulLocalLanguageCandidates.filter((candidate) => candidate.providerMatch.state === 'resolved').length, 0);
+  assert.equal(seoulLocalLanguageCandidates.filter((candidate) => candidate.providerMatch.state === 'probable').length, 7);
+  assert.equal(seoulLocalLanguageCandidates.filter((candidate) => candidate.providerMatch.state === 'unresolved').length, 1);
+  assert.equal(seoulLocalLanguageCandidates.filter((candidate) => candidate.providerMatch.kind === 'route').length, 6);
+  assert.ok(seoulLocalLanguageCandidates.every((candidate) => buildKoreaLocalLensHandoff(candidate).canAutoSave === false));
+});
+
+test('Korean provider handoffs use Naver and Kakao rather than a China-specific map', () => {
+  const route = seoulLocalLanguageCandidates.find((candidate) => candidate.id === 'seonyudo-mangwon');
+  const place = seoulLocalLanguageCandidates.find((candidate) => candidate.id === 'mangwoo-history-park');
+  const routeHandoff = buildKoreaLocalLensHandoff(route);
+  const placeHandoff = buildKoreaLocalLensHandoff(place);
+
+  assert.equal(routeHandoff.links.length, 5);
+  assert.match(routeHandoff.links[0].url, /map\.naver\.com/);
+  assert.match(routeHandoff.links[2].url, /map\.kakao\.com/);
+  assert.equal(placeHandoff.links.length, 3);
+  assert.doesNotMatch(placeHandoff.links.map((link) => link.url).join(' '), /amap/i);
+});
+
+test('study records preserve the configured destination for cross-city analysis', () => {
+  const record = createLocalLensRecord({
+    studyVersion: localLensSeoulStudyVersion,
+    destination: 'Seoul',
+    sessionId: 'seoul-study-123',
+    profile: { base: 'Jongno', interests: ['history'] },
+    baselineKeptIds: ['seongbuk-dong'],
+    treatmentDecisions: { 'seongbuk-cultural-walk': 'add' },
+    replaceTargets: {},
+  }, new Date('2026-07-15T12:00:00.000Z'));
+
+  assert.equal(record.destination, 'Seoul');
+  assert.equal(record.studyVersion, localLensSeoulStudyVersion);
+  assert.equal(record.summary.changedPlan, true);
+});
+
 test('baseline normalization deduplicates, validates, and caps selections', () => {
   const validIds = baselineCandidates.map((item) => item.id);
   const selected = normalizeBaselineSelection([...validIds, validIds[0], 'unknown'], validIds);
