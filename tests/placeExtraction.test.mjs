@@ -310,6 +310,27 @@ test('Tianjin handoff keeps the central arrival, city districts, local museum, a
   assert.deepEqual(result.places.map((place) => place.category), ['Move', 'See', 'See', 'See', 'See', 'See']);
 });
 
+test('Macau handoff keeps four non-interchangeable arrivals and two scheduled cultural anchors separate', () => {
+  const result = extractTripPlaces({
+    title: 'Macau field-guide places',
+    text: '1. Border Gate Checkpoint / 關閘邊檢大樓 — Macau — Preserve the Gongbei crossing and its 06:00–01:00 clock.\n2. Hong Kong–Zhuhai–Macao Bridge Macao Port / 港珠澳大橋澳門口岸 — Macau — Keep the Hong Kong and Zhuhai passenger halls distinct.\n3. Outer Harbour Ferry Terminal / 外港客運碼頭 — Macau — Use the peninsula terminal printed on the sailing.\n4. Taipa Ferry Terminal / 氹仔客運碼頭 — Macau — Do not substitute Outer Harbour when the ticket lands at Pac On.\n5. Macao Museum at Mount Fortress / 澳門博物館（大炮台） — Macau — Keep the museum distinct from the fortress, Ruins, and public heritage streets.\n6. Taipa Houses / 龍環葡韻 — Macau — Resolve the five-house complex and each separately scheduled use.',
+  });
+  assert.equal(result.places.length, 6);
+  assert.deepEqual(result.places.map((place) => place.localName), [
+    '關閘邊檢大樓',
+    '港珠澳大橋澳門口岸',
+    '外港客運碼頭',
+    '氹仔客運碼頭',
+    '澳門博物館（大炮台）',
+    '龍環葡韻',
+  ]);
+  assert.deepEqual(result.places.map((place) => place.city), Array(6).fill('Macau'));
+  assert.deepEqual(result.places.map((place) => place.category), ['Move', 'Move', 'Move', 'Move', 'See', 'See']);
+
+  const freeText = extractTripPlaces({ text: 'We arrive at Taipa Ferry Terminal, then visit Taipa Houses and Macao Museum.' });
+  assert.deepEqual(freeText.places.map((place) => place.name), ['Taipa Ferry Terminal', 'Taipa Houses', 'Macao Museum at Mount Fortress']);
+});
+
 test('Guilin handoff keeps the city context and two classic-cruise ports separate', () => {
   const result = extractTripPlaces({
     title: 'Guilin field-guide places',

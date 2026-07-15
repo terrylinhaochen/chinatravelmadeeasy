@@ -128,6 +128,12 @@ const knownPlaces = [
   { name: 'Tianjin Tianhou Palace', localName: '天津天后宫', city: 'Tianjin', category: 'See', aliases: ['tianjin tianhou palace', 'tianhou palace tianjin', '天津天后宫', '天后宫'] },
   { name: 'Liang Qichao Memorial Hall', localName: '天津梁启超纪念馆', city: 'Tianjin', category: 'See', aliases: ['liang qichao memorial hall', 'liang qichao memorial museum', '天津梁启超纪念馆', '梁启超纪念馆'] },
   { name: 'National Maritime Museum of China', localName: '国家海洋博物馆', city: 'Tianjin', category: 'See', aliases: ['national maritime museum of china', 'national maritime museum', '国家海洋博物馆'] },
+  { name: 'Border Gate Checkpoint', localName: '關閘邊檢大樓', city: 'Macau', category: 'Move', aliases: ['border gate checkpoint', 'border gate macau', 'portas do cerco', '關閘邊檢大樓', '关闸边检大楼', '關閘口岸', '关闸口岸'] },
+  { name: 'Hong Kong–Zhuhai–Macao Bridge Macao Port', localName: '港珠澳大橋澳門口岸', city: 'Macau', category: 'Move', aliases: ['hong kong–zhuhai–macao bridge macao port', 'hong kong-zhuhai-macao bridge macao port', 'hzmb macao port', 'hzmb macau port', '港珠澳大橋澳門口岸', '港珠澳大桥澳门口岸'] },
+  { name: 'Outer Harbour Ferry Terminal', localName: '外港客運碼頭', city: 'Macau', category: 'Move', aliases: ['outer harbour ferry terminal', 'outer harbor ferry terminal', 'macau maritime ferry terminal', '外港客運碼頭', '外港客运码头'] },
+  { name: 'Taipa Ferry Terminal', localName: '氹仔客運碼頭', city: 'Macau', category: 'Move', aliases: ['taipa ferry terminal', 'pac on ferry terminal', '氹仔客運碼頭', '氹仔客运码头'] },
+  { name: 'Macao Museum at Mount Fortress', localName: '澳門博物館（大炮台）', city: 'Macau', category: 'See', aliases: ['macao museum at mount fortress', 'macau museum at mount fortress', 'macao museum', 'macau museum', '澳門博物館', '澳门博物馆', '大炮台'] },
+  { name: 'Taipa Houses', localName: '龍環葡韻', city: 'Macau', category: 'See', aliases: ['taipa houses', 'taipa houses museum', 'casas da taipa', '龍環葡韻', '龙环葡韵'] },
   { name: 'Forbidden City', localName: '故宫', city: 'Beijing', category: 'See', aliases: ['forbidden city', '故宫'] },
   { name: 'Temple of Heaven', localName: '天坛', city: 'Beijing', category: 'See', aliases: ['temple of heaven', '天坛'] },
   { name: 'Mutianyu Great Wall', localName: '慕田峪长城', city: 'Beijing', category: 'See', aliases: ['mutianyu', '慕田峪'] },
@@ -310,6 +316,7 @@ function inferCity(text) {
   if (/福州站|三坊七巷游客中心|福州市林则徐纪念馆|福建博物院|鼓山旅游景区游客中心|鼓山下院|中国船政文化博物馆|Fuzhou Railway Station|Sanfang Qixiang Visitor Center|Lin Zexu Memorial Hall|Fujian Museum|Drum Mountain Visitor Center|China Shipbuilding Culture Museum/i.test(text)) return 'Fuzhou';
   if (/泉州站|泉州西街游客服务中心|西街游客服务中心|泉州开元寺|清净寺|泉州海外交通史博物馆|泉州海交馆|洛阳桥游客中心|Quanzhou Railway Station|Quanzhou West Street Visitor Service Center|Quanzhou Kaiyuan Temple|Qingjing Mosque|Quanzhou Maritime Museum|Luoyang Bridge Visitor Center/i.test(text)) return 'Quanzhou';
   if (/天津站|天津五大道文化旅游区游客服务中心|五大道游客服务中心|天津博物馆|天津天后宫|天津梁启超纪念馆|梁启超纪念馆|国家海洋博物馆|Tianjin Railway Station|Wudadao Cultural Tourism Area Visitor Service Center|Tianjin Museum|Tianjin Tianhou Palace|Liang Qichao Memorial Hall|National Maritime Museum of China/i.test(text)) return 'Tianjin';
+  if (/澳門|澳门|Macau|Macao|Portas do Cerco|關閘邊檢大樓|关闸边检大楼|港珠澳大橋澳門口岸|港珠澳大桥澳门口岸|外港客運碼頭|外港客运码头|氹仔客運碼頭|氹仔客运码头|龍環葡韻|龙环葡韵/i.test(text)) return 'Macau';
   return '';
 }
 function inferCategory(text) {

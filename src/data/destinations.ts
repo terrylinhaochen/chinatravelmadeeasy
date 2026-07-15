@@ -1956,10 +1956,82 @@ const destinationRecords: Omit<Destination, 'image' | 'mapPin'>[] = [
     name: 'Macau',
     slug: 'macau',
     type: 'Special administrative region',
-    summary: 'Easy add-on for food, history, and transit',
-    why: 'Macau is a compact add-on from Hong Kong or Guangdong, strongest for food, old streets, and a simple cross-border planning question.',
-    guideIds: ['china-visa-free-2026', 'street-food-night-markets', 'china-pre-departure-checklist', 'alipay-wechat-pay-foreign-cards'],
-    mapQuery: 'Macau',
+    summary: 'A compact cross-border port city where the exact checkpoint, ferry terminal, heritage component, and island district determine whether the plan works',
+    why: 'Macau rewards a two-day reading of maritime trade, Chinese and Portuguese institutions, peninsula neighborhoods, Taipa, and modern resort infrastructure—but only after the arrival port and return contract are resolved precisely.',
+    featured: true,
+    guideIds: ['china-visa-free-2026', 'neighborhoods-beyond-landmarks', 'didi-metro-getting-around', 'china-attraction-tickets-reservations', 'street-food-night-markets', 'alipay-wechat-pay-foreign-cards'],
+    mapQuery: '澳門',
+    editorial: {
+      dek: 'Macau is small enough to cross in an afternoon and complicated enough to strand a careless itinerary. The peninsula, Taipa, Cotai, Coloane, two ferry terminals, several land checkpoints, and the Hong Kong–Zhuhai–Macao Bridge create different arrival and return contracts. The rewarding trip reads a trading port across living Chinese and Portuguese institutions, then uses exact bilingual identities to keep every border, museum, house, restaurant, and resort venue honest.',
+      sections: [
+        {
+          title: 'Read a port city, not a heritage-and-casino split screen',
+          body: 'UNESCO defines the Historic Centre as a route of 22 principal buildings and public spaces whose value comes from their urban relationships, living traditions, and long role in maritime exchange—not from pastel façades alone. The peninsula’s temples, churches, charitable institutions, civic squares, fortifications, trading streets, and Inner Harbour belong to one evolving port-city system. Taipa, Cotai, and Coloane add village fabric, reclaimed land, airport and ferry infrastructure, and resort districts; they are not one interchangeable “islands” pin.',
+        },
+        {
+          title: 'Arrival: save the checkpoint printed on the ticket',
+          body: '關閘邊檢大樓 serves the Gongbei crossing and currently operates 06:00–01:00; it is not the 24-hour Qingmao or Hengqin arrangement. 港珠澳大橋澳門口岸 has separate Hong Kong–Macao and Zhuhai–Macao passenger halls with different hours. Ferry tickets may terminate at 外港客運碼頭 on the peninsula or 氹仔客運碼頭 beside Pac On, the airport, and Cotai. Keep the original travel document, visa or entry eligibility, terminal name, sailing or coach, final local transfer, and return buffer together. Resident e-channel or QR announcements do not automatically apply to a foreign visitor.',
+        },
+        {
+          title: 'Give Macau two days and two geographic arguments',
+          body: 'Use the first full day for the peninsula: establish the city at Macao Museum and Mount Fortress, descend through the Ruins of St Paul’s and the connected heritage streets, and continue beyond Senado Square toward the southern route only as energy and opening hours allow. Give the second day to Taipa’s houses and village-scale streets, then choose either a specific Cotai institution or event, or a slower Coloane extension. A rushed day trip can support one peninsula route; it cannot truthfully complete the peninsula, Taipa, Cotai interiors, and Coloane.',
+        },
+        {
+          title: 'Day one: walk the historic route in a legible direction',
+          body: 'Begin at 澳門博物館 inside the Mount Fortress complex so trade, domestic life, religion, craft, and the territory’s changing urban form precede the photo stops. The fortress garden, museum galleries, Ruins façade, crypt, Na Tcha Temple, surviving city-wall section, Company of Jesus Square, churches, shops, and Senado Square are adjacent but separately named places. Continue south only with a chosen endpoint—Lilau, Mandarin’s House, or A-Ma Temple—rather than accumulating every UNESCO component. Public streets remain the route when an interior is closed.',
+        },
+        {
+          title: 'Treat every interior as its own schedule',
+          body: 'Macao Museum currently opens 10:00–18:00, closes Monday outside public holidays, and has its own admission and special-weather rules. Mount Fortress gardens, the Ruins façade, the crypt, Holy House of Mercy museum, churches, and civic interiors follow different schedules; even neighboring rooms may close on different weekdays. Save the venue-level Chinese identity and current notice with the pin. “Historic Centre open” proves only that public space remains accessible, not that every museum or chapel is admitting visitors.',
+        },
+        {
+          title: 'Day two: let Taipa explain the reclaimed city around it',
+          body: 'Use 龍環葡韻 as the fixed cultural anchor: five 1921 residences now have distinct museum, exhibition, creative, nostalgic, reception, and restaurant uses. The current public galleries are free, normally open 10:00–19:00, and close Monday, while the restaurant keeps separate hours. Walk toward Taipa Village with the old shoreline and wetland edge in mind, then decide whether Cotai is useful for a named exhibition, performance, hotel, or meal. A resort property, tower, lobby, theatre, shop, restaurant, and shuttle stop can occupy one complex while requiring different entrances and access rules.',
+        },
+        {
+          title: 'Stay on the side of the trip that matters after dinner',
+          body: 'A peninsula base around the central or NAPE districts shortens heritage mornings, older neighborhood walks, and access to Outer Harbour. Taipa or Cotai makes more sense for the airport, Taipa Ferry Terminal, an arena event, or a resort-specific stay, but a free shuttle should be treated as a dated service attached to a property—not the city’s transit backbone. Before booking, resolve the Chinese and Portuguese hotel name, tower, public entrance, taxi drop-off, and late return rather than relying on a familiar English brand.',
+        },
+        {
+          title: 'Use buses as the default and keep a cash recovery path',
+          body: 'Public buses connect the peninsula, Taipa, and Coloane; the standard cash fare is currently MOP6 with exact change, while approved stored-value cards have separate discounted fares and transfer rules. LRT serves parts of Taipa, Cotai, Seac Pai Van, and Hengqin, but it does not replace the peninsula bus network. Macao’s official currency is the pataca, payment acceptance and foreign-wallet eligibility vary by merchant and account, and the return journey may cross into a different payment system. Carry a modest MOP fallback and do not assume a mainland-only or Hong Kong-only setup completes the whole trip.',
+        },
+        {
+          title: 'Make short video prove the branch, room, and date',
+          body: 'An egg tart, pork-chop bun, Macanese dish, casino lobby, rooftop, installation, or performance is an experience lead until the source proves the exact storefront or property, branch, floor or entrance, public-access conditions, and date. Keep the caption, creator context, visible signs, transcript, and current provider identity together. Do not turn a dish into the most famous bakery, a skyline into the nearest hotel, or an event clip into a permanent attraction. A negative first-person report is useful when it preserves when, where, and what actually failed.',
+        },
+        {
+          title: 'Build recovery around border clocks, Mondays, and typhoons',
+          body: 'Protect the final sailing, coach, flight, or checkpoint window before adding another district. Monday closures can remove Macao Museum and Taipa Houses at once, while public heritage streets support a reduced route. From May through November, tropical-cyclone and storm-surge warnings can change ferry, bridge, museum, event, and public-transport operations; at Signal No. 8 or above, official guidance is to remain in a safe place and public transport may be suspended. Drop Coloane or a Cotai interior before risking the border, and never use a normal timetable as a severe-weather promise.',
+        },
+      ],
+      quickFacts: [
+        { label: 'Useful minimum', value: 'Two full days: peninsula heritage and one Taipa–Cotai–Coloane argument' },
+        { label: 'Best first base', value: 'Peninsula for heritage and older neighborhoods; Taipa or Cotai for a named airport, ferry, arena, or resort need' },
+        { label: 'Arrival rule', value: 'Border Gate, HZMB Macao Port, Outer Harbour, and Taipa Ferry Terminal are four different handoffs' },
+        { label: 'Transport default', value: 'Bus for the full city; LRT where its actual line fits; exact MOP cash as the recovery option' },
+        { label: 'Interior rule', value: 'Every museum, chapel, house, gallery, restaurant, and resort venue keeps its own schedule and entrance' },
+        { label: 'Video-to-map rule', value: 'Resolve the branch, tower, room, entrance, access condition, and date before saving a venue pin' },
+      ],
+      checkedAt: '2026-07-14',
+      sources: [
+        { title: 'Macao immigration: current checkpoint identities, entry rules, and round-the-clock exceptions', url: 'https://www.gov.mo/en/services/ps-1474/faqs/' },
+        { title: 'Macao government: current land-checkpoint hours and ferry-terminal route identities', url: 'https://www.cdqq.gov.mo/en/home-coming/living/transportation/' },
+        { title: 'Macao Tourism: ports of entry and Border Gate hours', url: 'https://www.macaotourism.gov.mo/en/travelessential/before-you-travel/ports-of-entry' },
+        { title: 'Macao Tourism: current ferry operators and terminal-specific routes', url: 'https://www.macaotourism.gov.mo/en/travelessential/before-you-travel/travelling-to-macao' },
+        { title: 'Macao government: current tourist-information counters at five distinct visitor arrivals', url: 'https://www.gov.mo/en/services/ps-1657/ps-1657a/' },
+        { title: 'UNESCO: Historic Centre of Macao as a 22-component port-city route', url: 'https://whc.unesco.org/en/list/1110/' },
+        { title: 'Macao World Heritage: official component-site directory', url: 'https://www.wh.mo/en/content/site/' },
+        { title: 'Macao World Heritage: Mount Fortress and Macao Museum identities and hours', url: 'https://www.wh.mo/en/site/detail/21' },
+        { title: 'Macao Museum: current hours, admission, address, and special-weather arrangements', url: 'https://www.macaumuseum.gov.mo/en/visit/access' },
+        { title: 'Cultural Affairs Bureau: Taipa Houses identities, address, hours, and admission', url: 'https://www.macauculture.gov.mo/en/housesmuseum' },
+        { title: 'Macao transport bureau: current bus fares and stored-value transfer rules', url: 'https://www.dsat.gov.mo/dsat/subpage.aspx?a_id=1612338099' },
+        { title: 'Macao Tourism: buses, Macau Pass, and LRT roles', url: 'https://www.macaotourism.gov.mo/en/travelessential/before-you-travel/local-transportation' },
+        { title: 'Macao Tourism: pataca, card, and visitor-wallet information', url: 'https://www.macaotourism.gov.mo/en/article/before-you-travel/practical-info' },
+        { title: 'Macao Tourism: tropical-cyclone and storm-surge visitor guidance', url: 'https://www.macaotourism.gov.mo/en/travelessential/useful-info/what-you-need-to-know-about-typhoon-season' },
+        { title: 'Macao government: Signal No. 8 visitor safety and public-transport suspension', url: 'https://www.gov.mo/en/news/369306/' },
+      ],
+    },
   },
 ];
 

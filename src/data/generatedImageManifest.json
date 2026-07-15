@@ -396,9 +396,9 @@
     },
     "region:macau": {
       "src": "/images/curated/region-macau.jpg",
-      "alt": "Ruins of Saint Paul's in Macau",
-      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg/3840px-%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg",
-      "title": "Ruins of Saint Paul's"
+      "alt": "The stone façade and staircase of the Ruins of St Paul’s in Macao",
+      "source": "https://commons.wikimedia.org/wiki/File:%E5%A4%A7%E4%B8%89%E5%B7%B4%E7%89%8C%E5%9D%8A.jpg",
+      "title": "Ruins of St Paul’s, Macao"
     },
     "region:nanjing": {
       "src": "/images/curated/region-nanjing.jpg",
