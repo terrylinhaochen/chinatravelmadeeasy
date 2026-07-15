@@ -16,6 +16,10 @@ const mapFaqs = [
     q: 'Can I share or remix saved pins?',
     a: 'Yes. Mark each candidate Keep, Maybe, or Drop, add the hard constraints, then copy a handoff link. The recipient reopens the evidence, decisions, reasons, and constraints as their own editable version.',
   },
+  {
+    q: 'How do I contribute a local-language recommendation?',
+    a: 'Expand Contribute local knowledge, preserve the original name and evidence, choose place or route, and add a public source or map link when available. The page prepares a private review packet; it does not publish or transmit the contribution automatically.',
+  },
 ];
 const jsonLd = [
   {
@@ -88,6 +92,105 @@ const jsonLd = [
       <p id="sourceText" class="ds-tag mt-3 hidden"></p>
       <p id="statusText" class="ds-card mt-4 hidden p-3 text-sm leading-relaxed text-soft"></p>
     </div>
+
+    <details id="contribute" class="ds-card mt-5 overflow-hidden" data-contribution-details>
+      <summary class="cursor-pointer list-none p-5 sm:p-6">
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <p class="ds-eyebrow">Contribute local knowledge</p>
+            <h2 class="mt-2 text-2xl font-bold">Share the original evidence—not just a recommendation</h2>
+            <p class="mt-2 max-w-3xl text-sm leading-relaxed text-soft">Add a local-language post, map link, caption, or route with enough context for a reviewer to translate and resolve it without guessing.</p>
+          </div>
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line text-xl" aria-hidden="true">+</span>
+        </div>
+      </summary>
+
+      <div class="border-t border-line p-5 sm:p-6">
+        <div class="grid gap-8 lg:grid-cols-[.7fr_1.3fr]">
+          <div>
+            <p class="text-sm leading-relaxed text-soft">A useful contribution preserves the local wording, says why it belongs in a trip, and admits when the map identity is missing. It does not need to be polished or translated.</p>
+            <ol class="mt-5 grid gap-3 text-sm text-soft">
+              <li class="rounded-2xl border border-line p-4"><strong class="block text-ink">1. Preserve the source</strong>Public link or pasted original-language evidence.</li>
+              <li class="rounded-2xl border border-line p-4"><strong class="block text-ink">2. Preserve the shape</strong>Say whether it is one place, a bounded route, or still unclear.</li>
+              <li class="rounded-2xl border border-line p-4"><strong class="block text-ink">3. Let review do the rest</strong>Translation, provider matching, duplication, and publication remain pending.</li>
+            </ol>
+          </div>
+
+          <form class="ds-panel p-5 sm:p-6" data-contribution-form>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="text-sm font-semibold">City or destination<input required name="city" maxlength="100" class="ds-input mt-2" placeholder="Shanghai, Seoul, Osaka…" /></label>
+              <label class="text-sm font-semibold">Source language<input required name="sourceLanguage" maxlength="40" class="ds-input mt-2" placeholder="Chinese, Korean, Japanese…" /></label>
+              <label class="text-sm font-semibold">Source ecosystem
+                <select required name="sourcePlatform" class="ds-input mt-2">
+                  <option value="">Choose one</option>
+                  <option value="xiaohongshu">Xiaohongshu</option>
+                  <option value="dianping">Dianping</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="tiktok">TikTok</option>
+                  <option value="local-map">Local map</option>
+                  <option value="local-publication">Local publication or guide</option>
+                  <option value="personal-knowledge">Personal local knowledge</option>
+                  <option value="other">Other</option>
+                </select>
+              </label>
+              <label class="text-sm font-semibold">What is it?
+                <select required name="kind" class="ds-input mt-2" data-contribution-kind>
+                  <option value="place">One place or venue</option>
+                  <option value="route">A bounded walk or route</option>
+                  <option value="unclear">Not sure yet</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="mt-4 block text-sm font-semibold">Original place or route name<input required name="originalName" maxlength="160" class="ds-input mt-2" placeholder="Keep the original script when possible" /></label>
+
+            <div class="mt-4 hidden grid gap-4 sm:grid-cols-2" data-route-fields>
+              <label class="text-sm font-semibold">Route start<input name="routeStart" maxlength="160" class="ds-input mt-2" placeholder="Named entrance or intersection" /></label>
+              <label class="text-sm font-semibold">Route end<input name="routeEnd" maxlength="160" class="ds-input mt-2" placeholder="Named exit or final stop" /></label>
+            </div>
+
+            <div class="mt-4 grid gap-4 sm:grid-cols-2">
+              <label class="text-sm font-semibold">Public source link <span class="font-normal text-faint">if available</span><input name="sourceUrl" type="url" class="ds-input mt-2" placeholder="https://…" /></label>
+              <label class="text-sm font-semibold">Local map share link <span class="font-normal text-faint">optional</span><input name="localMapUrl" type="url" class="ds-input mt-2" placeholder="AMap, Apple, Baidu, Google…" /></label>
+            </div>
+
+            <label class="mt-4 block text-sm font-semibold">Original caption, quote, or screenshot OCR<textarea name="evidenceText" maxlength="2000" class="ds-input mt-2 min-h-32" placeholder="Paste the relevant local-language wording. Keep claims and qualifiers intact."></textarea></label>
+            <label class="mt-4 block text-sm font-semibold">Why might this change a traveler’s plan?<textarea required name="whyItMatters" maxlength="500" class="ds-input mt-2 min-h-24" placeholder="The concrete reason, tradeoff, warning, route role, or experience—not ‘hidden gem.’"></textarea></label>
+
+            <label class="mt-4 block text-sm font-semibold">Your relationship to this evidence
+              <select name="personalContext" class="ds-input mt-2">
+                <option value="source-only">I found the source</option>
+                <option value="planning">I am considering it for a trip</option>
+                <option value="visited">I went here</option>
+                <option value="local">I know this place locally</option>
+              </select>
+            </label>
+
+            <label class="mt-5 flex items-start gap-3 text-sm leading-relaxed text-soft">
+              <input required name="rightsConsent" type="checkbox" class="mt-1" />
+              <span>I can share this link or short evidence excerpt for review. I understand it will not publish automatically and may be corrected, merged, or rejected.</span>
+            </label>
+
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <button type="submit" class="ds-button ds-button-dark">Prepare contribution</button>
+              <p class="hidden text-sm text-soft" data-contribution-status aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+
+        <section class="mt-6 hidden rounded-3xl border border-line bg-surface p-5 sm:p-6" data-contribution-result aria-labelledby="contribution-result-heading">
+          <p class="ds-eyebrow">Review packet ready</p>
+          <h3 id="contribution-result-heading" class="mt-2 text-2xl font-bold" data-contribution-title></h3>
+          <p class="mt-2 max-w-3xl text-sm leading-relaxed text-soft">The record is saved on this device only. Download it or prepare an email to send it for human review.</p>
+          <ul class="mt-5 grid gap-2 sm:grid-cols-2" data-contribution-checklist></ul>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <button type="button" class="ds-button ds-button-dark" data-contribution-email>Prepare review email</button>
+            <button type="button" class="ds-button ds-button-secondary" data-contribution-download>Download JSON</button>
+            <button type="button" class="text-sm font-semibold text-soft hover:text-accent" data-contribution-reset>Share another source</button>
+          </div>
+        </section>
+      </div>
+    </details>
   </section>
 
   <section id="resultSection" class="mx-auto hidden max-w-6xl px-4 pb-8 sm:px-6">
@@ -188,6 +291,13 @@ const jsonLd = [
     import { amapUrl, appleMapsUrl, displayName, extractTripPlaces, normalizeSource, sourceFromShareOrLink } from '../utils/placeExtraction.js';
     import { getSavedPinLists, getUser, savePinList } from '../utils/localPrototypeState.js';
     import { createSharedWorkspace, decisionCounts, decodeSharedWorkspace, encodeSharedWorkspace, findWorkspaceConflicts, sequenceKeptPlaces } from '../utils/sharedLocationTask.js';
+    import {
+      canonicalizeContributionUrl,
+      createLocalKnowledgeSubmission,
+      inferContributionPlatform,
+      localKnowledgeReviewChecklist,
+      validateLocalKnowledgeSubmission,
+    } from '../utils/localKnowledgeSubmission.js';
 
     const linkInput = document.querySelector('#linkInput');
     const extractBtn = document.querySelector('#extractBtn');
@@ -214,6 +324,14 @@ const jsonLd = [
     const constraintPace = document.querySelector('#constraintPace');
     const constraintMustDo = document.querySelector('#constraintMustDo');
     const constraintNeeds = document.querySelector('#constraintNeeds');
+    const contributionDetails = document.querySelector('[data-contribution-details]');
+    const contributionForm = document.querySelector('[data-contribution-form]');
+    const contributionKind = document.querySelector('[data-contribution-kind]');
+    const routeFields = document.querySelector('[data-route-fields]');
+    const contributionStatus = document.querySelector('[data-contribution-status]');
+    const contributionResult = document.querySelector('[data-contribution-result]');
+    const contributionTitle = document.querySelector('[data-contribution-title]');
+    const contributionChecklist = document.querySelector('[data-contribution-checklist]');
     const sampleSources = {
       'tiktok-shanghai': {
         collectionName: 'TikTok Shanghai food crawl',
@@ -231,7 +349,9 @@ const jsonLd = [
     let selectedPlaces = [];
     let selectedSource = null;
     let selectedCollectionName = 'China inspiration collection';
+    let currentContribution = null;
     const pendingAuthSaveKey = 'ctme-pending-map-save';
+    const contributionStorageKey = 'ctme-local-knowledge-contributions-v1';
 
     const query = new URLSearchParams(window.location.search);
     const sharedWorkspace = decodeSharedWorkspace(query.get('task'));
@@ -256,6 +376,7 @@ const jsonLd = [
     } else {
       showStage('import');
     }
+    if (window.location.hash === '#contribute' && contributionDetails) contributionDetails.open = true;
 
     extractBtn.addEventListener('click', () => runExtraction(linkInput.value));
     document.querySelectorAll('.sampleBtn').forEach((button) => {
@@ -269,7 +390,149 @@ const jsonLd = [
       input.addEventListener('input', updateWorkspaceOverview);
       input.addEventListener('change', updateWorkspaceOverview);
     });
+    contributionKind?.addEventListener('change', renderContributionShape);
+    contributionForm?.querySelector('[name="sourceUrl"]')?.addEventListener('blur', (event) => {
+      const platform = contributionForm.querySelector('[name="sourcePlatform"]');
+      if (!platform.value) platform.value = inferContributionPlatform(event.currentTarget.value);
+    });
+    contributionForm?.addEventListener('submit', prepareContribution);
+    document.querySelector('[data-contribution-download]')?.addEventListener('click', downloadContribution);
+    document.querySelector('[data-contribution-email]')?.addEventListener('click', emailContribution);
+    document.querySelector('[data-contribution-reset]')?.addEventListener('click', resetContribution);
+    renderContributionShape();
     resumePendingAuthSave();
+
+    function prepareContribution(event) {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+      const rawSourceUrl = String(formData.get('sourceUrl') || '').trim();
+      const rawMapUrl = String(formData.get('localMapUrl') || '').trim();
+      if (rawSourceUrl && !canonicalizeContributionUrl(rawSourceUrl)) {
+        showContributionStatus('Use a public HTTPS source link. Local, private-network, credentialed, and HTTP URLs are not accepted.', true);
+        return;
+      }
+      if (rawMapUrl && !canonicalizeContributionUrl(rawMapUrl)) {
+        showContributionStatus('Use a public HTTPS map link.', true);
+        return;
+      }
+
+      const submission = createLocalKnowledgeSubmission({
+        city: formData.get('city'),
+        sourceLanguage: formData.get('sourceLanguage'),
+        sourcePlatform: formData.get('sourcePlatform'),
+        sourceUrl: rawSourceUrl,
+        kind: formData.get('kind'),
+        originalName: formData.get('originalName'),
+        evidenceText: formData.get('evidenceText'),
+        whyItMatters: formData.get('whyItMatters'),
+        personalContext: formData.get('personalContext'),
+        localMapUrl: rawMapUrl,
+        routeStart: formData.get('routeStart'),
+        routeEnd: formData.get('routeEnd'),
+        rightsConsent: formData.get('rightsConsent') === 'on',
+      });
+      const validation = validateLocalKnowledgeSubmission(submission);
+      if (!validation.valid) {
+        showContributionStatus(validation.errors.join(' · '), true);
+        return;
+      }
+
+      currentContribution = submission;
+      persistContribution(submission);
+      renderContributionResult(submission);
+      showContributionStatus('Review packet prepared and saved on this device. Nothing has been sent.', false);
+      window.gtag?.('event', 'local_knowledge_contribution_prepared', {
+        source_platform: submission.sourcePlatform,
+        source_language: submission.sourceLanguage,
+        contribution_kind: submission.kind,
+        has_map_link: Boolean(submission.localMapUrl),
+      });
+    }
+
+    function renderContributionShape() {
+      const isRoute = contributionKind?.value === 'route';
+      routeFields?.classList.toggle('hidden', !isRoute);
+      routeFields?.querySelectorAll('input').forEach((input) => { input.required = isRoute; });
+    }
+
+    function renderContributionResult(submission) {
+      const review = localKnowledgeReviewChecklist(submission);
+      contributionTitle.textContent = submission.originalName + ' · ' + submission.city;
+      contributionChecklist.innerHTML = review.checks.map((check) =>
+        '<li class="rounded-2xl border border-line bg-white p-3 text-sm"><strong class="text-ink">' + (check.ready ? 'Ready' : 'Needs review') + '</strong><span class="ml-2 text-soft">' + escapeHtml(check.label) + '</span></li>'
+      ).join('');
+      contributionResult.classList.remove('hidden');
+      contributionResult.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function persistContribution(submission) {
+      try {
+        const existing = JSON.parse(localStorage.getItem(contributionStorageKey) || '[]');
+        const records = [submission, ...existing.filter((item) => item.submissionId !== submission.submissionId)].slice(0, 25);
+        localStorage.setItem(contributionStorageKey, JSON.stringify(records));
+      } catch {
+        localStorage.setItem(contributionStorageKey, JSON.stringify([submission]));
+      }
+    }
+
+    function downloadContribution() {
+      if (!currentContribution) return;
+      const blob = new Blob([JSON.stringify(currentContribution, null, 2) + '\n'], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = currentContribution.submissionId + '.json';
+      document.body.append(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showContributionStatus('JSON downloaded. Send that file for review when the email body is too long.', false);
+    }
+
+    function emailContribution() {
+      if (!currentContribution) return;
+      const subject = 'Local knowledge contribution · ' + currentContribution.city + ' · ' + currentContribution.originalName;
+      window.location.href = 'mailto:hello@chinatravelmadeeasy.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(formatContribution(currentContribution));
+    }
+
+    function formatContribution(submission) {
+      return [
+        'Submission: ' + submission.submissionId,
+        'City: ' + submission.city,
+        'Source language: ' + submission.sourceLanguage,
+        'Source ecosystem: ' + submission.sourcePlatform,
+        'Shape: ' + submission.kind,
+        'Original name: ' + submission.originalName,
+        ...(submission.routeStart ? ['Route start: ' + submission.routeStart] : []),
+        ...(submission.routeEnd ? ['Route end: ' + submission.routeEnd] : []),
+        'Source: ' + (submission.sourceUrl || 'not supplied'),
+        'Local map: ' + (submission.localMapUrl || 'not supplied'),
+        'Relationship: ' + (submission.personalContext || 'not supplied'),
+        '',
+        'Why it may change a trip:',
+        submission.whyItMatters,
+        '',
+        'Original evidence:',
+        submission.evidenceText || 'Open the supplied public source.',
+        '',
+        'This record requires translation, provider resolution, duplicate review, and editorial approval before publication.',
+      ].join('\n');
+    }
+
+    function resetContribution() {
+      currentContribution = null;
+      contributionForm.reset();
+      contributionResult.classList.add('hidden');
+      contributionStatus.classList.add('hidden');
+      renderContributionShape();
+      contributionForm.querySelector('[name="city"]')?.focus();
+    }
+
+    function showContributionStatus(message, isError) {
+      contributionStatus.textContent = message;
+      contributionStatus.classList.remove('hidden');
+      contributionStatus.classList.toggle('text-accent', Boolean(isError));
+    }
 
     function runExtraction(input, options = {}) {
       const normalized = typeof input === 'object'

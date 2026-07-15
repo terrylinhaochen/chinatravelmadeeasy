@@ -131,6 +131,8 @@ Reconsider the wedge if, after controlling for category and distance:
 
 Until authenticated local-platform retrieval is available, collect evidence rather than asking for generic recommendations.
 
+The first runnable intake lives at `/map-import/#contribute`, inside the same Add Places workflow travelers already use. It preserves the original source, language, place-versus-route shape, local name, decision-changing reason, optional map link, and sharing consent, then produces a reviewer-ready JSON or email packet. It does not auto-publish or transmit in the background. Use the [contribution runbook](./local-knowledge-contribution-runbook.md) for the record contract, reviewer aggregation command, and initial 20-submission gate.
+
 Accepted submissions:
 
 - a public Xiaohongshu, Dianping, Instagram, or TikTok link;
