@@ -6,6 +6,7 @@ import CommunityVideoRail from '../components/CommunityVideoRail.astro';
 import { destinations } from '../data/destinations';
 import { getGeneratedImage } from '../data/generatedImages';
 import { communityVideos } from '../data/communityVideos';
+import { yangpuLocalUseCollection } from '../data/curatedCollections';
 import { destinationFieldNoteHref, videoCuratedCollectionHref } from '../utils/videoEmbed.js';
 
 const heroImage = getGeneratedImage('home:hero') ?? {
@@ -24,6 +25,8 @@ const homeVideoCache = communityVideos.map((video) => ({
   collectionHref: videoCuratedCollectionHref(video),
 }));
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+const localGuideHref = `/curated/${yangpuLocalUseCollection.owner.slug}/${yangpuLocalUseCollection.pathSlug}/shanghai/`;
+const localGuidePlaces = yangpuLocalUseCollection.places;
 
 const travelModes = [
   {
@@ -115,29 +118,29 @@ const extraEssentialCards = essentialCards.slice(3);
 
 const homeFaqs = [
   {
-    question: 'What can I save?',
+    question: 'What makes these guides local?',
     answer:
-      'Paste a caption, OCR text, a note, or a friend list with place names. The prototype extracts candidates for you to review; it does not fetch a social post or read pixels from an image.',
+      'The research starts with Chinese-language queries and local sources, not a translated English best-of list. Every recommendation keeps the source evidence and states whether it comes from direct resident testimony, corroborated local use, or a weaker proxy.',
   },
   {
     question: 'Who is this for?',
     answer:
-      'It is built for independent travelers and backpackers who already collect pins from social posts, friends, and guides, then need a faster way to make those places usable.',
+      'It is for English-speaking independent travelers who want a more immersive China trip without needing to search, interpret, and reconcile the Chinese internet themselves.',
   },
   {
-    question: 'Can I still use the travel guides?',
+    question: 'How does a local recommendation become usable?',
     answer:
-      'Yes. The guides are there when you need practical context, but the homepage is centered on collecting, cleaning, and saving places.',
+      'We preserve the Chinese place name, explain why the source matters to the trip, and check the provider identity before treating a recommendation as a map-ready pin. Interesting but uncertain places remain clearly marked for review.',
   },
   {
-    question: 'Why not just keep pins in one map app?',
+    question: 'Can I add a tip or video I found?',
     answer:
-      'Travel inspiration comes from too many places: screenshots, captions, shared lists, and different map apps. This keeps the list portable before you choose where to save it.',
+      'Yes. Paste a TikTok or Instagram link, caption, OCR text, or place list. The source becomes evidence for a China field guide; it does not become a trusted recommendation until the place and context are reviewed.',
   },
 ];
 
 const description =
-  'Turn scattered China travel tips into reviewed, map-ready places that keep local names when available.';
+  'Local guides for a more immersive China trip, researched through Chinese-language sources and made practical for English-speaking travelers.';
 
 const jsonLd = [
   {
@@ -169,25 +172,23 @@ const jsonLd = [
 ];
 ---
 
-<Base title="Make China travel tips map-ready" description={description} image={heroImage.src} imageAlt={heroImage.alt} jsonLd={jsonLd}>
+<Base title="Local guides for an immersive China trip" description={description} image={heroImage.src} imageAlt={heroImage.alt} jsonLd={jsonLd}>
   <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12">
     <div class="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
       <div class="min-w-0 max-w-xl">
-        <p class="ds-eyebrow">
-          Save places
-        </p>
+        <p class="ds-eyebrow">Local guides, researched in Chinese</p>
         <h1 class="mt-4 text-4xl leading-[1.02] sm:text-6xl lg:text-7xl">
-          Make China travel tips map-ready.
+          Local guides for a more immersive China trip.
         </h1>
         <p class="mt-5 text-lg leading-relaxed text-soft">
-          Paste the caption or place list. Review the matches, keep the source context, and hand off map-ready places with the Chinese name when we can resolve it.
+          We search China’s local internet, explain why a place matters, and turn the useful findings into English field guides with bilingual map identities.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#save-places" class="ds-button ds-button-primary">
-            Add places
+          <a href={localGuideHref} class="ds-button ds-button-primary">
+            Read a local guide
           </a>
-          <a href="/discover/?intent=places" class="ds-button ds-button-secondary">
-            Explore map-ready tips
+          <a href="/discover/" class="ds-button ds-button-secondary">
+            Explore China
           </a>
         </div>
       </div>
@@ -229,6 +230,32 @@ const jsonLd = [
             <h2 class="mt-4 text-2xl leading-tight group-hover:text-accent">{mode.title}</h2>
             <p class="mt-2 text-sm leading-relaxed text-soft">{mode.body}</p>
           </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14" aria-labelledby="local-guide-heading">
+    <div class="grid gap-6 lg:grid-cols-[.72fr_1.28fr] lg:items-end">
+      <div>
+        <p class="ds-eyebrow">A guide made from local search</p>
+        <h2 id="local-guide-heading" class="mt-2 text-3xl leading-tight sm:text-4xl">What Yangpu residents use on a slow day</h2>
+      </div>
+      <div>
+        <p class="leading-relaxed text-soft">This Shanghai guide begins with Chinese-local reporting, separates direct resident evidence from weaker community signals, and only calls a place map-ready when AMap and Apple agree on its identity.</p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <a href={localGuideHref} class="ds-button ds-button-dark">Read the guide</a>
+          <a href="/research/local-lens/" class="ds-button ds-button-secondary">See how local search works</a>
+        </div>
+      </div>
+    </div>
+    <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {localGuidePlaces.map((place) => (
+        <a href={localGuideHref} class="ds-card-link p-4">
+          <p class="ds-tag">{place.evidenceLabel} · {place.resolutionState === 'resolved' ? 'Map-ready' : 'Needs map review'}</p>
+          <h3 class="mt-3 text-2xl leading-tight">{place.name}</h3>
+          <p class="mt-1 font-semibold text-soft" lang="zh-CN">{place.localName}</p>
+          <p class="mt-3 text-sm leading-relaxed text-soft">{place.localUse}</p>
         </a>
       ))}
     </div>
@@ -334,8 +361,8 @@ const jsonLd = [
     </div>
     <div class="mt-10 border-t border-line pt-10 sm:mt-12 sm:pt-12">
       <CommunityVideoRail
-        heading="What travelers actually did"
-        intro="A harbour race, a skyline at blue hour, or a street twenty floors above another: watch the story first, then keep the places it genuinely identifies."
+        heading="Traveler evidence for the next local guide"
+        intro="A harbour race, a skyline at blue hour, or a street twenty floors above another: the video is evidence. We keep the useful context and resolve only the places it genuinely identifies."
       />
     </div>
     <script id="homeVideoCache" type="application/json" is:inline set:html={JSON.stringify(homeVideoCache).replace(/</g, '\\u003c')}></script>
@@ -438,7 +465,7 @@ const jsonLd = [
   <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
     <div class="border-t border-line pt-8">
       <p class="ds-eyebrow">FAQ</p>
-      <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">Quick answers before you save places</h2>
+      <h2 class="mt-2 text-3xl font-bold leading-tight sm:text-4xl">How the local guides work</h2>
       <div class="mt-6 grid gap-3">
         {homeFaqs.map((item) => (
           <details class="group ds-card p-0">

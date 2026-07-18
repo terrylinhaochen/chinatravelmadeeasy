@@ -1173,5 +1173,4 @@ export const yangpuLocalUseCollection: CuratedCollection = {
 export const curatedCollections: CuratedCollection[] = [
   yangpuLocalUseCollection,
   ...travelerVideoCollections,
-  { ...bennyChanGoodRestaurants, kind: 'imported-map' },
 ];

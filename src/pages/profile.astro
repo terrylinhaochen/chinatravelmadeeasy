@@ -51,7 +51,7 @@ const jsonLd = [
         </p>
         <div class="mt-5 flex flex-wrap gap-2">
           <a href="/map-import/" class="ds-button ds-button-dark">Add places</a>
-          <a href="/curated/" class="ds-button ds-button-secondary">Browse city collections</a>
+          <a href="/curated/" class="ds-button ds-button-secondary">Browse Local Guides</a>
         </div>
       </div>
     </div>
@@ -62,7 +62,7 @@ const jsonLd = [
           <p class="ds-eyebrow">Workspace</p>
           <h2 class="mt-2 text-3xl leading-tight">Saved and collected</h2>
           <p class="mt-2 max-w-2xl text-sm leading-relaxed text-soft">
-            Uploaded lists and collected city maps show up here.
+            Saved Local Guides, traveler field notes, and your own place lists show up here.
           </p>
         </div>
         <div class="flex flex-wrap gap-2">
@@ -168,15 +168,15 @@ const jsonLd = [
     function renderCollected(collections) {
       const target = document.querySelector('[data-profile-collected-lists]');
       if (!collections.length) {
-        target.innerHTML = '<div class="profile-empty-card">Collect a city map from Curated to remix it here.</div>';
+        target.innerHTML = '<div class="profile-empty-card">Save a Local Guide or city field note to keep it here.</div>';
         return;
       }
       target.innerHTML = collections.map((collection) => (
         '<article class="profile-saved-card">' +
-          '<div><p class="ds-tag">' + escapeHtml(collection.owner || collection.source || 'Curated') + '</p>' +
+          '<div><p class="ds-tag">' + escapeHtml(collection.owner || collection.source || 'Local Guide') + '</p>' +
           '<h3 class="mt-1 text-xl leading-tight">' + escapeHtml(collection.title || 'Collected map') + '</h3></div>' +
           '<p class="mt-2 text-sm text-soft">' + Number(collection.placeCount || 0) + ' pin' + (Number(collection.placeCount || 0) === 1 ? '' : 's') + '</p>' +
-          '<a class="mt-3 inline-flex text-sm font-semibold text-ink hover:text-accent" href="' + escapeHtml(collection.href || '/curated/') + '">Open collection</a>' +
+          '<a class="mt-3 inline-flex text-sm font-semibold text-ink hover:text-accent" href="' + escapeHtml(collection.href || '/curated/') + '">Open guide</a>' +
         '</article>'
       )).join('');
     }

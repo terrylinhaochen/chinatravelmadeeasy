@@ -58,7 +58,7 @@ const intentForDestination = (guideIds: string[]) => {
   return [...new Set(['places', ...matched])];
 };
 const description =
-  'Discover China travel tips by intent, then turn destination pins and guide recommendations into bilingual, reviewable map queries.';
+  'Explore local China guides built from Chinese-language research, grounded traveler evidence, and bilingual place identities.';
 const videosForDestination = (slug: string) => communityVideos.filter((video) => video.destinationSlug === slug);
 const videoSearchText = (slug: string) => videosForDestination(slug)
   .flatMap((video) => [
@@ -74,7 +74,7 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Map-ready China travel discovery',
+    name: 'Local China travel guides',
     url: 'https://chinatravelmadeeasy.com/discover/',
     description,
     isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
@@ -82,7 +82,7 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'China destinations and map-ready travel guides',
+    name: 'China destinations and locally researched travel guides',
     numberOfItems: destinations.length + guides.length,
     itemListElement: [
       ...destinations.map((destination, index) => ({
@@ -102,15 +102,15 @@ const jsonLd = [
 ];
 ---
 
-<Base title="Map-ready China travel discovery" description={description} jsonLd={jsonLd}>
+<Base title="Local China travel guides" description={description} jsonLd={jsonLd}>
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
     <div class="grid gap-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
       <div>
-        <p class="ds-eyebrow">Save places</p>
-        <h1 class="mt-2 text-4xl leading-tight sm:text-5xl">Make China travel tips map-ready.</h1>
+        <p class="ds-eyebrow">Local China guides</p>
+        <h1 class="mt-2 text-4xl leading-tight sm:text-5xl">Plan the China trip locals would recognize.</h1>
       </div>
       <p class="text-lg leading-relaxed text-soft">
-        Start with the kind of trip you are building. Then review destinations, guides, and bilingual place matches without losing the source context.
+        Start with the experience you want. Explore places surfaced through Chinese-language research, then keep the local evidence, English context, and bilingual map identity together.
       </p>
     </div>
 
@@ -140,20 +140,20 @@ const jsonLd = [
 
     <aside class="mt-8 grid gap-5 rounded-3xl border border-line bg-white p-5 sm:p-7 lg:grid-cols-[1fr_auto] lg:items-center" aria-labelledby="local-lens-study-heading">
       <div>
-        <p class="ds-eyebrow">Research beyond the English web</p>
-        <h2 id="local-lens-study-heading" class="mt-2 text-2xl leading-tight sm:text-3xl">Ask our agent to research in the destination language</h2>
-        <p class="mt-3 max-w-3xl text-sm leading-relaxed text-soft">The agent searches local-language sources, keeps the original evidence, explains the recommendation, and checks the map identity. You decide what deserves time in the trip.</p>
+        <p class="ds-eyebrow">How the guides are made</p>
+        <h2 id="local-lens-study-heading" class="mt-2 text-2xl leading-tight sm:text-3xl">Search China’s local internet before writing the guide</h2>
+        <p class="mt-3 max-w-3xl text-sm leading-relaxed text-soft">Our agent searches in Chinese, keeps the original evidence, explains why locals use a place, and checks its map identity before presenting it to an English-speaking traveler.</p>
       </div>
       <div class="flex flex-wrap gap-2 lg:justify-end">
-        <a href="/research/local-lens/" class="ds-button ds-button-dark whitespace-nowrap">Research a city</a>
+        <a href="/research/local-lens/" class="ds-button ds-button-dark whitespace-nowrap">See the research method</a>
       </div>
     </aside>
 
     <section class="mt-12" aria-labelledby="map-ready-heading">
       <p class="ds-eyebrow">Places to go</p>
-      <h2 id="map-ready-heading" class="mt-2 text-3xl leading-tight">Choose the story you want the trip to tell</h2>
+      <h2 id="map-ready-heading" class="mt-2 text-3xl leading-tight">Choose where you want to go deeper</h2>
       <p class="mt-3 max-w-3xl leading-relaxed text-soft">
-        Full destination digests combine editorial judgment, grounded traveler media, and bilingual places. Starter briefs remain clearly marked until they meet the same standard.
+        Full destination guides combine local-language research, editorial judgment, grounded traveler media, and bilingual places. Starter briefs remain clearly marked until they meet the same standard.
       </p>
       <div id="discoverDestinations" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {destinations.map((destination) => {
@@ -205,8 +205,8 @@ const jsonLd = [
     </section>
 
     <section class="mt-14 border-t border-line pt-10" aria-labelledby="guide-heading">
-      <p class="ds-eyebrow">Read before you save</p>
-      <h2 id="guide-heading" class="mt-2 text-3xl leading-tight">Guides that prevent a bad pin from becoming a bad plan</h2>
+      <p class="ds-eyebrow">Make the local find usable</p>
+      <h2 id="guide-heading" class="mt-2 text-3xl leading-tight">Practical guides for navigating what you find</h2>
       <div id="discoverGuides" class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {guides.map((guide) => (
           <div
@@ -226,14 +226,14 @@ const jsonLd = [
     </p>
 
     <section class="mt-14 border-t border-line pt-10" aria-labelledby="handoff-heading">
-      <p class="ds-eyebrow">The China-specific layer</p>
-      <h2 id="handoff-heading" class="mt-2 text-3xl leading-tight">How a travel tip becomes usable</h2>
+      <p class="ds-eyebrow">The China-specific method</p>
+      <h2 id="handoff-heading" class="mt-2 text-3xl leading-tight">How local research becomes a usable guide</h2>
       <ol class="mt-6 grid gap-4 md:grid-cols-4">
         {[
-          ['1', 'Capture', 'Paste the caption, OCR text, guide places, or friend list.'],
-          ['2', 'Resolve', 'Match the English mention to a Chinese name, city, and branch.'],
-          ['3', 'Review', 'Keep the evidence; mark weak matches before they become pins.'],
-          ['4', 'Handoff', 'Open a map query, share the city set, or contribute it with consent.'],
+          ['1', 'Search locally', 'Research the experience in Chinese and retrieve the original local evidence.'],
+          ['2', 'Interpret', 'Explain why locals use the place and what transfers to a visitor’s trip.'],
+          ['3', 'Resolve', 'Match the Chinese name, city, branch, and map-provider identity.'],
+          ['4', 'Curate', 'Publish the English field guide and keep uncertain findings visibly under review.'],
         ].map(([step, title, body]) => (
           <li class="ds-card p-5">
             <span class="ds-tag">Step {step}</span>

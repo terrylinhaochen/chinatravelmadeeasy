@@ -8,7 +8,7 @@ import {
 } from '../../data/curatedCollections';
 
 const description =
-  'Chinese-local research, China travel videos, and imported place lists curated into city-level collections with provenance and bilingual identities.';
+  'Local China guides built from Chinese-language research and grounded traveler stories, with source evidence and bilingual place identities attached.';
 
 function collectionHref(collection: (typeof curatedCollections)[number], city?: CuratedCollectionRegionBucket) {
   const owner = collection.owner.slug;
@@ -49,13 +49,12 @@ const cityEditions = curatedCollections
     return (b.count ?? 0) - (a.count ?? 0);
   });
 const guideFilters = ['All', ...Array.from(new Set(cityEditions.map((edition) => edition.guide)))];
-const firstImportedIndex = cityEditions.findIndex((edition) => edition.scope !== 'China');
 
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Curated map collections',
+    name: 'Local China guides',
     url: 'https://chinatravelmadeeasy.com/curated/',
     description,
     isPartOf: { '@type': 'WebSite', url: 'https://chinatravelmadeeasy.com/' },
@@ -63,7 +62,7 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Curated city map editions',
+    name: 'Local China city guides and field notes',
     numberOfItems: cityEditions.length,
     itemListElement: cityEditions.map((edition, index) => ({
       '@type': 'ListItem',
@@ -78,15 +77,15 @@ const jsonLd = [
 ];
 ---
 
-<Base title="Curated" description={description} jsonLd={jsonLd}>
+<Base title="Local China guides" description={description} jsonLd={jsonLd}>
   <section class="ds-section">
-    <p class="ds-eyebrow">Curated</p>
+    <p class="ds-eyebrow">Local guides</p>
     <div class="ds-section-head mt-3">
       <div>
-        <h1 class="ds-section-title">City maps worth remixing</h1>
+        <h1 class="ds-section-title">Go deeper into China.</h1>
       </div>
       <p class="text-lg leading-relaxed text-soft">
-        Start with traveler video evidence resolved into exact China places. Imported maps remain below as provenance examples, split into one city at a time.
+        Start with places surfaced through Chinese-language research and grounded traveler stories. Every guide keeps the local evidence, English context, and bilingual map identity together.
       </p>
     </div>
 
@@ -107,15 +106,8 @@ const jsonLd = [
         <>
         {index === 0 && (
           <div class="border-b border-line pb-3" data-curated-section-heading="China">
-            <p class="ds-eyebrow">China local evidence and traveler stories</p>
-            <h2 class="mt-2 text-3xl leading-tight">Why locals use it, followed by the map identity</h2>
-          </div>
-        )}
-        {index === firstImportedIndex && (
-          <div class="mt-5 border-b border-line pb-3" data-curated-section-heading="Imported archive">
-            <p class="ds-eyebrow">Imported archive</p>
-            <h2 class="mt-2 text-3xl leading-tight">Original uploads, preserved and split by city</h2>
-            <p class="mt-2 max-w-2xl text-sm leading-relaxed text-soft">These prove that a multi-city source remains traceable while each collected edition stays city-specific. They are not China recommendations.</p>
+            <p class="ds-eyebrow">China, researched locally</p>
+            <h2 class="mt-2 text-3xl leading-tight">Why locals use it, translated into a trip you can take</h2>
           </div>
         )}
         <article
