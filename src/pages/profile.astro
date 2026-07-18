@@ -237,18 +237,47 @@ const jsonLd = [
           '&contributionPlatform=' + encodeURIComponent(packet.sourcePlatform || '') +
           '&contributionKind=' + encodeURIComponent(packet.kind || 'place') +
           '#contribute';
+        const reviewSubject = 'Local knowledge contribution · ' + (packet.city || 'China') + ' · ' + (packet.originalName || 'local evidence');
+        const reviewBody = formatLocalEvidencePacket(packet);
+        const reviewHref = 'mailto:hello@chinatravelmadeeasy.com?subject=' + encodeURIComponent(reviewSubject) + '&body=' + encodeURIComponent(reviewBody);
         return '<article class="profile-saved-card">' +
           '<div><p class="ds-tag">' + escapeHtml(sourceCopy) + '</p>' +
           '<h3 class="mt-1 text-xl leading-tight">' + escapeHtml(packet.originalName || 'Local evidence packet') + '</h3></div>' +
           '<p class="mt-2 text-sm text-soft">' + escapeHtml(packet.city || 'City pending') + ' · ' + escapeHtml(reviewCopy) + '</p>' +
+          '<p class="mt-2 rounded-md border border-line bg-white p-2 text-xs font-semibold leading-relaxed text-soft">Saved on this device only. It is not submitted until you send it for review.</p>' +
           (packet.whyItMatters ? '<p class="mt-3 text-sm leading-relaxed text-soft">' + escapeHtml(packet.whyItMatters) + '</p>' : '') +
           '<div class="mt-4 flex flex-wrap gap-3">' +
+            '<a class="text-sm font-semibold text-ink hover:text-accent" href="' + escapeHtml(reviewHref) + '">Send for review</a>' +
             '<a class="text-sm font-semibold text-ink hover:text-accent" href="' + escapeHtml(contributionHref) + '">Add another source like this</a>' +
             (packet.sourceUrl ? '<a class="text-sm font-semibold text-ink hover:text-accent" target="_blank" rel="noopener" href="' + escapeHtml(packet.sourceUrl) + '">Open original source</a>' : '') +
             (packet.localMapUrl ? '<a class="text-sm font-semibold text-ink hover:text-accent" target="_blank" rel="noopener" href="' + escapeHtml(packet.localMapUrl) + '">Open local map</a>' : '') +
           '</div>' +
         '</article>';
       }).join('');
+    }
+
+    function formatLocalEvidencePacket(packet) {
+      return [
+        'Submission: ' + (packet.submissionId || 'local-only'),
+        'City: ' + (packet.city || 'not supplied'),
+        'Source language: ' + (packet.sourceLanguage || 'not supplied'),
+        'Source ecosystem: ' + (packet.sourcePlatform || 'not supplied'),
+        'Shape: ' + (packet.kind || 'not supplied'),
+        'Original name: ' + (packet.originalName || 'not supplied'),
+        ...(packet.routeStart ? ['Route start: ' + packet.routeStart] : []),
+        ...(packet.routeEnd ? ['Route end: ' + packet.routeEnd] : []),
+        'Source: ' + (packet.sourceUrl || 'not supplied'),
+        'Local map: ' + (packet.localMapUrl || 'not supplied'),
+        'Relationship: ' + (packet.personalContext || 'not supplied'),
+        '',
+        'Why it may change a trip:',
+        packet.whyItMatters || 'not supplied',
+        '',
+        'Original evidence:',
+        packet.evidenceText || 'Open the supplied public source.',
+        '',
+        'This packet still needs translation, provider resolution, duplicate review, and editorial approval before publication.',
+      ].join('\n');
     }
 
     function escapeHtml(value) {

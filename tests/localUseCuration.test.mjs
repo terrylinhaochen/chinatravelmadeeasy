@@ -128,6 +128,11 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /ctme-local-knowledge-contributions-v1/);
   assert.match(profilePage, /function renderLocalEvidence\(packets\)/);
   assert.match(profilePage, /Provider match pending/);
+  assert.match(profilePage, /Saved on this device only\. It is not submitted until you send it for review\./);
+  assert.match(profilePage, /function formatLocalEvidencePacket\(packet\)/);
+  assert.match(profilePage, /Send for review/);
+  assert.match(profilePage, /mailto:hello@chinatravelmadeeasy\.com/);
+  assert.match(profilePage, /translation, provider resolution, duplicate review, and editorial approval/);
   assert.match(profilePage, /Add another source like this/);
   assert.match(profilePage, /Open original source/);
   assert.match(profilePage, /Open local map/);
