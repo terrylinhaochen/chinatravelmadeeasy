@@ -56,9 +56,10 @@ test('public curated collections stay focused on China local guides and traveler
 });
 
 test('public local-research UI is China-first and does not expose the archived Korea/Japan benchmark', async () => {
-  const [localLens, mapImport] = await Promise.all([
+  const [localLens, mapImport, discover] = await Promise.all([
     readFile(new URL('../src/pages/research/local-lens/index.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/pages/map-import.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/discover.astro', import.meta.url), 'utf8'),
   ]);
 
   assert.match(localLens, /Research in Chinese/);
@@ -66,4 +67,7 @@ test('public local-research UI is China-first and does not expose the archived K
   assert.doesNotMatch(localLens, /Korean|Japanese|Seoul/);
   assert.match(mapImport, /Shanghai, Hong Kong, Chengdu/);
   assert.doesNotMatch(mapImport, /Seoul|Osaka|Korean|Japanese/);
+  assert.match(discover, /Locally researched field guide/);
+  assert.match(discover, /localGuideHref/);
+  assert.match(discover, /Local evidence creates candidates, not automatic pins/);
 });
