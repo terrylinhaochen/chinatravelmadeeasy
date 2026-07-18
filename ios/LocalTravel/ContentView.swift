@@ -34,6 +34,7 @@ struct GuidesView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
                     GuideHeader(guide: guide)
+                    SourceEvidenceStrip(guide: guide)
 
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Places locals actually use")
@@ -50,6 +51,7 @@ struct GuidesView: View {
                     }
                 }
                 .padding()
+                .padding(.bottom, 24)
             }
             .navigationTitle("Local Travel")
             .navigationBarTitleDisplayMode(.inline)
@@ -68,7 +70,7 @@ struct GuideHeader: View {
                 .textCase(.uppercase)
 
             Text(guide.title)
-                .font(.largeTitle.bold())
+                .font(.system(.title, design: .default, weight: .bold))
                 .fixedSize(horizontal: false, vertical: true)
 
             Text("\(guide.city) · \(guide.neighborhood)")
@@ -79,7 +81,7 @@ struct GuideHeader: View {
                 .font(.body)
                 .foregroundStyle(.primary)
 
-            HStack(spacing: 12) {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                 StatPill(value: "\(guide.places.count)", label: "researched")
                 StatPill(value: "\(guide.resolvedPlaces.count)", label: "map-ready")
                 StatPill(value: guide.checkedAt, label: "checked")
@@ -96,7 +98,9 @@ struct StatPill: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(value)
-                .font(.headline.monospacedDigit())
+                .font(.subheadline.monospacedDigit().weight(.bold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
             Text(label)
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -107,12 +111,77 @@ struct StatPill: View {
     }
 }
 
+struct SourceEvidenceStrip: View {
+    let guide: LocalGuide
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(alignment: .firstTextBaseline) {
+                Text("Source notes")
+                    .font(.title3.bold())
+                Spacer()
+                Text("\(guide.sourceNotes.count) checked")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+            }
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 12) {
+                    ForEach(guide.sourceNotes) { note in
+                        SourceEvidenceCard(note: note)
+                    }
+                }
+                .scrollTargetLayout()
+            }
+            .scrollTargetBehavior(.viewAligned)
+        }
+    }
+}
+
+struct SourceEvidenceCard: View {
+    let note: LocalSourceNote
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text(note.platform)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Text(note.originalLanguage)
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(.blue)
+            }
+
+            Text(note.title)
+                .font(.headline)
+                .lineLimit(3)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Text(note.localSignal)
+                .font(.subheadline)
+                .foregroundStyle(.primary)
+                .lineLimit(4)
+
+            Spacer(minLength: 0)
+
+            Label("\(note.mappedPlaceIDs.count) mapped", systemImage: "mappin.and.ellipse")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.secondary)
+        }
+        .frame(width: 270, alignment: .topLeading)
+        .frame(minHeight: 190, alignment: .topLeading)
+        .padding(16)
+        .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8))
+    }
+}
+
 struct PlaceCard: View {
     let place: LocalGuidePlace
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .firstTextBaseline) {
+        VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 8) {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(place.englishName)
                         .font(.headline)
@@ -120,8 +189,6 @@ struct PlaceCard: View {
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
-
-                Spacer()
 
                 ResolutionBadge(state: place.resolutionState)
             }

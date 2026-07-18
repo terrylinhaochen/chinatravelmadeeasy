@@ -74,6 +74,16 @@ struct LocalGuidePlace: Identifiable, Equatable {
     }
 }
 
+struct LocalSourceNote: Identifiable, Equatable {
+    let id: String
+    let platform: String
+    let title: String
+    let originalLanguage: String
+    let localSignal: String
+    let mappedPlaceIDs: [String]
+    let retrievedAt: String
+}
+
 struct LocalGuide: Identifiable, Equatable {
     let id: String
     let title: String
@@ -83,6 +93,7 @@ struct LocalGuide: Identifiable, Equatable {
     let intent: String
     let summary: String
     let methodNote: String
+    let sourceNotes: [LocalSourceNote]
     let places: [LocalGuidePlace]
 
     var resolvedPlaces: [LocalGuidePlace] {
@@ -100,6 +111,35 @@ enum LocalGuideFixtures {
         intent: "Find public places with evidence of ordinary local use, then keep the resident signal, practical context, and map confidence attached.",
         summary: "Four Yangpu public spaces surfaced through Chinese-language resident reporting and local public sources. Direct testimony, community-use evidence, and provider confidence remain separate so local never becomes an unsupported label.",
         methodNote: "This reviewed slice searched accessible Chinese-local web sources. Xiaohongshu and Dianping adapters are not connected yet, so no candidate is attributed to either platform.",
+        sourceNotes: [
+            LocalSourceNote(
+                id: "yangpu-student-family-green-hill",
+                platform: "Chinese local reporting",
+                title: "A Yangpu student returns to Green Hill with her brother",
+                originalLanguage: "Chinese",
+                localSignal: "Repeat resident use turns an architecture landmark into a family-accessible riverfront stop.",
+                mappedPlaceIDs: ["green-hill-local-use"],
+                retrievedAt: "2026-07-17"
+            ),
+            LocalSourceNote(
+                id: "yangpu-child-friendly-waterfront",
+                platform: "District community evidence",
+                title: "Child-friendly waterfront spaces connect museum, factory, and river walk",
+                originalLanguage: "Chinese",
+                localSignal: "The useful travel idea is not one viral pin; it is a slower Yangpu waterfront day with indoor fallbacks.",
+                mappedPlaceIDs: ["worldskills-museum-local-use", "soap-dream-space-local-use"],
+                retrievedAt: "2026-07-17"
+            ),
+            LocalSourceNote(
+                id: "fuxing-island-neighborhood-walk",
+                platform: "Shanghai community attraction review",
+                title: "Fuxing Island Park is used for quiet walks and neighborhood air",
+                originalLanguage: "Chinese",
+                localSignal: "Local use changes the itinerary role: this is a slow finish, not a marquee detour.",
+                mappedPlaceIDs: ["fuxing-island-park-local-use"],
+                retrievedAt: "2026-07-17"
+            )
+        ],
         places: [
             LocalGuidePlace(
                 id: "green-hill-local-use",

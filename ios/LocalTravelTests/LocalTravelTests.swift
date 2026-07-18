@@ -6,10 +6,22 @@ final class LocalTravelTests: XCTestCase {
         let guide = LocalGuideFixtures.yangpu
 
         XCTAssertEqual(guide.places.count, 4)
+        XCTAssertEqual(guide.sourceNotes.count, 3)
         XCTAssertEqual(guide.places.filter { $0.evidenceGrade == .residentDirect }.count, 1)
         XCTAssertEqual(guide.places.filter { $0.resolutionState == .resolved }.count, 1)
         XCTAssertTrue(guide.methodNote.contains("Xiaohongshu"))
         XCTAssertTrue(guide.methodNote.contains("not connected"))
+    }
+
+    func testEverySourceNoteMapsBackToKnownPlaces() {
+        let guide = LocalGuideFixtures.yangpu
+        let placeIDs = Set(guide.places.map(\.id))
+
+        for note in guide.sourceNotes {
+            XCTAssertFalse(note.mappedPlaceIDs.isEmpty)
+            XCTAssertTrue(note.mappedPlaceIDs.allSatisfy { placeIDs.contains($0) })
+            XCTAssertEqual(note.originalLanguage, "Chinese")
+        }
     }
 
     func testOnlyResolvedPlacesCanAutoSave() {
