@@ -4,12 +4,14 @@ import {
   shanghaiLocalUseCollection,
   summarizeShanghaiLocalUse,
   validateShanghaiLocalUseCandidate,
+  validateShanghaiLocalUseSourceNote,
 } from '../src/data/shanghaiLocalUse.js';
 
 test('the Yangpu collection publishes a small, source-backed local-use slice', () => {
   const summary = summarizeShanghaiLocalUse();
   assert.deepEqual(summary, {
     candidateCount: 4,
+    sourceNoteCount: 3,
     directResidentCount: 1,
     resolvedCount: 1,
     sourceCount: 6,
@@ -17,6 +19,21 @@ test('the Yangpu collection publishes a small, source-backed local-use slice', (
   assert.equal(shanghaiLocalUseCollection.sourceAccess.chineseLocalWeb, 'reviewed');
   assert.equal(shanghaiLocalUseCollection.sourceAccess.xiaohongshu, 'not-connected');
   assert.equal(shanghaiLocalUseCollection.sourceAccess.dianping, 'not-connected');
+});
+
+test('source notes link local evidence to candidates without implying all are map-ready', () => {
+  const candidateById = new Map(shanghaiLocalUseCollection.candidates.map((candidate) => [candidate.id, candidate]));
+
+  for (const note of shanghaiLocalUseCollection.sourceNotes) {
+    const result = validateShanghaiLocalUseSourceNote(note);
+    assert.equal(result.valid, true, `${note.id}: ${result.errors.join(', ')}`);
+    assert.equal(note.originalLanguage, 'Chinese');
+    assert.ok(note.candidateIds.every((id) => candidateById.has(id)));
+  }
+
+  const linkedCandidates = shanghaiLocalUseCollection.sourceNotes.flatMap((note) => note.candidateIds.map((id) => candidateById.get(id)));
+  assert.ok(linkedCandidates.some((candidate) => candidate.resolutionState === 'probable'));
+  assert.equal(linkedCandidates.filter((candidate) => candidate.resolutionState === 'resolved').length, 1);
 });
 
 test('every local-use candidate preserves bilingual identity, traveler context, and provenance', () => {

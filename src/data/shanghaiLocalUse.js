@@ -14,6 +14,35 @@ export const shanghaiLocalUseCollection = {
     xiaohongshu: 'not-connected',
     dianping: 'not-connected',
   },
+  sourceNotes: [
+    {
+      id: 'yangpu-student-family-green-hill',
+      platform: 'Chinese local reporting',
+      title: 'A Yangpu student returns to Green Hill with her brother',
+      originalLanguage: 'Chinese',
+      localSignal: 'Repeat resident use turns an architecture landmark into a family-accessible riverfront stop.',
+      candidateIds: ['green-hill-local-use'],
+      retrievedAt: '2026-07-17',
+    },
+    {
+      id: 'yangpu-child-friendly-waterfront',
+      platform: 'District community evidence',
+      title: 'Child-friendly waterfront spaces connect museum, factory, and river walk',
+      originalLanguage: 'Chinese',
+      localSignal: 'The useful travel idea is not one viral pin; it is a slower Yangpu waterfront day with indoor fallbacks.',
+      candidateIds: ['worldskills-museum-local-use', 'soap-dream-space-local-use'],
+      retrievedAt: '2026-07-17',
+    },
+    {
+      id: 'fuxing-island-neighborhood-walk',
+      platform: 'Shanghai community attraction review',
+      title: 'Fuxing Island Park is used for quiet walks and neighborhood air',
+      originalLanguage: 'Chinese',
+      localSignal: 'Local use changes the itinerary role: this is a slow finish, not a marquee detour.',
+      candidateIds: ['fuxing-island-park-local-use'],
+      retrievedAt: '2026-07-17',
+    },
+  ],
   candidates: [
     {
       id: 'green-hill-local-use',
@@ -150,6 +179,7 @@ export function summarizeShanghaiLocalUse(collection = shanghaiLocalUseCollectio
   const candidates = collection.candidates || [];
   return {
     candidateCount: candidates.length,
+    sourceNoteCount: (collection.sourceNotes || []).length,
     directResidentCount: candidates.filter((candidate) => candidate.evidenceGrade === 'resident-direct').length,
     resolvedCount: candidates.filter((candidate) => candidate.resolutionState === 'resolved').length,
     sourceCount: new Set(candidates.flatMap((candidate) => candidate.sources.map((source) => source.url))).size,
@@ -167,5 +197,17 @@ export function validateShanghaiLocalUseCandidate(candidate) {
     if (!candidate.providerLinks?.amap?.includes('/place/')) errors.push('resolved-without-amap-place');
     if (!candidate.providerLinks?.apple?.includes('/place')) errors.push('resolved-without-apple-place');
   }
+  return { valid: errors.length === 0, errors };
+}
+
+export function validateShanghaiLocalUseSourceNote(note, collection = shanghaiLocalUseCollection) {
+  const errors = [];
+  const candidateIds = new Set((collection.candidates || []).map((candidate) => candidate.id));
+  if (!note?.id || !note?.title) errors.push('missing-source-note-identity');
+  if (!note?.platform || !note?.originalLanguage) errors.push('missing-source-context');
+  if (!note?.localSignal) errors.push('missing-local-signal');
+  if (!Array.isArray(note?.candidateIds) || note.candidateIds.length === 0) errors.push('missing-candidate-links');
+  if ((note?.candidateIds || []).some((id) => !candidateIds.has(id))) errors.push('unknown-candidate-link');
+  if (note?.retrievedAt && Number.isNaN(Date.parse(note.retrievedAt))) errors.push('invalid-retrieved-date');
   return { valid: errors.length === 0, errors };
 }

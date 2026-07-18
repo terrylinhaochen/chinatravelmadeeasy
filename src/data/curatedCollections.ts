@@ -194,6 +194,16 @@ export interface CuratedCollectionPlace {
   }>;
 }
 
+export interface CuratedCollectionSourceNote {
+  id: string;
+  platform: string;
+  title: string;
+  originalLanguage: string;
+  localSignal: string;
+  candidateIds: string[];
+  retrievedAt: string;
+}
+
 export interface CuratedCollection {
   slug: string;
   pathSlug?: string;
@@ -213,6 +223,7 @@ export interface CuratedCollection {
   checkedAt?: string;
   methodNote?: string;
   sourceAccess?: Record<string, string>;
+  sourceNotes?: CuratedCollectionSourceNote[];
 }
 
 export const bennyChanGoodRestaurants = {
@@ -1145,6 +1156,7 @@ export const yangpuLocalUseCollection: CuratedCollection = {
   kind: 'local-research',
   methodNote: shanghaiLocalUseCollection.methodNote,
   sourceAccess: shanghaiLocalUseCollection.sourceAccess,
+  sourceNotes: shanghaiLocalUseCollection.sourceNotes,
   regionBuckets: { shanghai: shanghaiLocalUseCollection.candidates.length },
   places: shanghaiLocalUseCollection.candidates.map((candidate) => ({
     id: candidate.id,
