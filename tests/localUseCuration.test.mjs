@@ -213,3 +213,22 @@ test('direct resident testimony is not inferred from official or community-progr
     .filter((candidate) => candidate.evidenceGrade !== 'resident-direct')
     .every((candidate) => !candidate.evidenceLabel.toLowerCase().includes('direct resident')));
 });
+
+test('the local UGC MFP acceptance record states the proven and unproven boundaries', async () => {
+  const [acceptanceDoc, readme, stories] = await Promise.all([
+    readFile(new URL('../docs/local-ugc-mfp-acceptance-2026-07-18.md', import.meta.url), 'utf8'),
+    readFile(new URL('../README.md', import.meta.url), 'utf8'),
+    readFile(new URL('../docs/product-user-stories.md', import.meta.url), 'utf8'),
+  ]);
+
+  assert.match(acceptanceDoc, /static\/manual local Chinese evidence/);
+  assert.match(acceptanceDoc, /static\/manual local Chinese evidence → evidence-graded guide candidates → one provider-resolved saved pin/);
+  assert.match(acceptanceDoc, /UGC enters as a review packet only/);
+  assert.match(acceptanceDoc, /Live Xiaohongshu, Dianping, or Douyin retrieval/);
+  assert.match(acceptanceDoc, /Production AMap POI API and Apple Maps Server resolution/);
+  assert.match(readme, /docs\/local-ugc-mfp-acceptance-2026-07-18\.md/);
+  assert.match(readme, /only the one provider-resolved pin can be saved to Profile/);
+  assert.match(stories, /As a traveler using the Chinese local-source MFP/);
+  assert.match(stories, /review packet while the product makes clear that it is not yet a published guide candidate or provider-resolved pin/);
+  assert.match(stories, /The Chinese local-source MFP is static\/manual/);
+});

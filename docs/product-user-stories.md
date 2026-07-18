@@ -33,6 +33,8 @@
 29. As a traveler holding a TikTok or Instagram URL, I can expand one entry under Add Places and immediately reopen a previously processed traveler story and its Curated city collection; an unseen link clearly asks for the caption instead of fabricating extraction or silently returning zero places.
 30. As a traveler planning Chengdu, I can open a first-class city edition rather than a broad Sichuan page, distinguish TFU from CTU and South Gate from a panda-campus center, then review six exact bilingual city anchors without mixing in Leshan, Dujiangyan, or other province excursions.
 31. As a traveler planning Xi’an, I can distinguish the walled city, Tang museum-and-pagoda day, and Lintong archaeology day; keep the Shaanxi History Museum’s main and Qin–Han sites separate; and hand six exact bilingual identities into one review task.
+32. As a traveler using the Chinese local-source MFP, I can start on Discover, open the Shanghai evidence ledger, read the original Chinese cue and local-use grade, save only the provider-resolved pin to Profile, and return to the three unresolved local leads without losing their source context.
+33. As a traveler with a Xiaohongshu, Dianping, short-video, map, caption, OCR, or personal-knowledge lead, I can prepare it as a UGC review packet while the product makes clear that it is not yet a published guide candidate or provider-resolved pin.
 
 ## Not yet complete
 
@@ -41,6 +43,7 @@
 - Unknown places are still resolved heuristically; a production version needs a bilingual POI resolver.
 - The static site does not fetch arbitrary social posts or perform image OCR.
 - Chengdu and Xi’an have complete editorial and map-ready destination digests but no verified TikTok or Instagram traveler stories yet; their pages intentionally do not invent media rails.
+- The Chinese local-source MFP is static/manual: Xiaohongshu, Dianping, and short-video leads are review packets only until live platform retrieval and provider-resolution adapters are connected.
 
 ## Local Prototype State
 
