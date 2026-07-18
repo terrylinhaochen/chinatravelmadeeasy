@@ -287,10 +287,10 @@ test('direct resident testimony is not inferred from official or community-progr
 test('reviewed Chinese UGC packets are visible without claiming live platform retrieval', () => {
   const summary = summarizeReviewedLocalUgcPackets();
   assert.deepEqual(summary, {
-    packetCount: 1,
-    candidateCount: 2,
+    packetCount: 2,
+    candidateCount: 4,
     resolvedCandidateCount: 1,
-    gridCellCount: 2,
+    gridCellCount: 4,
     livePlatformRetrievalCount: 0,
   });
 
@@ -300,20 +300,34 @@ test('reviewed Chinese UGC packets are visible without claiming live platform re
     assert.equal(packet.livePlatformRetrieval, false);
     assert.equal(packet.reviewedAt, '2026-07-18');
     assert.equal(packet.providerCheckedAt, '2026-07-18');
-    assert.match(packet.sourceBoundary, /No live Xiaohongshu retrieval/);
+    assert.match(packet.sourceBoundary, /No live (Xiaohongshu|Douyin) retrieval/);
     assert.match(packet.originalCue, /[\u3400-\u9fff]/u);
     assert.match(packet.evidenceText, /[\u3400-\u9fff]/u);
     assert.ok(packet.reviewGates.some((gate) => gate.label === 'Provider identity'));
-    assert.equal(packet.candidates.filter((candidate) => candidate.resolutionState === 'resolved').length, 1);
-    assert.ok(packet.candidates.some((candidate) => candidate.resolutionState === 'probable'));
+    assert.ok(packet.candidates.some((candidate) => candidate.resolutionState !== 'resolved'));
     assert.ok(packet.candidates.every((candidate) => candidate.gridCell.sourceEvidence && candidate.gridCell.localUseFit));
     assert.ok(packet.candidates.every((candidate) => candidate.gridCell.providerIdentity && candidate.gridCell.travelerDecision));
-    assert.match(packet.candidates.find((candidate) => candidate.resolutionState === 'resolved').gridCell.providerIdentity, /Resolved/);
-    assert.match(packet.candidates.find((candidate) => candidate.resolutionState === 'probable').gridCell.travelerDecision, /do not save/i);
-    assert.ok(packet.candidates.find((candidate) => candidate.resolutionState === 'resolved').providerLinks.amap.includes('/place/'));
-    assert.ok(packet.candidates.find((candidate) => candidate.resolutionState === 'resolved').providerLinks.apple.includes('/place'));
-    assert.equal(packet.candidates.find((candidate) => candidate.resolutionState === 'probable').providerLinks, undefined);
+    const resolved = packet.candidates.find((candidate) => candidate.resolutionState === 'resolved');
+    if (resolved) {
+      assert.match(resolved.gridCell.providerIdentity, /Resolved/);
+      assert.ok(resolved.providerLinks.amap.includes('/place/'));
+      assert.ok(resolved.providerLinks.apple.includes('/place'));
+    } else {
+      assert.ok(packet.reviewGates.some((gate) => gate.state.includes('0 resolved')));
+      assert.ok(packet.candidates.every((candidate) => !candidate.providerLinks));
+    }
+    assert.ok(packet.candidates
+      .filter((candidate) => candidate.resolutionState !== 'resolved')
+      .every((candidate) => /do not save|not safe|not a pin|context only/i.test(candidate.gridCell.travelerDecision + ' ' + candidate.gridCell.providerIdentity)));
+    assert.ok(packet.candidates.filter((candidate) => candidate.resolutionState !== 'resolved').every((candidate) => candidate.providerLinks === undefined));
   }
+
+  const caution = reviewedLocalUgcPackets.find((packet) => packet.id === 'yangpu-waterfront-rain-caution-seeded-packet');
+  assert.ok(caution);
+  assert.match(caution.title, /weather and return route/);
+  assert.match(caution.originalCue, /下雨天风大/);
+  assert.equal(caution.candidates.filter((candidate) => candidate.resolutionState === 'resolved').length, 0);
+  assert.ok(caution.candidates.every((candidate) => /Do not save|not safe|not a pin|context only/i.test(candidate.gridCell.travelerDecision)));
 });
 
 test('the local UGC MFP acceptance record states the proven and unproven boundaries', async () => {
@@ -324,7 +338,7 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   ]);
 
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence/);
-  assert.match(acceptanceDoc, /static\/manual local Chinese evidence \+ one seeded reviewed Chinese UGC packet → evidence-graded guide candidates → one provider-resolved saved pin/);
+  assert.match(acceptanceDoc, /static\/manual local Chinese evidence \+ two seeded reviewed Chinese UGC packets → evidence-graded guide candidates → one provider-resolved saved pin/);
   assert.match(acceptanceDoc, /Reviewed UGC is discoverable before save/);
   assert.match(acceptanceDoc, /UGC save follows the grid decision/);
   assert.match(acceptanceDoc, /UGC provenance remains visible after saving/);

@@ -6,7 +6,7 @@ Date: 2026-07-18
 
 The minimum functioning product should let an English-speaking traveler start from locally surfaced China evidence, understand why the place matters locally, distinguish useful leads from provider-resolved pins, save only the safe pin, and keep unresolved local leads attached to the evidence trail.
 
-This record covers the current static/manual Chinese slice plus one operator-reviewed Chinese UGC packet. It does not certify live Xiaohongshu, Dianping, Douyin, AMap, Apple Maps Server, or Supabase worker operation.
+This record covers the current static/manual Chinese slice plus two operator-reviewed Chinese UGC packets. It does not certify live Xiaohongshu, Dianping, Douyin, AMap, Apple Maps Server, or Supabase worker operation.
 
 ## Current accepted MFP path
 
@@ -41,8 +41,8 @@ This record covers the current static/manual Chinese slice plus one operator-rev
 | Local evidence becomes a traveler decision | Every reviewed candidate exposes a `Trip role` and `Next action`, and the saved profile card preserves those fields for the map-ready pin. |
 | Provider resolution is separate from local evidence strength | The guide and tests keep only `resolutionState === "resolved"` candidates eligible for automatic save. |
 | Map save does not overclaim unresolved leads | The city save payload includes only provider-resolved places; Profile links unresolved leads back to the evidence ledger. |
-| Reviewed UGC is discoverable before save | `/discover/` shows one seeded Chinese UGC packet with original cue, local-use signal, two local-grid cells, source-derived candidates, one safe pin, and explicit `Not live platform retrieval` labeling. |
-| UGC is mapped to local-grid cells | Each candidate exposes `Source evidence`, `Local-use fit`, `Provider identity`, and `Traveler decision`, with probable candidates marked `review cell` and resolved candidates marked `saveable cell`. |
+| Reviewed UGC is discoverable before save | `/discover/` shows two seeded Chinese UGC packets with original cues, local-use signals, four local-grid cells, source-derived candidates, one safe pin, and explicit `Not live platform retrieval` labeling. |
+| UGC is mapped to local-grid cells | Each candidate exposes `Source evidence`, `Local-use fit`, `Provider identity`, and `Traveler decision`, with review-only candidates marked `review cell` and the one resolved candidate marked `saveable cell`. |
 | UGC save follows the grid decision | `Save UGC-mapped pin` writes only the resolved `saveable cell` to Profile and leaves the other source-derived candidate review-first. |
 | UGC provenance remains visible after saving | Discover and Profile show the UGC boundary, source evidence, packet review date, and provider-check date so the saved pin is not detached from its evidence. |
 | UGC is supported honestly in the current slice | UGC enters as a review packet only. Xiaohongshu and Dianping are explicitly labeled not connected. |
@@ -72,7 +72,7 @@ python3 -m http.server 4331 --directory dist
 Then verify:
 
 - `/discover/` renders the local-to-map loop, reviewed Chinese UGC packet, and UGC review-packet boundary.
-- The reviewed UGC packet renders `A slow Yangpu riverfront day instead of a skyline checklist`, `operator-reviewed seed`, `UGC boundary`, `Packet reviewed`, `Provider checked`, `Local grid mapping`, `review cell`, `saveable cell`, `Save UGC-mapped pin`, `Not live platform retrieval`, `Compare with reviewed grid`, and `Add similar UGC lead`.
+- The reviewed UGC packets render `A slow Yangpu riverfront day instead of a skyline checklist`, `The riverfront walk works only if the weather and return route work`, `operator-reviewed seed`, `UGC boundary`, `Packet reviewed`, `Provider checked`, `Local grid mapping`, `review cell`, `saveable cell`, `Save UGC-mapped pin`, `Not live platform retrieval`, `Compare with reviewed grid`, and `Add similar UGC lead`.
 - A clean browser can click `Save UGC-mapped pin`, sign in locally, open Profile, and see `Fuxing Island Park`, `Open saved AMap pin`, `Open saved Apple pin`, `Review 1 unresolved local lead`, `UGC boundary`, `Source evidence`, and `Freshness`.
 - `Open evidence ledger` routes to the Shanghai guide source-notes anchor.
 - The Shanghai guide renders `Xiaohongshu — Not connected`, `Dianping — Not connected`, and `UGC intake — Review packet only`.
@@ -90,4 +90,4 @@ Then verify:
 - Cross-device saved maps and group collaboration.
 - A deployed Supabase worker proving the queue, RLS, provider payload storage, and edge functions together.
 
-The current MFP is therefore: **static/manual local Chinese evidence + one seeded reviewed Chinese UGC packet → evidence-graded guide candidates → one provider-resolved saved pin → retained unresolved leads → UGC review intake**.
+The current MFP is therefore: **static/manual local Chinese evidence + two seeded reviewed Chinese UGC packets → evidence-graded guide candidates → one provider-resolved saved pin → retained unresolved leads → UGC review intake**.

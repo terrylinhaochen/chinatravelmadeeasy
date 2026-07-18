@@ -64,6 +64,65 @@ export const reviewedLocalUgcPackets = [
       { label: 'Traveler decision', state: 'Use as a slow Yangpu half-day, not a skyline checklist' },
     ],
   },
+  {
+    id: 'yangpu-waterfront-rain-caution-seeded-packet',
+    platform: 'Chinese short-video comment packet',
+    sourceAccess: 'operator-reviewed seed',
+    livePlatformRetrieval: false,
+    reviewedAt: '2026-07-18',
+    sourceBoundary: 'Seeded from an operator-reviewed Chinese short-video-style caption and comment summary. No live Douyin retrieval, comment ranking, or platform engagement is claimed.',
+    providerCheckedAt: '2026-07-18',
+    city: 'Shanghai',
+    language: 'Chinese',
+    title: 'The riverfront walk works only if the weather and return route work',
+    hook: 'Use the local warning to change timing and backup plans, not to create a false restaurant or attraction pin.',
+    originalCue: '下雨天风大，回程不好打车',
+    cueMeaning: 'The local value is an execution warning: exposed riverfront weather and return logistics can make the route worse.',
+    localUseSignal: 'corroborated-local-use',
+    localUseLabel: 'Corroborated local-use signal',
+    evidenceText: '杨浦滨江下雨天风大，绿之丘附近拍照可以，但回程不好打车，最好白天走、提前看地铁或公交。',
+    travelerRead:
+      'This does not add a new must-see. It changes the usable version of the Yangpu plan: go earlier, keep a transit fallback, and avoid treating a rainy riverfront clip as an effortless evening route.',
+    gridReview:
+      'Original Chinese warning, local-use fit, provider identity, and traveler decision are reviewed separately; no candidate is saveable until a provider identity and trip role both survive review.',
+    guideHref: '/curated/ctme-local-lens/what-yangpu-residents-use-on-a-slow-day/shanghai/#source-notes-heading',
+    contributionHref:
+      '/map-import/?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=tiktok&contributionKind=route#contribute',
+    candidates: [
+      {
+        id: 'short-video-yangpu-rain-route-grid-cell',
+        name: 'Yangpu riverfront rainy-day route',
+        localName: '杨浦滨江雨天路线',
+        role: 'Useful as a route warning, but not a pin: timing, weather, and return transport need review.',
+        resolutionState: 'unresolved',
+        gridCell: {
+          sourceEvidence: 'Caption/comment summary warns 下雨天风大 and 回程不好打车 along the Yangpu riverfront.',
+          localUseFit: 'Corroborated local-use signal because the insight is about ordinary execution conditions, not a tourist photo claim.',
+          providerIdentity: 'Unresolved and not safe for automatic save: this is a route condition across the riverfront, not a confirmed AMap or Apple POI.',
+          travelerDecision: 'Do not save as a pin; use it to schedule the riverfront earlier and keep a metro or bus fallback.',
+        },
+      },
+      {
+        id: 'short-video-green-hill-rain-grid-cell',
+        name: 'Green Hill',
+        localName: '绿之丘',
+        role: 'Known route anchor, but this packet only supports a weather/taxi caveat.',
+        resolutionState: 'probable',
+        gridCell: {
+          sourceEvidence: 'Caption/comment summary references 绿之丘 as the photo anchor near the exposed riverfront.',
+          localUseFit: 'Local-use proxy: the packet supports timing and return-route advice, not direct testimony that locals repeat this exact stop.',
+          providerIdentity: 'Probable: matches the reviewed guide context, but still not safe for automatic save from this UGC packet.',
+          travelerDecision: 'Keep as context only; do not save from this packet because the actionable insight is the route caveat.',
+        },
+      },
+    ],
+    reviewGates: [
+      { label: 'Source evidence', state: 'Original Chinese warning retained' },
+      { label: 'Local-use fit', state: 'Classified as corroborated local-use signal' },
+      { label: 'Provider identity', state: '0 resolved · 2 review-first' },
+      { label: 'Traveler decision', state: 'Use as timing and transport caveat, not as a map pin' },
+    ],
+  },
 ];
 
 export function summarizeReviewedLocalUgcPackets(packets = reviewedLocalUgcPackets) {
