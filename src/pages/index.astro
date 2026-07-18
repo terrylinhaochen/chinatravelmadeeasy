@@ -804,7 +804,7 @@ const jsonLd = [
       const status = result.data?.status;
       if (status === 'published' && result.data?.slug) {
         showHomeVideoStatus('This source has passed place review. Open its destination story to inspect the evidence before saving.', false);
-        homeVideoFieldNote.href = `/videos/${result.data.slug}/`;
+        homeVideoFieldNote.href = publishedVideoDestinationHref(result.data);
         homeVideoActions.classList.remove('hidden');
         return;
       }
@@ -837,7 +837,7 @@ const jsonLd = [
       if (state.status === 'published') {
         showHomeVideoStatus(`Place review complete: ${state.places?.length || 0} grounded ${state.places?.length === 1 ? 'place' : 'places'} ready.`, false);
         if (state.slug) {
-          homeVideoFieldNote.href = `/videos/${state.slug}/`;
+          homeVideoFieldNote.href = publishedVideoDestinationHref(state);
           homeVideoActions.classList.remove('hidden');
         }
         return;
@@ -855,6 +855,13 @@ const jsonLd = [
       }
       pollHomeVideoStatus(videoId, attempt + 1);
     }, 3000);
+  }
+
+  function publishedVideoDestinationHref(video) {
+    if (video?.destinationSlug && video?.slug) {
+      return '/regions/' + encodeURIComponent(video.destinationSlug) + '/#field-note-' + encodeURIComponent(video.slug);
+    }
+    return '/discover/';
   }
 
   function showHomeVideoStatus(message, isError) {

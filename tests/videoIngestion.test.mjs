@@ -91,3 +91,14 @@ test('video handoff includes resolved places and preserves the source', () => {
   assert.doesNotMatch(parsed.searchParams.get('text'), /Possible cafe/);
   assert.equal(parsed.searchParams.get('url'), 'https://www.tiktok.com/@traveler/video/123');
 });
+
+test('homepage published-video status opens destination context rather than the old video feed', async () => {
+  const homepage = await import('node:fs/promises').then(({ readFile }) =>
+    readFile(new URL('../src/pages/index.astro', import.meta.url), 'utf8')
+  );
+
+  assert.doesNotMatch(homepage, /homeVideoFieldNote\.href = `\/videos\/\$\{(?:result\.data|state)\.slug\}\/`/);
+  assert.match(homepage, /function publishedVideoDestinationHref\(video\)/);
+  assert.match(homepage, /\/regions\/' \+ encodeURIComponent\(video\.destinationSlug\) \+ '\/#field-note-'/);
+  assert.match(homepage, /return '\/discover\/'/);
+});
