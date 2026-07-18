@@ -23,6 +23,9 @@ const places = item.places.filter((place) => place.regionBucket === city);
 const noteCount = places.filter((place) => place.note).length;
 const isLocalResearch = item.kind === 'local-research';
 const resolvedCount = places.filter((place) => place.resolutionState === 'resolved' || !place.resolutionState).length;
+const saveablePlaces = isLocalResearch
+  ? places.filter((place) => place.resolutionState === 'resolved')
+  : places;
 const directResidentCount = places.filter((place) => place.evidenceGrade === 'resident-direct').length;
 const placeById = new Map(places.map((place) => [place.id, place]));
 const sourceNotes = isLocalResearch ? (item.sourceNotes ?? []).map((note) => {
@@ -193,6 +196,19 @@ const jsonLd = [
     candidateCount: isLocalResearch ? places.length : undefined,
     safePlaceCount: resolvedCount,
     type: isLocalResearch ? 'local-research' : 'curated',
+    places: saveablePlaces.map((place) => ({
+      id: place.id,
+      name: place.name,
+      localName: place.localName,
+      city: meta.city,
+      address: place.address,
+      latitude: place.latitude,
+      longitude: place.longitude,
+      note: place.localUse || place.note,
+      evidenceLabel: place.evidenceLabel,
+      resolutionState: place.resolutionState || 'resolved',
+      providerLinks: place.providerLinks,
+    })),
   })} />
 
   <script>

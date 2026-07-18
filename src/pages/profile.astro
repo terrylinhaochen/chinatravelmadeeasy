@@ -171,14 +171,34 @@ const jsonLd = [
         target.innerHTML = '<div class="profile-empty-card">Save a Local Guide or city field note to keep it here.</div>';
         return;
       }
-      target.innerHTML = collections.map((collection) => (
-        '<article class="profile-saved-card">' +
+      target.innerHTML = collections.map((collection) => {
+        const places = Array.isArray(collection.places) ? collection.places : [];
+        const isLocalResearch = collection.type === 'local-research';
+        const pinCopy = Number(collection.placeCount || places.length || 0) + ' map-ready pin' + (Number(collection.placeCount || places.length || 0) === 1 ? '' : 's');
+        const candidateCopy = isLocalResearch && Number(collection.candidateCount || 0)
+          ? ' · ' + Number(collection.candidateCount || 0) + ' researched candidate' + (Number(collection.candidateCount || 0) === 1 ? '' : 's')
+          : '';
+        const placeChips = places.length
+          ? '<div class="mt-3 flex flex-wrap gap-2">' + places.slice(0, 4).map((place) => '<span class="ds-chip">' + escapeHtml(place.localName ? place.name + ' · ' + place.localName : place.name || 'Place') + '</span>').join('') + '</div>'
+          : '';
+        const firstPlace = places.find((place) => place.providerLinks?.amap || place.providerLinks?.apple);
+        const mapLinks = firstPlace
+          ? '<div class="mt-3 flex flex-wrap gap-3">' +
+              (firstPlace.providerLinks?.amap ? '<a class="text-sm font-semibold text-ink hover:text-accent" target="_blank" rel="noopener" href="' + escapeHtml(firstPlace.providerLinks.amap) + '">Open saved AMap pin</a>' : '') +
+              (firstPlace.providerLinks?.apple ? '<a class="text-sm font-semibold text-ink hover:text-accent" target="_blank" rel="noopener" href="' + escapeHtml(firstPlace.providerLinks.apple) + '">Open saved Apple pin</a>' : '') +
+            '</div>'
+          : '';
+        return '<article class="profile-saved-card">' +
           '<div><p class="ds-tag">' + escapeHtml(collection.owner || collection.source || 'Local Guide') + '</p>' +
           '<h3 class="mt-1 text-xl leading-tight">' + escapeHtml(collection.title || 'Collected map') + '</h3></div>' +
-          '<p class="mt-2 text-sm text-soft">' + Number(collection.placeCount || 0) + ' pin' + (Number(collection.placeCount || 0) === 1 ? '' : 's') + '</p>' +
-          '<a class="mt-3 inline-flex text-sm font-semibold text-ink hover:text-accent" href="' + escapeHtml(collection.href || '/curated/') + '">Open guide</a>' +
-        '</article>'
-      )).join('');
+          '<p class="mt-2 text-sm text-soft">' + pinCopy + candidateCopy + '</p>' +
+          placeChips +
+          '<div class="mt-3 flex flex-wrap gap-3">' +
+            '<a class="text-sm font-semibold text-ink hover:text-accent" href="' + escapeHtml(collection.href || '/curated/') + '">Open guide</a>' +
+          '</div>' +
+          mapLinks +
+        '</article>';
+      }).join('');
     }
 
     function escapeHtml(value) {

@@ -1,4 +1,5 @@
 import { strict as assert } from 'node:assert';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import {
   shanghaiLocalUseCollection,
@@ -69,6 +70,20 @@ test('the published collection keeps research candidates separate from safe pins
     placeCount: 1,
     safePlaceCount: 1,
   });
+});
+
+test('the city collection save payload carries only map-ready local pins into Profile', async () => {
+  const [cityPage, profilePage] = await Promise.all([
+    readFile(new URL('../src/pages/curated/[owner]/[collection]/[city].astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/profile.astro', import.meta.url), 'utf8'),
+  ]);
+
+  assert.match(cityPage, /const saveablePlaces = isLocalResearch[\s\S]+resolutionState === 'resolved'/);
+  assert.match(cityPage, /places: saveablePlaces\.map/);
+  assert.match(cityPage, /providerLinks: place\.providerLinks/);
+  assert.match(profilePage, /map-ready pin/);
+  assert.match(profilePage, /Open saved AMap pin/);
+  assert.match(profilePage, /Open saved Apple pin/);
 });
 
 test('direct resident testimony is not inferred from official or community-program sources', () => {
