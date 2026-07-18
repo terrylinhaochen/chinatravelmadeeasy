@@ -224,6 +224,9 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence/);
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence → evidence-graded guide candidates → one provider-resolved saved pin/);
   assert.match(acceptanceDoc, /UGC enters as a review packet only/);
+  assert.match(acceptanceDoc, /UGC intake persists into the traveler workspace/);
+  assert.match(acceptanceDoc, /A clean rendered browser can prepare a Xiaohongshu-style packet/);
+  assert.match(acceptanceDoc, /Compare with reviewed local grid/);
   assert.match(acceptanceDoc, /Live Xiaohongshu, Dianping, or Douyin retrieval/);
   assert.match(acceptanceDoc, /Production AMap POI API and Apple Maps Server resolution/);
   assert.match(readme, /docs\/local-ugc-mfp-acceptance-2026-07-18\.md/);

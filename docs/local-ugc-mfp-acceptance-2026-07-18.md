@@ -23,6 +23,7 @@ This record covers the current static/manual Chinese slice. It does not certify 
    - the original Chinese cue;
    - `Review 3 unresolved local leads`, linking back to the guide evidence ledger.
 8. Use `/map-import/?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute` to prepare a UGC review packet from a Xiaohongshu, Dianping, short-video, local-map, caption, OCR, or personal-knowledge source.
+9. Open `/profile/` and confirm the UGC review packet remains visible with provider resolution pending, review stages, original-source access, and a link back to the reviewed Shanghai local grid.
 
 ## Acceptance criteria
 
@@ -34,6 +35,7 @@ This record covers the current static/manual Chinese slice. It does not certify 
 | Provider resolution is separate from local evidence strength | The guide and tests keep only `resolutionState === "resolved"` candidates eligible for automatic save. |
 | Map save does not overclaim unresolved leads | The city save payload includes only provider-resolved places; Profile links unresolved leads back to the evidence ledger. |
 | UGC is supported honestly in the current slice | UGC enters as a review packet only. Xiaohongshu and Dianping are explicitly labeled not connected. |
+| UGC intake persists into the traveler workspace | A clean rendered browser can prepare a Xiaohongshu-style packet, open Profile, and see `Provider match pending`, `UGC evidence packet`, `Map-ready pin`, `Open original source`, and `Compare with reviewed local grid`. |
 | Local dogfooding can complete without production email | Localhost sign-in stores `authProvider: "localhost-preview"` and does not send a Supabase magic link. |
 
 ## Commands that should pass
@@ -58,6 +60,7 @@ Then verify:
 - `Open evidence ledger` routes to the Shanghai guide source-notes anchor.
 - The Shanghai guide renders `Xiaohongshu — Not connected`, `Dianping — Not connected`, and `UGC intake — Review packet only`.
 - A clean browser can save the one map-ready pin and reopen it from Profile with AMap/Apple links plus unresolved-lead recovery.
+- A clean browser can open `Add Chinese source`, fill the pre-scoped contribution form, prepare a review packet, and see that packet in Profile with a reviewed-grid recovery link.
 
 ## Not accepted yet
 
