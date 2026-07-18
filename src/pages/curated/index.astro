@@ -49,6 +49,35 @@ const cityEditions = curatedCollections
     return (b.count ?? 0) - (a.count ?? 0);
   });
 const guideFilters = ['All', ...Array.from(new Set(cityEditions.map((edition) => edition.guide)))];
+const collectPayloads = Object.fromEntries(cityEditions.map((edition) => {
+  const isLocalResearch = edition.collection.kind === 'local-research';
+  const saveablePlaces = isLocalResearch
+    ? edition.places.filter((place) => place.resolutionState === 'resolved')
+    : edition.places;
+  return [edition.id, {
+    id: edition.id,
+    title: `${edition.meta.edition}: ${edition.collection.title}`,
+    owner: edition.collection.owner.name,
+    href: edition.href,
+    placeCount: isLocalResearch ? edition.resolvedCount : edition.count,
+    candidateCount: isLocalResearch ? edition.count : undefined,
+    type: isLocalResearch ? 'local-research' : 'curated',
+    source: 'Curated',
+    places: saveablePlaces.map((place) => ({
+      id: place.id,
+      name: place.name,
+      localName: place.localName,
+      city: edition.meta.city,
+      address: place.address,
+      latitude: place.latitude,
+      longitude: place.longitude,
+      note: place.localUse || place.note,
+      evidenceLabel: place.evidenceLabel,
+      resolutionState: place.resolutionState || 'resolved',
+      providerLinks: place.providerLinks,
+    })),
+  }];
+}));
 
 const jsonLd = [
   {
@@ -188,9 +217,12 @@ const jsonLd = [
   </section>
 </Base>
 
+<script type="application/json" id="curatedCollectPayloads" set:html={JSON.stringify(collectPayloads)} />
+
 <script>
   import { collectCuratedCollection, getCollectedCollections, getUser } from '../../utils/localPrototypeState.js';
 
+  const collectPayloads = JSON.parse(document.querySelector('#curatedCollectPayloads')?.textContent || '{}');
   const collectButtons = document.querySelectorAll('[data-curated-collect]');
   const guideButtons = document.querySelectorAll('[data-curated-guide-filter]');
   const curatedCards = document.querySelectorAll('[data-curated-card]');
@@ -234,20 +266,20 @@ const jsonLd = [
   }
 
   function payloadForButton(button) {
-    return {
+    return collectPayloads[button.dataset.curatedCollect] || {
       id: button.dataset.curatedCollect,
       title: button.dataset.curatedTitle,
       owner: button.dataset.curatedOwner,
       href: button.dataset.curatedHref,
       placeCount: Number(button.dataset.curatedCount || 0),
       candidateCount: Number(button.dataset.curatedCandidateCount || 0) || undefined,
+      type: 'curated',
       source: 'Curated',
-      savedAt: new Date().toISOString(),
     };
   }
 
   function completeCollect(item, button) {
-    collectCuratedCollection(item);
+    collectCuratedCollection({ ...item, savedAt: item.savedAt || new Date().toISOString() });
     localStorage.removeItem(pendingCollectKey);
     markCollected(button);
     const status = document.querySelector(`[data-curated-collect-status="${item.id}"]`);

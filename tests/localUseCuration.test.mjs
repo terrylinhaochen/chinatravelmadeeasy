@@ -73,8 +73,9 @@ test('the published collection keeps research candidates separate from safe pins
 });
 
 test('the city collection save payload carries only map-ready local pins into Profile', async () => {
-  const [cityPage, profilePage, mapComponent] = await Promise.all([
+  const [cityPage, curatedIndex, profilePage, mapComponent] = await Promise.all([
     readFile(new URL('../src/pages/curated/[owner]/[collection]/[city].astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/curated/index.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/pages/profile.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/components/CuratedCollectionMap.astro', import.meta.url), 'utf8'),
   ]);
@@ -82,6 +83,10 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(cityPage, /const saveablePlaces = isLocalResearch[\s\S]+resolutionState === 'resolved'/);
   assert.match(cityPage, /places: saveablePlaces\.map/);
   assert.match(cityPage, /providerLinks: place\.providerLinks/);
+  assert.match(curatedIndex, /const collectPayloads = Object\.fromEntries/);
+  assert.match(curatedIndex, /type: isLocalResearch \? 'local-research' : 'curated'/);
+  assert.match(curatedIndex, /places: saveablePlaces\.map/);
+  assert.match(curatedIndex, /collectPayloads\[button\.dataset\.curatedCollect\]/);
   assert.match(profilePage, /map-ready pin/);
   assert.match(profilePage, /Open saved AMap pin/);
   assert.match(profilePage, /Open saved Apple pin/);
