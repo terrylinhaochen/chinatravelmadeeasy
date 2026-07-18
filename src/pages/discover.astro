@@ -62,10 +62,12 @@ const description =
   'Explore local China guides built from Chinese-language research, grounded traveler evidence, and bilingual place identities.';
 const videosForDestination = (slug: string) => communityVideos.filter((video) => video.destinationSlug === slug);
 const localGuideHref = `/curated/${yangpuLocalUseCollection.owner.slug}/${yangpuLocalUseCollection.pathSlug}/shanghai/`;
+const localGuideContributionHref = '/map-import/?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute';
 const localGuideCandidates = yangpuLocalUseCollection.places;
 const localGuideSourceNotes = yangpuLocalUseCollection.sourceNotes ?? [];
 const localGuideSafePins = localGuideCandidates.filter((place) => place.resolutionState === 'resolved').length;
 const localGuideDirectResident = localGuideCandidates.filter((place) => place.evidenceGrade === 'resident-direct').length;
+const localGuideReviewLeads = localGuideCandidates.length - localGuideSafePins;
 const localGuideSearchText = [
   yangpuLocalUseCollection.title,
   yangpuLocalUseCollection.description,
@@ -191,6 +193,7 @@ const jsonLd = [
           </div>
           <div class="mt-auto flex flex-wrap gap-2 pt-6">
             <a href={localGuideHref} class="ds-button ds-button-dark">Open the local guide</a>
+            <a href={localGuideContributionHref} class="ds-button ds-button-secondary">Add Chinese source</a>
             <a href="/research/local-lens/" class="ds-button ds-button-secondary">See the research method</a>
           </div>
         </div>
@@ -198,6 +201,16 @@ const jsonLd = [
           <div class="rounded-2xl border border-line bg-white/80 p-4">
             <p class="ds-eyebrow">What makes it different</p>
             <p class="mt-2 text-sm leading-relaxed text-soft">Local evidence creates candidates, not automatic pins. This slice has {localGuideDirectResident} direct resident signal and only {localGuideSafePins} provider-resolved place.</p>
+          </div>
+          <div class="rounded-2xl border border-line bg-white/80 p-4">
+            <p class="ds-eyebrow">From Chinese source to map-ready pin</p>
+            <div class="mt-3 grid gap-2 text-sm leading-relaxed">
+              <p><span class="font-semibold text-ink">Chinese local source</span> → keep the original wording, platform, and local-use claim.</p>
+              <p><span class="font-semibold text-ink">Evidence-graded candidate</span> → separate direct resident testimony, corroborated signals, and proxy claims.</p>
+              <p><span class="font-semibold text-ink">{localGuideSafePins} safe pin</span> → save only when the branch or venue identity is provider-resolved.</p>
+              <p><span class="font-semibold text-ink">{localGuideReviewLeads} review leads stay visible</span> → useful ideas remain attached to evidence without becoming false pins.</p>
+            </div>
+            <p class="mt-3 border-t border-line pt-3 text-xs leading-relaxed text-soft">Adding a source opens a scoped review packet for local wording, translation, duplicate checks, and provider resolution.</p>
           </div>
           <div class="grid gap-3 sm:grid-cols-3">
             {localGuideSourceNotes.map((note) => {

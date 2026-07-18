@@ -75,12 +75,13 @@ test('the published collection keeps research candidates separate from safe pins
 });
 
 test('the city collection save payload carries only map-ready local pins into Profile', async () => {
-  const [cityPage, curatedIndex, profilePage, mapComponent, mapImportPage] = await Promise.all([
+  const [cityPage, curatedIndex, profilePage, mapComponent, mapImportPage, discoverPage] = await Promise.all([
     readFile(new URL('../src/pages/curated/[owner]/[collection]/[city].astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/pages/curated/index.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/pages/profile.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/components/CuratedCollectionMap.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/pages/map-import.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/discover.astro', import.meta.url), 'utf8'),
   ]);
 
   assert.match(cityPage, /const saveablePlaces = isLocalResearch[\s\S]+resolutionState === 'resolved'/);
@@ -136,6 +137,13 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /Add another source like this/);
   assert.match(profilePage, /Open original source/);
   assert.match(profilePage, /Open local map/);
+  assert.match(discoverPage, /const localGuideContributionHref = '\/map-import\/\?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute'/);
+  assert.match(discoverPage, /Add Chinese source/);
+  assert.match(discoverPage, /From Chinese source to map-ready pin/);
+  assert.match(discoverPage, /Chinese local source/);
+  assert.match(discoverPage, /Evidence-graded candidate/);
+  assert.match(discoverPage, /review leads stay visible/);
+  assert.match(discoverPage, /scoped review packet/);
   assert.match(mapComponent, /<a[\s\S]+href=\{`#\$\{place\.id\}`\}/);
   assert.match(mapComponent, /aria-label=\{`Open \$\{place\.name\} candidate details/);
   assert.match(mapComponent, /data-resolution=\{isLocalResearch \? cell\.resolutionState : undefined\}/);
