@@ -104,6 +104,12 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapImportPage, /contributionForm\.elements\.namedItem\(name\)/);
   assert.match(mapImportPage, /Started a scoped local-source review packet/);
   assert.match(cityPage, /Evidence ledger/);
+  assert.match(cityPage, /linkedCandidates: linkedCandidates\.map/);
+  assert.match(cityPage, /Follow this evidence to the map/);
+  assert.match(cityPage, /href=\{`#\$\{candidate\.id\}`\}/);
+  assert.match(cityPage, /candidate\.resolutionState === 'resolved' \? 'map-ready' : 'needs review'/);
+  assert.match(cityPage, /id=\{place\.id\}/);
+  assert.match(cityPage, /scroll-mt-24/);
   assert.match(cityPage, /Retrieved \{note\.retrievedAt\}/);
   assert.match(cityPage, /\(note\.sources \?\? \[\]\)\.map/);
   assert.match(curatedIndex, /const collectPayloads = Object\.fromEntries/);
