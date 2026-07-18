@@ -81,6 +81,7 @@ const jsonLd = [
           <p class="mt-1 max-w-2xl text-sm leading-relaxed text-soft">Captions, OCR text, and one-place-per-line lists work. A bare TikTok or Instagram URL does not: this static page cannot fetch the post behind it.</p>
         </div>
         <div class="flex flex-wrap gap-2">
+          <button type="button" data-sample="xiaohongshu-yangpu" class="sampleBtn ds-button ds-button-secondary min-h-0 px-3 py-2">Run Chinese local sample</button>
           <button type="button" data-sample="tiktok-shanghai" class="sampleBtn ds-button ds-button-secondary min-h-0 px-3 py-2">Run TikTok sample</button>
           <button type="button" data-sample="instagram-chengdu" class="sampleBtn ds-button ds-button-secondary min-h-0 px-3 py-2">Run Instagram sample</button>
         </div>
@@ -338,6 +339,13 @@ const jsonLd = [
     const contributionStageList = document.querySelector('[data-contribution-stage-list]');
     const contributionChecklist = document.querySelector('[data-contribution-checklist]');
     const sampleSources = {
+      'xiaohongshu-yangpu': {
+        collectionName: 'Xiaohongshu-style Yangpu riverfront note',
+        title: '杨浦滨江慢走：绿之丘到复兴岛公园',
+        url: 'https://www.xiaohongshu.com/explore/abc123',
+        text: `1. Green Hill / 绿之丘 — Shanghai — 小红书笔记说先上屋顶看江景，适合接在杨浦滨江慢走。
+2. Fuxing Island Park / 复兴岛公园 — Shanghai — 市民散步、观景、寻幽；更像本地人周末放空路线，不是打卡清单。`,
+      },
       'tiktok-shanghai': {
         collectionName: 'TikTok Shanghai food crawl',
         title: 'Shanghai food crawl: soup dumplings, old streets, skyline',

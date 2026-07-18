@@ -114,6 +114,10 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapImportPage, /function applyContributionPrefill\(params\)/);
   assert.match(mapImportPage, /allowedPlatforms = new Set\(\['xiaohongshu', 'dianping'/);
   assert.match(mapImportPage, /contributionForm\.elements\.namedItem\(name\)/);
+  assert.match(mapImportPage, /Run Chinese local sample/);
+  assert.match(mapImportPage, /xiaohongshu-yangpu/);
+  assert.match(mapImportPage, /Green Hill \/ 绿之丘/);
+  assert.match(mapImportPage, /Fuxing Island Park \/ 复兴岛公园/);
   assert.match(mapImportPage, /Started a scoped local-source review packet/);
   assert.match(mapImportPage, /data-contribution-stage-list/);
   assert.match(mapImportPage, /localKnowledgeReviewStages\(submission\)/);
