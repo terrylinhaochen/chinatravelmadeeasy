@@ -6,7 +6,7 @@ Date: 2026-07-18
 
 The minimum functioning product should let an English-speaking traveler start from locally surfaced China evidence, understand why the place matters locally, distinguish useful leads from provider-resolved pins, save only the safe pin, and keep unresolved local leads attached to the evidence trail.
 
-This record covers the current static/manual Chinese slice. It does not certify live Xiaohongshu, Dianping, Douyin, AMap, Apple Maps Server, or Supabase worker operation.
+This record covers the current static/manual Chinese slice plus one operator-reviewed Chinese UGC packet. It does not certify live Xiaohongshu, Dianping, Douyin, AMap, Apple Maps Server, or Supabase worker operation.
 
 ## Current accepted MFP path
 
@@ -15,19 +15,20 @@ This record covers the current static/manual Chinese slice. It does not certify 
 3. Use `Open evidence ledger` to reach `/curated/ctme-local-lens/what-yangpu-residents-use-on-a-slow-day/shanghai/#source-notes-heading`.
 4. Read the source notes, original Chinese cues, evidence grades, and map-resolution states.
 5. For each reviewed candidate, read the explicit trip role and next action so research becomes a travel decision rather than a generic recommendation.
-6. Save `1 map-ready pin` from the city guide.
-7. Open `/profile/`.
-8. Confirm Profile shows:
+6. Read the reviewed Chinese UGC packet on Discover and confirm it exposes the original cue, local-use signal, candidate gates, and the not-live platform retrieval boundary.
+7. Save `1 map-ready pin` from the city guide.
+8. Open `/profile/`.
+9. Confirm Profile shows:
    - the saved provider-resolved pin;
    - AMap and Apple handoff links;
    - why the pin survived review;
    - the trip role and next action;
    - the original Chinese cue;
    - `Review 3 unresolved local leads`, linking back to the guide evidence ledger.
-9. Use `/map-import/?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute` to prepare a UGC review packet from a Xiaohongshu, Dianping, short-video, local-map, caption, OCR, or personal-knowledge source.
-10. Classify the local-use signal as direct local first-person use, local creator or resident UGC, corroborated local-use, local-use proxy, traveler-only evidence, or unknown.
-11. Confirm the prepared packet shows a local-grid review summary separating source evidence, local-use fit, provider identity, and traveler decision gates.
-12. Open `/profile/` and confirm the UGC review packet remains visible with provider resolution pending, local-use signal, local-grid review state, review stages, original-source access, and a link back to the reviewed Shanghai local grid.
+10. Use `/map-import/?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute` to prepare a UGC review packet from a Xiaohongshu, Dianping, short-video, local-map, caption, OCR, or personal-knowledge source.
+11. Classify the local-use signal as direct local first-person use, local creator or resident UGC, corroborated local-use, local-use proxy, traveler-only evidence, or unknown.
+12. Confirm the prepared packet shows a local-grid review summary separating source evidence, local-use fit, provider identity, and traveler decision gates.
+13. Open `/profile/` and confirm the UGC review packet remains visible with provider resolution pending, local-use signal, local-grid review state, review stages, original-source access, and a link back to the reviewed Shanghai local grid.
 
 ## Acceptance criteria
 
@@ -39,6 +40,7 @@ This record covers the current static/manual Chinese slice. It does not certify 
 | Local evidence becomes a traveler decision | Every reviewed candidate exposes a `Trip role` and `Next action`, and the saved profile card preserves those fields for the map-ready pin. |
 | Provider resolution is separate from local evidence strength | The guide and tests keep only `resolutionState === "resolved"` candidates eligible for automatic save. |
 | Map save does not overclaim unresolved leads | The city save payload includes only provider-resolved places; Profile links unresolved leads back to the evidence ledger. |
+| Reviewed UGC is discoverable before save | `/discover/` shows one seeded Chinese UGC packet with original cue, local-use signal, source-derived candidates, one safe pin, and explicit `Not live platform retrieval` labeling. |
 | UGC is supported honestly in the current slice | UGC enters as a review packet only. Xiaohongshu and Dianping are explicitly labeled not connected. |
 | UGC intake grades localness explicitly | The contribution form requires a local-use signal before the packet can be prepared; unknown is allowed but remains not ready as guide supply until review. |
 | UGC packets enter the same local-grid rubric | Prepared packets expose source evidence, local-use fit, provider identity, and traveler-decision gates before they can become public guide candidates. |
@@ -65,7 +67,8 @@ python3 -m http.server 4331 --directory dist
 
 Then verify:
 
-- `/discover/` renders the local-to-map loop and UGC review-packet boundary.
+- `/discover/` renders the local-to-map loop, reviewed Chinese UGC packet, and UGC review-packet boundary.
+- The reviewed UGC packet renders `A slow Yangpu riverfront day instead of a skyline checklist`, `operator-reviewed seed`, `Not live platform retrieval`, `Compare with reviewed grid`, and `Add similar UGC lead`.
 - `Open evidence ledger` routes to the Shanghai guide source-notes anchor.
 - The Shanghai guide renders `Xiaohongshu — Not connected`, `Dianping — Not connected`, and `UGC intake — Review packet only`.
 - A clean browser can save the one map-ready pin and reopen it from Profile with AMap/Apple links, trip role, next action, and unresolved-lead recovery.
@@ -82,4 +85,4 @@ Then verify:
 - Cross-device saved maps and group collaboration.
 - A deployed Supabase worker proving the queue, RLS, provider payload storage, and edge functions together.
 
-The current MFP is therefore: **static/manual local Chinese evidence → evidence-graded guide candidates → one provider-resolved saved pin → retained unresolved leads → UGC review intake**.
+The current MFP is therefore: **static/manual local Chinese evidence + one seeded reviewed Chinese UGC packet → evidence-graded guide candidates → one provider-resolved saved pin → retained unresolved leads → UGC review intake**.

@@ -7,6 +7,11 @@ import {
   validateShanghaiLocalUseCandidate,
   validateShanghaiLocalUseSourceNote,
 } from '../src/data/shanghaiLocalUse.js';
+import {
+  reviewedLocalUgcPackets,
+  summarizeReviewedLocalUgcPackets,
+  validateReviewedLocalUgcPacket,
+} from '../src/data/reviewedLocalUgcPackets.js';
 
 test('the Yangpu collection publishes a small, source-backed local-use slice', () => {
   const summary = summarizeShanghaiLocalUse();
@@ -199,6 +204,8 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(baseLayout, /production still uses the email link/);
   assert.match(discoverPage, /const localGuideContributionHref = '\/map-import\/\?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute'/);
   assert.match(discoverPage, /const localGuideEvidenceHref = `\$\{localGuideHref\}#source-notes-heading`/);
+  assert.match(discoverPage, /reviewedLocalUgcPackets/);
+  assert.match(discoverPage, /summarizeReviewedLocalUgcPackets/);
   assert.match(discoverPage, /Add Chinese source/);
   assert.match(discoverPage, /Try the local-to-map loop/);
   assert.match(discoverPage, /Start with what Shanghai locals use, then save only the pin that survives review/);
@@ -211,6 +218,12 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(discoverPage, /MFP status/);
   assert.match(discoverPage, /What is actually functional today\?/);
   assert.match(discoverPage, /Reviewed Chinese local grid/);
+  assert.match(discoverPage, /Reviewed UGC packet/);
+  assert.match(discoverPage, /Seeded locally/);
+  assert.match(discoverPage, /operator-reviewed Chinese UGC packet/);
+  assert.match(discoverPage, /Not live platform retrieval/);
+  assert.match(discoverPage, /Compare with reviewed grid/);
+  assert.match(discoverPage, /Add similar UGC lead/);
   assert.match(discoverPage, /UGC review packets/);
   assert.match(discoverPage, /Map-ready save/);
   assert.match(discoverPage, /Live Chinese-platform retrieval/);
@@ -244,6 +257,27 @@ test('direct resident testimony is not inferred from official or community-progr
     .every((candidate) => !candidate.evidenceLabel.toLowerCase().includes('direct resident')));
 });
 
+test('reviewed Chinese UGC packets are visible without claiming live platform retrieval', () => {
+  const summary = summarizeReviewedLocalUgcPackets();
+  assert.deepEqual(summary, {
+    packetCount: 1,
+    candidateCount: 2,
+    resolvedCandidateCount: 1,
+    livePlatformRetrievalCount: 0,
+  });
+
+  for (const packet of reviewedLocalUgcPackets) {
+    const result = validateReviewedLocalUgcPacket(packet);
+    assert.equal(result.valid, true, `${packet.id}: ${result.errors.join(', ')}`);
+    assert.equal(packet.livePlatformRetrieval, false);
+    assert.match(packet.originalCue, /[\u3400-\u9fff]/u);
+    assert.match(packet.evidenceText, /[\u3400-\u9fff]/u);
+    assert.ok(packet.reviewGates.some((gate) => gate.label === 'Provider identity'));
+    assert.equal(packet.candidates.filter((candidate) => candidate.resolutionState === 'resolved').length, 1);
+    assert.ok(packet.candidates.some((candidate) => candidate.resolutionState === 'probable'));
+  }
+});
+
 test('the local UGC MFP acceptance record states the proven and unproven boundaries', async () => {
   const [acceptanceDoc, readme, stories] = await Promise.all([
     readFile(new URL('../docs/local-ugc-mfp-acceptance-2026-07-18.md', import.meta.url), 'utf8'),
@@ -252,7 +286,10 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   ]);
 
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence/);
-  assert.match(acceptanceDoc, /static\/manual local Chinese evidence → evidence-graded guide candidates → one provider-resolved saved pin/);
+  assert.match(acceptanceDoc, /static\/manual local Chinese evidence \+ one seeded reviewed Chinese UGC packet → evidence-graded guide candidates → one provider-resolved saved pin/);
+  assert.match(acceptanceDoc, /Reviewed UGC is discoverable before save/);
+  assert.match(acceptanceDoc, /Not live platform retrieval/);
+  assert.match(acceptanceDoc, /A slow Yangpu riverfront day instead of a skyline checklist/);
   assert.match(acceptanceDoc, /UGC enters as a review packet only/);
   assert.match(acceptanceDoc, /Local evidence becomes a traveler decision/);
   assert.match(acceptanceDoc, /Trip role/);
@@ -271,6 +308,7 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(acceptanceDoc, /npm run test:local-ugc-mfp:rendered/);
   assert.match(acceptanceDoc, /repeatable rendered acceptance gate/);
   assert.match(readme, /docs\/local-ugc-mfp-acceptance-2026-07-18\.md/);
+  assert.match(readme, /one seeded reviewed Chinese UGC packet/);
   assert.match(readme, /only the one provider-resolved pin can be saved to Profile/);
   assert.match(stories, /As a traveler using the Chinese local-source MFP/);
   assert.match(stories, /prepare it as a UGC review packet, classify the local-use signal behind the lead/);

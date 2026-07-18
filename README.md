@@ -29,7 +29,7 @@ The isolated backend lives in `supabase/`: RLS migrations, queue-backed submissi
 
 Local Lens now uses the same queue boundary for agent-run destination research. Authenticated `submit-local-research` requests carry destination, destination language, trip intent, and constraints; an external research worker claims them, retrieves local-language evidence, and completes owner-only candidates with explicit resolution states. The static UI shows a reviewed Shanghai snapshot when the worker is not connected and never represents Xiaohongshu or Dianping as searched unless their authenticated adapters ran. See `docs/local-language-agent-research.md`.
 
-The accepted static Chinese local-source MFP is documented in `docs/local-ugc-mfp-acceptance-2026-07-18.md`: Discover opens a Shanghai evidence ledger, the guide separates local evidence strength from provider resolution, only the one provider-resolved pin can be saved to Profile, unresolved leads remain linked to the source ledger, and Xiaohongshu/Dianping/short-video leads enter as UGC review packets until live adapters are connected.
+The accepted static Chinese local-source MFP is documented in `docs/local-ugc-mfp-acceptance-2026-07-18.md`: Discover opens a Shanghai evidence ledger and one seeded reviewed Chinese UGC packet, the guide separates local evidence strength from provider resolution, only the one provider-resolved pin can be saved to Profile, unresolved leads remain linked to the source ledger, and Xiaohongshu/Dianping/short-video leads enter as UGC review packets until live adapters are connected.
 
 ## Develop
 
