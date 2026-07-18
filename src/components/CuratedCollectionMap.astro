@@ -11,31 +11,80 @@ interface Props {
 const { collection, compact = false, places = collection.places } = Astro.props;
 const mapColumns = worldPixelAtlas.columns;
 const mapRows = worldPixelAtlas.rows;
-const cellCounts = new Map<string, { count: number; names: string[]; column: number; row: number }>();
+const isLocalResearch = collection.kind === 'local-research';
+type CellResolutionState = 'resolved' | 'probable' | 'unresolved' | 'mixed';
+const resolutionPriority: Record<CellResolutionState, number> = {
+  resolved: 3,
+  probable: 2,
+  unresolved: 1,
+  mixed: 0,
+};
+const cellCounts = new Map<string, {
+  count: number;
+  names: string[];
+  column: number;
+  row: number;
+  states: Set<CellResolutionState>;
+}>();
 
 for (const place of places) {
   const projected = projectLonLatToWorldCell(place.longitude, place.latitude);
   const key = worldPixelKey(projected.column, projected.row);
+  const state = (place.resolutionState ?? 'resolved') as CellResolutionState;
   const existing = cellCounts.get(key);
   if (existing) {
     existing.count += 1;
     if (existing.names.length < 4) existing.names.push(place.name);
+    existing.states.add(state);
   } else {
-    cellCounts.set(key, { count: 1, names: [place.name], column: projected.column, row: projected.row });
+    cellCounts.set(key, { count: 1, names: [place.name], column: projected.column, row: projected.row, states: new Set([state]) });
   }
 }
 
 const maxCellCount = Math.max(1, ...Array.from(cellCounts.values()).map((cell) => cell.count));
+const stateForCell = (states: Set<CellResolutionState>) => {
+  const list = Array.from(states);
+  if (list.length === 1) return list[0];
+  if (list.includes('resolved') && list.some((state) => state !== 'resolved')) return 'mixed';
+  return list.sort((a, b) => resolutionPriority[b] - resolutionPriority[a])[0] ?? 'unresolved';
+};
 const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => {
   const column = (index % mapColumns) + 1;
   const row = Math.floor(index / mapColumns) + 1;
   const active = cellCounts.get(worldPixelKey(column, row));
   const density = active ? Math.max(1, Math.min(5, Math.ceil((active.count / maxCellCount) * 5))) : 0;
-  return { column, row, isLand: isWorldPixelLand(column, row), active, density };
+  const resolutionState = active ? stateForCell(active.states) : undefined;
+  return { column, row, isLand: isWorldPixelLand(column, row), active, density, resolutionState };
 });
+const mapReadyCount = places.filter((place) => (place.resolutionState ?? 'resolved') === 'resolved').length;
+const reviewCount = places.length - mapReadyCount;
 ---
 
 <div class:list={['curated-map', compact && 'curated-map-compact']} aria-label={`${collection.title} pixel map`}>
+  {isLocalResearch && !compact && (
+    <div class="curated-map-legend" aria-label="Local research map resolution states">
+      <span><i data-state="resolved"></i>{mapReadyCount} map-ready</span>
+      <span><i data-state="probable"></i>{reviewCount} needs review</span>
+    </div>
+  )}
+  {isLocalResearch && !compact && (
+    <div class="curated-local-grid" aria-label="Local candidate resolution grid">
+      {places.map((place, index) => {
+        const state = place.resolutionState ?? 'resolved';
+        return (
+          <span
+            class="curated-local-grid-item"
+            data-local-grid-place
+            data-resolution={state}
+            title={`${place.name} · ${state === 'resolved' ? 'map-ready' : 'needs provider review'}`}
+          >
+            <i aria-hidden="true">{index + 1}</i>
+            <span>{place.name}</span>
+          </span>
+        );
+      })}
+    </div>
+  )}
   <div class="curated-map-grid" style={`--atlas-columns: ${mapColumns};`} data-projection={worldPixelAtlas.projection}>
     {mapCells.map((cell) => (
       cell.active ? (
@@ -44,8 +93,9 @@ const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => 
           data-land="true"
           data-active="true"
           data-density={cell.density}
+          data-resolution={isLocalResearch ? cell.resolutionState : undefined}
           data-cell={`${cell.column}:${cell.row}`}
-          title={`${cell.active.count} pin${cell.active.count === 1 ? '' : 's'}: ${cell.active.names.join(', ')}`}
+          title={`${cell.active.count} ${isLocalResearch ? 'candidate' : 'pin'}${cell.active.count === 1 ? '' : 's'}${isLocalResearch ? ` · ${cell.resolutionState === 'resolved' ? 'map-ready' : cell.resolutionState === 'mixed' ? 'mixed review state' : 'needs map review'}` : ''}: ${cell.active.names.join(', ')}`}
         ></span>
       ) : (
         <span
@@ -83,6 +133,39 @@ const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => 
     gap: clamp(0.04rem, 0.16vw, 0.12rem);
   }
 
+  .curated-map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.65rem;
+    color: var(--color-soft);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .curated-map-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.72);
+    padding: 0.25rem 0.5rem;
+  }
+
+  .curated-map-legend i {
+    width: 0.58rem;
+    height: 0.58rem;
+    border-radius: 2px;
+    background: rgb(140 47 34 / 1);
+  }
+
+  .curated-map-legend i[data-state="probable"] {
+    background: rgb(198 164 107 / 1);
+  }
+
   .curated-map-cell {
     aspect-ratio: 1;
     border-radius: 1px;
@@ -99,6 +182,18 @@ const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => 
     box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.42);
   }
 
+  .curated-map-cell[data-resolution="probable"] {
+    background: rgb(198 164 107 / 1);
+  }
+
+  .curated-map-cell[data-resolution="unresolved"] {
+    background: rgb(120 113 108 / 1);
+  }
+
+  .curated-map-cell[data-resolution="mixed"] {
+    background: linear-gradient(135deg, rgb(140 47 34 / 1) 0 50%, rgb(198 164 107 / 1) 50% 100%);
+  }
+
   .curated-map-cell[data-density="2"] {
     background: rgb(124 42 32 / 1);
   }
@@ -113,5 +208,64 @@ const mapCells = Array.from({ length: mapColumns * mapRows }).map((_, index) => 
 
   .curated-map-cell[data-density="5"] {
     background: rgb(68 22 17 / 1);
+  }
+
+  .curated-map-cell[data-density="2"][data-resolution="probable"],
+  .curated-map-cell[data-density="3"][data-resolution="probable"],
+  .curated-map-cell[data-density="4"][data-resolution="probable"],
+  .curated-map-cell[data-density="5"][data-resolution="probable"] {
+    background: rgb(174 132 63 / 1);
+  }
+
+  .curated-map-cell[data-density="2"][data-resolution="mixed"],
+  .curated-map-cell[data-density="3"][data-resolution="mixed"],
+  .curated-map-cell[data-density="4"][data-resolution="mixed"],
+  .curated-map-cell[data-density="5"][data-resolution="mixed"] {
+    background: linear-gradient(135deg, rgb(140 47 34 / 1) 0 50%, rgb(198 164 107 / 1) 50% 100%);
+  }
+
+  .curated-local-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.25rem, 1fr));
+    gap: 0.45rem;
+    margin-top: 0.75rem;
+  }
+
+  .curated-local-grid-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: rgb(255 255 255 / 0.72);
+    padding: 0.45rem 0.5rem;
+    color: var(--color-soft);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .curated-local-grid-item i {
+    display: inline-flex;
+    width: 1.2rem;
+    height: 1.2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background: rgb(198 164 107 / 1);
+    color: white;
+    font-style: normal;
+    line-height: 1;
+  }
+
+  .curated-local-grid-item[data-resolution="resolved"] i {
+    background: rgb(140 47 34 / 1);
+  }
+
+  .curated-local-grid-item span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 </style>

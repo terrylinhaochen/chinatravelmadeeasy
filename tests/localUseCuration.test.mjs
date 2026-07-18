@@ -73,9 +73,10 @@ test('the published collection keeps research candidates separate from safe pins
 });
 
 test('the city collection save payload carries only map-ready local pins into Profile', async () => {
-  const [cityPage, profilePage] = await Promise.all([
+  const [cityPage, profilePage, mapComponent] = await Promise.all([
     readFile(new URL('../src/pages/curated/[owner]/[collection]/[city].astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/pages/profile.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/components/CuratedCollectionMap.astro', import.meta.url), 'utf8'),
   ]);
 
   assert.match(cityPage, /const saveablePlaces = isLocalResearch[\s\S]+resolutionState === 'resolved'/);
@@ -84,6 +85,11 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /map-ready pin/);
   assert.match(profilePage, /Open saved AMap pin/);
   assert.match(profilePage, /Open saved Apple pin/);
+  assert.match(mapComponent, /data-resolution=\{isLocalResearch \? cell\.resolutionState : undefined\}/);
+  assert.match(mapComponent, /mapReadyCount.*map-ready/s);
+  assert.match(mapComponent, /reviewCount.*needs review/s);
+  assert.match(mapComponent, /data-local-grid-place/);
+  assert.match(mapComponent, /Local candidate resolution grid/);
 });
 
 test('direct resident testimony is not inferred from official or community-program sources', () => {
