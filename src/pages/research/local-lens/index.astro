@@ -1,6 +1,10 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { localLanguageCandidates } from '../../../data/localLensShanghai.js';
+import {
+  shanghaiLocalUseCollection,
+  summarizeShanghaiLocalUse,
+} from '../../../data/shanghaiLocalUse.js';
 import { buildLocalLensHandoff } from '../../../utils/localLensHandoff.js';
 import {
   localResearchStages,
@@ -11,6 +15,7 @@ import {
 
 const description = 'An agent-run workflow that researches a destination in its local language, preserves source evidence, and resolves recommendations to usable map identities.';
 const summary = summarizeAgentResearch(localLanguageCandidates);
+const publishedSummary = summarizeShanghaiLocalUse(shanghaiLocalUseCollection);
 const adapters = sourceAdapterState();
 const featuredCandidates = localLanguageCandidates.filter((candidate) => [
   'yuyuan-segment',
@@ -110,6 +115,27 @@ const featuredCandidates = localLanguageCandidates.filter((candidate) => [
             </span>
           </article>
         ))}
+      </div>
+    </section>
+
+    <section class="mt-16 rounded-3xl border border-line bg-[linear-gradient(135deg,#f4efe5_0%,#fff_58%,#edf3f1_100%)] p-6 sm:p-8" aria-labelledby="published-collection-heading">
+      <div class="grid gap-7 lg:grid-cols-[1fr_.72fr] lg:items-end">
+        <div>
+          <p class="ds-eyebrow">Published local-use collection · checked 17 July 2026</p>
+          <h2 id="published-collection-heading" class="mt-2 max-w-3xl text-3xl leading-tight sm:text-4xl">What Yangpu residents use on a slow day</h2>
+          <p class="mt-4 max-w-3xl leading-relaxed text-soft">The research output now lives inside Curated, where a traveler can see the bilingual identity, why the place surfaced, how strong the local-use evidence is, and whether its map identity is safe to save.</p>
+          <p class="mt-3 max-w-3xl text-sm leading-relaxed text-soft">This run used accessible Chinese-local reporting and official local sources. Xiaohongshu and Dianping were not connected, so the collection makes no claim to having searched either platform.</p>
+          <div class="mt-6 flex flex-wrap gap-2">
+            <a href="/curated/ctme-local-lens/what-yangpu-residents-use-on-a-slow-day/shanghai/" class="ds-button ds-button-dark">Open the curated collection</a>
+            <a href="/regions/shanghai/" class="ds-button ds-button-secondary">See it in Shanghai</a>
+          </div>
+        </div>
+        <dl class="grid grid-cols-2 gap-2 text-center text-sm">
+          <div class="rounded-xl border border-line bg-white px-4 py-4"><dt class="text-soft">Candidates</dt><dd class="mt-1 text-2xl font-semibold">{publishedSummary.candidateCount}</dd></div>
+          <div class="rounded-xl border border-line bg-white px-4 py-4"><dt class="text-soft">Resident-direct</dt><dd class="mt-1 text-2xl font-semibold">{publishedSummary.directResidentCount}</dd></div>
+          <div class="rounded-xl border border-line bg-white px-4 py-4"><dt class="text-soft">Safe pins</dt><dd class="mt-1 text-2xl font-semibold">{publishedSummary.resolvedCount}</dd></div>
+          <div class="rounded-xl border border-line bg-white px-4 py-4"><dt class="text-soft">Sources</dt><dd class="mt-1 text-2xl font-semibold">{publishedSummary.sourceCount}</dd></div>
+        </dl>
       </div>
     </section>
 

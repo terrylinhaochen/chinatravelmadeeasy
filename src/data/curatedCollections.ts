@@ -1,4 +1,5 @@
 import { communityVideos } from './communityVideos';
+import { shanghaiLocalUseCollection } from './shanghaiLocalUse.js';
 
 export type CuratedCollectionRegionBucket =
   | 'hong-kong'
@@ -176,6 +177,21 @@ export interface CuratedCollectionPlace {
   sourceUrl?: string;
   sourceProvider: string;
   regionBucket: CuratedCollectionRegionBucket;
+  localUse?: string;
+  travelerContext?: string;
+  evidenceGrade?: 'resident-direct' | 'local-use-corroborated' | 'local-use-proxy';
+  evidenceLabel?: string;
+  resolutionState?: 'resolved' | 'probable' | 'unresolved';
+  resolutionNote?: string;
+  providerLinks?: {
+    amap?: string;
+    apple?: string;
+  };
+  sources?: Array<{
+    label: string;
+    type: string;
+    url: string;
+  }>;
 }
 
 export interface CuratedCollection {
@@ -193,6 +209,10 @@ export interface CuratedCollection {
   importedAt: string;
   regionBuckets: Partial<Record<CuratedCollectionRegionBucket, number>>;
   places: CuratedCollectionPlace[];
+  kind?: 'traveler-video' | 'local-research' | 'imported-map';
+  checkedAt?: string;
+  methodNote?: string;
+  sourceAccess?: Record<string, string>;
 }
 
 export const bennyChanGoodRestaurants = {
@@ -1098,10 +1118,60 @@ export const travelerVideoCollections: CuratedCollection[] = communityVideos.fla
       sourceProvider: video.platform === 'instagram' ? 'Instagram' : 'TikTok',
       regionBucket: bucket,
     })),
+    kind: 'traveler-video',
+    checkedAt: video.checkedAt,
   }];
 });
 
+export const yangpuLocalUseCollection: CuratedCollection = {
+  slug: shanghaiLocalUseCollection.id,
+  pathSlug: shanghaiLocalUseCollection.slug,
+  provider: 'Local Lens research',
+  sourceUrl: shanghaiLocalUseCollection.candidates[0].sources[0].url,
+  canonicalUrl: shanghaiLocalUseCollection.candidates[0].sources[0].url,
+  listId: shanghaiLocalUseCollection.id,
+  title: shanghaiLocalUseCollection.title,
+  description: shanghaiLocalUseCollection.summary,
+  emoji: '邻',
+  owner: {
+    name: 'CTME Local Lens',
+    slug: 'ctme-local-lens',
+    avatarUrl: '/images/curated/region-shanghai.jpg',
+    id: 'ctme-local-lens',
+  },
+  placeCount: shanghaiLocalUseCollection.candidates.length,
+  importedAt: shanghaiLocalUseCollection.checkedAt,
+  checkedAt: shanghaiLocalUseCollection.checkedAt,
+  kind: 'local-research',
+  methodNote: shanghaiLocalUseCollection.methodNote,
+  sourceAccess: shanghaiLocalUseCollection.sourceAccess,
+  regionBuckets: { shanghai: shanghaiLocalUseCollection.candidates.length },
+  places: shanghaiLocalUseCollection.candidates.map((candidate) => ({
+    id: candidate.id,
+    name: candidate.name,
+    localName: candidate.localName,
+    slug: candidate.slug,
+    address: candidate.address,
+    latitude: candidate.latitude,
+    longitude: candidate.longitude,
+    note: candidate.travelerContext,
+    evidence: candidate.evidence,
+    sourceUrl: candidate.sources[0].url,
+    sourceProvider: candidate.evidenceLabel,
+    regionBucket: 'shanghai',
+    localUse: candidate.localUse,
+    travelerContext: candidate.travelerContext,
+    evidenceGrade: candidate.evidenceGrade,
+    evidenceLabel: candidate.evidenceLabel,
+    resolutionState: candidate.resolutionState,
+    resolutionNote: candidate.resolutionNote,
+    providerLinks: candidate.providerLinks,
+    sources: candidate.sources,
+  })),
+};
+
 export const curatedCollections: CuratedCollection[] = [
+  yangpuLocalUseCollection,
   ...travelerVideoCollections,
-  bennyChanGoodRestaurants,
+  { ...bennyChanGoodRestaurants, kind: 'imported-map' },
 ];

@@ -21,10 +21,15 @@ const { item, city } = Astro.props;
 const meta = curatedRegionMeta[city];
 const places = item.places.filter((place) => place.regionBucket === city);
 const noteCount = places.filter((place) => place.note).length;
+const isLocalResearch = item.kind === 'local-research';
+const resolvedCount = places.filter((place) => place.resolutionState === 'resolved' || !place.resolutionState).length;
+const directResidentCount = places.filter((place) => place.evidenceGrade === 'resident-direct').length;
 const displayTitle = item.title.replace(/\b\w/g, (letter) => letter.toUpperCase());
 const collectionSlug = item.pathSlug ?? item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const pagePath = `/curated/${item.owner.slug}/${collectionSlug}/${city}/`;
-const description = `${meta.edition} by ${item.owner.name}: ${places.length} city-specific map-ready ${places.length === 1 ? 'place' : 'places'} from ${item.provider} evidence.`;
+const description = isLocalResearch
+  ? `${displayTitle}: ${places.length} Shanghai candidates with local-use evidence, bilingual identities, and explicit provider-review states.`
+  : `${meta.edition} by ${item.owner.name}: ${places.length} city-specific map-ready ${places.length === 1 ? 'place' : 'places'} from ${item.provider} evidence.`;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -60,47 +65,74 @@ const jsonLd = [
 
     <div class="mt-6 grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch">
       <div class="ds-card flex h-full flex-col p-5 sm:p-7">
-        <p class="ds-eyebrow">{meta.label} · {item.provider === 'TikTok' || item.provider === 'Instagram' ? 'Traveler story' : 'City collection'}</p>
+        <p class="ds-eyebrow">{meta.label} · {isLocalResearch ? 'Local-use research' : item.provider === 'TikTok' || item.provider === 'Instagram' ? 'Traveler story' : 'City collection'}</p>
         <h1 class="mt-3 text-5xl leading-tight sm:text-6xl">{displayTitle}</h1>
         <div class="mt-5 flex items-center gap-3">
           <span class="city-owner-mark" aria-hidden="true">{item.owner.name.slice(0, 1)}</span>
-          <div><p class="font-semibold">{item.owner.name}</p><p class="text-sm text-soft">From {item.provider}</p></div>
+          <div><p class="font-semibold">{item.owner.name}</p><p class="text-sm text-soft">{isLocalResearch ? `Reviewed ${item.checkedAt}` : `From ${item.provider}`}</p></div>
         </div>
-        <p class="mt-6 leading-relaxed text-soft">{meta.hook}</p>
+        <p class="mt-6 leading-relaxed text-soft">{isLocalResearch ? item.description : meta.hook}</p>
         <div class="mt-6 grid grid-cols-2 gap-2">
-          <div class="city-stat"><p class="ds-tag">Pins</p><p class="mt-2 text-3xl leading-none">{places.length}</p></div>
-          <div class="city-stat"><p class="ds-tag">Notes</p><p class="mt-2 text-3xl leading-none">{noteCount}</p></div>
+          <div class="city-stat"><p class="ds-tag">{isLocalResearch ? 'Resident-direct' : 'Pins'}</p><p class="mt-2 text-3xl leading-none">{isLocalResearch ? directResidentCount : places.length}</p></div>
+          <div class="city-stat"><p class="ds-tag">{isLocalResearch ? 'Safe pins' : 'Notes'}</p><p class="mt-2 text-3xl leading-none">{isLocalResearch ? resolvedCount : noteCount}</p></div>
         </div>
         <div class="mt-auto flex flex-wrap gap-2 pt-6">
-          <button type="button" class="ds-button ds-button-dark" data-city-collect>Collect {meta.label}</button>
-          <a href={item.canonicalUrl || item.sourceUrl} class="ds-button ds-button-secondary" target="_blank" rel="noopener">Open source</a>
+          <button type="button" class="ds-button ds-button-dark" data-city-collect>{isLocalResearch ? 'Save reviewed collection' : `Collect ${meta.label}`}</button>
+          <a href={item.canonicalUrl || item.sourceUrl} class="ds-button ds-button-secondary" target="_blank" rel="noopener">{isLocalResearch ? 'Open lead evidence' : 'Open source'}</a>
         </div>
         <p class="mt-3 hidden text-sm leading-relaxed text-soft" data-city-status></p>
       </div>
       <div class="city-map h-full"><CuratedCollectionMap collection={item} places={places} /></div>
     </div>
 
+    {isLocalResearch && (
+      <section class="mt-8 grid gap-4 rounded-2xl border border-line bg-surface p-5 sm:p-6 lg:grid-cols-[1fr_.8fr]" aria-labelledby="local-method-heading">
+        <div>
+          <p class="ds-eyebrow">What this slice proves</p>
+          <h2 id="local-method-heading" class="mt-2 text-3xl leading-tight">Local use is evidence, not a badge.</h2>
+          <p class="mt-3 leading-relaxed text-soft">{item.methodNote}</p>
+        </div>
+        <dl class="grid gap-2 text-sm sm:grid-cols-3 lg:grid-cols-1">
+          <div class="rounded-xl border border-line bg-white p-3"><dt class="ds-tag">Chinese local web</dt><dd class="mt-2 font-semibold">Reviewed</dd></div>
+          <div class="rounded-xl border border-line bg-white p-3"><dt class="ds-tag">Xiaohongshu</dt><dd class="mt-2 font-semibold text-soft">Not connected</dd></div>
+          <div class="rounded-xl border border-line bg-white p-3"><dt class="ds-tag">Dianping</dt><dd class="mt-2 font-semibold text-soft">Not connected</dd></div>
+        </dl>
+      </section>
+    )}
+
     <section class="mt-10" aria-labelledby="city-pins-heading">
       <div class="grid gap-4 md:grid-cols-[1fr_minmax(16rem,0.45fr)] md:items-end">
-        <div><p class="ds-eyebrow">{meta.label} pins</p><h2 id="city-pins-heading" class="mt-2 text-3xl leading-tight">Search this city, not the whole source</h2></div>
+        <div><p class="ds-eyebrow">{isLocalResearch ? 'Reviewed local-use candidates' : `${meta.label} pins`}</p><h2 id="city-pins-heading" class="mt-2 text-3xl leading-tight">{isLocalResearch ? 'See the local-use evidence before opening the map' : 'Search this city, not the whole source'}</h2></div>
         <input data-city-search class="ds-input text-sm" type="search" placeholder={`Search ${meta.label} places`} />
       </div>
       <p class="mt-3 text-sm text-soft" data-city-count>Showing {places.length} places</p>
       <div class="mt-5 grid gap-3 md:grid-cols-2" data-city-list>
         {places.map((place) => (
-          <article class="city-place-card ds-card p-4" data-city-place data-search={`${place.name} ${place.localName ?? ''} ${place.address} ${place.note}`.toLowerCase()}>
+          <article class="city-place-card ds-card p-4" data-city-place data-search={`${place.name} ${place.localName ?? ''} ${place.address} ${place.note} ${place.localUse ?? ''} ${place.evidence ?? ''} ${place.evidenceLabel ?? ''}`.toLowerCase()}>
             <div class="flex items-start justify-between gap-3">
               <div>
-                <p class="ds-tag">{meta.label} · {place.sourceProvider}</p>
+                <p class="ds-tag">{meta.label} · {place.evidenceLabel ?? place.sourceProvider}{place.resolutionState ? ` · ${place.resolutionState === 'resolved' ? 'Safe pin' : 'Review map'}` : ''}</p>
                 <h3 class="mt-2 text-2xl leading-tight">{place.name}</h3>
                 {place.localName && <p class="mt-1 font-semibold text-soft">{place.localName}</p>}
               </div>
             </div>
             <p class="mt-3 text-sm leading-relaxed text-soft">{place.address}</p>
-            {place.note && <p class="mt-3 border-t border-line pt-3 text-sm leading-relaxed text-ink"><strong>Why this pin:</strong> {place.note}</p>}
+            {place.localUse && <p class="mt-3 border-t border-line pt-3 text-sm leading-relaxed text-ink"><strong>How locals use it:</strong> {place.localUse}</p>}
+            {place.evidence && <p class="mt-3 text-sm leading-relaxed text-soft"><strong class="text-ink">What the evidence says:</strong> {place.evidence}</p>}
+            {place.travelerContext && <p class="mt-3 text-sm leading-relaxed text-soft"><strong class="text-ink">For your trip:</strong> {place.travelerContext}</p>}
+            {!place.localUse && place.note && <p class="mt-3 border-t border-line pt-3 text-sm leading-relaxed text-ink"><strong>Why this pin:</strong> {place.note}</p>}
+            {place.resolutionNote && <p class:list={['mt-3 rounded-md border p-3 text-xs leading-relaxed', place.resolutionState === 'resolved' ? 'border-success/30 bg-success/5 text-ink' : 'border-line bg-paper text-soft']}><strong>{place.resolutionState === 'resolved' ? 'Provider check passed:' : 'Provider review:'}</strong> {place.resolutionNote}</p>}
+            {place.sources && place.sources.length > 0 && (
+              <div class="mt-4 border-t border-line pt-3">
+                <p class="ds-tag">Sources</p>
+                <ul class="mt-2 grid gap-1.5">
+                  {place.sources.map((source) => <li><a href={source.url} target="_blank" rel="noopener" class="text-xs font-semibold leading-relaxed text-accent hover:underline">{source.label} ↗</a></li>)}
+                </ul>
+              </div>
+            )}
             <div class="mt-4 flex flex-wrap gap-2">
-              <a href={`https://uri.amap.com/search?keyword=${encodeURIComponent(`${place.localName || place.name} ${meta.city}`)}&view=map&src=chinatravelmadeeasy&callnative=1`} target="_blank" rel="noopener" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm">AMap</a>
-              <a href={`https://maps.apple.com/?ll=${place.latitude},${place.longitude}&q=${encodeURIComponent(`${place.localName || place.name} ${place.name}`)}`} target="_blank" rel="noopener" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm">Apple Maps</a>
+              <a href={place.providerLinks?.amap ?? `https://uri.amap.com/search?keyword=${encodeURIComponent(`${place.localName || place.name} ${meta.city}`)}&view=map&src=chinatravelmadeeasy&callnative=1`} target="_blank" rel="noopener" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm">{place.resolutionState === 'resolved' ? 'Open AMap place' : 'Review in AMap'}</a>
+              <a href={place.providerLinks?.apple ?? `https://maps.apple.com/?ll=${place.latitude},${place.longitude}&q=${encodeURIComponent(`${place.localName || place.name} ${place.name}`)}`} target="_blank" rel="noopener" class="ds-button ds-button-secondary min-h-0 px-3 py-2 text-sm">{place.resolutionState === 'resolved' ? 'Open Apple place' : 'Review in Apple Maps'}</a>
             </div>
           </article>
         ))}
@@ -114,7 +146,10 @@ const jsonLd = [
     title: `${meta.edition}: ${displayTitle}`,
     owner: item.owner.name,
     href: pagePath,
-    placeCount: places.length,
+    placeCount: isLocalResearch ? resolvedCount : places.length,
+    candidateCount: isLocalResearch ? places.length : undefined,
+    safePlaceCount: resolvedCount,
+    type: isLocalResearch ? 'local-research' : 'curated',
   })} />
 
   <script>
@@ -134,7 +169,10 @@ const jsonLd = [
 
     collectButton.addEventListener('click', async () => {
       localStorage.setItem(pendingCollectKey, JSON.stringify(payload));
-      const user = window.ctmeRequireUser ? await window.ctmeRequireUser('collect this city map to your profile') : null;
+      const action = payload.type === 'local-research'
+        ? 'save this reviewed local-use collection to your profile'
+        : 'collect this city map to your profile';
+      const user = window.ctmeRequireUser ? await window.ctmeRequireUser(action) : null;
       if (!user) return;
       completeCollect(payload);
     });

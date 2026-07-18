@@ -8,11 +8,11 @@ import {
 } from '../../data/curatedCollections';
 
 const description =
-  'China travel videos and imported place lists resolved into city-level map collections with creator evidence and bilingual identities.';
+  'Chinese-local research, China travel videos, and imported place lists curated into city-level collections with provenance and bilingual identities.';
 
 function collectionHref(collection: (typeof curatedCollections)[number], city?: CuratedCollectionRegionBucket) {
   const owner = collection.owner.slug;
-  const list = collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const list = collection.pathSlug ?? collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   return city ? `/curated/${owner}/${list}/${city}/` : `/curated/${owner}/${list}/`;
 }
 
@@ -31,12 +31,18 @@ const cityEditions = curatedCollections
         guide: curatedRegionMeta[city].guide,
         scope: curatedRegionMeta[city].scope,
         noteCount: places.filter((place) => place.note).length,
+        resolvedCount: places.filter((place) => place.resolutionState === 'resolved' || !place.resolutionState).length,
+        directResidentCount: places.filter((place) => place.evidenceGrade === 'resident-direct').length,
         href: collectionHref(collection, city),
       };
     })
   )
   .sort((a, b) => {
     if (a.scope !== b.scope) return a.scope === 'China' ? -1 : 1;
+    if (a.collection.kind !== b.collection.kind) {
+      if (a.collection.kind === 'local-research') return -1;
+      if (b.collection.kind === 'local-research') return 1;
+    }
     const cityPriority: Partial<Record<CuratedCollectionRegionBucket, number>> = { 'hong-kong': 0, shanghai: 1, beijing: 2, chongqing: 3 };
     const priorityDifference = (cityPriority[a.city] ?? 99) - (cityPriority[b.city] ?? 99);
     if (priorityDifference) return priorityDifference;
@@ -63,7 +69,9 @@ const jsonLd = [
       '@type': 'ListItem',
       position: index + 1,
       name: `${edition.meta.edition} by ${edition.collection.owner.name}`,
-      description: `${edition.count} imported pins ready to collect and remix`,
+      description: edition.collection.kind === 'local-research'
+        ? `${edition.count} locally sourced candidates with explicit evidence and map-resolution states`
+        : `${edition.count} imported pins ready to collect and remix`,
       url: `https://chinatravelmadeeasy.com${edition.href}`,
     })),
   },
@@ -99,8 +107,8 @@ const jsonLd = [
         <>
         {index === 0 && (
           <div class="border-b border-line pb-3" data-curated-section-heading="China">
-            <p class="ds-eyebrow">China traveler stories</p>
-            <h2 class="mt-2 text-3xl leading-tight">Creator evidence that survives the map handoff</h2>
+            <p class="ds-eyebrow">China local evidence and traveler stories</p>
+            <h2 class="mt-2 text-3xl leading-tight">Why locals use it, followed by the map identity</h2>
           </div>
         )}
         {index === firstImportedIndex && (
@@ -137,30 +145,30 @@ const jsonLd = [
               <h3 class="text-3xl leading-tight">{edition.meta.edition}</h3>
               <span class="ds-tag">{edition.guide}</span>
             </div>
-            <p class="mt-3 text-sm leading-relaxed text-soft">{edition.meta.focus}</p>
+            <p class="mt-3 text-sm leading-relaxed text-soft">{edition.collection.kind === 'local-research' ? edition.collection.description : edition.meta.focus}</p>
 
             <div class="mt-5 grid grid-cols-3 gap-2">
               <div class="curated-stat">
-                <p class="ds-tag">Pins</p>
+                <p class="ds-tag">{edition.collection.kind === 'local-research' ? 'Ideas' : 'Pins'}</p>
                 <p class="mt-2 text-2xl leading-none">{edition.count}</p>
               </div>
               <div class="curated-stat">
-                <p class="ds-tag">City</p>
-                <p class="mt-2 text-lg leading-none">{edition.meta.label}</p>
+                <p class="ds-tag">{edition.collection.kind === 'local-research' ? 'Resident-direct' : 'City'}</p>
+                <p class="mt-2 text-lg leading-none">{edition.collection.kind === 'local-research' ? edition.directResidentCount : edition.meta.label}</p>
               </div>
               <div class="curated-stat">
-                <p class="ds-tag">Notes</p>
-                <p class="mt-2 text-2xl leading-none">{edition.noteCount}</p>
+                <p class="ds-tag">{edition.collection.kind === 'local-research' ? 'Safe pins' : 'Notes'}</p>
+                <p class="mt-2 text-2xl leading-none">{edition.collection.kind === 'local-research' ? edition.resolvedCount : edition.noteCount}</p>
               </div>
             </div>
 
             <div class="mt-5 rounded-md border border-line bg-paper p-3">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <p class="ds-tag">Why collect</p>
-                <p class="text-xs font-semibold uppercase tracking-[0.12em] text-faint">{edition.scope === 'China' ? `${edition.collection.provider} evidence` : 'Imported source'}</p>
+                <p class="ds-tag">{edition.collection.kind === 'local-research' ? 'Evidence rule' : 'Why collect'}</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.12em] text-faint">{edition.collection.kind === 'local-research' ? `Checked ${edition.collection.checkedAt}` : edition.scope === 'China' ? `${edition.collection.provider} evidence` : 'Imported source'}</p>
               </div>
               <a class="curated-preview-copy mt-3" href={edition.href}>
-                {edition.meta.hook}
+                {edition.collection.kind === 'local-research' ? 'Direct resident testimony, local-use proxies, and official claims are labeled separately. Only provider-resolved places become safe pins.' : edition.meta.hook}
               </a>
             </div>
 
@@ -172,9 +180,10 @@ const jsonLd = [
                 data-curated-title={`${edition.meta.edition}: ${edition.collection.title}`}
                 data-curated-owner={edition.collection.owner.name}
                 data-curated-href={edition.href}
-                data-curated-count={edition.count}
+                data-curated-count={edition.collection.kind === 'local-research' ? edition.resolvedCount : edition.count}
+                data-curated-candidate-count={edition.collection.kind === 'local-research' ? edition.count : undefined}
               >
-                Collect
+                {edition.collection.kind === 'local-research' ? 'Collect research' : 'Collect'}
               </button>
               <a href={edition.href} class="ds-button ds-button-secondary">Open city</a>
             </div>
@@ -239,6 +248,7 @@ const jsonLd = [
       owner: button.dataset.curatedOwner,
       href: button.dataset.curatedHref,
       placeCount: Number(button.dataset.curatedCount || 0),
+      candidateCount: Number(button.dataset.curatedCandidateCount || 0) || undefined,
       source: 'Curated',
       savedAt: new Date().toISOString(),
     };
