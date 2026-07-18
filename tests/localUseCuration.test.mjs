@@ -30,6 +30,8 @@ test('source notes link local evidence to candidates without implying all are ma
     assert.equal(result.valid, true, `${note.id}: ${result.errors.join(', ')}`);
     assert.equal(note.originalLanguage, 'Chinese');
     assert.ok(note.candidateIds.every((id) => candidateById.has(id)));
+    assert.ok(note.sources.length >= 1);
+    assert.ok(note.sources.every((source) => source.url.startsWith('https://')));
   }
 
   const linkedCandidates = shanghaiLocalUseCollection.sourceNotes.flatMap((note) => note.candidateIds.map((id) => candidateById.get(id)));
@@ -83,6 +85,9 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(cityPage, /const saveablePlaces = isLocalResearch[\s\S]+resolutionState === 'resolved'/);
   assert.match(cityPage, /places: saveablePlaces\.map/);
   assert.match(cityPage, /providerLinks: place\.providerLinks/);
+  assert.match(cityPage, /Evidence ledger/);
+  assert.match(cityPage, /Retrieved \{note\.retrievedAt\}/);
+  assert.match(cityPage, /\(note\.sources \?\? \[\]\)\.map/);
   assert.match(curatedIndex, /const collectPayloads = Object\.fromEntries/);
   assert.match(curatedIndex, /type: isLocalResearch \? 'local-research' : 'curated'/);
   assert.match(curatedIndex, /places: saveablePlaces\.map/);

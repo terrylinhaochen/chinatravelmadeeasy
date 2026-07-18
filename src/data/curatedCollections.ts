@@ -202,6 +202,11 @@ export interface CuratedCollectionSourceNote {
   localSignal: string;
   candidateIds: string[];
   retrievedAt: string;
+  sources?: Array<{
+    label: string;
+    type: string;
+    url: string;
+  }>;
 }
 
 export interface CuratedCollection {

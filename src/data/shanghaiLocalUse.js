@@ -23,6 +23,13 @@ export const shanghaiLocalUseCollection = {
       localSignal: 'Repeat resident use turns an architecture landmark into a family-accessible riverfront stop.',
       candidateIds: ['green-hill-local-use'],
       retrievedAt: '2026-07-17',
+      sources: [
+        {
+          label: 'Chinese Youth Daily · resident interviews and usage counts',
+          type: 'resident-reporting',
+          url: 'https://k.sina.cn/article_1726918143_66eeadff02001n24w.html?from=news&subch=onews',
+        },
+      ],
     },
     {
       id: 'yangpu-child-friendly-waterfront',
@@ -32,6 +39,23 @@ export const shanghaiLocalUseCollection = {
       localSignal: 'The useful travel idea is not one viral pin; it is a slower Yangpu waterfront day with indoor fallbacks.',
       candidateIds: ['worldskills-museum-local-use', 'soap-dream-space-local-use'],
       retrievedAt: '2026-07-17',
+      sources: [
+        {
+          label: 'Chinese Youth Daily · child-friendly waterfront network',
+          type: 'local-use-reporting',
+          url: 'https://k.sina.cn/article_1726918143_66eeadff02001n24w.html?from=news&subch=onews',
+        },
+        {
+          label: 'WorldSkills Museum · current visitor contract',
+          type: 'official-operations',
+          url: 'https://worldskillsmuseum.com/visit/',
+        },
+        {
+          label: 'Yangpu government · soap factory public-space identity',
+          type: 'official-identity',
+          url: 'https://www.shyp.gov.cn/shypq/ggfw-bmgg/20220104/400267.html',
+        },
+      ],
     },
     {
       id: 'fuxing-island-neighborhood-walk',
@@ -41,6 +65,13 @@ export const shanghaiLocalUseCollection = {
       localSignal: 'Local use changes the itinerary role: this is a slow finish, not a marquee detour.',
       candidateIds: ['fuxing-island-park-local-use'],
       retrievedAt: '2026-07-17',
+      sources: [
+        {
+          label: 'Shanghai government · community-use evidence and address',
+          type: 'community-attraction-review',
+          url: 'https://www.shanghai.gov.cn/nw17239/20260126/6d318188a95549e182af3feda8d499e3.html',
+        },
+      ],
     },
   ],
   candidates: [
@@ -209,5 +240,7 @@ export function validateShanghaiLocalUseSourceNote(note, collection = shanghaiLo
   if (!Array.isArray(note?.candidateIds) || note.candidateIds.length === 0) errors.push('missing-candidate-links');
   if ((note?.candidateIds || []).some((id) => !candidateIds.has(id))) errors.push('unknown-candidate-link');
   if (note?.retrievedAt && Number.isNaN(Date.parse(note.retrievedAt))) errors.push('invalid-retrieved-date');
+  if (!Array.isArray(note?.sources) || note.sources.length === 0) errors.push('missing-source-note-evidence');
+  if ((note?.sources || []).some((source) => !source?.label || !source?.type || !source?.url?.startsWith('https://'))) errors.push('invalid-source-note-evidence');
   return { valid: errors.length === 0, errors };
 }
