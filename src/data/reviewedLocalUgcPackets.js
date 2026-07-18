@@ -4,6 +4,9 @@ export const reviewedLocalUgcPackets = [
     platform: 'Xiaohongshu-style UGC packet',
     sourceAccess: 'operator-reviewed seed',
     livePlatformRetrieval: false,
+    reviewedAt: '2026-07-18',
+    sourceBoundary: 'Seeded from an operator-reviewed Chinese UGC-style caption. No live Xiaohongshu retrieval or platform ranking is claimed.',
+    providerCheckedAt: '2026-07-18',
     city: 'Shanghai',
     language: 'Chinese',
     title: 'A slow Yangpu riverfront day instead of a skyline checklist',
@@ -83,6 +86,9 @@ export function validateReviewedLocalUgcPacket(packet) {
   const errors = [];
   if (!packet?.id || !packet?.title || !packet?.hook) errors.push('missing-packet-identity');
   if (!packet?.platform || !packet?.sourceAccess) errors.push('missing-source-boundary');
+  if (!packet?.reviewedAt || Number.isNaN(Date.parse(packet.reviewedAt))) errors.push('missing-reviewed-date');
+  if (!packet?.providerCheckedAt || Number.isNaN(Date.parse(packet.providerCheckedAt))) errors.push('missing-provider-check-date');
+  if (!packet?.sourceBoundary || !/No live/i.test(packet.sourceBoundary)) errors.push('missing-source-boundary-copy');
   if (packet?.livePlatformRetrieval !== false) errors.push('must-not-claim-live-platform-retrieval');
   if (!packet?.originalCue || !/[\u3400-\u9fff]/u.test(packet.originalCue)) errors.push('missing-chinese-cue');
   if (!packet?.cueMeaning || packet.cueMeaning.length < 24) errors.push('missing-cue-meaning');

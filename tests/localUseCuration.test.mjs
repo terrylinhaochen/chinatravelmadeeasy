@@ -173,6 +173,12 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /firstPlace\.travelerAction/);
   assert.match(profilePage, /firstPlace\.originalCue/);
   assert.match(profilePage, /firstPlace\.cueMeaning/);
+  assert.match(profilePage, /firstPlace\.sourceBoundary/);
+  assert.match(profilePage, /UGC boundary:/);
+  assert.match(profilePage, /firstPlace\.sourceEvidence/);
+  assert.match(profilePage, /Source evidence:/);
+  assert.match(profilePage, /firstPlace\.reviewedAt/);
+  assert.match(profilePage, /provider checked/);
   assert.match(profilePage, /reviewLeadCount = Math\.max/);
   assert.match(profilePage, /Review ' \+ reviewLeadCount \+ ' unresolved local lead/);
   assert.match(profilePage, /evidenceHref = \(collection\.href \|\| '\/curated\/'\) \+ \(isLocalResearch \? '#source-notes-heading' : ''\)/);
@@ -223,6 +229,12 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(discoverPage, /operator-reviewed Chinese UGC packet/);
   assert.match(discoverPage, /local-grid cells/);
   assert.match(discoverPage, /Local grid mapping/);
+  assert.match(discoverPage, /UGC boundary/);
+  assert.match(discoverPage, /Packet reviewed/);
+  assert.match(discoverPage, /Provider checked/);
+  assert.match(discoverPage, /packet\.sourceBoundary/);
+  assert.match(discoverPage, /packet\.reviewedAt/);
+  assert.match(discoverPage, /packet\.providerCheckedAt/);
   assert.match(discoverPage, /saveable cell/);
   assert.match(discoverPage, /review cell/);
   assert.match(discoverPage, /candidate\.gridCell\.sourceEvidence/);
@@ -286,6 +298,9 @@ test('reviewed Chinese UGC packets are visible without claiming live platform re
     const result = validateReviewedLocalUgcPacket(packet);
     assert.equal(result.valid, true, `${packet.id}: ${result.errors.join(', ')}`);
     assert.equal(packet.livePlatformRetrieval, false);
+    assert.equal(packet.reviewedAt, '2026-07-18');
+    assert.equal(packet.providerCheckedAt, '2026-07-18');
+    assert.match(packet.sourceBoundary, /No live Xiaohongshu retrieval/);
     assert.match(packet.originalCue, /[\u3400-\u9fff]/u);
     assert.match(packet.evidenceText, /[\u3400-\u9fff]/u);
     assert.ok(packet.reviewGates.some((gate) => gate.label === 'Provider identity'));
@@ -312,6 +327,7 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence \+ one seeded reviewed Chinese UGC packet → evidence-graded guide candidates → one provider-resolved saved pin/);
   assert.match(acceptanceDoc, /Reviewed UGC is discoverable before save/);
   assert.match(acceptanceDoc, /UGC save follows the grid decision/);
+  assert.match(acceptanceDoc, /UGC provenance remains visible after saving/);
   assert.match(acceptanceDoc, /Save UGC-mapped pin/);
   assert.match(acceptanceDoc, /reviewed UGC safe-pin save-to-Profile/);
   assert.match(acceptanceDoc, /Not live platform retrieval/);

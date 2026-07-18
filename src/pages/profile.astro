@@ -209,6 +209,9 @@ const jsonLd = [
               (firstPlace.tripRole ? '<p class="mt-2"><strong class="text-ink">Trip role:</strong> ' + escapeHtml(firstPlace.tripRole) + '</p>' : '') +
               (firstPlace.travelerAction ? '<p class="mt-2"><strong class="text-ink">Next action:</strong> ' + escapeHtml(firstPlace.travelerAction) + '</p>' : '') +
               (firstPlace.originalCue ? '<p class="mt-2"><strong class="text-ink">Original cue:</strong> <span class="font-semibold text-ink">' + escapeHtml(firstPlace.originalCue) + '</span>' + (firstPlace.cueMeaning ? '<span class="block pt-1">' + escapeHtml(firstPlace.cueMeaning) + '</span>' : '') + '</p>' : '') +
+              (firstPlace.sourceBoundary ? '<p class="mt-2"><strong class="text-ink">UGC boundary:</strong> ' + escapeHtml(firstPlace.sourceBoundary) + '</p>' : '') +
+              (firstPlace.sourceEvidence ? '<p class="mt-2"><strong class="text-ink">Source evidence:</strong> ' + escapeHtml(firstPlace.sourceEvidence) + '</p>' : '') +
+              (firstPlace.reviewedAt || firstPlace.providerCheckedAt ? '<p class="mt-2"><strong class="text-ink">Freshness:</strong> ' + (firstPlace.reviewedAt ? 'packet reviewed ' + escapeHtml(firstPlace.reviewedAt) : '') + (firstPlace.reviewedAt && firstPlace.providerCheckedAt ? ' · ' : '') + (firstPlace.providerCheckedAt ? 'provider checked ' + escapeHtml(firstPlace.providerCheckedAt) : '') + '</p>' : '') +
             '</div>'
           : '';
         const mapLinks = firstPlace

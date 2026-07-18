@@ -92,6 +92,11 @@ const localUgcSavePayloads = Object.fromEntries(reviewedLocalUgcPackets.map((pac
       address: candidate.address || '',
       note: packet.travelerRead,
       evidenceLabel: packet.localUseLabel,
+      sourceAccess: packet.sourceAccess,
+      sourceBoundary: packet.sourceBoundary,
+      sourceEvidence: candidate.gridCell.sourceEvidence,
+      reviewedAt: packet.reviewedAt,
+      providerCheckedAt: packet.providerCheckedAt,
       tripRole: candidate.gridCell.travelerDecision,
       travelerAction: candidate.gridCell.providerIdentity,
       originalCue: packet.originalCue,
@@ -140,7 +145,7 @@ const localGuideSearchText = [
   ...localGuideSourceNotes.flatMap((note) => [note.platform, note.title, note.originalLanguage, note.localSignal]),
   ...localGuideSourceNotes.flatMap((note) => [note.originalCue ?? '', note.cueMeaning ?? '']),
   ...localGuideCandidates.flatMap((place) => [place.name, place.localName ?? '', place.address, place.localUse ?? '', place.evidence ?? '', place.travelerContext ?? '', place.evidenceLabel ?? '', place.originalCue ?? '', place.cueMeaning ?? '']),
-  ...reviewedLocalUgcPackets.flatMap((packet) => [packet.platform, packet.sourceAccess, packet.title, packet.hook, packet.originalCue, packet.evidenceText, packet.travelerRead, packet.localUseLabel]),
+  ...reviewedLocalUgcPackets.flatMap((packet) => [packet.platform, packet.sourceAccess, packet.sourceBoundary, packet.reviewedAt, packet.providerCheckedAt, packet.title, packet.hook, packet.originalCue, packet.evidenceText, packet.travelerRead, packet.localUseLabel]),
   ...reviewedLocalUgcPackets.flatMap((packet) => packet.candidates.flatMap((candidate) => [
     candidate.name,
     candidate.localName,
@@ -320,6 +325,11 @@ const jsonLd = [
                       <span class="font-semibold">Original cue:</span> {packet.originalCue}
                       <span class="block text-soft">{packet.cueMeaning}</span>
                     </p>
+                    <dl class="mt-3 grid gap-2 rounded-md border border-line bg-white px-3 py-2 text-xs leading-relaxed text-soft sm:grid-cols-3">
+                      <div><dt class="font-semibold text-ink">UGC boundary</dt><dd>{packet.sourceBoundary}</dd></div>
+                      <div><dt class="font-semibold text-ink">Packet reviewed</dt><dd>{packet.reviewedAt}</dd></div>
+                      <div><dt class="font-semibold text-ink">Provider checked</dt><dd>{packet.providerCheckedAt}</dd></div>
+                    </dl>
                     <p class="mt-3 text-sm leading-relaxed text-soft">{packet.travelerRead}</p>
                     <div class="mt-4 grid gap-2 sm:grid-cols-2">
                       {packet.candidates.map((candidate) => (
