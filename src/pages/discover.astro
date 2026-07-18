@@ -69,6 +69,33 @@ const localGuideSourceNotes = yangpuLocalUseCollection.sourceNotes ?? [];
 const localGuideSafePins = localGuideCandidates.filter((place) => place.resolutionState === 'resolved').length;
 const localGuideDirectResident = localGuideCandidates.filter((place) => place.evidenceGrade === 'resident-direct').length;
 const localGuideReviewLeads = localGuideCandidates.length - localGuideSafePins;
+const localMfpStatus = [
+  {
+    label: 'Reviewed Chinese local grid',
+    state: 'Proven in this slice',
+    body: `${localGuideCandidates.length} Shanghai candidates preserve Chinese cues, local-use grades, trip roles, and source links.`,
+  },
+  {
+    label: 'UGC review packets',
+    state: 'Functional locally',
+    body: 'A Xiaohongshu, Dianping, short-video, map, caption, or OCR lead can be saved as a local-grid review packet.',
+  },
+  {
+    label: 'Map-ready save',
+    state: `${localGuideSafePins} safe pin`,
+    body: `Only provider-resolved places save to Profile; ${localGuideReviewLeads} leads remain review-first.`,
+  },
+  {
+    label: 'Live Chinese-platform retrieval',
+    state: 'Not live yet',
+    body: 'Xiaohongshu, Dianping, and Douyin adapters are not connected in the public MFP.',
+  },
+  {
+    label: 'Production provider resolver',
+    state: 'Not live yet',
+    body: 'AMap/Apple identity checks are represented by reviewed seed data, not a production resolver.',
+  },
+];
 const localGuideSearchText = [
   yangpuLocalUseCollection.title,
   yangpuLocalUseCollection.description,
@@ -227,6 +254,21 @@ const jsonLd = [
               <p><span class="font-semibold text-ink">{localGuideReviewLeads} review leads stay visible</span> → useful ideas remain attached to evidence without becoming false pins.</p>
             </div>
             <p class="mt-3 border-t border-line pt-3 text-xs leading-relaxed text-soft">Adding a source opens a scoped review packet for local wording, translation, duplicate checks, and provider resolution.</p>
+          </div>
+          <div class="rounded-2xl border border-line bg-ink p-4 text-white">
+            <p class="ds-eyebrow text-white/60">MFP status</p>
+            <h3 class="mt-2 text-xl leading-tight">What is actually functional today?</h3>
+            <div class="mt-4 grid gap-2">
+              {localMfpStatus.map((item) => (
+                <div class="rounded-xl border border-white/15 bg-white/10 p-3">
+                  <div class="flex flex-wrap items-start justify-between gap-2">
+                    <p class="text-sm font-semibold">{item.label}</p>
+                    <span class="rounded-full bg-white px-2 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-ink">{item.state}</span>
+                  </div>
+                  <p class="mt-2 text-xs leading-relaxed text-white/70">{item.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <div class="grid gap-3 sm:grid-cols-3">
             {localGuideSourceNotes.map((note) => {

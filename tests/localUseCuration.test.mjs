@@ -207,6 +207,15 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(discoverPage, /Add it as a UGC review packet first/);
   assert.match(discoverPage, /local wording and provider identity are checked/);
   assert.match(discoverPage, /From Chinese source to map-ready pin/);
+  assert.match(discoverPage, /const localMfpStatus = \[/);
+  assert.match(discoverPage, /MFP status/);
+  assert.match(discoverPage, /What is actually functional today\?/);
+  assert.match(discoverPage, /Reviewed Chinese local grid/);
+  assert.match(discoverPage, /UGC review packets/);
+  assert.match(discoverPage, /Map-ready save/);
+  assert.match(discoverPage, /Live Chinese-platform retrieval/);
+  assert.match(discoverPage, /Production provider resolver/);
+  assert.match(discoverPage, /Not live yet/);
   assert.match(discoverPage, /Chinese local source/);
   assert.match(discoverPage, /Evidence-graded candidate/);
   assert.match(discoverPage, /Original cue:/);
