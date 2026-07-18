@@ -118,6 +118,9 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapImportPage, /xiaohongshu-yangpu/);
   assert.match(mapImportPage, /Green Hill \/ 绿之丘/);
   assert.match(mapImportPage, /Fuxing Island Park \/ 复兴岛公园/);
+  assert.match(mapImportPage, /source-derived candidates, not provider-verified pins/);
+  assert.match(mapImportPage, /Structured source line · verify provider/);
+  assert.match(mapImportPage, /Known name match · verify provider/);
   assert.match(mapImportPage, /Started a scoped local-source review packet/);
   assert.match(mapImportPage, /data-contribution-stage-list/);
   assert.match(mapImportPage, /localKnowledgeReviewStages\(submission\)/);
