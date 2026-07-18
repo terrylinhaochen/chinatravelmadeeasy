@@ -47,10 +47,16 @@ test("local-language research is an owner-only queued agent workflow", async () 
 
 test("video submission uses atomic service-only RPCs", async () => {
   const submit = await read("supabase/functions/submit-video/index.ts");
+  const shared = await read("supabase/functions/_shared/ctme.ts");
   const migration = await read("supabase/migrations/20260713072317_backend_contract_hardening.sql");
 
   assert.match(submit, /rpc\("consume_submission_rate_limit"/);
   assert.match(submit, /rpc\("register_video_submission"/);
+  assert.match(submit, /destinationSlugForCity/);
+  assert.match(submit, /destinationSlug/);
+  assert.match(shared, /export function destinationSlugForCity/);
+  assert.match(shared, /Hong Kong[\s\S]+"hong-kong"/);
+  assert.match(shared, /Shanghai[\s\S]+"shanghai"/);
   assert.match(migration, /create or replace function public\.register_video_submission/);
   assert.match(migration, /pg_advisory_xact_lock/);
   assert.match(migration, /insert into ctme_private\.ingestion_jobs/);
@@ -62,7 +68,17 @@ test("video submission uses atomic service-only RPCs", async () => {
 test("unpublished extraction evidence is not returned by video status", async () => {
   const status = await read("supabase/functions/video-status/index.ts");
   assert.match(status, /publication_state !== "published"[\s\S]+?places: \[\]/);
+  assert.match(status, /\.select\("id,slug,city,publication_state"\)/);
+  assert.match(status, /destinationSlug: destinationSlugForCity\(video\.city\)/);
   assert.match(status, /\.eq\("resolution_state", "resolved"\)/);
+});
+
+test("published video snapshots keep destination context for guide-first routing", async () => {
+  const materializer = await read("pipeline/materialize_video_snapshots.mjs");
+
+  assert.match(materializer, /destinationSlugByCity/);
+  assert.match(materializer, /\['Shanghai', 'shanghai'\]/);
+  assert.match(materializer, /destinationSlug: destinationSlugByCity\.get\(record\.city\) \|\| undefined/);
 });
 
 test("official metadata worker consumes the private queue through service-only RPCs", async () => {

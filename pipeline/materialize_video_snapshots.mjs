@@ -18,11 +18,17 @@ const url = `${base}/rest/v1/videos?publication_state=eq.published&select=${enco
 const response = await fetch(url, { headers: { apikey: key, Authorization: `Bearer ${key}` } });
 if (!response.ok) throw new Error(`Snapshot request failed: ${response.status} ${await response.text()}`);
 const records = await response.json();
+const destinationSlugByCity = new Map([
+  ['Hong Kong', 'hong-kong'],
+  ['Shanghai', 'shanghai'],
+  ['Beijing', 'beijing'],
+  ['Chongqing', 'chongqing'],
+]);
 const snapshots = records.map((record) => {
   const metrics = [...(record.video_metric_snapshots || [])].sort((a, b) => String(b.captured_at).localeCompare(String(a.captured_at)))[0] || {};
   return {
     id: record.id, slug: record.slug, platform: record.platform, externalId: record.external_video_id, sourceUrl: record.canonical_url,
-    title: record.title, creator: record.creator_name, city: record.city, poster: record.poster_url,
+    title: record.title, creator: record.creator_name, city: record.city, destinationSlug: destinationSlugByCity.get(record.city) || undefined, poster: record.poster_url,
     publishedAt: record.source_published_at?.slice(0, 10), checkedAt: record.metadata_checked_at?.slice(0, 10), durationSeconds: 0,
     verdict: record.experience_label || 'mixed', summary: record.summary || '', views: metrics.views, likes: metrics.likes, comments: metrics.comments,
     saves: 0, wentCount: 0, helpfulCount: 0,
@@ -34,4 +40,3 @@ const snapshots = records.map((record) => {
 });
 await writeFile(output, `${JSON.stringify(snapshots, null, 2)}\n`);
 console.log(`Materialized ${snapshots.length} published videos into ${output}.`);
-

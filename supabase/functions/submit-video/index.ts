@@ -1,6 +1,6 @@
 import "@supabase/functions-js/edge-runtime.d.ts";
 import { withSupabase } from "@supabase/server";
-import { admin, errorMessage, fingerprint, json, parseVideoUrl, preflight, verifyTurnstile } from "../_shared/ctme.ts";
+import { admin, destinationSlugForCity, errorMessage, fingerprint, json, parseVideoUrl, preflight, verifyTurnstile } from "../_shared/ctme.ts";
 
 type RateLimitResult = {
   allowed: boolean;
@@ -45,9 +45,15 @@ export default {
       if (submissionError) throw submissionError;
       const submission = submissionData as SubmissionResult | null;
       if (!submission) throw new Error("submission_failed");
+      let destinationSlug = null;
+      if (submission.status === "published") {
+        const { data: video } = await db.from("videos").select("city").eq("id", submission.video_id).maybeSingle();
+        destinationSlug = destinationSlugForCity(video?.city);
+      }
       return json({
         videoId: submission.video_id,
         slug: submission.video_slug,
+        destinationSlug,
         status: submission.status,
         cached: submission.cached,
       }, submission.cached ? 200 : 202);
