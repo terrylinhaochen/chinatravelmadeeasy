@@ -220,3 +220,30 @@ export function localKnowledgeReviewChecklist(submission) {
     ],
   };
 }
+
+export function localKnowledgeReviewStages(submission) {
+  const checklist = localKnowledgeReviewChecklist(submission);
+  const hasProviderLink = Boolean(submission?.localMapUrl);
+  return [
+    {
+      id: 'ugc-packet',
+      label: 'UGC evidence packet',
+      state: checklist.valid ? 'ready' : 'needs-input',
+      body: 'Original local wording, source ecosystem, and why-it-matters are preserved for review.',
+    },
+    {
+      id: 'guide-candidate',
+      label: 'Guide candidate',
+      state: checklist.valid ? 'review-pending' : 'blocked',
+      body: 'Translation, duplicate checks, and evidence grading still need review before this can enter a public guide.',
+    },
+    {
+      id: 'map-ready-pin',
+      label: 'Map-ready pin',
+      state: hasProviderLink ? 'provider-supplied' : 'not-ready',
+      body: hasProviderLink
+        ? 'A map link was supplied, but CTME still needs to verify provider identity before automatic save.'
+        : 'No automatic save until AMap/Apple or the relevant local provider identity is verified.',
+    },
+  ];
+}

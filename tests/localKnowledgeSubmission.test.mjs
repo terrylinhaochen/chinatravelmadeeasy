@@ -7,6 +7,7 @@ import {
   createLocalKnowledgeSubmission,
   inferContributionPlatform,
   localKnowledgeReviewChecklist,
+  localKnowledgeReviewStages,
   localKnowledgeSubmissionKey,
   validateLocalKnowledgeSubmission,
 } from '../src/utils/localKnowledgeSubmission.js';
@@ -77,6 +78,20 @@ test('review checklist keeps provider identity separate from content completenes
   assert.equal(checklist.valid, true);
   assert.equal(checklist.checks.find((check) => check.id === 'provider').ready, false);
   assert.equal(checklist.checks.find((check) => check.id === 'original-evidence').ready, true);
+});
+
+test('review stages keep UGC evidence separate from map-ready pins', () => {
+  const withoutProvider = createLocalKnowledgeSubmission({ ...baseInput, localMapUrl: '' });
+  const withoutProviderStages = localKnowledgeReviewStages(withoutProvider);
+  assert.deepEqual(withoutProviderStages.map((stage) => stage.id), ['ugc-packet', 'guide-candidate', 'map-ready-pin']);
+  assert.equal(withoutProviderStages.find((stage) => stage.id === 'ugc-packet').state, 'ready');
+  assert.equal(withoutProviderStages.find((stage) => stage.id === 'guide-candidate').state, 'review-pending');
+  assert.equal(withoutProviderStages.find((stage) => stage.id === 'map-ready-pin').state, 'not-ready');
+  assert.match(withoutProviderStages.find((stage) => stage.id === 'map-ready-pin').body, /No automatic save/);
+
+  const withProviderStages = localKnowledgeReviewStages(createLocalKnowledgeSubmission(baseInput));
+  assert.equal(withProviderStages.find((stage) => stage.id === 'map-ready-pin').state, 'provider-supplied');
+  assert.match(withProviderStages.find((stage) => stage.id === 'map-ready-pin').body, /verify provider identity/);
 });
 
 test('review queue merges duplicate evidence without collapsing different places from one post', () => {

@@ -182,6 +182,8 @@ const jsonLd = [
           <p class="ds-eyebrow">Review packet ready</p>
           <h3 id="contribution-result-heading" class="mt-2 text-2xl font-bold" data-contribution-title></h3>
           <p class="mt-2 max-w-3xl text-sm leading-relaxed text-soft">The record is saved on this device only. Download it or prepare an email to send it for human review.</p>
+          <p class="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-faint">UGC evidence packet → guide candidate → Map-ready pin</p>
+          <ol class="mt-5 grid gap-2 sm:grid-cols-3" data-contribution-stage-list></ol>
           <ul class="mt-5 grid gap-2 sm:grid-cols-2" data-contribution-checklist></ul>
           <div class="mt-6 flex flex-wrap gap-3">
             <button type="button" class="ds-button ds-button-dark" data-contribution-email>Prepare review email</button>
@@ -296,6 +298,7 @@ const jsonLd = [
       createLocalKnowledgeSubmission,
       inferContributionPlatform,
       localKnowledgeReviewChecklist,
+      localKnowledgeReviewStages,
       validateLocalKnowledgeSubmission,
     } from '../utils/localKnowledgeSubmission.js';
 
@@ -331,6 +334,7 @@ const jsonLd = [
     const contributionStatus = document.querySelector('[data-contribution-status]');
     const contributionResult = document.querySelector('[data-contribution-result]');
     const contributionTitle = document.querySelector('[data-contribution-title]');
+    const contributionStageList = document.querySelector('[data-contribution-stage-list]');
     const contributionChecklist = document.querySelector('[data-contribution-checklist]');
     const sampleSources = {
       'tiktok-shanghai': {
@@ -479,7 +483,15 @@ const jsonLd = [
 
     function renderContributionResult(submission) {
       const review = localKnowledgeReviewChecklist(submission);
+      const stages = localKnowledgeReviewStages(submission);
       contributionTitle.textContent = submission.originalName + ' · ' + submission.city;
+      contributionStageList.innerHTML = stages.map((stage) =>
+        '<li class="rounded-2xl border border-line bg-white p-3 text-sm leading-relaxed">' +
+          '<strong class="block text-ink">' + escapeHtml(stage.label) + '</strong>' +
+          '<span class="mt-1 inline-flex rounded-full bg-paper px-2 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-soft">' + escapeHtml(stage.state) + '</span>' +
+          '<span class="mt-2 block text-xs text-soft">' + escapeHtml(stage.body) + '</span>' +
+        '</li>'
+      ).join('');
       contributionChecklist.innerHTML = review.checks.map((check) =>
         '<li class="rounded-2xl border border-line bg-white p-3 text-sm"><strong class="text-ink">' + (check.ready ? 'Ready' : 'Needs review') + '</strong><span class="ml-2 text-soft">' + escapeHtml(check.label) + '</span></li>'
       ).join('');

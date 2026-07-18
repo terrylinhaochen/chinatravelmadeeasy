@@ -115,6 +115,10 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapImportPage, /allowedPlatforms = new Set\(\['xiaohongshu', 'dianping'/);
   assert.match(mapImportPage, /contributionForm\.elements\.namedItem\(name\)/);
   assert.match(mapImportPage, /Started a scoped local-source review packet/);
+  assert.match(mapImportPage, /data-contribution-stage-list/);
+  assert.match(mapImportPage, /localKnowledgeReviewStages\(submission\)/);
+  assert.match(mapImportPage, /UGC evidence packet/);
+  assert.match(mapImportPage, /Map-ready pin/);
   assert.match(cityPage, /Evidence ledger/);
   assert.match(cityPage, /Original-language cue/);
   assert.match(cityPage, /place\.originalCue/);
