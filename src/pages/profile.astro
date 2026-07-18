@@ -215,6 +215,11 @@ const jsonLd = [
               (firstPlace.providerLinks?.apple ? '<a class="text-sm font-semibold text-ink hover:text-accent" target="_blank" rel="noopener" href="' + escapeHtml(firstPlace.providerLinks.apple) + '">Open saved Apple pin</a>' : '') +
             '</div>'
           : '';
+        const reviewLeadCount = Math.max(0, Number(collection.candidateCount || 0) - Number(collection.safePlaceCount || collection.placeCount || places.length || 0));
+        const evidenceHref = (collection.href || '/curated/') + (isLocalResearch ? '#source-notes-heading' : '');
+        const reviewLeadLink = isLocalResearch && reviewLeadCount
+          ? '<a class="text-sm font-semibold text-ink hover:text-accent" href="' + escapeHtml(evidenceHref) + '">Review ' + reviewLeadCount + ' unresolved local lead' + (reviewLeadCount === 1 ? '' : 's') + '</a>'
+          : '';
         return '<article class="profile-saved-card">' +
           '<div><p class="ds-tag">' + escapeHtml(collection.owner || collection.source || 'Local Guide') + '</p>' +
           '<h3 class="mt-1 text-xl leading-tight">' + escapeHtml(collection.title || 'Collected map') + '</h3></div>' +
@@ -223,6 +228,7 @@ const jsonLd = [
           localContext +
           '<div class="mt-3 flex flex-wrap gap-3">' +
             '<a class="text-sm font-semibold text-ink hover:text-accent" href="' + escapeHtml(collection.href || '/curated/') + '">Open guide</a>' +
+            reviewLeadLink +
           '</div>' +
           mapLinks +
         '</article>';

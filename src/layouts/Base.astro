@@ -198,8 +198,10 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
       window.ctmeRequireUser = function requireUser(actionCopy = 'save this to your profile') {
         const existing = getUser();
         if (existing) return Promise.resolve(existing);
-        modalCopy.textContent = isSupabaseConfigured()
+        modalCopy.textContent = isSupabaseConfigured() && !isLocalPrototypeHost()
           ? 'Enter an email to ' + actionCopy + '. We will send a magic link and return you to this page to finish the action.'
+          : isSupabaseConfigured()
+            ? 'Enter an email to ' + actionCopy + '. Localhost continues in this browser for dogfooding; production still uses the email link.'
           : 'Enter an email to ' + actionCopy + '. This local prototype stores it in this browser.';
         modalError.classList.add('hidden');
         modal.classList.remove('is-hidden');
@@ -217,6 +219,12 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
         }
         modalSubmit.disabled = true;
         modalSubmit.textContent = 'Sending...';
+        if (isSupabaseConfigured() && isLocalPrototypeHost()) {
+          modalSubmit.disabled = false;
+          modalSubmit.textContent = 'Continue';
+          resolveSignin(setUser(email, { authProvider: 'localhost-preview' }));
+          return;
+        }
         if (isSupabaseConfigured()) {
           const nextPath = window.location.pathname + window.location.search;
           const result = await sendSupabaseEmailLink(email, nextPath || '/profile/');
@@ -240,6 +248,10 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
         modal.classList.add('is-hidden');
         if (signinResolver) signinResolver(user);
         signinResolver = null;
+      }
+
+      function isLocalPrototypeHost() {
+        return ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
       }
 
       function renderSignedInState() {

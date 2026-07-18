@@ -87,6 +87,7 @@ test('the city collection save payload carries only map-ready local pins into Pr
     readFile(new URL('../src/pages/map-import.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/pages/discover.astro', import.meta.url), 'utf8'),
   ]);
+  const baseLayout = await readFile(new URL('../src/layouts/Base.astro', import.meta.url), 'utf8');
 
   assert.match(cityPage, /const saveablePlaces = isLocalResearch[\s\S]+resolutionState === 'resolved'/);
   assert.match(cityPage, /places: saveablePlaces\.map/);
@@ -149,6 +150,9 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /Why this pin survived review/);
   assert.match(profilePage, /firstPlace\.originalCue/);
   assert.match(profilePage, /firstPlace\.cueMeaning/);
+  assert.match(profilePage, /reviewLeadCount = Math\.max/);
+  assert.match(profilePage, /Review ' \+ reviewLeadCount \+ ' unresolved local lead/);
+  assert.match(profilePage, /evidenceHref = \(collection\.href \|\| '\/curated\/'\) \+ \(isLocalResearch \? '#source-notes-heading' : ''\)/);
   assert.match(profilePage, /Local evidence packets/);
   assert.match(profilePage, /ctme-local-knowledge-contributions-v1/);
   assert.match(profilePage, /function renderLocalEvidence\(packets\)/);
@@ -166,6 +170,10 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /Add another source like this/);
   assert.match(profilePage, /Open original source/);
   assert.match(profilePage, /Open local map/);
+  assert.match(baseLayout, /function isLocalPrototypeHost\(\)/);
+  assert.match(baseLayout, /\['localhost', '127\.0\.0\.1', '::1'\]\.includes\(window\.location\.hostname\)/);
+  assert.match(baseLayout, /authProvider: 'localhost-preview'/);
+  assert.match(baseLayout, /production still uses the email link/);
   assert.match(discoverPage, /const localGuideContributionHref = '\/map-import\/\?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute'/);
   assert.match(discoverPage, /Add Chinese source/);
   assert.match(discoverPage, /From Chinese source to map-ready pin/);
