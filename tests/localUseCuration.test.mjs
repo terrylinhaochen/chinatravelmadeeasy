@@ -106,6 +106,8 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(cityPage, /Direct resident testimony/);
   assert.match(cityPage, /Corroborated local-use signal/);
   assert.match(cityPage, /Community-program proxy/);
+  assert.match(cityPage, /UGC intake/);
+  assert.match(cityPage, /Review packet only/);
   assert.match(cityPage, /Found a Chinese post locals actually use\?/);
   assert.match(cityPage, /const localContributionHref = `\/map-import\/\?contributionCity=\$\{encodeURIComponent\(meta\.city\)\}&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute`/);
   assert.match(cityPage, /href=\{localContributionHref\}/);
@@ -181,6 +183,8 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(discoverPage, /Start with what Shanghai locals use, then save only the pin that survives review/);
   assert.match(discoverPage, /Open evidence ledger/);
   assert.match(discoverPage, /Save reviewed pin/);
+  assert.match(discoverPage, /Add it as a UGC review packet first/);
+  assert.match(discoverPage, /local wording and provider identity are checked/);
   assert.match(discoverPage, /From Chinese source to map-ready pin/);
   assert.match(discoverPage, /Chinese local source/);
   assert.match(discoverPage, /Evidence-graded candidate/);
