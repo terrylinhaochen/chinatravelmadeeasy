@@ -181,6 +181,8 @@ export interface CuratedCollectionPlace {
   travelerContext?: string;
   evidenceGrade?: 'resident-direct' | 'local-use-corroborated' | 'local-use-proxy';
   evidenceLabel?: string;
+  originalCue?: string;
+  cueMeaning?: string;
   resolutionState?: 'resolved' | 'probable' | 'unresolved';
   resolutionNote?: string;
   providerLinks?: {
@@ -199,6 +201,8 @@ export interface CuratedCollectionSourceNote {
   platform: string;
   title: string;
   originalLanguage: string;
+  originalCue?: string;
+  cueMeaning?: string;
   localSignal: string;
   candidateIds: string[];
   retrievedAt: string;
@@ -1180,6 +1184,8 @@ export const yangpuLocalUseCollection: CuratedCollection = {
     travelerContext: candidate.travelerContext,
     evidenceGrade: candidate.evidenceGrade,
     evidenceLabel: candidate.evidenceLabel,
+    originalCue: candidate.originalCue,
+    cueMeaning: candidate.cueMeaning,
     resolutionState: candidate.resolutionState,
     resolutionNote: candidate.resolutionNote,
     providerLinks: candidate.providerLinks,

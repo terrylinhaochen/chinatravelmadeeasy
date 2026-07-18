@@ -29,6 +29,8 @@ test('source notes link local evidence to candidates without implying all are ma
     const result = validateShanghaiLocalUseSourceNote(note);
     assert.equal(result.valid, true, `${note.id}: ${result.errors.join(', ')}`);
     assert.equal(note.originalLanguage, 'Chinese');
+    assert.ok(note.originalCue, `${note.id}: missing original-language cue`);
+    assert.ok(note.cueMeaning, `${note.id}: missing original-language cue meaning`);
     assert.ok(note.candidateIds.every((id) => candidateById.has(id)));
     assert.ok(note.sources.length >= 1);
     assert.ok(note.sources.every((source) => source.url.startsWith('https://')));
@@ -44,6 +46,8 @@ test('every local-use candidate preserves bilingual identity, traveler context, 
     const result = validateShanghaiLocalUseCandidate(candidate);
     assert.equal(result.valid, true, `${candidate.id}: ${result.errors.join(', ')}`);
     assert.match(candidate.address, /[\u3400-\u9fff]/u);
+    assert.match(candidate.originalCue, /[\u3400-\u9fff]/u);
+    assert.ok(candidate.cueMeaning.length >= 24);
     assert.ok(candidate.sources.every((source) => source.url.startsWith('https://')));
   }
 });
@@ -110,6 +114,9 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapImportPage, /contributionForm\.elements\.namedItem\(name\)/);
   assert.match(mapImportPage, /Started a scoped local-source review packet/);
   assert.match(cityPage, /Evidence ledger/);
+  assert.match(cityPage, /Original-language cue/);
+  assert.match(cityPage, /place\.originalCue/);
+  assert.match(cityPage, /place\.cueMeaning/);
   assert.match(cityPage, /linkedCandidates: linkedCandidates\.map/);
   assert.match(cityPage, /Follow this evidence to the map/);
   assert.match(cityPage, /href=\{`#\$\{candidate\.id\}`\}/);
@@ -142,6 +149,8 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(discoverPage, /From Chinese source to map-ready pin/);
   assert.match(discoverPage, /Chinese local source/);
   assert.match(discoverPage, /Evidence-graded candidate/);
+  assert.match(discoverPage, /Original cue:/);
+  assert.match(discoverPage, /note\.originalCue/);
   assert.match(discoverPage, /review leads stay visible/);
   assert.match(discoverPage, /scoped review packet/);
   assert.match(mapComponent, /<a[\s\S]+href=\{`#\$\{place\.id\}`\}/);
