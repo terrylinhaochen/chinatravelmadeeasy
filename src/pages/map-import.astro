@@ -198,6 +198,11 @@ const jsonLd = [
           <p class="mt-2 max-w-3xl text-sm leading-relaxed text-soft">The record is saved on this device only. Download it or prepare an email to send it for human review.</p>
           <p class="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-faint">UGC evidence packet → guide candidate → Map-ready pin</p>
           <ol class="mt-5 grid gap-2 sm:grid-cols-3" data-contribution-stage-list></ol>
+          <div class="mt-5 rounded-2xl border border-line bg-white p-4">
+            <p class="ds-eyebrow">Local grid review</p>
+            <p class="mt-2 text-sm font-semibold text-ink" data-contribution-grid-verdict></p>
+            <ul class="mt-3 grid gap-2 sm:grid-cols-2" data-contribution-grid-review></ul>
+          </div>
           <ul class="mt-5 grid gap-2 sm:grid-cols-2" data-contribution-checklist></ul>
           <div class="mt-6 flex flex-wrap gap-3">
             <button type="button" class="ds-button ds-button-dark" data-contribution-email>Prepare review email</button>
@@ -313,6 +318,7 @@ const jsonLd = [
       createLocalKnowledgeSubmission,
       inferContributionPlatform,
       localKnowledgeReviewChecklist,
+      localKnowledgeGridReview,
       localKnowledgeReviewStages,
       validateLocalKnowledgeSubmission,
     } from '../utils/localKnowledgeSubmission.js';
@@ -350,6 +356,8 @@ const jsonLd = [
     const contributionResult = document.querySelector('[data-contribution-result]');
     const contributionTitle = document.querySelector('[data-contribution-title]');
     const contributionStageList = document.querySelector('[data-contribution-stage-list]');
+    const contributionGridVerdict = document.querySelector('[data-contribution-grid-verdict]');
+    const contributionGridReview = document.querySelector('[data-contribution-grid-review]');
     const contributionChecklist = document.querySelector('[data-contribution-checklist]');
     const sampleSources = {
       'xiaohongshu-yangpu': {
@@ -506,6 +514,7 @@ const jsonLd = [
 
     function renderContributionResult(submission) {
       const review = localKnowledgeReviewChecklist(submission);
+      const gridReview = localKnowledgeGridReview(submission);
       const stages = localKnowledgeReviewStages(submission);
       contributionTitle.textContent = submission.originalName + ' · ' + submission.city;
       contributionStageList.innerHTML = stages.map((stage) =>
@@ -513,6 +522,14 @@ const jsonLd = [
           '<strong class="block text-ink">' + escapeHtml(stage.label) + '</strong>' +
           '<span class="mt-1 inline-flex rounded-full bg-paper px-2 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-soft">' + escapeHtml(stage.state) + '</span>' +
           '<span class="mt-2 block text-xs text-soft">' + escapeHtml(stage.body) + '</span>' +
+        '</li>'
+      ).join('');
+      contributionGridVerdict.textContent = gridReview.verdict + (gridReview.canAutoSave ? ' · auto-save eligible' : ' · not map-ready');
+      contributionGridReview.innerHTML = gridReview.items.map((item) =>
+        '<li class="rounded-xl border border-line bg-paper p-3 text-sm leading-relaxed">' +
+          '<strong class="block text-ink">' + escapeHtml(item.label) + '</strong>' +
+          '<span class="mt-1 inline-flex rounded-full bg-white px-2 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-soft">' + escapeHtml(item.state) + '</span>' +
+          '<span class="mt-2 block text-xs text-soft">' + escapeHtml(item.body) + '</span>' +
         '</li>'
       ).join('');
       contributionChecklist.innerHTML = review.checks.map((check) =>

@@ -6,6 +6,7 @@ import {
   canonicalizeContributionUrl,
   createLocalKnowledgeSubmission,
   inferContributionPlatform,
+  localKnowledgeGridReview,
   localKnowledgeReviewChecklist,
   localKnowledgeReviewStages,
   localKnowledgeSubmissionKey,
@@ -102,6 +103,27 @@ test('review stages keep UGC evidence separate from map-ready pins', () => {
   const withProviderStages = localKnowledgeReviewStages(createLocalKnowledgeSubmission(baseInput));
   assert.equal(withProviderStages.find((stage) => stage.id === 'map-ready-pin').state, 'provider-supplied');
   assert.match(withProviderStages.find((stage) => stage.id === 'map-ready-pin').body, /verify provider identity/);
+});
+
+test('local grid review separates evidence, local-use, provider, and traveler-decision gates', () => {
+  const readyForReview = localKnowledgeGridReview(createLocalKnowledgeSubmission(baseInput));
+  assert.equal(readyForReview.verdict, 'ready for local grid review');
+  assert.equal(readyForReview.canEnterPublicGuide, true);
+  assert.equal(readyForReview.canAutoSave, false);
+  assert.deepEqual(readyForReview.items.map((item) => item.id), [
+    'source-evidence',
+    'local-use-fit',
+    'provider-identity',
+    'traveler-decision',
+  ]);
+  assert.equal(readyForReview.items.find((item) => item.id === 'local-use-fit').state, 'classified');
+  assert.equal(readyForReview.items.find((item) => item.id === 'provider-identity').state, 'provider supplied');
+
+  const travelerOnly = localKnowledgeGridReview(createLocalKnowledgeSubmission({ ...baseInput, localUseSignal: 'traveler-only', localMapUrl: '' }));
+  assert.equal(travelerOnly.verdict, 'needs local grid review');
+  assert.equal(travelerOnly.canEnterPublicGuide, false);
+  assert.equal(travelerOnly.items.find((item) => item.id === 'local-use-fit').state, 'traveler-only');
+  assert.equal(travelerOnly.items.find((item) => item.id === 'provider-identity').state, 'provider pending');
 });
 
 test('review queue merges duplicate evidence without collapsing different places from one post', () => {

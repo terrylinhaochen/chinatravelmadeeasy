@@ -131,6 +131,9 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapImportPage, /localUseSignal: formData\.get\('localUseSignal'\)/);
   assert.match(mapImportPage, /Local-use signal:/);
   assert.match(mapImportPage, /data-contribution-stage-list/);
+  assert.match(mapImportPage, /Local grid review/);
+  assert.match(mapImportPage, /data-contribution-grid-review/);
+  assert.match(mapImportPage, /localKnowledgeGridReview\(submission\)/);
   assert.match(mapImportPage, /localKnowledgeReviewStages\(submission\)/);
   assert.match(mapImportPage, /UGC evidence packet/);
   assert.match(mapImportPage, /Map-ready pin/);
@@ -171,6 +174,9 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /Local evidence packets/);
   assert.match(profilePage, /ctme-local-knowledge-contributions-v1/);
   assert.match(profilePage, /function renderLocalEvidence\(packets\)/);
+  assert.match(profilePage, /localKnowledgeGridReview\(packet\)/);
+  assert.match(profilePage, /gridReview\.verdict/);
+  assert.match(profilePage, /Local grid review/);
   assert.match(profilePage, /localKnowledgeReviewStages\(packet\)/);
   assert.match(profilePage, /stageCopy/);
   assert.match(profilePage, /localReviewGridHref\(packet\)/);
@@ -243,6 +249,8 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(acceptanceDoc, /Trip role/);
   assert.match(acceptanceDoc, /Next action/);
   assert.match(acceptanceDoc, /UGC intake grades localness explicitly/);
+  assert.match(acceptanceDoc, /UGC packets enter the same local-grid rubric/);
+  assert.match(acceptanceDoc, /source evidence, local-use fit, provider identity, and traveler-decision gates/);
   assert.match(acceptanceDoc, /local-use signal/);
   assert.match(acceptanceDoc, /UGC intake persists into the traveler workspace/);
   assert.match(acceptanceDoc, /A clean rendered browser can prepare a Xiaohongshu-style packet/);

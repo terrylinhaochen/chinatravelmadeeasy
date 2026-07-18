@@ -260,3 +260,59 @@ export function localKnowledgeReviewStages(submission) {
     },
   ];
 }
+
+export function localKnowledgeGridReview(submission) {
+  const validation = validateLocalKnowledgeSubmission(submission);
+  const localUseSignal = submission?.localUseSignal || 'unknown';
+  const hasProviderLink = Boolean(submission?.localMapUrl);
+  const decisionReady = String(submission?.whyItMatters || '').trim().length >= 40;
+  const localUseReady = Boolean(localUseSignal && localUseSignal !== 'unknown' && localUseSignal !== 'traveler-only');
+  const localUseState = localUseSignal === 'traveler-only'
+    ? 'traveler-only'
+    : localUseReady
+      ? 'classified'
+      : 'needs-local-review';
+  return {
+    verdict: validation.valid && localUseReady
+      ? 'ready for local grid review'
+      : 'needs local grid review',
+    canEnterPublicGuide: validation.valid && localUseReady && decisionReady,
+    canAutoSave: false,
+    items: [
+      {
+        id: 'source-evidence',
+        label: 'Source evidence',
+        state: validation.valid ? 'packet ready' : 'needs input',
+        body: validation.valid
+          ? 'Original wording, source ecosystem, and contribution rights are preserved.'
+          : 'The packet still needs required evidence before review.',
+      },
+      {
+        id: 'local-use-fit',
+        label: 'Local-use fit',
+        state: localUseState,
+        body: localUseReady
+          ? 'The packet declares a local-use signal strong enough for human review.'
+          : localUseSignal === 'traveler-only'
+            ? 'Traveler evidence can be useful, but it cannot support a locals-use claim by itself.'
+            : 'The local-use signal must be classified before this can become local guide supply.',
+      },
+      {
+        id: 'provider-identity',
+        label: 'Provider identity',
+        state: hasProviderLink ? 'provider supplied' : 'provider pending',
+        body: hasProviderLink
+          ? 'A map link was supplied, but CTME still needs to verify the provider identity.'
+          : 'No AMap, Apple, or local-provider identity is verified yet.',
+      },
+      {
+        id: 'traveler-decision',
+        label: 'Traveler decision',
+        state: decisionReady ? 'decision cue ready' : 'needs trip role',
+        body: decisionReady
+          ? 'The packet explains why this could change a traveler’s route.'
+          : 'The packet needs a concrete route role, tradeoff, warning, or experience.',
+      },
+    ],
+  };
+}
