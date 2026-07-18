@@ -165,7 +165,7 @@ struct SourceEvidenceCard: View {
 
             Spacer(minLength: 0)
 
-            Label("\(note.mappedPlaceIDs.count) mapped", systemImage: "mappin.and.ellipse")
+            Label("\(note.candidatePlaceIDs.count) candidate\(note.candidatePlaceIDs.count == 1 ? "" : "s")", systemImage: "mappin.and.ellipse")
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
         }

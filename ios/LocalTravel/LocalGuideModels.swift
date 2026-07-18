@@ -80,7 +80,7 @@ struct LocalSourceNote: Identifiable, Equatable {
     let title: String
     let originalLanguage: String
     let localSignal: String
-    let mappedPlaceIDs: [String]
+    let candidatePlaceIDs: [String]
     let retrievedAt: String
 }
 
@@ -118,7 +118,7 @@ enum LocalGuideFixtures {
                 title: "A Yangpu student returns to Green Hill with her brother",
                 originalLanguage: "Chinese",
                 localSignal: "Repeat resident use turns an architecture landmark into a family-accessible riverfront stop.",
-                mappedPlaceIDs: ["green-hill-local-use"],
+                candidatePlaceIDs: ["green-hill-local-use"],
                 retrievedAt: "2026-07-17"
             ),
             LocalSourceNote(
@@ -127,7 +127,7 @@ enum LocalGuideFixtures {
                 title: "Child-friendly waterfront spaces connect museum, factory, and river walk",
                 originalLanguage: "Chinese",
                 localSignal: "The useful travel idea is not one viral pin; it is a slower Yangpu waterfront day with indoor fallbacks.",
-                mappedPlaceIDs: ["worldskills-museum-local-use", "soap-dream-space-local-use"],
+                candidatePlaceIDs: ["worldskills-museum-local-use", "soap-dream-space-local-use"],
                 retrievedAt: "2026-07-17"
             ),
             LocalSourceNote(
@@ -136,7 +136,7 @@ enum LocalGuideFixtures {
                 title: "Fuxing Island Park is used for quiet walks and neighborhood air",
                 originalLanguage: "Chinese",
                 localSignal: "Local use changes the itinerary role: this is a slow finish, not a marquee detour.",
-                mappedPlaceIDs: ["fuxing-island-park-local-use"],
+                candidatePlaceIDs: ["fuxing-island-park-local-use"],
                 retrievedAt: "2026-07-17"
             )
         ],

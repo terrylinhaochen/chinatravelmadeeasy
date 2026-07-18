@@ -13,15 +13,24 @@ final class LocalTravelTests: XCTestCase {
         XCTAssertTrue(guide.methodNote.contains("not connected"))
     }
 
-    func testEverySourceNoteMapsBackToKnownPlaces() {
+    func testEverySourceNoteLinksBackToKnownCandidates() {
         let guide = LocalGuideFixtures.yangpu
         let placeIDs = Set(guide.places.map(\.id))
 
         for note in guide.sourceNotes {
-            XCTAssertFalse(note.mappedPlaceIDs.isEmpty)
-            XCTAssertTrue(note.mappedPlaceIDs.allSatisfy { placeIDs.contains($0) })
+            XCTAssertFalse(note.candidatePlaceIDs.isEmpty)
+            XCTAssertTrue(note.candidatePlaceIDs.allSatisfy { placeIDs.contains($0) })
             XCTAssertEqual(note.originalLanguage, "Chinese")
         }
+    }
+
+    func testSourceLinkedCandidatesAreNotAllMapReady() {
+        let guide = LocalGuideFixtures.yangpu
+        let linkedCandidateIDs = Set(guide.sourceNotes.flatMap(\.candidatePlaceIDs))
+        let nonSaveableLinkedCandidates = guide.places.filter { linkedCandidateIDs.contains($0.id) && !$0.resolutionState.canAutoSave }
+
+        XCTAssertFalse(nonSaveableLinkedCandidates.isEmpty)
+        XCTAssertEqual(guide.resolvedPlaces.count, guide.places.filter { $0.resolutionState.canAutoSave }.count)
     }
 
     func testOnlyResolvedPlacesCanAutoSave() {
