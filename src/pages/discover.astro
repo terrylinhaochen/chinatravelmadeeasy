@@ -71,6 +71,36 @@ const localGuideSafePins = localGuideCandidates.filter((place) => place.resoluti
 const localGuideDirectResident = localGuideCandidates.filter((place) => place.evidenceGrade === 'resident-direct').length;
 const localGuideReviewLeads = localGuideCandidates.length - localGuideSafePins;
 const localUgcSummary = summarizeReviewedLocalUgcPackets(reviewedLocalUgcPackets);
+const localUgcSavePayloads = Object.fromEntries(reviewedLocalUgcPackets.map((packet) => {
+  const saveableCandidates = packet.candidates.filter((candidate) => candidate.resolutionState === 'resolved' && candidate.providerLinks);
+  return [packet.id, {
+    id: `reviewed-ugc:${packet.id}`,
+    title: packet.title,
+    owner: packet.platform,
+    source: 'Reviewed Chinese UGC packet',
+    type: 'local-research',
+    href: packet.guideHref,
+    city: packet.city,
+    placeCount: saveableCandidates.length,
+    safePlaceCount: saveableCandidates.length,
+    candidateCount: packet.candidates.length,
+    places: saveableCandidates.map((candidate) => ({
+      id: candidate.id,
+      name: candidate.name,
+      localName: candidate.localName,
+      city: candidate.city || packet.city,
+      address: candidate.address || '',
+      note: packet.travelerRead,
+      evidenceLabel: packet.localUseLabel,
+      tripRole: candidate.gridCell.travelerDecision,
+      travelerAction: candidate.gridCell.providerIdentity,
+      originalCue: packet.originalCue,
+      cueMeaning: packet.cueMeaning,
+      resolutionState: candidate.resolutionState,
+      providerLinks: candidate.providerLinks,
+    })),
+  }];
+}));
 const localMfpStatus = [
   {
     label: 'Reviewed Chinese local grid',
@@ -328,9 +358,11 @@ const jsonLd = [
                     </div>
                     <p class="mt-3 border-t border-line pt-3 text-xs leading-relaxed text-soft">Not live platform retrieval: this is a reviewed seed showing how a Chinese UGC lead enters the same local grid rubric.</p>
                     <div class="mt-4 flex flex-wrap gap-2">
+                      <button type="button" class="ds-button ds-button-dark min-h-0 px-3 py-2" data-local-ugc-save={packet.id}>Save UGC-mapped pin</button>
                       <a href={packet.guideHref} class="ds-button ds-button-dark min-h-0 px-3 py-2">Compare with reviewed grid</a>
                       <a href={packet.contributionHref} class="ds-button ds-button-secondary min-h-0 px-3 py-2">Add similar UGC lead</a>
                     </div>
+                    <p class="mt-3 hidden text-sm leading-relaxed text-soft" data-local-ugc-status={packet.id}></p>
                     <p class="mt-3 text-xs font-semibold text-soft">{packet.candidates.length} source-derived candidates · {resolved} safe pin</p>
                   </article>
                 );
@@ -476,6 +508,63 @@ const jsonLd = [
       </ol>
     </section>
   </section>
+
+  <script id="localUgcSavePayloads" type="application/json" set:html={JSON.stringify(localUgcSavePayloads)} />
+
+  <script>
+    import { collectCuratedCollection, getCollectedCollections, getUser } from '../utils/localPrototypeState.js';
+
+    const localUgcSavePayloads = JSON.parse(document.querySelector('#localUgcSavePayloads')?.textContent || '{}');
+    const pendingLocalUgcSaveKey = 'ctme-pending-reviewed-ugc-save';
+
+    document.querySelectorAll('[data-local-ugc-save]').forEach((button) => {
+      const packetId = button.dataset.localUgcSave;
+      const payload = localUgcSavePayloads[packetId];
+      const status = document.querySelector(`[data-local-ugc-status="${packetId}"]`);
+      if (!payload || !payload.safePlaceCount) {
+        button.disabled = true;
+        button.textContent = 'Provider review first';
+        return;
+      }
+      if (getCollectedCollections().some((entry) => entry.id === payload.id)) markUgcSaved(button);
+      button.addEventListener('click', async () => {
+        localStorage.setItem(pendingLocalUgcSaveKey, JSON.stringify(payload));
+        const user = window.ctmeRequireUser ? await window.ctmeRequireUser('save the UGC-mapped local pin to your profile') : null;
+        if (!user) return;
+        completeLocalUgcSave(payload, button, status);
+      });
+    });
+
+    resumePendingLocalUgcSave();
+
+    function resumePendingLocalUgcSave() {
+      if (!getUser()) return;
+      let pending;
+      try { pending = JSON.parse(localStorage.getItem(pendingLocalUgcSaveKey) || 'null'); } catch { pending = null; }
+      if (!pending?.id || !Object.values(localUgcSavePayloads).some((payload) => payload.id === pending.id)) return;
+      const packetId = Object.entries(localUgcSavePayloads).find(([, payload]) => payload.id === pending.id)?.[0];
+      const button = document.querySelector(`[data-local-ugc-save="${packetId}"]`);
+      const status = document.querySelector(`[data-local-ugc-status="${packetId}"]`);
+      if (button) completeLocalUgcSave(pending, button, status);
+    }
+
+    function completeLocalUgcSave(payload, button, status) {
+      collectCuratedCollection({ ...payload, savedAt: new Date().toISOString() });
+      localStorage.removeItem(pendingLocalUgcSaveKey);
+      markUgcSaved(button);
+      if (status) {
+        const reviewCount = Math.max(0, Number(payload.candidateCount || 0) - Number(payload.safePlaceCount || 0));
+        status.innerHTML = 'Saved ' + payload.safePlaceCount + ' UGC-mapped pin to Profile. ' + reviewCount + ' source-derived candidate' + (reviewCount === 1 ? '' : 's') + ' stayed review-first. <a class="font-semibold text-ink hover:text-accent" href="/profile/">Open Profile</a>';
+        status.classList.remove('hidden');
+      }
+    }
+
+    function markUgcSaved(button) {
+      button.textContent = 'Saved UGC pin';
+      button.classList.remove('ds-button-dark');
+      button.classList.add('ds-button-secondary');
+    }
+  </script>
 
   <script define:vars={{ intents }}>
     const filterButtons = [...document.querySelectorAll('[data-discover-filter]')];

@@ -232,6 +232,13 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(discoverPage, /Not live platform retrieval/);
   assert.match(discoverPage, /Compare with reviewed grid/);
   assert.match(discoverPage, /Add similar UGC lead/);
+  assert.match(discoverPage, /localUgcSavePayloads/);
+  assert.match(discoverPage, /data-local-ugc-save/);
+  assert.match(discoverPage, /Save UGC-mapped pin/);
+  assert.match(discoverPage, /ctme-pending-reviewed-ugc-save/);
+  assert.match(discoverPage, /save the UGC-mapped local pin to your profile/);
+  assert.match(discoverPage, /Saved ' \+ payload\.safePlaceCount \+ ' UGC-mapped pin to Profile/);
+  assert.match(discoverPage, /Provider review first/);
   assert.match(discoverPage, /UGC review packets/);
   assert.match(discoverPage, /Map-ready save/);
   assert.match(discoverPage, /Live Chinese-platform retrieval/);
@@ -288,6 +295,9 @@ test('reviewed Chinese UGC packets are visible without claiming live platform re
     assert.ok(packet.candidates.every((candidate) => candidate.gridCell.providerIdentity && candidate.gridCell.travelerDecision));
     assert.match(packet.candidates.find((candidate) => candidate.resolutionState === 'resolved').gridCell.providerIdentity, /Resolved/);
     assert.match(packet.candidates.find((candidate) => candidate.resolutionState === 'probable').gridCell.travelerDecision, /do not save/i);
+    assert.ok(packet.candidates.find((candidate) => candidate.resolutionState === 'resolved').providerLinks.amap.includes('/place/'));
+    assert.ok(packet.candidates.find((candidate) => candidate.resolutionState === 'resolved').providerLinks.apple.includes('/place'));
+    assert.equal(packet.candidates.find((candidate) => candidate.resolutionState === 'probable').providerLinks, undefined);
   }
 });
 
@@ -301,6 +311,9 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence/);
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence \+ one seeded reviewed Chinese UGC packet → evidence-graded guide candidates → one provider-resolved saved pin/);
   assert.match(acceptanceDoc, /Reviewed UGC is discoverable before save/);
+  assert.match(acceptanceDoc, /UGC save follows the grid decision/);
+  assert.match(acceptanceDoc, /Save UGC-mapped pin/);
+  assert.match(acceptanceDoc, /reviewed UGC safe-pin save-to-Profile/);
   assert.match(acceptanceDoc, /Not live platform retrieval/);
   assert.match(acceptanceDoc, /A slow Yangpu riverfront day instead of a skyline checklist/);
   assert.match(acceptanceDoc, /UGC enters as a review packet only/);

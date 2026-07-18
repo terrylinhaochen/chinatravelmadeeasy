@@ -38,8 +38,14 @@ export const reviewedLocalUgcPackets = [
         id: 'xhs-fuxing-island-park-grid-cell',
         name: 'Fuxing Island Park',
         localName: '复兴岛公园',
+        city: 'Shanghai',
+        address: '共青路386号, Yangpu, Shanghai',
         role: 'Safe slow-finish pin after AMap and Apple identity agreement.',
         resolutionState: 'resolved',
+        providerLinks: {
+          amap: 'https://www.amap.com/place/B00154DQQ7',
+          apple: 'https://maps.apple.com/place?_provider=57879&place-id=H2710I3F80D8CC0908F',
+        },
         gridCell: {
           sourceEvidence: 'Caption names 复兴岛公园 as the slow walk finish.',
           localUseFit: 'Matches the reviewed local-use cue 市民散步、观景、寻幽 from the Shanghai source ledger.',

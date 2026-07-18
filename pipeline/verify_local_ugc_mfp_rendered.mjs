@@ -62,6 +62,7 @@ async function verifyDiscoverStatus(page, baseUrl) {
     'Traveler decision',
     'review cell',
     'saveable cell',
+    'Save UGC-mapped pin',
     'Not live platform retrieval',
     'Compare with reviewed grid',
     'Add similar UGC lead',
@@ -73,6 +74,29 @@ async function verifyDiscoverStatus(page, baseUrl) {
     'Not live yet',
   ]) {
     await assertText(page, text, 'Discover MFP status');
+  }
+}
+
+async function verifyReviewedUgcSave(page, baseUrl) {
+  await page.goto(`${baseUrl}/discover/`, { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => localStorage.clear());
+  await page.getByRole('button', { name: 'Save UGC-mapped pin' }).click();
+  await page.locator('#ctmeSigninEmail').fill('ugc-dogfood@example.com');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByText('Saved 1 UGC-mapped pin to Profile').waitFor();
+  await page.getByRole('link', { name: 'Open Profile' }).click();
+  await page.waitForURL(/profile/);
+
+  for (const text of [
+    'A slow Yangpu riverfront day instead of a skyline checklist',
+    'Fuxing Island Park',
+    'Open saved AMap pin',
+    'Open saved Apple pin',
+    'Review 1 unresolved local lead',
+    'Save as the slow finish if the traveler wants neighborhood air rather than marquee sightseeing.',
+    'Resolved: AMap and Apple identify the same park at 共青路386号.',
+  ]) {
+    await assertText(page, text, 'Profile saved UGC mapped pin');
   }
 }
 
@@ -166,12 +190,13 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1400 } });
   try {
     await verifyDiscoverStatus(page, baseUrl);
+    await verifyReviewedUgcSave(page, baseUrl);
     await verifyUgcPacketToProfile(page, baseUrl);
     await verifyReviewedGridSave(page, baseUrl);
   } finally {
     await browser.close();
   }
-  console.log(JSON.stringify({ ok: true, baseUrl, checks: ['discover-status', 'ugc-packet-profile', 'reviewed-grid-save-profile'] }));
+  console.log(JSON.stringify({ ok: true, baseUrl, checks: ['discover-status', 'reviewed-ugc-save-profile', 'ugc-packet-profile', 'reviewed-grid-save-profile'] }));
 } finally {
   server.kill('SIGTERM');
 }
