@@ -377,6 +377,7 @@ const jsonLd = [
       showStage('import');
     }
     if (window.location.hash === '#contribute' && contributionDetails) contributionDetails.open = true;
+    applyContributionPrefill(query);
 
     extractBtn.addEventListener('click', () => runExtraction(linkInput.value));
     document.querySelectorAll('.sampleBtn').forEach((button) => {
@@ -453,6 +454,27 @@ const jsonLd = [
       const isRoute = contributionKind?.value === 'route';
       routeFields?.classList.toggle('hidden', !isRoute);
       routeFields?.querySelectorAll('input').forEach((input) => { input.required = isRoute; });
+    }
+
+    function applyContributionPrefill(params) {
+      if (!contributionForm) return;
+      const allowedPlatforms = new Set(['xiaohongshu', 'dianping', 'instagram', 'tiktok', 'local-map', 'local-publication', 'personal-knowledge', 'other']);
+      const allowedKinds = new Set(['place', 'route', 'unclear']);
+      const fieldValues = {
+        city: params.get('contributionCity'),
+        sourceLanguage: params.get('contributionLanguage'),
+        sourcePlatform: allowedPlatforms.has(params.get('contributionPlatform')) ? params.get('contributionPlatform') : '',
+        kind: allowedKinds.has(params.get('contributionKind')) ? params.get('contributionKind') : '',
+      };
+      const applied = Object.entries(fieldValues).filter(([, value]) => value);
+      applied.forEach(([name, value]) => {
+        const field = contributionForm.elements.namedItem(name);
+        if (field && 'value' in field) field.value = value;
+      });
+      if (!applied.length) return;
+      if (contributionDetails) contributionDetails.open = true;
+      renderContributionShape();
+      showContributionStatus('Started a scoped local-source review packet. Paste the original post, caption, OCR text, or map link before preparing it.', false);
     }
 
     function renderContributionResult(submission) {

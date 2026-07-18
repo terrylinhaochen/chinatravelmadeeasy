@@ -94,10 +94,15 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(cityPage, /Corroborated local-use signal/);
   assert.match(cityPage, /Community-program proxy/);
   assert.match(cityPage, /Found a Chinese post locals actually use\?/);
-  assert.match(cityPage, /href="\/map-import\/#contribute"/);
+  assert.match(cityPage, /const localContributionHref = `\/map-import\/\?contributionCity=\$\{encodeURIComponent\(meta\.city\)\}&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute`/);
+  assert.match(cityPage, /href=\{localContributionHref\}/);
   assert.match(cityPage, /Prepare local evidence/);
   assert.match(mapImportPage, /id="contribute"/);
   assert.match(mapImportPage, /window\.location\.hash === '#contribute'[\s\S]+contributionDetails\.open = true/);
+  assert.match(mapImportPage, /function applyContributionPrefill\(params\)/);
+  assert.match(mapImportPage, /allowedPlatforms = new Set\(\['xiaohongshu', 'dianping'/);
+  assert.match(mapImportPage, /contributionForm\.elements\.namedItem\(name\)/);
+  assert.match(mapImportPage, /Started a scoped local-source review packet/);
   assert.match(cityPage, /Evidence ledger/);
   assert.match(cityPage, /Retrieved \{note\.retrievedAt\}/);
   assert.match(cityPage, /\(note\.sources \?\? \[\]\)\.map/);

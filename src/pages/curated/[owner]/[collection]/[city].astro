@@ -63,6 +63,7 @@ const sourceNotes = isLocalResearch ? (item.sourceNotes ?? []).map((note) => {
 const displayTitle = item.title.replace(/\b\w/g, (letter) => letter.toUpperCase());
 const collectionSlug = item.pathSlug ?? item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const pagePath = `/curated/${item.owner.slug}/${collectionSlug}/${city}/`;
+const localContributionHref = `/map-import/?contributionCity=${encodeURIComponent(meta.city)}&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute`;
 const description = isLocalResearch
   ? `${displayTitle}: ${places.length} Shanghai candidates with local-use evidence, bilingual identities, and explicit provider-review states.`
   : `${meta.edition} by ${item.owner.name}: ${places.length} city-specific map-ready ${places.length === 1 ? 'place' : 'places'} from ${item.provider} evidence.`;
@@ -172,7 +173,7 @@ const jsonLd = [
             <h2 id="local-contribution-heading" class="mt-2 text-3xl leading-tight">Found a Chinese post locals actually use?</h2>
             <p class="mt-3 max-w-3xl leading-relaxed text-white/75">Share the original Xiaohongshu, Dianping, local publication, map link, caption, or OCR text. CTME keeps it as a private review packet until the local wording, evidence grade, and provider identity are checked.</p>
           </div>
-          <a href="/map-import/#contribute" class="ds-button bg-white text-ink hover:bg-white/90">Prepare local evidence</a>
+          <a href={localContributionHref} class="ds-button bg-white text-ink hover:bg-white/90">Prepare local evidence</a>
         </div>
       </section>
     )}
