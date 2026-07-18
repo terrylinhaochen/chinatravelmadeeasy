@@ -75,11 +75,12 @@ test('the published collection keeps research candidates separate from safe pins
 });
 
 test('the city collection save payload carries only map-ready local pins into Profile', async () => {
-  const [cityPage, curatedIndex, profilePage, mapComponent] = await Promise.all([
+  const [cityPage, curatedIndex, profilePage, mapComponent, mapImportPage] = await Promise.all([
     readFile(new URL('../src/pages/curated/[owner]/[collection]/[city].astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/pages/curated/index.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/pages/profile.astro', import.meta.url), 'utf8'),
     readFile(new URL('../src/components/CuratedCollectionMap.astro', import.meta.url), 'utf8'),
+    readFile(new URL('../src/pages/map-import.astro', import.meta.url), 'utf8'),
   ]);
 
   assert.match(cityPage, /const saveablePlaces = isLocalResearch[\s\S]+resolutionState === 'resolved'/);
@@ -92,6 +93,11 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(cityPage, /Direct resident testimony/);
   assert.match(cityPage, /Corroborated local-use signal/);
   assert.match(cityPage, /Community-program proxy/);
+  assert.match(cityPage, /Found a Chinese post locals actually use\?/);
+  assert.match(cityPage, /href="\/map-import\/#contribute"/);
+  assert.match(cityPage, /Prepare local evidence/);
+  assert.match(mapImportPage, /id="contribute"/);
+  assert.match(mapImportPage, /window\.location\.hash === '#contribute'[\s\S]+contributionDetails\.open = true/);
   assert.match(cityPage, /Evidence ledger/);
   assert.match(cityPage, /Retrieved \{note\.retrievedAt\}/);
   assert.match(cityPage, /\(note\.sources \?\? \[\]\)\.map/);
