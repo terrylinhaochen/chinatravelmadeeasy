@@ -62,6 +62,7 @@ const description =
   'Explore local China guides built from Chinese-language research, grounded traveler evidence, and bilingual place identities.';
 const videosForDestination = (slug: string) => communityVideos.filter((video) => video.destinationSlug === slug);
 const localGuideHref = `/curated/${yangpuLocalUseCollection.owner.slug}/${yangpuLocalUseCollection.pathSlug}/shanghai/`;
+const localGuideEvidenceHref = `${localGuideHref}#source-notes-heading`;
 const localGuideContributionHref = '/map-import/?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute';
 const localGuideCandidates = yangpuLocalUseCollection.places;
 const localGuideSourceNotes = yangpuLocalUseCollection.sourceNotes ?? [];
@@ -202,6 +203,19 @@ const jsonLd = [
           <div class="rounded-2xl border border-line bg-white/80 p-4">
             <p class="ds-eyebrow">What makes it different</p>
             <p class="mt-2 text-sm leading-relaxed text-soft">Local evidence creates candidates, not automatic pins. This slice has {localGuideDirectResident} direct resident signal and only {localGuideSafePins} provider-resolved place.</p>
+          </div>
+          <div class="rounded-2xl border border-line bg-white/80 p-4">
+            <p class="ds-eyebrow">Try the local-to-map loop</p>
+            <h3 class="mt-2 text-xl leading-tight">Start with what Shanghai locals use, then save only the pin that survives review.</h3>
+            <ol class="mt-3 grid gap-2 text-sm leading-relaxed text-soft">
+              <li><span class="font-semibold text-ink">1.</span> Read the original Chinese cue and why it matters.</li>
+              <li><span class="font-semibold text-ink">2.</span> Save the one provider-resolved place to Profile.</li>
+              <li><span class="font-semibold text-ink">3.</span> Keep the other {localGuideReviewLeads} local leads attached to the evidence ledger.</li>
+            </ol>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a href={localGuideEvidenceHref} class="ds-button ds-button-dark">Open evidence ledger</a>
+              <a href={localGuideHref} class="ds-button ds-button-secondary">Save reviewed pin</a>
+            </div>
           </div>
           <div class="rounded-2xl border border-line bg-white/80 p-4">
             <p class="ds-eyebrow">From Chinese source to map-ready pin</p>

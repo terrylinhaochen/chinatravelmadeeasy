@@ -175,7 +175,12 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(baseLayout, /authProvider: 'localhost-preview'/);
   assert.match(baseLayout, /production still uses the email link/);
   assert.match(discoverPage, /const localGuideContributionHref = '\/map-import\/\?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute'/);
+  assert.match(discoverPage, /const localGuideEvidenceHref = `\$\{localGuideHref\}#source-notes-heading`/);
   assert.match(discoverPage, /Add Chinese source/);
+  assert.match(discoverPage, /Try the local-to-map loop/);
+  assert.match(discoverPage, /Start with what Shanghai locals use, then save only the pin that survives review/);
+  assert.match(discoverPage, /Open evidence ledger/);
+  assert.match(discoverPage, /Save reviewed pin/);
   assert.match(discoverPage, /From Chinese source to map-ready pin/);
   assert.match(discoverPage, /Chinese local source/);
   assert.match(discoverPage, /Evidence-graded candidate/);
