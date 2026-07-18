@@ -120,9 +120,10 @@ const jsonLd = [
           <div class="city-stat"><p class="ds-tag">{isLocalResearch ? 'Safe pins' : 'Notes'}</p><p class="mt-2 text-3xl leading-none">{isLocalResearch ? resolvedCount : noteCount}</p></div>
         </div>
         <div class="mt-auto flex flex-wrap gap-2 pt-6">
-          <button type="button" class="ds-button ds-button-dark" data-city-collect>{isLocalResearch ? 'Save reviewed collection' : `Collect ${meta.label}`}</button>
+          <button type="button" class="ds-button ds-button-dark" data-city-collect>{isLocalResearch ? `Save ${resolvedCount} map-ready pin${resolvedCount === 1 ? '' : 's'}` : `Collect ${meta.label}`}</button>
           <a href={item.canonicalUrl || item.sourceUrl} class="ds-button ds-button-secondary" target="_blank" rel="noopener">{isLocalResearch ? 'Open lead evidence' : 'Open source'}</a>
         </div>
+        {isLocalResearch && <p class="mt-3 text-xs font-semibold leading-relaxed text-soft">Profile saves only the provider-resolved pin. The other {places.length - resolvedCount} local leads stay review-first in this guide.</p>}
         <p class="mt-3 hidden text-sm leading-relaxed text-soft" data-city-status></p>
       </div>
       <div class="city-map h-full"><CuratedCollectionMap collection={item} places={places} /></div>
@@ -327,7 +328,7 @@ const jsonLd = [
     collectButton.addEventListener('click', async () => {
       localStorage.setItem(pendingCollectKey, JSON.stringify(payload));
       const action = payload.type === 'local-research'
-        ? 'save this reviewed local-use collection to your profile'
+        ? 'save the map-ready local pin to your profile'
         : 'collect this city map to your profile';
       const user = window.ctmeRequireUser ? await window.ctmeRequireUser(action) : null;
       if (!user) return;
@@ -364,6 +365,10 @@ const jsonLd = [
       localStorage.removeItem(pendingCollectKey);
       markCollected();
       status.innerHTML = 'Saved to Profile. <a class="font-semibold text-ink hover:text-accent" href="/profile/">Open Profile</a>';
+      if (payload.type === 'local-research') {
+        const reviewCount = Math.max(0, Number(payload.candidateCount || 0) - Number(payload.safePlaceCount || payload.placeCount || 0));
+        status.innerHTML = 'Saved ' + (payload.safePlaceCount || payload.placeCount || 0) + ' map-ready pin to Profile. ' + reviewCount + ' local lead' + (reviewCount === 1 ? '' : 's') + ' stayed review-first. <a class="font-semibold text-ink hover:text-accent" href="/profile/">Open Profile</a>';
+      }
       status.classList.remove('hidden');
     }
   </script>

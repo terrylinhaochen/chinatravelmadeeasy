@@ -86,6 +86,11 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(cityPage, /const saveablePlaces = isLocalResearch[\s\S]+resolutionState === 'resolved'/);
   assert.match(cityPage, /places: saveablePlaces\.map/);
   assert.match(cityPage, /providerLinks: place\.providerLinks/);
+  assert.match(cityPage, /Save \$\{resolvedCount\} map-ready pin/);
+  assert.match(cityPage, /Profile saves only the provider-resolved pin/);
+  assert.match(cityPage, /save the map-ready local pin to your profile/);
+  assert.match(cityPage, /Saved ' \+ \(payload\.safePlaceCount \|\| payload\.placeCount \|\| 0\) \+ ' map-ready pin to Profile/);
+  assert.match(cityPage, /stayed review-first/);
   assert.match(cityPage, /Local evidence rubric/);
   assert.match(cityPage, /“Locals use it” has to be graded\./);
   assert.match(cityPage, /Provider check is separate\./);
