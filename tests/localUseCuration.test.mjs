@@ -160,6 +160,10 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapComponent, /reviewCount.*needs review/s);
   assert.match(mapComponent, /data-local-grid-place/);
   assert.match(mapComponent, /Local candidate resolution grid/);
+  assert.match(mapComponent, /Local candidate grid/);
+  assert.match(mapComponent, /place\.localName/);
+  assert.match(mapComponent, /Save eligible/);
+  assert.match(mapComponent, /Provider review first/);
 });
 
 test('direct resident testimony is not inferred from official or community-program sources', () => {

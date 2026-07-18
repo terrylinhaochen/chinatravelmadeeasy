@@ -68,9 +68,16 @@ const reviewCount = places.length - mapReadyCount;
     </div>
   )}
   {isLocalResearch && !compact && (
+    <div class="curated-local-grid-intro">
+      <p class="ds-tag">Local candidate grid</p>
+      <p>Use the numbered cells to jump from the map to each evidence card. Red is provider-resolved and save eligible; amber stays review-first.</p>
+    </div>
+  )}
+  {isLocalResearch && !compact && (
     <div class="curated-local-grid" aria-label="Local candidate resolution grid">
       {places.map((place, index) => {
         const state = place.resolutionState ?? 'resolved';
+        const stateCopy = state === 'resolved' ? 'Save eligible' : 'Provider review first';
         return (
           <a
             href={`#${place.id}`}
@@ -81,7 +88,11 @@ const reviewCount = places.length - mapReadyCount;
             aria-label={`Open ${place.name} candidate details · ${state === 'resolved' ? 'map-ready' : 'needs provider review'}`}
           >
             <i aria-hidden="true">{index + 1}</i>
-            <span>{place.name}</span>
+            <span class="curated-local-grid-copy">
+              <strong>{place.name}</strong>
+              {place.localName && <em>{place.localName}</em>}
+              <small>{stateCopy}</small>
+            </span>
           </a>
         );
       })}
@@ -228,9 +239,24 @@ const reviewCount = places.length - mapReadyCount;
 
   .curated-local-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(8.25rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
     gap: 0.45rem;
     margin-top: 0.75rem;
+  }
+
+  .curated-local-grid-intro {
+    margin-top: 0.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: rgb(255 255 255 / 0.72);
+    padding: 0.65rem 0.75rem;
+  }
+
+  .curated-local-grid-intro p:last-child {
+    margin-top: 0.25rem;
+    color: var(--color-soft);
+    font-size: 0.76rem;
+    line-height: 1.45;
   }
 
   .curated-local-grid-item {
@@ -273,9 +299,39 @@ const reviewCount = places.length - mapReadyCount;
     background: rgb(140 47 34 / 1);
   }
 
-  .curated-local-grid-item span {
+  .curated-local-grid-copy {
+    display: grid;
+    min-width: 0;
+    gap: 0.1rem;
+  }
+
+  .curated-local-grid-copy strong,
+  .curated-local-grid-copy em,
+  .curated-local-grid-copy small {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .curated-local-grid-copy strong {
+    color: var(--color-ink);
+    font-style: normal;
+  }
+
+  .curated-local-grid-copy em {
+    color: var(--color-soft);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .curated-local-grid-copy small {
+    color: var(--color-faint);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .curated-local-grid-item[data-resolution="resolved"] .curated-local-grid-copy small {
+    color: var(--color-accent);
   }
 </style>
