@@ -91,6 +91,8 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(cityPage, /const saveablePlaces = isLocalResearch[\s\S]+resolutionState === 'resolved'/);
   assert.match(cityPage, /places: saveablePlaces\.map/);
   assert.match(cityPage, /providerLinks: place\.providerLinks/);
+  assert.match(cityPage, /originalCue: place\.originalCue/);
+  assert.match(cityPage, /cueMeaning: place\.cueMeaning/);
   assert.match(cityPage, /Save \$\{resolvedCount\} map-ready pin/);
   assert.match(cityPage, /Profile saves only the provider-resolved pin/);
   assert.match(cityPage, /save the map-ready local pin to your profile/);
@@ -132,6 +134,9 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /map-ready pin/);
   assert.match(profilePage, /Open saved AMap pin/);
   assert.match(profilePage, /Open saved Apple pin/);
+  assert.match(profilePage, /Why this pin survived review/);
+  assert.match(profilePage, /firstPlace\.originalCue/);
+  assert.match(profilePage, /firstPlace\.cueMeaning/);
   assert.match(profilePage, /Local evidence packets/);
   assert.match(profilePage, /ctme-local-knowledge-contributions-v1/);
   assert.match(profilePage, /function renderLocalEvidence\(packets\)/);

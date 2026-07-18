@@ -202,6 +202,12 @@ const jsonLd = [
           ? '<div class="mt-3 flex flex-wrap gap-2">' + places.slice(0, 4).map((place) => '<span class="ds-chip">' + escapeHtml(place.localName ? place.name + ' · ' + place.localName : place.name || 'Place') + '</span>').join('') + '</div>'
           : '';
         const firstPlace = places.find((place) => place.providerLinks?.amap || place.providerLinks?.apple);
+        const localContext = isLocalResearch && firstPlace
+          ? '<div class="mt-3 rounded-md border border-line bg-white p-3 text-xs leading-relaxed text-soft">' +
+              '<p><strong class="text-ink">Why this pin survived review:</strong> ' + escapeHtml(firstPlace.note || firstPlace.evidenceLabel || 'Provider-resolved local-use candidate.') + '</p>' +
+              (firstPlace.originalCue ? '<p class="mt-2"><strong class="text-ink">Original cue:</strong> <span class="font-semibold text-ink">' + escapeHtml(firstPlace.originalCue) + '</span>' + (firstPlace.cueMeaning ? '<span class="block pt-1">' + escapeHtml(firstPlace.cueMeaning) + '</span>' : '') + '</p>' : '') +
+            '</div>'
+          : '';
         const mapLinks = firstPlace
           ? '<div class="mt-3 flex flex-wrap gap-3">' +
               (firstPlace.providerLinks?.amap ? '<a class="text-sm font-semibold text-ink hover:text-accent" target="_blank" rel="noopener" href="' + escapeHtml(firstPlace.providerLinks.amap) + '">Open saved AMap pin</a>' : '') +
@@ -213,6 +219,7 @@ const jsonLd = [
           '<h3 class="mt-1 text-xl leading-tight">' + escapeHtml(collection.title || 'Collected map') + '</h3></div>' +
           '<p class="mt-2 text-sm text-soft">' + pinCopy + candidateCopy + '</p>' +
           placeChips +
+          localContext +
           '<div class="mt-3 flex flex-wrap gap-3">' +
             '<a class="text-sm font-semibold text-ink hover:text-accent" href="' + escapeHtml(collection.href || '/curated/') + '">Open guide</a>' +
           '</div>' +
