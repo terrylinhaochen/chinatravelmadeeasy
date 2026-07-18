@@ -266,6 +266,8 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(acceptanceDoc, /Compare with reviewed local grid/);
   assert.match(acceptanceDoc, /Live Xiaohongshu, Dianping, or Douyin retrieval/);
   assert.match(acceptanceDoc, /Production AMap POI API and Apple Maps Server resolution/);
+  assert.match(acceptanceDoc, /npm run test:local-ugc-mfp:rendered/);
+  assert.match(acceptanceDoc, /repeatable rendered acceptance gate/);
   assert.match(readme, /docs\/local-ugc-mfp-acceptance-2026-07-18\.md/);
   assert.match(readme, /only the one provider-resolved pin can be saved to Profile/);
   assert.match(stories, /As a traveler using the Chinese local-source MFP/);
