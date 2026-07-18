@@ -48,6 +48,7 @@ This record covers the current static/manual Chinese slice. It does not certify 
 ## Commands that should pass
 
 ```sh
+npm run test:local-ugc-mfp
 /Users/terry/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node --test tests/localUseCuration.test.mjs
 /Users/terry/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node --test tests/placeExtraction.test.mjs tests/localPrototypeState.test.mjs tests/communityMapState.test.mjs tests/sharedLocationTask.test.mjs tests/videoIngestion.test.mjs tests/librarySearch.test.mjs tests/destinationQuality.test.mjs tests/localLensStudy.test.mjs tests/localLanguageResearch.test.mjs tests/localUseCuration.test.mjs tests/localKnowledgeSubmission.test.mjs tests/supabaseBackendContract.test.mjs
 /Users/terry/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node ./node_modules/.bin/astro build
@@ -69,6 +70,7 @@ Then verify:
 - The Shanghai guide renders `Xiaohongshu — Not connected`, `Dianping — Not connected`, and `UGC intake — Review packet only`.
 - A clean browser can save the one map-ready pin and reopen it from Profile with AMap/Apple links, trip role, next action, and unresolved-lead recovery.
 - A clean browser can open `Add Chinese source`, fill the pre-scoped contribution form including the local-use signal, prepare a review packet, and see source evidence, local-use fit, provider identity, and traveler-decision gates in both the packet result and Profile with a reviewed-grid recovery link.
+- `npm run test:local-ugc-mfp` runs the complete local MFP gate: unit contracts, build prerequisites, clean static build, and rendered browser acceptance.
 - `npm run test:local-ugc-mfp:rendered` starts a temporary static server from `dist/` and verifies Discover status, UGC packet-to-Profile, and reviewed-grid safe-pin save-to-Profile as a repeatable rendered acceptance gate.
 
 ## Not accepted yet
