@@ -125,6 +125,9 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapImportPage, /Structured source line · verify provider/);
   assert.match(mapImportPage, /Known name match · verify provider/);
   assert.match(mapImportPage, /Started a scoped local-source review packet/);
+  assert.match(mapImportPage, /What local-use signal does the source show\?/);
+  assert.match(mapImportPage, /localUseSignal: formData\.get\('localUseSignal'\)/);
+  assert.match(mapImportPage, /Local-use signal:/);
   assert.match(mapImportPage, /data-contribution-stage-list/);
   assert.match(mapImportPage, /localKnowledgeReviewStages\(submission\)/);
   assert.match(mapImportPage, /UGC evidence packet/);
@@ -162,6 +165,8 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /stageCopy/);
   assert.match(profilePage, /localReviewGridHref\(packet\)/);
   assert.match(profilePage, /Compare with reviewed local grid/);
+  assert.match(profilePage, /Local-use signal:/);
+  assert.match(profilePage, /function localUseSignalLabel\(value\)/);
   assert.match(profilePage, /what-yangpu-residents-use-on-a-slow-day\/shanghai\/#source-notes-heading/);
   assert.match(profilePage, /Provider match pending/);
   assert.match(profilePage, /Saved on this device only\. It is not submitted until you send it for review\./);
@@ -224,6 +229,8 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence/);
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence → evidence-graded guide candidates → one provider-resolved saved pin/);
   assert.match(acceptanceDoc, /UGC enters as a review packet only/);
+  assert.match(acceptanceDoc, /UGC intake grades localness explicitly/);
+  assert.match(acceptanceDoc, /local-use signal/);
   assert.match(acceptanceDoc, /UGC intake persists into the traveler workspace/);
   assert.match(acceptanceDoc, /A clean rendered browser can prepare a Xiaohongshu-style packet/);
   assert.match(acceptanceDoc, /Compare with reviewed local grid/);
@@ -232,6 +239,6 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(readme, /docs\/local-ugc-mfp-acceptance-2026-07-18\.md/);
   assert.match(readme, /only the one provider-resolved pin can be saved to Profile/);
   assert.match(stories, /As a traveler using the Chinese local-source MFP/);
-  assert.match(stories, /review packet while the product makes clear that it is not yet a published guide candidate or provider-resolved pin/);
+  assert.match(stories, /prepare it as a UGC review packet, classify the local-use signal behind the lead/);
   assert.match(stories, /The Chinese local-source MFP is static\/manual/);
 });

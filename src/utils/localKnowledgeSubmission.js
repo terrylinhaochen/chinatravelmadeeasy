@@ -11,6 +11,14 @@ export const LOCAL_KNOWLEDGE_SOURCE_PLATFORMS = [
 ];
 export const LOCAL_KNOWLEDGE_KINDS = ['place', 'route', 'unclear'];
 export const LOCAL_KNOWLEDGE_CONTEXTS = ['source-only', 'planning', 'visited', 'local'];
+export const LOCAL_USE_SIGNALS = [
+  'local-first-person',
+  'local-creator-ugc',
+  'corroborated-local-use',
+  'local-use-proxy',
+  'traveler-only',
+  'unknown',
+];
 
 const SOCIAL_HOSTS = {
   xiaohongshu: ['xiaohongshu.com', 'xhslink.com'],
@@ -102,6 +110,7 @@ export function createLocalKnowledgeSubmission(input, now = new Date()) {
     originalName: String(input.originalName || '').trim(),
     evidenceText: String(input.evidenceText || '').trim(),
     whyItMatters: String(input.whyItMatters || '').trim(),
+    localUseSignal: String(input.localUseSignal || 'unknown').trim(),
     personalContext: String(input.personalContext || '').trim(),
     localMapUrl,
     routeStart: String(input.routeStart || '').trim(),
@@ -131,6 +140,7 @@ export function validateLocalKnowledgeSubmission(submission) {
   if (!LOCAL_KNOWLEDGE_SOURCE_PLATFORMS.includes(submission.sourcePlatform)) errors.push('sourcePlatform is invalid');
   if (!LOCAL_KNOWLEDGE_KINDS.includes(submission.kind)) errors.push('kind is invalid');
   if (!LOCAL_KNOWLEDGE_CONTEXTS.includes(submission.personalContext)) errors.push('personalContext is invalid');
+  if (!LOCAL_USE_SIGNALS.includes(submission.localUseSignal)) errors.push('localUseSignal is invalid');
   if (!String(submission.originalName || '').trim()) errors.push('originalName is required');
   if (!String(submission.whyItMatters || '').trim()) errors.push('whyItMatters is required');
   if (!submission.sourceUrl && !String(submission.evidenceText || '').trim()) errors.push('sourceUrl or evidenceText is required');
@@ -213,6 +223,7 @@ export function localKnowledgeReviewChecklist(submission) {
     errors: validation.errors,
     checks: [
       { id: 'original-evidence', label: 'Original-language evidence retained', ready: Boolean(submission.evidenceText || submission.sourceUrl) },
+      { id: 'local-use-signal', label: 'Local-use signal classified', ready: Boolean(submission.localUseSignal && submission.localUseSignal !== 'unknown') },
       { id: 'identity', label: 'Original name and city supplied', ready: Boolean(submission.originalName && submission.city) },
       { id: 'route-shape', label: submission.kind === 'route' ? 'Route has start and end' : 'Recommendation shape selected', ready: submission.kind !== 'route' || Boolean(submission.routeStart && submission.routeEnd) },
       { id: 'provider', label: 'Local map identity supplied', ready: Boolean(submission.localMapUrl) },
@@ -235,7 +246,9 @@ export function localKnowledgeReviewStages(submission) {
       id: 'guide-candidate',
       label: 'Guide candidate',
       state: checklist.valid ? 'review-pending' : 'blocked',
-      body: 'Translation, duplicate checks, and evidence grading still need review before this can enter a public guide.',
+      body: submission?.localUseSignal && submission.localUseSignal !== 'unknown'
+        ? 'Translation, duplicate checks, and local-use grading still need review before this can enter a public guide.'
+        : 'The local-use signal is still unknown, so this cannot become local guide supply until review classifies it.',
     },
     {
       id: 'map-ready-pin',

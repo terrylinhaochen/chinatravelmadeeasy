@@ -158,6 +158,19 @@ const jsonLd = [
             <label class="mt-4 block text-sm font-semibold">Original caption, quote, or screenshot OCR<textarea name="evidenceText" maxlength="2000" class="ds-input mt-2 min-h-32" placeholder="Paste the relevant local-language wording. Keep claims and qualifiers intact."></textarea></label>
             <label class="mt-4 block text-sm font-semibold">Why might this change a traveler’s plan?<textarea required name="whyItMatters" maxlength="500" class="ds-input mt-2 min-h-24" placeholder="The concrete reason, tradeoff, warning, route role, or experience—not ‘hidden gem.’"></textarea></label>
 
+            <label class="mt-4 block text-sm font-semibold">What local-use signal does the source show?
+              <select required name="localUseSignal" class="ds-input mt-2">
+                <option value="">Choose the strongest support</option>
+                <option value="local-first-person">Direct local first-person use</option>
+                <option value="local-creator-ugc">Local creator or resident UGC</option>
+                <option value="corroborated-local-use">Corroborated local-use signal</option>
+                <option value="local-use-proxy">Local-use proxy, not direct testimony</option>
+                <option value="traveler-only">Traveler evidence only</option>
+                <option value="unknown">Unknown until review</option>
+              </select>
+              <span class="mt-2 block text-xs leading-relaxed text-soft">This is the core review gate: popularity is not enough. Say what makes the evidence local, or mark it unknown.</span>
+            </label>
+
             <label class="mt-4 block text-sm font-semibold">Your relationship to this evidence
               <select name="personalContext" class="ds-input mt-2">
                 <option value="source-only">I found the source</option>
@@ -439,6 +452,7 @@ const jsonLd = [
         originalName: formData.get('originalName'),
         evidenceText: formData.get('evidenceText'),
         whyItMatters: formData.get('whyItMatters'),
+        localUseSignal: formData.get('localUseSignal'),
         personalContext: formData.get('personalContext'),
         localMapUrl: rawMapUrl,
         routeStart: formData.get('routeStart'),
@@ -554,6 +568,9 @@ const jsonLd = [
         '',
         'Why it may change a trip:',
         submission.whyItMatters,
+        '',
+        'Local-use signal:',
+        submission.localUseSignal || 'unknown',
         '',
         'Original evidence:',
         submission.evidenceText || 'Open the supplied public source.',

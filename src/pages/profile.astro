@@ -266,6 +266,7 @@ const jsonLd = [
           '<h3 class="mt-1 text-xl leading-tight">' + escapeHtml(packet.originalName || 'Local evidence packet') + '</h3></div>' +
           '<p class="mt-2 text-sm text-soft">' + escapeHtml(packet.city || 'City pending') + ' · ' + escapeHtml(reviewCopy) + '</p>' +
           '<p class="mt-2 rounded-md border border-line bg-white p-2 text-xs font-semibold leading-relaxed text-soft">Saved on this device only. It is not submitted until you send it for review.</p>' +
+          '<p class="mt-2 rounded-md border border-line bg-white p-2 text-xs leading-relaxed text-soft"><strong class="text-ink">Local-use signal:</strong> ' + escapeHtml(localUseSignalLabel(packet.localUseSignal)) + '</p>' +
           '<ol class="mt-3 grid gap-2 text-xs sm:grid-cols-3">' + stageCopy + '</ol>' +
           (packet.whyItMatters ? '<p class="mt-3 text-sm leading-relaxed text-soft">' + escapeHtml(packet.whyItMatters) + '</p>' : '') +
           '<div class="mt-4 flex flex-wrap gap-3">' +
@@ -287,6 +288,18 @@ const jsonLd = [
       return '';
     }
 
+    function localUseSignalLabel(value) {
+      const labels = {
+        'local-first-person': 'Direct local first-person use',
+        'local-creator-ugc': 'Local creator or resident UGC',
+        'corroborated-local-use': 'Corroborated local-use signal',
+        'local-use-proxy': 'Local-use proxy, not direct testimony',
+        'traveler-only': 'Traveler evidence only',
+        unknown: 'Unknown until review',
+      };
+      return labels[value] || 'Unknown until review';
+    }
+
     function formatLocalEvidencePacket(packet) {
       return [
         'Submission: ' + (packet.submissionId || 'local-only'),
@@ -303,6 +316,9 @@ const jsonLd = [
         '',
         'Why it may change a trip:',
         packet.whyItMatters || 'not supplied',
+        '',
+        'Local-use signal:',
+        localUseSignalLabel(packet.localUseSignal),
         '',
         'Original evidence:',
         packet.evidenceText || 'Open the supplied public source.',

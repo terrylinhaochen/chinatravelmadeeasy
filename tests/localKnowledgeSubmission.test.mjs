@@ -21,6 +21,7 @@ const baseInput = {
   originalName: '绿之丘',
   evidenceText: '沿着杨浦滨江走到绿之丘，可以上到屋顶看江景。',
   whyItMatters: 'It adds a specific industrial-riverfront stop and explains why it belongs in the walk.',
+  localUseSignal: 'local-creator-ugc',
   personalContext: 'source-only',
   localMapUrl: 'https://maps.apple.com/?q=%E7%BB%BF%E4%B9%8B%E4%B8%98',
   rightsConsent: true,
@@ -33,6 +34,7 @@ test('creates a reviewer-ready Chinese local-source submission without identity 
   assert.equal(submission.createdAt, '2026-07-14T18:00:00.000Z');
   assert.equal(validateLocalKnowledgeSubmission(submission).valid, true);
   assert.equal('email' in submission, false);
+  assert.equal(submission.localUseSignal, 'local-creator-ugc');
   assert.equal(submission.review.providerResolution, 'pending');
 });
 
@@ -78,6 +80,11 @@ test('review checklist keeps provider identity separate from content completenes
   assert.equal(checklist.valid, true);
   assert.equal(checklist.checks.find((check) => check.id === 'provider').ready, false);
   assert.equal(checklist.checks.find((check) => check.id === 'original-evidence').ready, true);
+  assert.equal(checklist.checks.find((check) => check.id === 'local-use-signal').ready, true);
+
+  const unknownSignal = createLocalKnowledgeSubmission({ ...baseInput, localUseSignal: 'unknown' });
+  assert.equal(validateLocalKnowledgeSubmission(unknownSignal).valid, true);
+  assert.equal(localKnowledgeReviewChecklist(unknownSignal).checks.find((check) => check.id === 'local-use-signal').ready, false);
 });
 
 test('review stages keep UGC evidence separate from map-ready pins', () => {
@@ -88,6 +95,9 @@ test('review stages keep UGC evidence separate from map-ready pins', () => {
   assert.equal(withoutProviderStages.find((stage) => stage.id === 'guide-candidate').state, 'review-pending');
   assert.equal(withoutProviderStages.find((stage) => stage.id === 'map-ready-pin').state, 'not-ready');
   assert.match(withoutProviderStages.find((stage) => stage.id === 'map-ready-pin').body, /No automatic save/);
+
+  const unknownSignalStages = localKnowledgeReviewStages(createLocalKnowledgeSubmission({ ...baseInput, localUseSignal: 'unknown' }));
+  assert.match(unknownSignalStages.find((stage) => stage.id === 'guide-candidate').body, /local-use signal is still unknown/);
 
   const withProviderStages = localKnowledgeReviewStages(createLocalKnowledgeSubmission(baseInput));
   assert.equal(withProviderStages.find((stage) => stage.id === 'map-ready-pin').state, 'provider-supplied');
