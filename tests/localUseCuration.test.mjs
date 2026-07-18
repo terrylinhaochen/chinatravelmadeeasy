@@ -221,6 +221,14 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(discoverPage, /Reviewed UGC packet/);
   assert.match(discoverPage, /Seeded locally/);
   assert.match(discoverPage, /operator-reviewed Chinese UGC packet/);
+  assert.match(discoverPage, /local-grid cells/);
+  assert.match(discoverPage, /Local grid mapping/);
+  assert.match(discoverPage, /saveable cell/);
+  assert.match(discoverPage, /review cell/);
+  assert.match(discoverPage, /candidate\.gridCell\.sourceEvidence/);
+  assert.match(discoverPage, /candidate\.gridCell\.localUseFit/);
+  assert.match(discoverPage, /candidate\.gridCell\.providerIdentity/);
+  assert.match(discoverPage, /candidate\.gridCell\.travelerDecision/);
   assert.match(discoverPage, /Not live platform retrieval/);
   assert.match(discoverPage, /Compare with reviewed grid/);
   assert.match(discoverPage, /Add similar UGC lead/);
@@ -263,6 +271,7 @@ test('reviewed Chinese UGC packets are visible without claiming live platform re
     packetCount: 1,
     candidateCount: 2,
     resolvedCandidateCount: 1,
+    gridCellCount: 2,
     livePlatformRetrievalCount: 0,
   });
 
@@ -275,6 +284,10 @@ test('reviewed Chinese UGC packets are visible without claiming live platform re
     assert.ok(packet.reviewGates.some((gate) => gate.label === 'Provider identity'));
     assert.equal(packet.candidates.filter((candidate) => candidate.resolutionState === 'resolved').length, 1);
     assert.ok(packet.candidates.some((candidate) => candidate.resolutionState === 'probable'));
+    assert.ok(packet.candidates.every((candidate) => candidate.gridCell.sourceEvidence && candidate.gridCell.localUseFit));
+    assert.ok(packet.candidates.every((candidate) => candidate.gridCell.providerIdentity && candidate.gridCell.travelerDecision));
+    assert.match(packet.candidates.find((candidate) => candidate.resolutionState === 'resolved').gridCell.providerIdentity, /Resolved/);
+    assert.match(packet.candidates.find((candidate) => candidate.resolutionState === 'probable').gridCell.travelerDecision, /do not save/i);
   }
 });
 

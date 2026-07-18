@@ -22,16 +22,30 @@ export const reviewedLocalUgcPackets = [
       '/map-import/?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute',
     candidates: [
       {
+        id: 'xhs-green-hill-yangpu-grid-cell',
         name: 'Green Hill',
         localName: '绿之丘',
         role: 'Good candidate for the industrial-riverfront opening, but still review-before-save.',
         resolutionState: 'probable',
+        gridCell: {
+          sourceEvidence: 'Caption names 绿之丘 as the river-view opening of the walk.',
+          localUseFit: 'Local creator route framing, but not direct resident repeat-use testimony in this packet.',
+          providerIdentity: 'Probable: Chinese name and Yangpu context match the reviewed guide, but provider identity is not safe for automatic save.',
+          travelerDecision: 'Keep as the opening idea; do not save until the exact provider result is checked.',
+        },
       },
       {
+        id: 'xhs-fuxing-island-park-grid-cell',
         name: 'Fuxing Island Park',
         localName: '复兴岛公园',
         role: 'Safe slow-finish pin after AMap and Apple identity agreement.',
         resolutionState: 'resolved',
+        gridCell: {
+          sourceEvidence: 'Caption names 复兴岛公园 as the slow walk finish.',
+          localUseFit: 'Matches the reviewed local-use cue 市民散步、观景、寻幽 from the Shanghai source ledger.',
+          providerIdentity: 'Resolved: AMap and Apple identify the same park at 共青路386号.',
+          travelerDecision: 'Save as the slow finish if the traveler wants neighborhood air rather than marquee sightseeing.',
+        },
       },
     ],
     reviewGates: [
@@ -49,10 +63,12 @@ export function summarizeReviewedLocalUgcPackets(packets = reviewedLocalUgcPacke
     (sum, packet) => sum + (packet.candidates || []).filter((candidate) => candidate.resolutionState === 'resolved').length,
     0,
   );
+  const gridCellCount = packets.reduce((sum, packet) => sum + (packet.candidates || []).filter((candidate) => candidate.gridCell).length, 0);
   return {
     packetCount: packets.length,
     candidateCount,
     resolvedCandidateCount,
+    gridCellCount,
     livePlatformRetrievalCount: packets.filter((packet) => packet.livePlatformRetrieval).length,
   };
 }
@@ -71,6 +87,19 @@ export function validateReviewedLocalUgcPacket(packet) {
   if (!Array.isArray(packet?.reviewGates) || packet.reviewGates.length !== 4) errors.push('missing-review-gates');
   if ((packet?.candidates || []).some((candidate) => !['resolved', 'probable', 'unresolved'].includes(candidate.resolutionState))) {
     errors.push('invalid-candidate-resolution');
+  }
+  for (const candidate of packet?.candidates || []) {
+    if (!candidate?.id) errors.push('missing-candidate-id');
+    const gridCell = candidate?.gridCell || {};
+    if (!gridCell.sourceEvidence || !gridCell.localUseFit || !gridCell.providerIdentity || !gridCell.travelerDecision) {
+      errors.push(`missing-grid-cell-${candidate?.id || candidate?.name || 'unknown'}`);
+    }
+    if (candidate?.resolutionState === 'resolved' && !/Resolved/i.test(gridCell.providerIdentity || '')) {
+      errors.push(`resolved-cell-without-provider-proof-${candidate.id}`);
+    }
+    if (candidate?.resolutionState !== 'resolved' && !/not safe|not save|do not save|Probable/i.test(gridCell.providerIdentity || gridCell.travelerDecision || '')) {
+      errors.push(`review-cell-overclaims-save-${candidate.id}`);
+    }
   }
   return { valid: errors.length === 0, errors };
 }

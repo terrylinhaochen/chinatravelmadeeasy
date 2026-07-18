@@ -15,7 +15,7 @@ This record covers the current static/manual Chinese slice plus one operator-rev
 3. Use `Open evidence ledger` to reach `/curated/ctme-local-lens/what-yangpu-residents-use-on-a-slow-day/shanghai/#source-notes-heading`.
 4. Read the source notes, original Chinese cues, evidence grades, and map-resolution states.
 5. For each reviewed candidate, read the explicit trip role and next action so research becomes a travel decision rather than a generic recommendation.
-6. Read the reviewed Chinese UGC packet on Discover and confirm it exposes the original cue, local-use signal, candidate gates, and the not-live platform retrieval boundary.
+6. Read the reviewed Chinese UGC packet on Discover and confirm it exposes the original cue, local-use signal, per-candidate local-grid mapping, candidate gates, and the not-live platform retrieval boundary.
 7. Save `1 map-ready pin` from the city guide.
 8. Open `/profile/`.
 9. Confirm Profile shows:
@@ -40,7 +40,8 @@ This record covers the current static/manual Chinese slice plus one operator-rev
 | Local evidence becomes a traveler decision | Every reviewed candidate exposes a `Trip role` and `Next action`, and the saved profile card preserves those fields for the map-ready pin. |
 | Provider resolution is separate from local evidence strength | The guide and tests keep only `resolutionState === "resolved"` candidates eligible for automatic save. |
 | Map save does not overclaim unresolved leads | The city save payload includes only provider-resolved places; Profile links unresolved leads back to the evidence ledger. |
-| Reviewed UGC is discoverable before save | `/discover/` shows one seeded Chinese UGC packet with original cue, local-use signal, source-derived candidates, one safe pin, and explicit `Not live platform retrieval` labeling. |
+| Reviewed UGC is discoverable before save | `/discover/` shows one seeded Chinese UGC packet with original cue, local-use signal, two local-grid cells, source-derived candidates, one safe pin, and explicit `Not live platform retrieval` labeling. |
+| UGC is mapped to local-grid cells | Each candidate exposes `Source evidence`, `Local-use fit`, `Provider identity`, and `Traveler decision`, with probable candidates marked `review cell` and resolved candidates marked `saveable cell`. |
 | UGC is supported honestly in the current slice | UGC enters as a review packet only. Xiaohongshu and Dianping are explicitly labeled not connected. |
 | UGC intake grades localness explicitly | The contribution form requires a local-use signal before the packet can be prepared; unknown is allowed but remains not ready as guide supply until review. |
 | UGC packets enter the same local-grid rubric | Prepared packets expose source evidence, local-use fit, provider identity, and traveler-decision gates before they can become public guide candidates. |
@@ -68,7 +69,7 @@ python3 -m http.server 4331 --directory dist
 Then verify:
 
 - `/discover/` renders the local-to-map loop, reviewed Chinese UGC packet, and UGC review-packet boundary.
-- The reviewed UGC packet renders `A slow Yangpu riverfront day instead of a skyline checklist`, `operator-reviewed seed`, `Not live platform retrieval`, `Compare with reviewed grid`, and `Add similar UGC lead`.
+- The reviewed UGC packet renders `A slow Yangpu riverfront day instead of a skyline checklist`, `operator-reviewed seed`, `Local grid mapping`, `review cell`, `saveable cell`, `Not live platform retrieval`, `Compare with reviewed grid`, and `Add similar UGC lead`.
 - `Open evidence ledger` routes to the Shanghai guide source-notes anchor.
 - The Shanghai guide renders `Xiaohongshu — Not connected`, `Dianping — Not connected`, and `UGC intake — Review packet only`.
 - A clean browser can save the one map-ready pin and reopen it from Profile with AMap/Apple links, trip role, next action, and unresolved-lead recovery.
