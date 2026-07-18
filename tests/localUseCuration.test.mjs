@@ -119,6 +119,7 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapImportPage, /localKnowledgeReviewStages\(submission\)/);
   assert.match(mapImportPage, /UGC evidence packet/);
   assert.match(mapImportPage, /Map-ready pin/);
+  assert.match(mapImportPage, /View in Profile/);
   assert.match(cityPage, /Evidence ledger/);
   assert.match(cityPage, /Original-language cue/);
   assert.match(cityPage, /place\.originalCue/);
@@ -146,6 +147,9 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /function renderLocalEvidence\(packets\)/);
   assert.match(profilePage, /localKnowledgeReviewStages\(packet\)/);
   assert.match(profilePage, /stageCopy/);
+  assert.match(profilePage, /localReviewGridHref\(packet\)/);
+  assert.match(profilePage, /Compare with reviewed local grid/);
+  assert.match(profilePage, /what-yangpu-residents-use-on-a-slow-day\/shanghai\/#source-notes-heading/);
   assert.match(profilePage, /Provider match pending/);
   assert.match(profilePage, /Saved on this device only\. It is not submitted until you send it for review\./);
   assert.match(profilePage, /function formatLocalEvidencePacket\(packet\)/);
