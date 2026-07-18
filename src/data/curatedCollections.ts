@@ -178,6 +178,8 @@ export interface CuratedCollectionPlace {
   sourceProvider: string;
   regionBucket: CuratedCollectionRegionBucket;
   localUse?: string;
+  tripRole?: string;
+  travelerAction?: string;
   travelerContext?: string;
   evidenceGrade?: 'resident-direct' | 'local-use-corroborated' | 'local-use-proxy';
   evidenceLabel?: string;
@@ -1181,6 +1183,8 @@ export const yangpuLocalUseCollection: CuratedCollection = {
     sourceProvider: candidate.evidenceLabel,
     regionBucket: 'shanghai',
     localUse: candidate.localUse,
+    tripRole: candidate.tripRole,
+    travelerAction: candidate.travelerAction,
     travelerContext: candidate.travelerContext,
     evidenceGrade: candidate.evidenceGrade,
     evidenceLabel: candidate.evidenceLabel,

@@ -94,6 +94,8 @@ export const shanghaiLocalUseCollection = {
       originalCue: '每隔一两周',
       cueMeaning: 'The source describes repeat family use.',
       localUse: 'A repeat family activity stop and an accessible river overlook, rather than only an architecture photo.',
+      tripRole: 'Use as the opening overlook for a Yangpu waterfront half-day when family access, ramps, or industrial architecture matter.',
+      travelerAction: 'Review before saving: the local story is strong, but the persistent AMap POI still needs confirmation.',
       evidence: 'Chinese Youth Daily interviewed a Yangpu student who returns with her brother every one or two weeks. The women-and-children center reported more than 300 programs and 60,000 visits, while local disability representatives described independently using the waterfront.',
       travelerContext: 'Best for a family, accessibility-conscious, or industrial-architecture afternoon. Check the current activity calendar separately; the public building and a scheduled program are different promises.',
       resolutionState: 'probable',
@@ -128,6 +130,8 @@ export const shanghaiLocalUseCollection = {
       originalCue: '25个滨江沿线特色室内户外空间场馆',
       cueMeaning: 'The museum appears in a waterfront network, not as an isolated attraction claim.',
       localUse: 'An indoor, interactive family stop that can carry the hottest or wettest part of a waterfront day.',
+      tripRole: 'Use as the weather-proof middle of a Yangpu riverfront day, especially with kids or visitors who need an indoor reset.',
+      travelerAction: 'Review before saving: confirm the exact provider identity and current reservation path before treating it as a pin.',
       evidence: 'Yangpu reporting includes the museum in the district’s child-friendly waterfront network. Its official visitor information confirms free entry, interactive exhibits, wheelchair access, the Anpu Road entrance, and a separate reservation path for visitors without WeChat.',
       travelerContext: 'Use it for two to three indoor hours, not as a quick photo stop. Recheck the current reservation rule and Monday closure before leaving.',
       resolutionState: 'probable',
@@ -162,6 +166,8 @@ export const shanghaiLocalUseCollection = {
       originalCue: '皂梦空间（原制皂厂）',
       cueMeaning: 'The local source preserves the factory-space identity, but not direct visitor testimony.',
       localUse: 'A small industrial-history pause inside the public waterfront network, especially relevant to families using the child-friendly corridor.',
+      tripRole: 'Treat as a conditional pause between stronger Yangpu anchors, not as a standalone reason to cross town.',
+      travelerAction: 'Keep as inspiration only until current public access and provider identity are verified.',
       evidence: 'Local reporting lists the former soap factory among 25 child-friendly demonstration spaces. Municipal material preserves its industrial identity and address, but the current slice did not retrieve direct resident testimony about this specific stop.',
       travelerContext: 'Treat it as a conditional pause, not the reason to cross Shanghai. Confirm current public access and opening before building the day around it.',
       resolutionState: 'probable',
@@ -196,6 +202,8 @@ export const shanghaiLocalUseCollection = {
       originalCue: '市民散步、观景、寻幽',
       cueMeaning: 'The source frames the park around everyday quiet use.',
       localUse: 'A quiet neighborhood walk for trees, river air, and a slower finish away from the central sightseeing circuit.',
+      tripRole: 'Save as the slow finish for a Yangpu local-use day when the goal is neighborhood air rather than marquee sightseeing.',
+      travelerAction: 'Save now: AMap and Apple agree on the park identity at 共青路386号.',
       evidence: 'Shanghai’s 2026 community-attraction review describes the park as a place residents use for walking, views, and quiet time. The source supplies the current address and explains the park’s water, woodland, and neighborhood role.',
       travelerContext: 'Use the island as a separate slow finish, not as an implied continuation of every Yangpu waterfront walk. Check current access and the return before dusk.',
       resolutionState: 'resolved',
@@ -234,7 +242,7 @@ export function summarizeShanghaiLocalUse(collection = shanghaiLocalUseCollectio
 export function validateShanghaiLocalUseCandidate(candidate) {
   const errors = [];
   if (!candidate?.name || !candidate?.localName) errors.push('missing-bilingual-identity');
-  if (!candidate?.localUse || !candidate?.evidence || !candidate?.travelerContext) errors.push('missing-use-context');
+  if (!candidate?.localUse || !candidate?.tripRole || !candidate?.travelerAction || !candidate?.evidence || !candidate?.travelerContext) errors.push('missing-use-context');
   if (!candidate?.originalCue || !candidate?.cueMeaning) errors.push('missing-original-language-cue');
   if (!['resident-direct', 'local-use-corroborated', 'local-use-proxy'].includes(candidate?.evidenceGrade)) errors.push('invalid-evidence-grade');
   if (!['resolved', 'probable', 'unresolved'].includes(candidate?.resolutionState)) errors.push('invalid-resolution-state');

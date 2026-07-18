@@ -14,17 +14,19 @@ This record covers the current static/manual Chinese slice. It does not certify 
 2. Find the Shanghai local-source guide card.
 3. Use `Open evidence ledger` to reach `/curated/ctme-local-lens/what-yangpu-residents-use-on-a-slow-day/shanghai/#source-notes-heading`.
 4. Read the source notes, original Chinese cues, evidence grades, and map-resolution states.
-5. Save `1 map-ready pin` from the city guide.
-6. Open `/profile/`.
-7. Confirm Profile shows:
+5. For each reviewed candidate, read the explicit trip role and next action so research becomes a travel decision rather than a generic recommendation.
+6. Save `1 map-ready pin` from the city guide.
+7. Open `/profile/`.
+8. Confirm Profile shows:
    - the saved provider-resolved pin;
    - AMap and Apple handoff links;
    - why the pin survived review;
+   - the trip role and next action;
    - the original Chinese cue;
    - `Review 3 unresolved local leads`, linking back to the guide evidence ledger.
-8. Use `/map-import/?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute` to prepare a UGC review packet from a Xiaohongshu, Dianping, short-video, local-map, caption, OCR, or personal-knowledge source.
-9. Classify the local-use signal as direct local first-person use, local creator or resident UGC, corroborated local-use, local-use proxy, traveler-only evidence, or unknown.
-10. Open `/profile/` and confirm the UGC review packet remains visible with provider resolution pending, local-use signal, review stages, original-source access, and a link back to the reviewed Shanghai local grid.
+9. Use `/map-import/?contributionCity=Shanghai&contributionLanguage=Chinese&contributionPlatform=xiaohongshu&contributionKind=place#contribute` to prepare a UGC review packet from a Xiaohongshu, Dianping, short-video, local-map, caption, OCR, or personal-knowledge source.
+10. Classify the local-use signal as direct local first-person use, local creator or resident UGC, corroborated local-use, local-use proxy, traveler-only evidence, or unknown.
+11. Open `/profile/` and confirm the UGC review packet remains visible with provider resolution pending, local-use signal, review stages, original-source access, and a link back to the reviewed Shanghai local grid.
 
 ## Acceptance criteria
 
@@ -33,6 +35,7 @@ This record covers the current static/manual Chinese slice. It does not certify 
 | Traveler can discover the local-source slice from Discover | `/discover/` contains `Try the local-to-map loop`, `Open evidence ledger`, and `Save reviewed pin`. |
 | Source evidence preserves original Chinese context | The Shanghai guide shows source notes with `originalCue`, `cueMeaning`, platform, retrieval date, and linked candidates. |
 | Local use is graded rather than treated as a badge | The guide labels direct resident testimony, corroborated local-use signals, and local-use proxies separately. |
+| Local evidence becomes a traveler decision | Every reviewed candidate exposes a `Trip role` and `Next action`, and the saved profile card preserves those fields for the map-ready pin. |
 | Provider resolution is separate from local evidence strength | The guide and tests keep only `resolutionState === "resolved"` candidates eligible for automatic save. |
 | Map save does not overclaim unresolved leads | The city save payload includes only provider-resolved places; Profile links unresolved leads back to the evidence ledger. |
 | UGC is supported honestly in the current slice | UGC enters as a review packet only. Xiaohongshu and Dianping are explicitly labeled not connected. |
@@ -61,7 +64,7 @@ Then verify:
 - `/discover/` renders the local-to-map loop and UGC review-packet boundary.
 - `Open evidence ledger` routes to the Shanghai guide source-notes anchor.
 - The Shanghai guide renders `Xiaohongshu — Not connected`, `Dianping — Not connected`, and `UGC intake — Review packet only`.
-- A clean browser can save the one map-ready pin and reopen it from Profile with AMap/Apple links plus unresolved-lead recovery.
+- A clean browser can save the one map-ready pin and reopen it from Profile with AMap/Apple links, trip role, next action, and unresolved-lead recovery.
 - A clean browser can open `Add Chinese source`, fill the pre-scoped contribution form including the local-use signal, prepare a review packet, and see that packet in Profile with a reviewed-grid recovery link.
 
 ## Not accepted yet

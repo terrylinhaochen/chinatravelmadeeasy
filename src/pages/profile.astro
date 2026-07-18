@@ -206,6 +206,8 @@ const jsonLd = [
         const localContext = isLocalResearch && firstPlace
           ? '<div class="mt-3 rounded-md border border-line bg-white p-3 text-xs leading-relaxed text-soft">' +
               '<p><strong class="text-ink">Why this pin survived review:</strong> ' + escapeHtml(firstPlace.note || firstPlace.evidenceLabel || 'Provider-resolved local-use candidate.') + '</p>' +
+              (firstPlace.tripRole ? '<p class="mt-2"><strong class="text-ink">Trip role:</strong> ' + escapeHtml(firstPlace.tripRole) + '</p>' : '') +
+              (firstPlace.travelerAction ? '<p class="mt-2"><strong class="text-ink">Next action:</strong> ' + escapeHtml(firstPlace.travelerAction) + '</p>' : '') +
               (firstPlace.originalCue ? '<p class="mt-2"><strong class="text-ink">Original cue:</strong> <span class="font-semibold text-ink">' + escapeHtml(firstPlace.originalCue) + '</span>' + (firstPlace.cueMeaning ? '<span class="block pt-1">' + escapeHtml(firstPlace.cueMeaning) + '</span>' : '') + '</p>' : '') +
             '</div>'
           : '';

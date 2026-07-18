@@ -48,6 +48,8 @@ test('every local-use candidate preserves bilingual identity, traveler context, 
     assert.match(candidate.address, /[\u3400-\u9fff]/u);
     assert.match(candidate.originalCue, /[\u3400-\u9fff]/u);
     assert.ok(candidate.cueMeaning.length >= 24);
+    assert.ok(candidate.tripRole.length >= 40);
+    assert.ok(candidate.travelerAction.length >= 40);
     assert.ok(candidate.sources.every((source) => source.url.startsWith('https://')));
   }
 });
@@ -135,6 +137,10 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(mapImportPage, /View in Profile/);
   assert.match(cityPage, /Evidence ledger/);
   assert.match(cityPage, /Original-language cue/);
+  assert.match(cityPage, /Trip role:/);
+  assert.match(cityPage, /Next action:/);
+  assert.match(cityPage, /place\.tripRole/);
+  assert.match(cityPage, /place\.travelerAction/);
   assert.match(cityPage, /place\.originalCue/);
   assert.match(cityPage, /place\.cueMeaning/);
   assert.match(cityPage, /linkedCandidates: linkedCandidates\.map/);
@@ -153,6 +159,10 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /Open saved AMap pin/);
   assert.match(profilePage, /Open saved Apple pin/);
   assert.match(profilePage, /Why this pin survived review/);
+  assert.match(profilePage, /Trip role:/);
+  assert.match(profilePage, /Next action:/);
+  assert.match(profilePage, /firstPlace\.tripRole/);
+  assert.match(profilePage, /firstPlace\.travelerAction/);
   assert.match(profilePage, /firstPlace\.originalCue/);
   assert.match(profilePage, /firstPlace\.cueMeaning/);
   assert.match(profilePage, /reviewLeadCount = Math\.max/);
@@ -229,6 +239,9 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence/);
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence → evidence-graded guide candidates → one provider-resolved saved pin/);
   assert.match(acceptanceDoc, /UGC enters as a review packet only/);
+  assert.match(acceptanceDoc, /Local evidence becomes a traveler decision/);
+  assert.match(acceptanceDoc, /Trip role/);
+  assert.match(acceptanceDoc, /Next action/);
   assert.match(acceptanceDoc, /UGC intake grades localness explicitly/);
   assert.match(acceptanceDoc, /local-use signal/);
   assert.match(acceptanceDoc, /UGC intake persists into the traveler workspace/);
