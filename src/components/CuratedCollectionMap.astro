@@ -72,15 +72,17 @@ const reviewCount = places.length - mapReadyCount;
       {places.map((place, index) => {
         const state = place.resolutionState ?? 'resolved';
         return (
-          <span
+          <a
+            href={`#${place.id}`}
             class="curated-local-grid-item"
             data-local-grid-place
             data-resolution={state}
             title={`${place.name} · ${state === 'resolved' ? 'map-ready' : 'needs provider review'}`}
+            aria-label={`Open ${place.name} candidate details · ${state === 'resolved' ? 'map-ready' : 'needs provider review'}`}
           >
             <i aria-hidden="true">{index + 1}</i>
             <span>{place.name}</span>
-          </span>
+          </a>
         );
       })}
     </div>
@@ -244,6 +246,14 @@ const reviewCount = places.length - mapReadyCount;
     color: var(--color-soft);
     font-size: 0.72rem;
     font-weight: 700;
+    text-decoration: none;
+    transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+  }
+
+  .curated-local-grid-item:hover {
+    border-color: rgb(140 47 34 / 0.45);
+    background: white;
+    color: var(--color-accent);
   }
 
   .curated-local-grid-item i {

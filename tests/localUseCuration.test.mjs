@@ -119,6 +119,8 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(profilePage, /map-ready pin/);
   assert.match(profilePage, /Open saved AMap pin/);
   assert.match(profilePage, /Open saved Apple pin/);
+  assert.match(mapComponent, /<a[\s\S]+href=\{`#\$\{place\.id\}`\}/);
+  assert.match(mapComponent, /aria-label=\{`Open \$\{place\.name\} candidate details/);
   assert.match(mapComponent, /data-resolution=\{isLocalResearch \? cell\.resolutionState : undefined\}/);
   assert.match(mapComponent, /mapReadyCount.*map-ready/s);
   assert.match(mapComponent, /reviewCount.*needs review/s);
