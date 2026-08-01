@@ -248,9 +248,14 @@ test('the city collection save payload carries only map-ready local pins into Pr
   assert.match(discoverPage, /data-local-ugc-save/);
   assert.match(discoverPage, /Save UGC-mapped pin/);
   assert.match(discoverPage, /ctme-pending-reviewed-ugc-save/);
+  assert.match(discoverPage, /ctme-local-knowledge-contributions-v1/);
   assert.match(discoverPage, /save the UGC-mapped local pin to your profile/);
   assert.match(discoverPage, /Saved ' \+ payload\.safePlaceCount \+ ' UGC-mapped pin to Profile/);
-  assert.match(discoverPage, /Provider review first/);
+  assert.match(discoverPage, /Keep review note/);
+  assert.match(discoverPage, /Kept review-only UGC note in Profile/);
+  assert.match(discoverPage, /0 map-ready pins were saved/);
+  assert.match(discoverPage, /createLocalKnowledgeSubmission/);
+  assert.match(discoverPage, /reviewedPacketId/);
   assert.match(discoverPage, /UGC review packets/);
   assert.match(discoverPage, /Map-ready save/);
   assert.match(discoverPage, /Live Chinese-platform retrieval/);
@@ -341,6 +346,8 @@ test('the local UGC MFP acceptance record states the proven and unproven boundar
   assert.match(acceptanceDoc, /static\/manual local Chinese evidence \+ two seeded reviewed Chinese UGC packets → evidence-graded guide candidates → one provider-resolved saved pin/);
   assert.match(acceptanceDoc, /Reviewed UGC is discoverable before save/);
   assert.match(acceptanceDoc, /UGC save follows the grid decision/);
+  assert.match(acceptanceDoc, /Review-only UGC insight can still be kept/);
+  assert.match(acceptanceDoc, /review-only UGC note-to-Profile/);
   assert.match(acceptanceDoc, /UGC provenance remains visible after saving/);
   assert.match(acceptanceDoc, /Save UGC-mapped pin/);
   assert.match(acceptanceDoc, /reviewed UGC safe-pin save-to-Profile/);

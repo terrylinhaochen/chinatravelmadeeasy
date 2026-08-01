@@ -79,6 +79,16 @@ const localUgcSavePayloads = Object.fromEntries(reviewedLocalUgcPackets.map((pac
     owner: packet.platform,
     source: 'Reviewed Chinese UGC packet',
     type: 'local-research',
+    sourcePlatform: packet.platform.toLowerCase().includes('xiaohongshu') ? 'xiaohongshu' : 'tiktok',
+    kind: packet.candidates.some((candidate) => candidate.name.toLowerCase().includes('route') || candidate.localName.includes('路线')) ? 'route' : 'place',
+    evidenceText: packet.evidenceText,
+    localUseSignal: packet.localUseSignal,
+    note: packet.travelerRead,
+    routeStart: packet.candidates[0]?.localName ?? '',
+    routeEnd: packet.candidates[1]?.localName ?? '',
+    sourceBoundary: packet.sourceBoundary,
+    providerCheckedAt: packet.providerCheckedAt,
+    reviewedAt: packet.reviewedAt,
     href: packet.guideHref,
     city: packet.city,
     placeCount: saveableCandidates.length,
@@ -523,17 +533,25 @@ const jsonLd = [
 
   <script>
     import { collectCuratedCollection, getCollectedCollections, getUser } from '../utils/localPrototypeState.js';
+    import { createLocalKnowledgeSubmission } from '../utils/localKnowledgeSubmission.js';
 
     const localUgcSavePayloads = JSON.parse(document.querySelector('#localUgcSavePayloads')?.textContent || '{}');
     const pendingLocalUgcSaveKey = 'ctme-pending-reviewed-ugc-save';
+    const localKnowledgeContributionsKey = 'ctme-local-knowledge-contributions-v1';
 
     document.querySelectorAll('[data-local-ugc-save]').forEach((button) => {
       const packetId = button.dataset.localUgcSave;
       const payload = localUgcSavePayloads[packetId];
       const status = document.querySelector(`[data-local-ugc-status="${packetId}"]`);
-      if (!payload || !payload.safePlaceCount) {
+      if (!payload) {
         button.disabled = true;
-        button.textContent = 'Provider review first';
+        button.textContent = 'Review unavailable';
+        return;
+      }
+      if (!payload.safePlaceCount) {
+        button.textContent = 'Keep review note';
+        if (hasLocalUgcReviewNote(payload)) markUgcReviewKept(button);
+        button.addEventListener('click', () => completeLocalUgcReviewNote(payload, button, status));
         return;
       }
       if (getCollectedCollections().some((entry) => entry.id === payload.id)) markUgcSaved(button);
@@ -571,6 +589,56 @@ const jsonLd = [
 
     function markUgcSaved(button) {
       button.textContent = 'Saved UGC pin';
+      button.classList.remove('ds-button-dark');
+      button.classList.add('ds-button-secondary');
+    }
+
+    function completeLocalUgcReviewNote(payload, button, status) {
+      const note = createLocalKnowledgeSubmission({
+        city: payload.city,
+        sourceLanguage: 'Chinese',
+        sourcePlatform: payload.sourcePlatform || 'tiktok',
+        kind: payload.kind || 'route',
+        originalName: payload.title,
+        evidenceText: payload.evidenceText || payload.sourceBoundary || payload.title,
+        whyItMatters: payload.note || 'This reviewed local UGC packet changes timing, transport, or route planning without creating a provider-resolved pin.',
+        localUseSignal: payload.localUseSignal || 'corroborated-local-use',
+        personalContext: 'source-only',
+        routeStart: payload.routeStart || '',
+        routeEnd: payload.routeEnd || '',
+        rightsConsent: true,
+      }, new Date(payload.reviewedAt || Date.now()));
+      note.reviewedPacketId = payload.id;
+      note.sourceBoundary = payload.sourceBoundary;
+      note.providerCheckedAt = payload.providerCheckedAt;
+
+      const current = readLocalUgcReviewNotes();
+      localStorage.setItem(
+        localKnowledgeContributionsKey,
+        JSON.stringify([note, ...current.filter((item) => item.submissionId !== note.submissionId && item.reviewedPacketId !== note.reviewedPacketId)].slice(0, 32))
+      );
+      markUgcReviewKept(button);
+      if (status) {
+        status.innerHTML = 'Kept review-only UGC note in Profile. 0 map-ready pins were saved. <a class="font-semibold text-ink hover:text-accent" href="/profile/">Open Profile</a>';
+        status.classList.remove('hidden');
+      }
+    }
+
+    function hasLocalUgcReviewNote(payload) {
+      return readLocalUgcReviewNotes().some((item) => item.reviewedPacketId === payload.id);
+    }
+
+    function readLocalUgcReviewNotes() {
+      try {
+        const records = JSON.parse(localStorage.getItem(localKnowledgeContributionsKey) || '[]');
+        return Array.isArray(records) ? records.filter(Boolean) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function markUgcReviewKept(button) {
+      button.textContent = 'Review note kept';
       button.classList.remove('ds-button-dark');
       button.classList.add('ds-button-secondary');
     }

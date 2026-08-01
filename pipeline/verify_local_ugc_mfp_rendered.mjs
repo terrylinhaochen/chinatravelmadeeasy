@@ -70,6 +70,7 @@ async function verifyDiscoverStatus(page, baseUrl) {
     'review cell',
     'saveable cell',
     'Save UGC-mapped pin',
+    'Keep review note',
     'Not live platform retrieval',
     'Compare with reviewed grid',
     'Add similar UGC lead',
@@ -81,6 +82,28 @@ async function verifyDiscoverStatus(page, baseUrl) {
     'Not live yet',
   ]) {
     await assertText(page, text, 'Discover MFP status');
+  }
+}
+
+async function verifyReviewOnlyUgcNote(page, baseUrl) {
+  await page.goto(`${baseUrl}/discover/`, { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => localStorage.clear());
+  await page.getByRole('button', { name: 'Keep review note' }).click();
+  await page.getByText('Kept review-only UGC note in Profile. 0 map-ready pins were saved.').waitFor();
+  await page.getByRole('link', { name: 'Open Profile' }).click();
+  await page.waitForURL(/profile/);
+
+  for (const text of [
+    'The riverfront walk works only if the weather and return route work',
+    'Shanghai · Provider match pending',
+    'Corroborated local-use signal',
+    'ready for local grid review · not map-ready',
+    'Provider identity',
+    'provider pending',
+    'This does not add a new must-see. It changes the usable version of the Yangpu plan',
+    'Compare with reviewed local grid',
+  ]) {
+    await assertText(page, text, 'Profile kept review-only UGC note');
   }
 }
 
@@ -202,13 +225,14 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1400 } });
   try {
     await verifyDiscoverStatus(page, baseUrl);
+    await verifyReviewOnlyUgcNote(page, baseUrl);
     await verifyReviewedUgcSave(page, baseUrl);
     await verifyUgcPacketToProfile(page, baseUrl);
     await verifyReviewedGridSave(page, baseUrl);
   } finally {
     await browser.close();
   }
-  console.log(JSON.stringify({ ok: true, baseUrl, checks: ['discover-status', 'reviewed-ugc-save-profile', 'ugc-packet-profile', 'reviewed-grid-save-profile'] }));
+  console.log(JSON.stringify({ ok: true, baseUrl, checks: ['discover-status', 'review-only-ugc-note-profile', 'reviewed-ugc-save-profile', 'ugc-packet-profile', 'reviewed-grid-save-profile'] }));
 } finally {
   server.kill('SIGTERM');
 }

@@ -44,6 +44,7 @@ This record covers the current static/manual Chinese slice plus two operator-rev
 | Reviewed UGC is discoverable before save | `/discover/` shows two seeded Chinese UGC packets with original cues, local-use signals, four local-grid cells, source-derived candidates, one safe pin, and explicit `Not live platform retrieval` labeling. |
 | UGC is mapped to local-grid cells | Each candidate exposes `Source evidence`, `Local-use fit`, `Provider identity`, and `Traveler decision`, with review-only candidates marked `review cell` and the one resolved candidate marked `saveable cell`. |
 | UGC save follows the grid decision | `Save UGC-mapped pin` writes only the resolved `saveable cell` to Profile and leaves the other source-derived candidate review-first. |
+| Review-only UGC insight can still be kept | `Keep review note` stores a review-only local caution in Profile as not map-ready, without creating AMap/Apple handoff links. |
 | UGC provenance remains visible after saving | Discover and Profile show the UGC boundary, source evidence, packet review date, and provider-check date so the saved pin is not detached from its evidence. |
 | UGC is supported honestly in the current slice | UGC enters as a review packet only. Xiaohongshu and Dianping are explicitly labeled not connected. |
 | UGC intake grades localness explicitly | The contribution form requires a local-use signal before the packet can be prepared; unknown is allowed but remains not ready as guide supply until review. |
@@ -73,13 +74,14 @@ Then verify:
 
 - `/discover/` renders the local-to-map loop, reviewed Chinese UGC packet, and UGC review-packet boundary.
 - The reviewed UGC packets render `A slow Yangpu riverfront day instead of a skyline checklist`, `The riverfront walk works only if the weather and return route work`, `operator-reviewed seed`, `UGC boundary`, `Packet reviewed`, `Provider checked`, `Local grid mapping`, `review cell`, `saveable cell`, `Save UGC-mapped pin`, `Not live platform retrieval`, `Compare with reviewed grid`, and `Add similar UGC lead`.
+- A clean browser can click `Keep review note`, open Profile, and see the weather/return-route caution as a local evidence packet with `Provider match pending`, `ready for local grid review · not map-ready`, and no map-ready save claim.
 - A clean browser can click `Save UGC-mapped pin`, sign in locally, open Profile, and see `Fuxing Island Park`, `Open saved AMap pin`, `Open saved Apple pin`, `Review 1 unresolved local lead`, `UGC boundary`, `Source evidence`, and `Freshness`.
 - `Open evidence ledger` routes to the Shanghai guide source-notes anchor.
 - The Shanghai guide renders `Xiaohongshu — Not connected`, `Dianping — Not connected`, and `UGC intake — Review packet only`.
 - A clean browser can save the one map-ready pin and reopen it from Profile with AMap/Apple links, trip role, next action, and unresolved-lead recovery.
 - A clean browser can open `Add Chinese source`, fill the pre-scoped contribution form including the local-use signal, prepare a review packet, and see source evidence, local-use fit, provider identity, and traveler-decision gates in both the packet result and Profile with a reviewed-grid recovery link.
 - `npm run test:local-ugc-mfp` runs the complete local MFP gate: unit contracts, build prerequisites, clean static build, and rendered browser acceptance.
-- `npm run test:local-ugc-mfp:rendered` starts a temporary static server from `dist/` and verifies Discover status, reviewed UGC safe-pin save-to-Profile, UGC packet-to-Profile, and reviewed-grid safe-pin save-to-Profile as a repeatable rendered acceptance gate.
+- `npm run test:local-ugc-mfp:rendered` starts a temporary static server from `dist/` and verifies Discover status, review-only UGC note-to-Profile, reviewed UGC safe-pin save-to-Profile, UGC packet-to-Profile, and reviewed-grid safe-pin save-to-Profile as a repeatable rendered acceptance gate.
 
 ## Not accepted yet
 

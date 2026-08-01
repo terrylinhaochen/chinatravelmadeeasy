@@ -66,6 +66,7 @@ console.log('\n' + JSON.stringify({
     'build-prerequisites',
     'clean-static-build',
     'rendered-discover-status',
+    'rendered-review-only-ugc-note-profile',
     'rendered-reviewed-ugc-save-profile',
     'rendered-ugc-packet-profile',
     'rendered-reviewed-grid-save-profile',
