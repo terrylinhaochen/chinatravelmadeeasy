@@ -1,6 +1,6 @@
 import { strict as assert } from 'node:assert';
 import test from 'node:test';
-import { mergeSavedPinLists, splitPinListByCity } from '../src/utils/localPrototypeState.js';
+import { clearUser, getUser, mergeSavedPinLists, setUser, splitPinListByCity } from '../src/utils/localPrototypeState.js';
 
 test('multi-city uploads split into city lists with shared provenance', () => {
   const result = splitPinListByCity({
@@ -40,4 +40,22 @@ test('a callback retry replaces the same pending homepage save instead of duplic
   assert.equal(result.length, 1);
   assert.equal(result[0].id, '6a3e9ac0-d4b4-40bb-ae49-e689716c439d');
   assert.equal(result[0].savedAt, '2026-07-13T00:00:00.000Z');
+});
+
+test('local profile setup can be cleared without deleting saved map data', () => {
+  const store = new Map();
+  globalThis.localStorage = {
+    getItem: (key) => store.get(key) ?? null,
+    setItem: (key, value) => store.set(key, String(value)),
+    removeItem: (key) => store.delete(key),
+  };
+  globalThis.window = { dispatchEvent() {} };
+  globalThis.CustomEvent = class CustomEvent {
+    constructor(type) { this.type = type; }
+  };
+
+  setUser('traveler@example.com', { authProvider: 'localhost-preview' });
+  assert.equal(getUser().email, 'traveler@example.com');
+  clearUser();
+  assert.equal(getUser(), null);
 });

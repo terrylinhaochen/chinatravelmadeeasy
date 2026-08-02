@@ -12,6 +12,7 @@
 		90A0000E2C4B000100000001 /* SavedPlacesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A0000D2C4B000100000001 /* SavedPlacesStore.swift */; };
 		90A000102C4B000100000001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A0000F2C4B000100000001 /* ContentView.swift */; };
 		90A0001A2C4B000100000001 /* LocalTravelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A000192C4B000100000001 /* LocalTravelTests.swift */; };
+		90A0002A2C4B000100000001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 90A000292C4B000100000001 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		90A0000F2C4B000100000001 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		90A000142C4B000100000001 /* LocalTravelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalTravelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		90A000192C4B000100000001 /* LocalTravelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTravelTests.swift; sourceTree = "<group>"; };
+		90A000292C4B000100000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -80,6 +82,7 @@
 				90A0000B2C4B000100000001 /* LocalGuideModels.swift */,
 				90A0000D2C4B000100000001 /* SavedPlacesStore.swift */,
 				90A0000F2C4B000100000001 /* ContentView.swift */,
+				90A000292C4B000100000001 /* Assets.xcassets */,
 			);
 			path = LocalTravel;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90A0002A2C4B000100000001 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +341,6 @@
 		90A000232C4B000100000001 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -362,7 +365,6 @@
 		90A000242C4B000100000001 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";

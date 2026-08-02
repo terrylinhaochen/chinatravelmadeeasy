@@ -161,8 +161,8 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
       <div class="ctme-modal-backdrop" data-ctme-signin-close></div>
       <div class="ctme-modal-panel">
         <button type="button" class="ctme-modal-close" data-ctme-signin-close aria-label="Close sign in">×</button>
-        <p class="ds-eyebrow">Sign in</p>
-        <h2 id="ctmeSigninTitle" class="mt-2 text-3xl leading-tight">Save this to your profile.</h2>
+        <p class="ds-eyebrow">Map profile</p>
+        <h2 id="ctmeSigninTitle" class="mt-2 text-3xl leading-tight">Set up your map profile.</h2>
         <p id="ctmeSigninCopy" class="mt-2 text-sm leading-relaxed text-soft">Enter an email to keep uploaded lists and collected maps in this browser.</p>
         <div class="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
           <input id="ctmeSigninEmail" type="email" class="ds-input text-sm" placeholder="you@example.com" />
@@ -201,8 +201,8 @@ const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
         modalCopy.textContent = isSupabaseConfigured() && !isLocalPrototypeHost()
           ? 'Enter an email to ' + actionCopy + '. We will send a magic link and return you to this page to finish the action.'
           : isSupabaseConfigured()
-            ? 'Enter an email to ' + actionCopy + '. Localhost continues in this browser for dogfooding; production still uses the email link.'
-          : 'Enter an email to ' + actionCopy + '. This local prototype stores it in this browser.';
+            ? 'Enter an email to ' + actionCopy + '. This local dogfood profile saves in this browser only; production still uses the email link.'
+          : 'Enter an email to ' + actionCopy + '. This local prototype stores it in this browser only.';
         modalError.classList.add('hidden');
         modal.classList.remove('is-hidden');
         modalEmail.focus();

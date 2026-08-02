@@ -26,6 +26,11 @@ export function setUser(email, attributes = {}) {
   return user;
 }
 
+export function clearUser() {
+  localStorage.removeItem(CTME_USER_KEY);
+  emitStateUpdate();
+}
+
 export function getSavedPinLists() {
   return readJson(CTME_SAVED_PIN_LISTS_KEY, []);
 }

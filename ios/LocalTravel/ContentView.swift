@@ -64,6 +64,17 @@ struct GuideHeader: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
+            SharedGuideImage(name: guide.heroImageName, height: 210, cornerRadius: 18)
+                .overlay(alignment: .bottomLeading) {
+                    Text("Local-language research · map-ready handoff")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.white)
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 10)
+                        .background(.black.opacity(0.45), in: Capsule())
+                        .padding(14)
+                }
+
             Text("Local China guides")
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
@@ -143,6 +154,13 @@ struct SourceEvidenceCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
+            Image(note.imageName)
+                .resizable()
+                .scaledToFill()
+                .frame(width: 238, height: 92)
+                .clipped()
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+
             HStack {
                 Text(note.platform)
                     .font(.caption.weight(.semibold))
@@ -170,7 +188,7 @@ struct SourceEvidenceCard: View {
                 .foregroundStyle(.secondary)
         }
         .frame(width: 270, alignment: .topLeading)
-        .frame(minHeight: 190, alignment: .topLeading)
+        .frame(minHeight: 292, alignment: .topLeading)
         .padding(16)
         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 8))
     }
@@ -181,6 +199,8 @@ struct PlaceCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            SharedGuideImage(name: place.imageName, height: 150, cornerRadius: 8)
+
             VStack(alignment: .leading, spacing: 8) {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(place.englishName)
@@ -227,6 +247,8 @@ struct PlaceDetailView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 VStack(alignment: .leading, spacing: 6) {
+                    SharedGuideImage(name: place.imageName, height: 240, cornerRadius: 18)
+
                     Text(place.localName)
                         .font(.title3)
                         .foregroundStyle(.secondary)
@@ -266,6 +288,24 @@ struct PlaceDetailView: View {
         }
         .navigationTitle(place.englishName)
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+struct SharedGuideImage: View {
+    let name: String
+    let height: CGFloat
+    let cornerRadius: CGFloat
+
+    var body: some View {
+        GeometryReader { proxy in
+            Image(name)
+                .resizable()
+                .scaledToFill()
+                .frame(width: proxy.size.width, height: height)
+                .clipped()
+                .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+        }
+        .frame(height: height)
     }
 }
 

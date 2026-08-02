@@ -22,7 +22,7 @@ const jsonLd = [
         <div class="flex items-center gap-3">
           <span class="profile-owner-mark" aria-hidden="true" data-profile-mark>P</span>
           <div>
-            <h1 class="text-5xl leading-tight sm:text-6xl" data-profile-heading>My places</h1>
+            <h1 class="text-5xl leading-tight sm:text-6xl" data-profile-heading>My map workspace</h1>
             <p class="mt-2 text-sm leading-relaxed text-soft" data-profile-session-copy>Sign in to keep uploaded lists and collected maps together.</p>
           </div>
         </div>
@@ -56,6 +56,62 @@ const jsonLd = [
       </div>
     </div>
 
+    <section class="mt-8 grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
+      <div class="ds-card p-4 sm:p-5">
+        <div class="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <p class="ds-eyebrow">Account setup</p>
+            <h2 class="mt-2 text-2xl leading-tight" data-profile-account-heading>Set up a map profile</h2>
+            <p class="mt-2 text-sm leading-relaxed text-soft" data-profile-account-copy>
+              Save reviewed pins to this browser first. Production uses email-link sign-in for cross-device maps.
+            </p>
+            <p class="mt-2 hidden text-xs font-semibold text-soft" data-profile-account-email></p>
+          </div>
+          <span class="ds-tag" data-profile-account-badge>Not set up</span>
+        </div>
+        <div class="mt-4 grid gap-2 text-xs sm:grid-cols-3">
+          <div class="rounded-md border border-line bg-white p-3">
+            <p class="font-semibold text-ink">Storage</p>
+            <p class="mt-1 text-soft" data-profile-storage-copy>Browser only until account setup.</p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-3">
+            <p class="font-semibold text-ink">Cross-device</p>
+            <p class="mt-1 text-soft" data-profile-sync-copy>Not active in this local build.</p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-3">
+            <p class="font-semibold text-ink">Map handoff</p>
+            <p class="mt-1 text-soft" data-profile-handoff-copy>0 pins with provider links.</p>
+          </div>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <button type="button" class="ds-button ds-button-dark" data-profile-account-action>Set up profile</button>
+          <button type="button" class="ds-button ds-button-secondary hidden" data-profile-signout>Use a different email</button>
+        </div>
+      </div>
+
+      <div class="ds-card p-4 sm:p-5">
+        <p class="ds-eyebrow">What makes this useful</p>
+        <h2 class="mt-2 text-2xl leading-tight">Save only pins that survived local-grid review.</h2>
+        <p class="mt-2 text-sm leading-relaxed text-soft">
+          Local tips, Chinese names, and source evidence stay attached. AMap is the mainland handoff; Apple Maps remains the fallback when available.
+        </p>
+        <div class="mt-4 grid gap-2 text-xs sm:grid-cols-3">
+          <div class="rounded-md border border-line bg-white p-3">
+            <p class="ds-tag">Map-ready</p>
+            <p class="mt-2 text-2xl leading-none" data-profile-map-ready-stat>0</p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-3">
+            <p class="ds-tag">Review-first leads</p>
+            <p class="mt-2 text-2xl leading-none" data-profile-review-lead-stat>0</p>
+          </div>
+          <div class="rounded-md border border-line bg-white p-3">
+            <p class="ds-tag">Evidence packets</p>
+            <p class="mt-2 text-2xl leading-none" data-profile-evidence-stat>0</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="profile-workspace ds-card mt-8 p-4 sm:p-5">
       <div class="flex flex-wrap items-end justify-between gap-3">
         <div>
@@ -66,7 +122,7 @@ const jsonLd = [
           </p>
         </div>
         <div class="flex flex-wrap gap-2">
-          <button type="button" class="ds-button ds-button-dark" data-profile-signin>Sign in</button>
+          <button type="button" class="ds-button ds-button-dark" data-profile-signin>Set up profile</button>
           <a href="/map-import/" class="ds-button ds-button-secondary">Add places</a>
         </div>
       </div>
@@ -100,6 +156,7 @@ const jsonLd = [
 
   <script>
     import {
+      clearUser,
       getProfileSummary,
       getUser,
     } from '../utils/localPrototypeState.js';
@@ -107,14 +164,23 @@ const jsonLd = [
     import { localKnowledgeGridReview, localKnowledgeReviewStages } from '../utils/localKnowledgeSubmission.js';
 
     const signinButton = document.querySelector('[data-profile-signin]');
+    const accountActionButton = document.querySelector('[data-profile-account-action]');
+    const signoutButton = document.querySelector('[data-profile-signout]');
     const localKnowledgeContributionsKey = 'ctme-local-knowledge-contributions-v1';
 
-    signinButton.addEventListener('click', async () => {
-      if (window.ctmeRequireUser) await window.ctmeRequireUser('start your profile');
+    signinButton.addEventListener('click', startProfileSetup);
+    accountActionButton.addEventListener('click', startProfileSetup);
+    signoutButton.addEventListener('click', () => {
+      clearUser();
       renderWorkspace();
     });
     window.addEventListener('ctme-state-updated', renderWorkspace);
     renderWorkspace();
+
+    async function startProfileSetup() {
+      if (window.ctmeRequireUser) await window.ctmeRequireUser('start your map profile');
+      renderWorkspace();
+    }
 
     function renderWorkspace() {
       const user = getUser();
@@ -122,10 +188,15 @@ const jsonLd = [
       const uploadedLists = summary.uploadedLists;
       const collectedMaps = summary.collectedCollections;
       const localEvidencePackets = getLocalEvidencePackets();
+      const mapReadyHandoffPins = countProviderHandoffPins(uploadedLists, collectedMaps);
+      const reviewLeadCount = countReviewFirstLeads(collectedMaps);
+      const isLocalPreview = user?.authProvider === 'localhost-preview' || (user && isLocalPrototypeHost());
       document.querySelector('[data-profile-mark]').textContent = user ? user.email.slice(0, 1).toUpperCase() : 'P';
-      document.querySelector('[data-profile-heading]').textContent = user ? user.email.split('@')[0] + "'s places" : 'My places';
+      document.querySelector('[data-profile-heading]').textContent = 'My map workspace';
       document.querySelector('[data-profile-session-copy]').textContent = user
-        ? 'Uploaded lists and collected maps are saved in this browser.'
+        ? isLocalPreview
+          ? 'Local dogfood profile for ' + user.email + ': saved maps stay in this browser.'
+          : 'Email-link profile active for ' + user.email + '. Saved maps can migrate to the server when backend sync is enabled.'
         : 'Sign in to keep uploaded lists and collected maps together.';
       document.querySelector('[data-profile-pin-stat]').textContent = String(summary.totalPins);
       document.querySelector('[data-profile-list-stat]').textContent = String(uploadedLists.length + collectedMaps.length);
@@ -136,12 +207,54 @@ const jsonLd = [
       document.querySelector('[data-profile-map-copy]').textContent = summary.totalPins
         ? 'Your workspace currently holds ' + summary.totalPins + ' reviewed pin' + (summary.totalPins === 1 ? '' : 's') + ' across ' + (uploadedLists.length + collectedMaps.length) + ' city set' + ((uploadedLists.length + collectedMaps.length) === 1 ? '' : 's') + '.'
         : 'Start with a caption, traveler story, or city collection. Nothing appears here merely because it exists in the community catalog.';
-      signinButton.textContent = user ? 'Signed in' : 'Sign in';
+      signinButton.textContent = user ? (isLocalPreview ? 'Local profile' : 'Email profile') : 'Set up profile';
       signinButton.classList.toggle('ds-button-secondary', Boolean(user));
       signinButton.classList.toggle('ds-button-dark', !user);
+      accountActionButton.textContent = user ? 'Profile active' : 'Set up profile';
+      accountActionButton.disabled = Boolean(user);
+      accountActionButton.classList.toggle('ds-button-secondary', Boolean(user));
+      accountActionButton.classList.toggle('ds-button-dark', !user);
+      signoutButton.classList.toggle('hidden', !user);
+      document.querySelector('[data-profile-account-heading]').textContent = user ? 'Map profile is set up' : 'Set up a map profile';
+      document.querySelector('[data-profile-account-badge]').textContent = user ? (isLocalPreview ? 'Local preview' : 'Email link') : 'Not set up';
+      document.querySelector('[data-profile-account-copy]').textContent = user
+        ? isLocalPreview
+          ? 'This dogfood profile uses your email as a local identity. It does not prove cross-device persistence yet.'
+          : 'Email-link sign-in is active for this browser. Server migration still depends on the production backend.'
+        : 'Set up the profile before saving map-ready pins. In this local build, setup creates a browser-local dogfood profile.';
+      const accountEmail = document.querySelector('[data-profile-account-email]');
+      accountEmail.textContent = user ? 'Account email: ' + user.email : '';
+      accountEmail.classList.toggle('hidden', !user);
+      document.querySelector('[data-profile-storage-copy]').textContent = user
+        ? isLocalPreview ? 'Browser localStorage under ' + user.email + '.' : 'Email identity with browser cache.'
+        : 'Nothing server-backed yet.';
+      document.querySelector('[data-profile-sync-copy]').textContent = isLocalPreview
+        ? 'Not cross-device in localhost.'
+        : user ? 'Ready for server migration when configured.' : 'Requires email-link account.';
+      document.querySelector('[data-profile-handoff-copy]').textContent = mapReadyHandoffPins + ' saved pin' + (mapReadyHandoffPins === 1 ? '' : 's') + ' with AMap/Apple handoff.';
+      document.querySelector('[data-profile-map-ready-stat]').textContent = String(mapReadyHandoffPins);
+      document.querySelector('[data-profile-review-lead-stat]').textContent = String(reviewLeadCount);
+      document.querySelector('[data-profile-evidence-stat]').textContent = String(localEvidencePackets.length);
       renderUploaded(uploadedLists);
       renderCollected(collectedMaps);
       renderLocalEvidence(localEvidencePackets);
+    }
+
+    function isLocalPrototypeHost() {
+      return ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+    }
+
+    function countProviderHandoffPins(uploadedLists, collectedMaps) {
+      const allPlaces = [...uploadedLists, ...collectedMaps].flatMap((collection) => Array.isArray(collection.places) ? collection.places : []);
+      return allPlaces.filter((place) => place?.providerLinks?.amap || place?.providerLinks?.apple || place?.amapUrl || place?.appleUrl).length;
+    }
+
+    function countReviewFirstLeads(collectedMaps) {
+      return collectedMaps.reduce((total, collection) => {
+        const candidates = Number(collection.candidateCount || 0);
+        const safe = Number(collection.safePlaceCount || collection.placeCount || (Array.isArray(collection.places) ? collection.places.length : 0) || 0);
+        return total + Math.max(0, candidates - safe);
+      }, 0);
     }
 
     function getLocalEvidencePackets() {
