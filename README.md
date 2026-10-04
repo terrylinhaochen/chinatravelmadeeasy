@@ -1,5 +1,3 @@
-> **Product consolidation — 2026-09-22:** Active product work has moved to Loops by CrowdListen at https://crowdlisten.com. This repository retains historical implementation and compatibility routes. Tracked source was archived before the front door changed; customer records and balances were not deleted.
-
 # China Travel Made Easy
 
 Practical travel guides for first-time foreign visitors to China who don't speak the language.
